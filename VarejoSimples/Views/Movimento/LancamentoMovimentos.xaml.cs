@@ -423,6 +423,7 @@ namespace VarejoSimples.Views.Movimento
         private void txAcrescimo_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculaTotalAcresc_Item();
+
         }
     }
 }
