@@ -93,6 +93,7 @@
           <Property Name="Movimento_id" Type="int" Nullable="false" />
           <Property Name="Valor_final" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Unidade_id" Type="int" />
         </EntityType>
         <EntityType Name="Itens_pagamento">
           <Key>
@@ -455,6 +456,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Itens_mov_Unid_AX9685">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
+          <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_movimento">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ItensMov_Prod_SA1820XX3">
           <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
           <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
@@ -574,6 +587,10 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
+          <AssociationSet Name="Itens_mov_Unid_AX9685" Association="Self.Itens_mov_Unid_AX9685">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
+          </AssociationSet>
           <AssociationSet Name="ItensMov_Prod_SA1820XX3" Association="Self.ItensMov_Prod_SA1820XX3">
             <End Role="Produtos" EntitySet="Produtos" />
             <End Role="Itens_movimento" EntitySet="Itens_movimento" />
@@ -668,6 +685,8 @@
           <Property Name="Valor_final" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="Produtos" Relationship="Model.ItensMov_Prod_SA1820XX3" FromRole="Itens_movimento" ToRole="Produtos" />
           <Property Name="Quant" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Unidade_id" Type="Int32" />
+          <NavigationProperty Name="Unidades" Relationship="Model.Itens_mov_Unid_AX9685" FromRole="Itens_movimento" ToRole="Unidades" />
         </EntityType>
         <EntityType Name="Lojas">
           <Key>
@@ -792,6 +811,7 @@
           <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Produtos" Relationship="Self.FK__Produtos__Unidad__36B12243" FromRole="Unidades" ToRole="Produtos" />
           <NavigationProperty Name="Produtos_fornecedores" Relationship="Model.Prod_Forn_FK_XXPTRBN8495TA" FromRole="Unidades" ToRole="Produtos_fornecedores" />
+          <NavigationProperty Name="Itens_movimento" Relationship="Model.Itens_mov_Unid_AX9685" FromRole="Unidades" ToRole="Itens_movimento" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -987,6 +1007,10 @@
           <AssociationSet Name="Prod_Forn_FK_XXPTRBN8495TA" Association="Model.Prod_Forn_FK_XXPTRBN8495TA">
             <End Role="Unidades" EntitySet="Unidades" />
             <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
+          </AssociationSet>
+          <AssociationSet Name="Itens_mov_Unid_AX9685" Association="Model.Itens_mov_Unid_AX9685">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Permissoes">
@@ -1227,6 +1251,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Itens_mov_Unid_AX9685">
+          <End Type="Model.Unidades" Role="Unidades" Multiplicity="0..1" />
+          <End Type="Model.Itens_movimento" Role="Itens_movimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_movimento">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1294,6 +1330,7 @@
           <EntitySetMapping Name="Itens_movimento">
             <EntityTypeMapping TypeName="Model.Itens_movimento">
               <MappingFragment StoreEntitySet="Itens_movimento">
+                <ScalarProperty Name="Unidade_id" ColumnName="Unidade_id" />
                 <ScalarProperty Name="Quant" ColumnName="Quant" />
                 <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

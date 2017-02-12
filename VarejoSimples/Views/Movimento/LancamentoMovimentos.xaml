@@ -122,6 +122,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Item" MinWidth="80" Width="Auto" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Produto" MinWidth="250" Width="*" Binding="{Binding Produtos.Descricao}"/>
+                    <DataGridTextColumn Header="Unidade" MinWidth="90" Width="Auto" Binding="{Binding Unidades.Sigla}"/>
                     <DataGridTextColumn Header="Valor Unit(R$)" MinWidth="130" Width="Auto" Binding="{Binding Valor_unit, StringFormat=N2}">
                         <DataGridTextColumn.CellStyle>
                             <Style TargetType="DataGridCell">
@@ -170,7 +171,15 @@
                             </Style>
                         </DataGridTextColumn.CellStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Valor final(R$)" MinWidth="130" Width="Auto" Binding="{Binding Valor_final}"/>
+                    <DataGridTextColumn Header="Valor final(R$)" MinWidth="130" Width="Auto" Binding="{Binding Valor_final}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Setters>
+                                    <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                </Style.Setters>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
             <Label x:Name="label4" Content="F3 - Busca produto" HorizontalAlignment="Left" Margin="10,0,0,60" VerticalAlignment="Bottom" Foreground="#FF002EFF" FontSize="13.333"/>

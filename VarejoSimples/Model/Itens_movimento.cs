@@ -27,8 +27,10 @@ namespace VarejoSimples.Model
         public int Movimento_id { get; set; }
         public decimal Valor_final { get; set; }
         public decimal Quant { get; set; }
+        public Nullable<int> Unidade_id { get; set; }
     
         public virtual Movimentos Movimentos { get; set; }
         public virtual Produtos Produtos { get; set; }
+        public virtual Unidades Unidades { get; set; }
     }
 }

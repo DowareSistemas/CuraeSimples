@@ -46,6 +46,7 @@
         <AssociationConnector Association="Model.Prod_Forn_SB1133321XXBra" />
         <AssociationConnector Association="Model.ItensMov_Prod_SA1820XX3" />
         <AssociationConnector Association="Model.Prod_Forn_FK_XXPTRBN8495TA" />
+        <AssociationConnector Association="Model.Itens_mov_Unid_AX9685" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

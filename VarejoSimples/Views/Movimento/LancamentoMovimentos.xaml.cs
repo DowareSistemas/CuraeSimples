@@ -201,7 +201,7 @@ namespace VarejoSimples.Views.Movimento
                     return;
                 }
 
-                if (Tipo_movimento.Movimentacao_itens == (int)Tipo_movimentacao.ENTRADA)
+                if (Tipo_movimento.Utiliza_fornecedor && Tipo_movimento.Movimentacao_itens == (int)Tipo_movimentacao.ENTRADA)
                     MostraFatorConv(produto.Produtos_fornecedores.First(pf => pf.Fornecedor_id == int.Parse(txCod_cliente_fornecedor.Text)));
                 else
                     lbFatorConversao.Visibility = Visibility.Hidden;
@@ -254,6 +254,7 @@ namespace VarejoSimples.Views.Movimento
             txTotal_prod.Text = valorTotal.ToString("N2");
             txValor_final.Text = txTotal_prod.Text;
             txDesconto.Focus();
+            txDesconto.SelectAll();
         }
 
         private void txDesconto_KeyDown(object sender, KeyEventArgs e)
@@ -344,13 +345,22 @@ namespace VarejoSimples.Views.Movimento
             item.Produto_id = prod.Id;
             item.Produtos = prod;
             item.Aliquota = prod.Aliquota;
-            item.Valor_unit = prod.Valor_unit;
+            item.Valor_unit = (Tipo_movimento.Utiliza_fornecedor
+                 ? prod.Produtos_fornecedores.First(pf => pf.Fornecedor_id == int.Parse(txCod_cliente_fornecedor.Text)).Preco_custo
+                 : prod.Valor_unit);
             item.Desconto = this.Desconto;
             item.Acrescimo = this.Acrescimo;
             item.Quant = decimal.Parse(txQuant.Text);
             item.Valor_final = decimal.Parse(txValor_final.Text);
             item.Cfop = Tipo_movimento.Cfop;
             item.Vendedor_id = int.Parse(txCod_vendedor.Text);
+
+            if (Tipo_movimento.Utiliza_fornecedor && Tipo_movimento.Movimentacao_itens == (int)Tipo_movimentacao.ENTRADA)
+                item.Unidades = prod.Produtos_fornecedores.First(pf => pf.Fornecedor_id == int.Parse(txCod_cliente_fornecedor.Text)).Unidades;
+            else
+                item.Unidades = prod.Unidades;
+
+            item.Unidade_id = item.Unidades.Id;
 
             Controller.VendeItem(item);
             dataGrid.ItemsSource = Controller.Itens_movimento;
