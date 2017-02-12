@@ -1,0 +1,1 @@
+﻿VND001=Listagem simples de vendedores

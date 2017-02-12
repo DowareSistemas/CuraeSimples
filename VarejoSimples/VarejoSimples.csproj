@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB069171-2717-4065-98D2-863D149730C9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VarejoSimples</RootNamespace>
+    <AssemblyName>Curae Varejo %28Simples%29</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icone.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="DB4Net">
+      <HintPath>..\DB4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="system.windows.controls.ribbon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Controller\BStatus.cs" />
+    <Compile Include="Controller\CaixasController.cs" />
+    <Compile Include="Controller\ClientesController.cs" />
+    <Compile Include="Controller\Extensions.cs" />
+    <Compile Include="Controller\FabricantesController.cs" />
+    <Compile Include="Controller\Formas_pagamentoController.cs" />
+    <Compile Include="Controller\FornecedoresController.cs" />
+    <Compile Include="Controller\Itens_movimentoController.cs" />
+    <Compile Include="Controller\LocalConfigController.cs" />
+    <Compile Include="Controller\LogController.cs" />
+    <Compile Include="Controller\LojasController.cs" />
+    <Compile Include="Controller\MarcasController.cs" />
+    <Compile Include="Controller\MovimentosController.cs" />
+    <Compile Include="Controller\Movimentos_caixasController.cs" />
+    <Compile Include="Controller\Operadoras_cartaoController.cs" />
+    <Compile Include="Controller\PermissoesController.cs" />
+    <Compile Include="Controller\ProdutosController.cs" />
+    <Compile Include="Controller\Produtos_fornecedoresController.cs" />
+    <Compile Include="Controller\RotinasController.cs" />
+    <Compile Include="Controller\Tipos_movimentoController.cs" />
+    <Compile Include="Controller\UnidadesController.cs" />
+    <Compile Include="Controller\UsuariosController.cs" />
+    <Compile Include="Controller\VendedoresController.cs" />
+    <Compile Include="Controller_Reports\IControllerReport.cs" />
+    <Compile Include="Controller_Reports\ReportController.cs" />
+    <Compile Include="Controller_Reports\ReportDataSource.cs" />
+    <Compile Include="Controller_Reports\ReportFile.cs" />
+    <Compile Include="Enums\Tipo_intervalo.cs" />
+    <Compile Include="Enums\Tipo_movimentacao.cs" />
+    <Compile Include="Enums\Tipo_pagamento.cs" />
+    <Compile Include="Enums\Tipo_recebimento.cs" />
+    <Compile Include="Interfaces\ICaixas.cs" />
+    <Compile Include="Interfaces\IClientes.cs" />
+    <Compile Include="Interfaces\IFabricantes.cs" />
+    <Compile Include="Interfaces\IFormas_pagamento.cs" />
+    <Compile Include="Interfaces\IFornecedor.cs" />
+    <Compile Include="Interfaces\IItens_movimento.cs" />
+    <Compile Include="Interfaces\ILojas.cs" />
+    <Compile Include="Interfaces\IMarcas.cs" />
+    <Compile Include="Interfaces\IMovimentos.cs" />
+    <Compile Include="Interfaces\IMovimentos_caixas.cs" />
+    <Compile Include="Interfaces\IOperadoras_cartao.cs" />
+    <Compile Include="Interfaces\IPermissoes.cs" />
+    <Compile Include="Interfaces\IProdutos.cs" />
+    <Compile Include="Interfaces\IProdutos_fornecedores.cs" />
+    <Compile Include="Interfaces\IRotinas.cs" />
+    <Compile Include="Interfaces\ITipos_movimento.cs" />
+    <Compile Include="Interfaces\IUnidades.cs" />
+    <Compile Include="Interfaces\IUsuarios.cs" />
+    <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\VND001.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VND001.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Repository\CaixasRepository.cs" />
+    <Compile Include="Repository\ClientesRepository.cs" />
+    <Compile Include="Repository\FabricantesRepository.cs" />
+    <Compile Include="Repository\Formas_pagamentoRepository.cs" />
+    <Compile Include="Repository\FornecedoresRepository.cs" />
+    <Compile Include="Repository\Itens_movimentoRepository.cs" />
+    <Compile Include="Repository\LojasRepository.cs" />
+    <Compile Include="Repository\MarcasRepository.cs" />
+    <Compile Include="Repository\MovimentosRepository.cs" />
+    <Compile Include="Repository\Movimentos_caixasRepository.cs" />
+    <Compile Include="Repository\Operadoras_cartaoRepository.cs" />
+    <Compile Include="Repository\PermissoesRepository.cs" />
+    <Compile Include="Repository\ProdutosRepository.cs" />
+    <Compile Include="Repository\Produtos_fornecedoresRepository.cs" />
+    <Compile Include="Repository\RepositoryImpl.cs" />
+    <Compile Include="Repository\RotinasRepository.cs" />
+    <Compile Include="Repository\Tipos_movimentoRepository.cs" />
+    <Compile Include="Repository\UnidadesRepository.cs" />
+    <Compile Include="Repository\UsuariosRepository.cs" />
+    <Compile Include="Repository\VendedoresRepository.cs" />
+    <Compile Include="Views\Caixa\CadCaixas.xaml.cs">
+      <DependentUpon>CadCaixas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cliente\CadCliente.xaml.cs">
+      <DependentUpon>CadCliente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cliente\PesquisarCliente.xaml.cs">
+      <DependentUpon>PesquisarCliente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conversors.cs" />
+    <Compile Include="Views\Fabricante\CadFabricantes.xaml.cs">
+      <DependentUpon>CadFabricantes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Fabricante\PesquisarFabricante.xaml.cs">
+      <DependentUpon>PesquisarFabricante.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Forma_pagto\CadFormas_pag.xaml.cs">
+      <DependentUpon>CadFormas_pag.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Forma_pagto\PesquisarFormas_pag.xaml.cs">
+      <DependentUpon>PesquisarFormas_pag.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Fornecedor\CadFornecedor.xaml.cs">
+      <DependentUpon>CadFornecedor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Fornecedor\PesquisarFornecedor.xaml.cs">
+      <DependentUpon>PesquisarFornecedor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Loja\CadLoja.xaml.cs">
+      <DependentUpon>CadLoja.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Loja\PesquisarLoja.xaml.cs">
+      <DependentUpon>PesquisarLoja.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Marca\CadMarcas.xaml.cs">
+      <DependentUpon>CadMarcas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Marca\PesquisarMarca.xaml.cs">
+      <DependentUpon>PesquisarMarca.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimento\LancamentoMovimentos.xaml.cs">
+      <DependentUpon>LancamentoMovimentos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Operadora_cartao\CadOperadora.xaml.cs">
+      <DependentUpon>CadOperadora.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Operadora_cartao\PesquisarOperadora.xaml.cs">
+      <DependentUpon>PesquisarOperadora.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Produto\CadProduto.xaml.cs">
+      <DependentUpon>CadProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Produto\PesquisarProduto.xaml.cs">
+      <DependentUpon>PesquisarProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ReportViewWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\ReportViewWindow.Designer.cs">
+      <DependentUpon>ReportViewWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tipo_movimento\CadastroTmv.xaml.cs">
+      <DependentUpon>CadastroTmv.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tipo_movimento\PesquisarTmv.xaml.cs">
+      <DependentUpon>PesquisarTmv.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Unidade\CadUnidade.xaml.cs">
+      <DependentUpon>CadUnidade.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Unidade\PesquisarUnidade.xaml.cs">
+      <DependentUpon>PesquisarUnidade.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Navigator.xaml.cs">
+      <DependentUpon>Navigator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Usuario\AlterarSenha.xaml.cs">
+      <DependentUpon>AlterarSenha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Usuario\CadastroUsuarios.xaml.cs">
+      <DependentUpon>CadastroUsuarios.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Usuario\CadPermissoes.xaml.cs">
+      <DependentUpon>CadPermissoes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Usuario\PesquisarUsuario.xaml.cs">
+      <DependentUpon>PesquisarUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vendedor\CadVendedor.xaml.cs">
+      <DependentUpon>CadVendedor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vendedor\ParametrosRelatorio.xaml.cs">
+      <DependentUpon>ParametrosRelatorio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vendedor\PesquisarVendedor.xaml.cs">
+      <DependentUpon>PesquisarVendedor.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controller\Declaracoes.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\Caixa\CadCaixas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cliente\CadCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cliente\PesquisarCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fabricante\CadFabricantes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fabricante\PesquisarFabricante.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Forma_pagto\CadFormas_pag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Forma_pagto\PesquisarFormas_pag.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fornecedor\CadFornecedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Fornecedor\PesquisarFornecedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Loja\CadLoja.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Loja\PesquisarLoja.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Marca\CadMarcas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Marca\PesquisarMarca.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Movimento\LancamentoMovimentos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Operadora_cartao\CadOperadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Operadora_cartao\PesquisarOperadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Produto\CadProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Produto\PesquisarProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tipo_movimento\CadastroTmv.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tipo_movimento\PesquisarTmv.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Unidade\CadUnidade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Unidade\PesquisarUnidade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Navigator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Usuario\AlterarSenha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Usuario\CadastroUsuarios.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Usuario\CadPermissoes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Usuario\PesquisarUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Vendedor\CadVendedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Vendedor\ParametrosRelatorio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Vendedor\PesquisarVendedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="icone.ico" />
+    <Resource Include="Images\novo.png" />
+    <Resource Include="Images\pagamento.png" />
+    <Resource Include="Images\salvar.png" />
+    <Resource Include="Images\desconto.png" />
+    <Resource Include="Images\nfce.png" />
+    <Resource Include="Images\impressao.png" />
+    <Resource Include="Images\opcoes.png" />
+    <Content Include="Relatorios\VND001.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>VND001.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">
+      <DependentUpon>ReportViewWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Model\DataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\DataModel.edmx.diagram">
+      <DependentUpon>DataModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Relatorios\reports.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\next.png" />
+    <Resource Include="Images\prev.png" />
+    <Resource Include="Images\confirma.png" />
+    <Resource Include="Images\error.png" />
+    <Resource Include="Images\sucess.png" />
+    <Resource Include="Images\warning.png" />
+    <Content Include="Model\DataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+      <LastGenOutput>DataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\DataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataModel.edmx</DependentUpon>
+      <LastGenOutput>DataModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,17 @@
+﻿<Window x:Class="VarejoSimples.Views.Usuario.AlterarSenha"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Usuario"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Alterar Senha" Height="211" Width="300">
+    <Grid>
+        <Label x:Name="label" Content="Nova senha:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <PasswordBox x:Name="txNovaSenha" KeyDown="txNovaSenha_KeyDown" Margin="13,67,10,0" VerticalAlignment="Top" Height="45" FontSize="24" Padding="0,4,0,0"/>
+        <Button x:Name="button" Content="_Confirmar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="134" FontSize="24" Height="45" Click="button_Click"/>
+
+    </Grid>
+</Window>

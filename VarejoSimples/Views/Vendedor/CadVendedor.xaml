@@ -1,0 +1,64 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Vendedor"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="VarejoSimples.Views.Vendedor.CadVendedor"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="Cadastro de vendedor" Height="466" Width="588">
+    <Grid>
+        <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
+            <Button x:Name="btSalvar" TabIndex="60" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
+            <Button x:Name="btCancelar" TabIndex="70" Content="_Cancelar" Margin="6,112,6,0" VerticalAlignment="Top" Click="btCancelar_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="prev" HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" Width="34" Height="33" Click="prev_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/prev.png" Height="25" Width="32" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="next" HorizontalAlignment="Right" Margin="0,7,6,0" VerticalAlignment="Top" Width="34" Height="33" Click="next_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/next.png" Height="30" Width="26" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="btNovo" TabIndex="70" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="btRelatorio" TabIndex="70" Content="_Relatório" Margin="6,180,6,0" VerticalAlignment="Top" Click="btRelatorio_Click" Height="30" FontSize="14.667"/>
+        </Grid>
+        <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCod" HorizontalAlignment="Left" Height="30" Margin="112,10,0,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="58" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy" Content="Nome" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txNome" HorizontalAlignment="Left" Height="30" Margin="112,45,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="367" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy1" Content="Apelido" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txApelido" HorizontalAlignment="Left" Height="30" Margin="112,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="218" FontSize="14.667" Padding="0,6,0,0"/>
+
+        <xctk:MaskedTextBox x:Name="txCelular1" HorizontalAlignment="Left" Margin="112,115,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Height="30" Width="123" FontSize="14.667" Mask="(00)00000-0000" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy2" Content="Celular" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <xctk:MaskedTextBox x:Name="txCelular2" HorizontalAlignment="Left" Margin="361,115,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Height="30" Width="118" FontSize="14.667" Mask="(00)00000-0000" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy3" Content="Celular alternat." HorizontalAlignment="Left" Margin="240,115,0,0" VerticalAlignment="Top" FontSize="14.667" Width="113"/>
+        <Label x:Name="label_Copy4" Content="Logradouro" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txLogradouro" HorizontalAlignment="Left" Height="30" Margin="112,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="367" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy5" Content="Bairro" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txBairro" HorizontalAlignment="Left" Height="30" Margin="112,185,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="230" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy6" Content="Número" HorizontalAlignment="Left" Margin="352,185,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txNumero" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Height="30" Margin="420,185,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="59" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy7" Content="UF" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txUF" MaxLength="2" HorizontalAlignment="Left" Height="30" Margin="112,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="33" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy11" Content="Município" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" FontSize="14.667" Width="86"/>
+        <TextBox x:Name="txMunicipio" HorizontalAlignment="Left" Height="30" Margin="112,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="367" FontSize="14.667" Padding="0,6,0,0"/>
+
+        <Label x:Name="label_Copy8" Content="Comissão (%)" HorizontalAlignment="Left" Margin="10,291,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txComissao" HorizontalContentAlignment="Right" HorizontalAlignment="Left" Height="30" Margin="112,291,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="80" FontSize="14.667" Padding="0,6,0,0" Text="0"/>
+        <Label x:Name="label_Copy9" Content="Usuário" HorizontalAlignment="Left" Margin="10,326,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCod_usuario" IsReadOnly="True"  HorizontalAlignment="Left" Height="30" Margin="112,326,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="48" FontSize="14.667" Padding="0,6,0,0"/>
+        <Button x:Name="btSelecionarUsuario" Content=". . ." HorizontalAlignment="Left" Margin="165,326,0,0" VerticalAlignment="Top" Width="30" Height="30" Click="btSelecionarUsuario_Click"/>
+        <TextBox x:Name="txNome_usuario" IsReadOnly="True"  HorizontalAlignment="Left" Height="30" Margin="200,326,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="281" FontSize="14.667" Padding="0,6,0,0"/>
+        <Label x:Name="label_Copy10" Content="Loja" HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCod_loja" IsReadOnly="True"  HorizontalAlignment="Left" Height="30" Margin="112,361,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="48" FontSize="14.667" Padding="0,6,0,0"/>
+        <Button x:Name="btSelecionarLoja" Content=". . ." HorizontalAlignment="Left" Margin="165,361,0,0" VerticalAlignment="Top" Width="30" Height="30" Click="btSelecionarLoja_Click"/>
+        <TextBox x:Name="txNome_loja" IsReadOnly="True"  HorizontalAlignment="Left" Height="30" Margin="200,361,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="281" FontSize="14.667" Padding="0,6,0,0"/>
+        <CheckBox x:Name="ckInativo" Content="Vendedor inativo" HorizontalAlignment="Left" Margin="340,302,0,0" VerticalAlignment="Top" FontSize="14.667" Width="139"/>
+    </Grid>
+</Window>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="432a42949f8441f7b04098f8acd39753" Name="Diagram1" ZoomLevel="112">
+        <EntityTypeShape EntityType="Model.Clientes" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Fabricantes" Width="1.5" PointX="1.875" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Formas_pagamento" Width="1.5" PointX="12.375" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Fornecedores" Width="1.5" PointX="7.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Itens_movimento" Width="1.5" PointX="6.125" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Lojas" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Marcas" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Movimentos" Width="1.5" PointX="3.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Operadoras_cartao" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Parcelas" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Produtos" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Produtos_fornecedores" Width="1.5" PointX="10" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Tipos_movimento" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Unidades" Width="1.5" PointX="5.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Usuarios" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Vendedores" Width="1.5" PointX="2.75" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__Produtos___Forne__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Itens_mov__Movim__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Movimento__Usuar__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Produtos__Unidad__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__Vendedore__Usuar__48CFD27E" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Permissoes" Width="1.5" PointX="0.875" PointY="0.5" />
+        <EntityTypeShape EntityType="Model.Rotinas" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="Model.FK__Permissoe__Rotin__656C112C" />
+        <AssociationConnector Association="Model.FK__Permissoe__Usuar__6477ECF3" />
+        <AssociationConnector Association="Model.FK_Vend_Loj_00XXA01" />
+        <EntityTypeShape EntityType="Model.Caixas" Width="1.5" PointX="10.75" PointY="15.25" />
+        <EntityTypeShape EntityType="Model.Estoque" Width="1.5" PointX="15.25" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.Itens_pagamento" Width="1.5" PointX="13" PointY="9.875" />
+        <EntityTypeShape EntityType="Model.Movimentos_caixas" Width="1.5" PointX="13" PointY="5.375" />
+        <AssociationConnector Association="Model.FK__Movimento__Caixa__7B5B524B" />
+        <AssociationConnector Association="Model.FK__Estoque__Loja_id__49C3F6B7" />
+        <AssociationConnector Association="Model.FK__Estoque__Produto__48CFD27E" />
+        <AssociationConnector Association="Model.FK__Itens_pag__Forma__71D1E811" />
+        <AssociationConnector Association="Model.FK__Movimento__Forma__7C4F7684" />
+        <AssociationConnector Association="Model.FK__Itens_pag__Movim__70DDC3D8" />
+        <AssociationConnector Association="Model.FK__Movimento__Loja___7E37BEF6" />
+        <AssociationConnector Association="Model.FK__Movimento__Usuar__7D439ABD" />
+        <AssociationConnector Association="Model.Prod_Forn_SB1133321XXBra" />
+        <AssociationConnector Association="Model.ItensMov_Prod_SA1820XX3" />
+        <AssociationConnector Association="Model.Prod_Forn_FK_XXPTRBN8495TA" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
