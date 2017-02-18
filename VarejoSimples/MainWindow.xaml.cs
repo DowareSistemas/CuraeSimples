@@ -25,8 +25,24 @@ namespace VarejoSimples
     /// </summary>
     public partial class MainWindow : Window
     {
+        private void NFCe()
+        {
+            Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
+            
+            Declaracoes.aCFAbrir_NFCe_Daruma("17132107704", "Emerson T Almeida", "Rua Aimores", "15", "Retiro", "3306305",
+                "Volta Redonda", "RJ", "27275350");
+
+            Declaracoes.aCFVender_NFCe_Daruma("F1", "1,00", "5,89", "D%", "0,00", "123456789", "UN", "Suco de Laranja");
+            Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
+            Declaracoes.aCFEfetuarPagamento_NFCe_Daruma("Dinheiro", "5,89");
+            int retorno = Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Mini");
+          
+            MessageBox.Show(Declaracoes.TrataRetorno(retorno));
+        }
+
         public MainWindow()
         {
+         //   NFCe();
             varejo_config db = new varejo_config();
             //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
             db.Database.CreateIfNotExists();
@@ -49,18 +65,6 @@ namespace VarejoSimples
             listView.SelectedIndex = 0;
             txNomeLoja.Text = (UsuariosController.LojaAtual.Nome_fantasia + $" ({UsuariosController.LojaAtual.Razao_social})");
             txUsuario.Text = UsuariosController.UsuarioAtual.Nome;
-
-            /*
-            Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
-
-            Declaracoes.eBuscarPortaVelocidade_DUAL_DarumaFramework();
-            Declaracoes.aCFAbrir_NFCe_Daruma("17132107704", "Emerson T Almeida", "Rua Aimores", "15", "Retiro", "Volta Redonda", "3306305", "RJ", "27275350");
-            Declaracoes.aCFVender_NFCe_Daruma("F1", "1,00", "5,89", "D%", "0,00", "123456789", "UN", "Suco de Laranja");
-            Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
-            Declaracoes.aCFEfetuarPagamento_NFCe_Daruma("Dinheiro", "5,89");
-            int retorno =  Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Mini");
-            MessageBox.Show(Declaracoes.TrataRetorno(retorno));
-            */
         }
 
         private void Window_Closed(object sender, EventArgs e)

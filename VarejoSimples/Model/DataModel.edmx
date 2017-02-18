@@ -37,6 +37,10 @@
           <Property Name="Produto_id" Type="int" Nullable="false" />
           <Property Name="Loja_id" Type="int" Nullable="false" />
           <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Lote" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Sublote" Type="int" Nullable="false" />
+          <Property Name="Data_entrada" Type="datetime" />
+          <Property Name="Data_validade" Type="date" />
         </EntityType>
         <EntityType Name="Fabricantes">
           <Key>
@@ -51,12 +55,12 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Tipo_pagamento" Type="int" Nullable="false" />
           <Property Name="Tipo_intervalo" Type="int" Nullable="false" />
           <Property Name="Intervalo" Type="int" Nullable="false" />
           <Property Name="Dia_base" Type="int" Nullable="false" />
-          <Property Name="Operadora_cartao_id" Type="int" Nullable="false" />
-          <Property Name="Tipo_pagamento" Type="int" Nullable="false" />
           <Property Name="Parcelas" Type="int" Nullable="false" />
+          <Property Name="Operadora_cartao_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Fornecedores">
           <Key>
@@ -70,10 +74,6 @@
           <Property Name="Numero" Type="int" Nullable="false" />
           <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Uf" Type="varchar" MaxLength="2" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="100" />
-          <Property Name="Telefone" Type="varchar" MaxLength="20" />
-          <Property Name="Cep" Type="varchar" MaxLength="20" />
-          <Property Name="Website" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Itens_movimento">
           <Key>
@@ -81,7 +81,9 @@
             <PropertyRef Name="Movimento_id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Movimento_id" Type="int" Nullable="false" />
           <Property Name="Produto_id" Type="int" Nullable="false" />
+          <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Valor_unit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Aliquota" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Desconto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -90,10 +92,9 @@
           <Property Name="Outros_valores" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Cfop" Type="int" Nullable="false" />
           <Property Name="Vendedor_id" Type="int" Nullable="false" />
-          <Property Name="Movimento_id" Type="int" Nullable="false" />
           <Property Name="Valor_final" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Unidade_id" Type="int" />
+          <Property Name="Unidade_id" Type="int" Nullable="false" />
+          <Property Name="Sublote" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Itens_pagamento">
           <Key>
@@ -133,9 +134,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Loja_id" Type="int" Nullable="false" />
           <Property Name="Data" Type="datetime" Nullable="false" />
           <Property Name="Usuario_id" Type="int" Nullable="false" />
           <Property Name="Cliente_id" Type="int" Nullable="false" />
+          <Property Name="Fornecedor_id" Type="int" Nullable="false" />
+          <Property Name="Num_NF" Type="int" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="int" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="bit" Nullable="false" />
         </EntityType>
@@ -194,10 +198,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Referencia" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Ean" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="Ncm" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Valor_unit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Unidade_id" Type="int" Nullable="false" />
           <Property Name="Aliquota" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -231,11 +235,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Movimentacao_itens" Type="int" Nullable="false" />
           <Property Name="Movimentacao_valores" Type="int" Nullable="false" />
           <Property Name="Gera_comissao" Type="bit" Nullable="false" />
           <Property Name="Cfop" Type="int" Nullable="false" />
-          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Utiliza_fornecedor" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidades">
@@ -254,8 +258,8 @@
           <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Senha" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Inativo" Type="bit" Nullable="false" />
-          <Property Name="Admin" Type="bit" Nullable="false" />
           <Property Name="Alteracao_pendente" Type="bit" Nullable="false" />
+          <Property Name="Admin" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Vendedores">
           <Key>
@@ -276,7 +280,7 @@
           <Property Name="Usuario_id" Type="int" Nullable="false" />
           <Property Name="Loja_id" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Estoque__Loja_id__49C3F6B7">
+        <Association Name="FK__Estoque__Loja_id__47DBAE45">
           <End Role="Lojas" Type="Self.Lojas" Multiplicity="1" />
           <End Role="Estoque" Type="Self.Estoque" Multiplicity="*" />
           <ReferentialConstraint>
@@ -288,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Estoque__Produto__48CFD27E">
+        <Association Name="FK__Estoque__Produto__46E78A0C">
           <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
           <End Role="Estoque" Type="Self.Estoque" Multiplicity="*" />
           <ReferentialConstraint>
@@ -300,7 +304,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Itens_pag__Forma__71D1E811">
+        <Association Name="FK__Itens_mov__Produ__7B5B524B">
+          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
+          <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_movimento">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_mov__Unida__7C4F7684">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="1" />
+          <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_movimento">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_pag__Forma__778AC167">
           <End Role="Formas_pagamento" Type="Self.Formas_pagamento" Multiplicity="1" />
           <End Role="Itens_pagamento" Type="Self.Itens_pagamento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -312,7 +340,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Itens_pag__Movim__70DDC3D8">
+        <Association Name="FK__Itens_pag__Movim__76969D2E">
           <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="1" />
           <End Role="Itens_pagamento" Type="Self.Itens_pagamento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -324,7 +352,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Movimento__Caixa__7B5B524B">
+        <Association Name="FK__Movimento__Caixa__02FC7413">
           <End Role="Caixas" Type="Self.Caixas" Multiplicity="1" />
           <End Role="Movimentos_caixas" Type="Self.Movimentos_caixas" Multiplicity="*" />
           <ReferentialConstraint>
@@ -336,7 +364,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Movimento__Forma__7C4F7684">
+        <Association Name="FK__Movimento__Forma__03F0984C">
           <End Role="Formas_pagamento" Type="Self.Formas_pagamento" Multiplicity="1" />
           <End Role="Movimentos_caixas" Type="Self.Movimentos_caixas" Multiplicity="*" />
           <ReferentialConstraint>
@@ -348,7 +376,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Movimento__Loja___7E37BEF6">
+        <Association Name="FK__Movimento__Loja___05D8E0BE">
           <End Role="Lojas" Type="Self.Lojas" Multiplicity="1" />
           <End Role="Movimentos_caixas" Type="Self.Movimentos_caixas" Multiplicity="*" />
           <ReferentialConstraint>
@@ -360,7 +388,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Movimento__Usuar__6D0D32F4">
+        <Association Name="FK__Movimento__Usuar__04E4BC85">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Movimentos_caixas" Type="Self.Movimentos_caixas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos_caixas">
+              <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Movimento__Usuar__72C60C4A">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
           <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -372,19 +412,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Movimento__Usuar__7D439ABD">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="Movimentos_caixas" Type="Self.Movimentos_caixas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Movimentos_caixas">
-              <PropertyRef Name="Usuario_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Permissoe__Rotin__5CD6CB2B">
+        <Association Name="FK__Permissoe__Rotin__60A75C0F">
           <End Role="Rotinas" Type="Self.Rotinas" Multiplicity="1" />
           <End Role="Permissoes" Type="Self.Permissoes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -396,7 +424,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permissoe__Usuar__5BE2A6F2">
+        <Association Name="FK__Permissoe__Usuar__5FB337D6">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
           <End Role="Permissoes" Type="Self.Permissoes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -408,7 +436,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Produtos___Forne__3B75D760">
+        <Association Name="FK__Produtos___Forne__3F466844">
           <End Role="Fornecedores" Type="Self.Fornecedores" Multiplicity="1" />
           <End Role="Produtos_fornecedores" Type="Self.Produtos_fornecedores" Multiplicity="*" />
           <ReferentialConstraint>
@@ -420,7 +448,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Produtos__Unidad__44FF419A">
+        <Association Name="FK__Produtos___Produ__403A8C7D">
+          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
+          <End Role="Produtos_fornecedores" Type="Self.Produtos_fornecedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produtos_fornecedores">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Produtos___Unida__412EB0B6">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="1" />
+          <End Role="Produtos_fornecedores" Type="Self.Produtos_fornecedores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produtos_fornecedores">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Produtos__Unidad__38996AB5">
           <End Role="Unidades" Type="Self.Unidades" Multiplicity="1" />
           <End Role="Produtos" Type="Self.Produtos" Multiplicity="*" />
           <ReferentialConstraint>
@@ -432,7 +484,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vendedore__Loja___68487DD7">
+        <Association Name="FK__Vendedore__Loja___6C190EBB">
           <End Role="Lojas" Type="Self.Lojas" Multiplicity="1" />
           <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="*" />
           <ReferentialConstraint>
@@ -444,7 +496,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vendedore__Usuar__6754599E">
+        <Association Name="FK__Vendedore__Usuar__6B24EA82">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
           <End Role="Vendedores" Type="Self.Vendedores" Multiplicity="*" />
           <ReferentialConstraint>
@@ -453,54 +505,6 @@
             </Principal>
             <Dependent Role="Vendedores">
               <PropertyRef Name="Usuario_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Itens_mov_Unid_AX9685">
-          <End Role="Unidades" Type="Self.Unidades" Multiplicity="0..1" />
-          <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unidades">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Itens_movimento">
-              <PropertyRef Name="Unidade_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ItensMov_Prod_SA1820XX3">
-          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
-          <End Role="Itens_movimento" Type="Self.Itens_movimento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Produtos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Itens_movimento">
-              <PropertyRef Name="Produto_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Prod_Forn_FK_XXPTRBN8495TA">
-          <End Role="Unidades" Type="Self.Unidades" Multiplicity="1" />
-          <End Role="Produtos_fornecedores" Type="Self.Produtos_fornecedores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Unidades">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Produtos_fornecedores">
-              <PropertyRef Name="Unidade_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Prod_Forn_SB1133321XXBra">
-          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
-          <End Role="Produtos_fornecedores" Type="Self.Produtos_fornecedores" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Produtos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Produtos_fornecedores">
-              <PropertyRef Name="Produto_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -527,81 +531,81 @@
           <EntitySet Name="Unidades" EntityType="Self.Unidades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Estoque__Loja_id__49C3F6B7" Association="Self.FK__Estoque__Loja_id__49C3F6B7">
+          <AssociationSet Name="FK__Estoque__Loja_id__47DBAE45" Association="Self.FK__Estoque__Loja_id__47DBAE45">
             <End Role="Lojas" EntitySet="Lojas" />
             <End Role="Estoque" EntitySet="Estoque" />
           </AssociationSet>
-          <AssociationSet Name="FK__Estoque__Produto__48CFD27E" Association="Self.FK__Estoque__Produto__48CFD27E">
+          <AssociationSet Name="FK__Estoque__Produto__46E78A0C" Association="Self.FK__Estoque__Produto__46E78A0C">
             <End Role="Produtos" EntitySet="Produtos" />
             <End Role="Estoque" EntitySet="Estoque" />
           </AssociationSet>
-          <AssociationSet Name="FK__Itens_pag__Forma__71D1E811" Association="Self.FK__Itens_pag__Forma__71D1E811">
+          <AssociationSet Name="FK__Itens_mov__Produ__7B5B524B" Association="Self.FK__Itens_mov__Produ__7B5B524B">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_mov__Unida__7C4F7684" Association="Self.FK__Itens_mov__Unida__7C4F7684">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_pag__Forma__778AC167" Association="Self.FK__Itens_pag__Forma__778AC167">
             <End Role="Formas_pagamento" EntitySet="Formas_pagamento" />
             <End Role="Itens_pagamento" EntitySet="Itens_pagamento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Itens_pag__Movim__70DDC3D8" Association="Self.FK__Itens_pag__Movim__70DDC3D8">
+          <AssociationSet Name="FK__Itens_pag__Movim__76969D2E" Association="Self.FK__Itens_pag__Movim__76969D2E">
             <End Role="Movimentos" EntitySet="Movimentos" />
             <End Role="Itens_pagamento" EntitySet="Itens_pagamento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Caixa__7B5B524B" Association="Self.FK__Movimento__Caixa__7B5B524B">
+          <AssociationSet Name="FK__Movimento__Caixa__02FC7413" Association="Self.FK__Movimento__Caixa__02FC7413">
             <End Role="Caixas" EntitySet="Caixas" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
           </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Forma__7C4F7684" Association="Self.FK__Movimento__Forma__7C4F7684">
+          <AssociationSet Name="FK__Movimento__Forma__03F0984C" Association="Self.FK__Movimento__Forma__03F0984C">
             <End Role="Formas_pagamento" EntitySet="Formas_pagamento" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
           </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Loja___7E37BEF6" Association="Self.FK__Movimento__Loja___7E37BEF6">
+          <AssociationSet Name="FK__Movimento__Loja___05D8E0BE" Association="Self.FK__Movimento__Loja___05D8E0BE">
             <End Role="Lojas" EntitySet="Lojas" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
           </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Usuar__6D0D32F4" Association="Self.FK__Movimento__Usuar__6D0D32F4">
+          <AssociationSet Name="FK__Movimento__Usuar__04E4BC85" Association="Self.FK__Movimento__Usuar__04E4BC85">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Movimento__Usuar__72C60C4A" Association="Self.FK__Movimento__Usuar__72C60C4A">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Movimentos" EntitySet="Movimentos" />
           </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Usuar__7D439ABD" Association="Self.FK__Movimento__Usuar__7D439ABD">
-            <End Role="Usuarios" EntitySet="Usuarios" />
-            <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Permissoe__Rotin__5CD6CB2B" Association="Self.FK__Permissoe__Rotin__5CD6CB2B">
+          <AssociationSet Name="FK__Permissoe__Rotin__60A75C0F" Association="Self.FK__Permissoe__Rotin__60A75C0F">
             <End Role="Rotinas" EntitySet="Rotinas" />
             <End Role="Permissoes" EntitySet="Permissoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permissoe__Usuar__5BE2A6F2" Association="Self.FK__Permissoe__Usuar__5BE2A6F2">
+          <AssociationSet Name="FK__Permissoe__Usuar__5FB337D6" Association="Self.FK__Permissoe__Usuar__5FB337D6">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Permissoes" EntitySet="Permissoes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Produtos___Forne__3B75D760" Association="Self.FK__Produtos___Forne__3B75D760">
+          <AssociationSet Name="FK__Produtos___Forne__3F466844" Association="Self.FK__Produtos___Forne__3F466844">
             <End Role="Fornecedores" EntitySet="Fornecedores" />
             <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
           </AssociationSet>
-          <AssociationSet Name="FK__Produtos__Unidad__44FF419A" Association="Self.FK__Produtos__Unidad__44FF419A">
+          <AssociationSet Name="FK__Produtos___Produ__403A8C7D" Association="Self.FK__Produtos___Produ__403A8C7D">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Produtos___Unida__412EB0B6" Association="Self.FK__Produtos___Unida__412EB0B6">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Produtos__Unidad__38996AB5" Association="Self.FK__Produtos__Unidad__38996AB5">
             <End Role="Unidades" EntitySet="Unidades" />
             <End Role="Produtos" EntitySet="Produtos" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vendedore__Loja___68487DD7" Association="Self.FK__Vendedore__Loja___68487DD7">
+          <AssociationSet Name="FK__Vendedore__Loja___6C190EBB" Association="Self.FK__Vendedore__Loja___6C190EBB">
             <End Role="Lojas" EntitySet="Lojas" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vendedore__Usuar__6754599E" Association="Self.FK__Vendedore__Usuar__6754599E">
+          <AssociationSet Name="FK__Vendedore__Usuar__6B24EA82" Association="Self.FK__Vendedore__Usuar__6B24EA82">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
-          </AssociationSet>
-          <AssociationSet Name="Itens_mov_Unid_AX9685" Association="Self.Itens_mov_Unid_AX9685">
-            <End Role="Unidades" EntitySet="Unidades" />
-            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
-          </AssociationSet>
-          <AssociationSet Name="ItensMov_Prod_SA1820XX3" Association="Self.ItensMov_Prod_SA1820XX3">
-            <End Role="Produtos" EntitySet="Produtos" />
-            <End Role="Itens_movimento" EntitySet="Itens_movimento" />
-          </AssociationSet>
-          <AssociationSet Name="Prod_Forn_FK_XXPTRBN8495TA" Association="Self.Prod_Forn_FK_XXPTRBN8495TA">
-            <End Role="Unidades" EntitySet="Unidades" />
-            <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
-          </AssociationSet>
-          <AssociationSet Name="Prod_Forn_SB1133321XXBra" Association="Self.Prod_Forn_SB1133321XXBra">
-            <End Role="Produtos" EntitySet="Produtos" />
-            <End Role="Produtos_fornecedores" EntitySet="Produtos_fornecedores" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -685,8 +689,9 @@
           <Property Name="Valor_final" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="Produtos" Relationship="Model.ItensMov_Prod_SA1820XX3" FromRole="Itens_movimento" ToRole="Produtos" />
           <Property Name="Quant" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Unidade_id" Type="Int32" />
+          <Property Name="Unidade_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Unidades" Relationship="Model.Itens_mov_Unid_AX9685" FromRole="Itens_movimento" ToRole="Unidades" />
+          <Property Name="Sublote" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Lojas">
           <Key>
@@ -728,6 +733,9 @@
           <NavigationProperty Name="Itens_movimento" Relationship="Self.FK__Itens_mov__Movim__5165187F" FromRole="Movimentos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK__Movimento__Usuar__4E88ABD4" FromRole="Movimentos" ToRole="Usuarios" />
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Movim__70DDC3D8" FromRole="Movimentos" ToRole="Itens_pagamento" />
+          <Property Name="Loja_id" Type="Int32" Nullable="false" />
+          <Property Name="Fornecedor_id" Type="Int32" Nullable="false" />
+          <Property Name="Num_NF" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Operadoras_cartao">
           <Key>
@@ -1089,6 +1097,10 @@
           <Property Name="Quant" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <NavigationProperty Name="Lojas" Relationship="Model.FK__Estoque__Loja_id__49C3F6B7" FromRole="Estoque" ToRole="Lojas" />
           <NavigationProperty Name="Produtos" Relationship="Model.FK__Estoque__Produto__48CFD27E" FromRole="Estoque" ToRole="Produtos" />
+          <Property Name="Lote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Data_entrada" Type="DateTime" Precision="3" />
+          <Property Name="Data_validade" Type="DateTime" Precision="0" />
+          <Property Name="Sublote" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Itens_pagamento">
           <Key>
@@ -1312,10 +1324,6 @@
           <EntitySetMapping Name="Fornecedores">
             <EntityTypeMapping TypeName="Model.Fornecedores">
               <MappingFragment StoreEntitySet="Fornecedores">
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="Cep" ColumnName="Cep" />
-                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Cnpj" ColumnName="Cnpj" />
@@ -1330,6 +1338,7 @@
           <EntitySetMapping Name="Itens_movimento">
             <EntityTypeMapping TypeName="Model.Itens_movimento">
               <MappingFragment StoreEntitySet="Itens_movimento">
+                <ScalarProperty Name="Sublote" ColumnName="Sublote" />
                 <ScalarProperty Name="Unidade_id" ColumnName="Unidade_id" />
                 <ScalarProperty Name="Quant" ColumnName="Quant" />
                 <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
@@ -1376,6 +1385,9 @@
           <EntitySetMapping Name="Movimentos">
             <EntityTypeMapping TypeName="Model.Movimentos">
               <MappingFragment StoreEntitySet="Movimentos">
+                <ScalarProperty Name="Num_NF" ColumnName="Num_NF" />
+                <ScalarProperty Name="Fornecedor_id" ColumnName="Fornecedor_id" />
+                <ScalarProperty Name="Loja_id" ColumnName="Loja_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
@@ -1529,6 +1541,10 @@
           <EntitySetMapping Name="Estoque">
             <EntityTypeMapping TypeName="Model.Estoque">
               <MappingFragment StoreEntitySet="Estoque">
+                <ScalarProperty Name="Sublote" ColumnName="Sublote" />
+                <ScalarProperty Name="Data_validade" ColumnName="Data_validade" />
+                <ScalarProperty Name="Data_entrada" ColumnName="Data_entrada" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
                 <ScalarProperty Name="Quant" ColumnName="Quant" />
                 <ScalarProperty Name="Loja_id" ColumnName="Loja_id" />
                 <ScalarProperty Name="Produto_id" ColumnName="Produto_id" />
