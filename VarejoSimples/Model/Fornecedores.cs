@@ -28,10 +28,9 @@ namespace VarejoSimples.Model
         public int Numero { get; set; }
         public string Municipio { get; set; }
         public string Uf { get; set; }
-        public string Email { get; set; }
         public string Telefone { get; set; }
+        public string Email { get; set; }
         public string Cep { get; set; }
-        public string Website { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }

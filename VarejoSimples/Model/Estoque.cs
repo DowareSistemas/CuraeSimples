@@ -18,6 +18,10 @@ namespace VarejoSimples.Model
         public int Produto_id { get; set; }
         public int Loja_id { get; set; }
         public decimal Quant { get; set; }
+        public string Lote { get; set; }
+        public int Sublote { get; set; }
+        public Nullable<System.DateTime> Data_entrada { get; set; }
+        public Nullable<System.DateTime> Data_validade { get; set; }
     
         public virtual Lojas Lojas { get; set; }
         public virtual Produtos Produtos { get; set; }

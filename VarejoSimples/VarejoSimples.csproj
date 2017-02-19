@@ -160,19 +160,70 @@
     <Compile Include="Model\Caixas.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Itens_pagamento.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Permissoes.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Relatorios\VND001.cs">
@@ -259,6 +310,9 @@
     </Compile>
     <Compile Include="Views\Produto\PesquisarProduto.xaml.cs">
       <DependentUpon>PesquisarProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Produto_fornecedor\Produto_fornecedor.xaml.cs">
+      <DependentUpon>Produto_fornecedor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\ReportViewWindow.cs">
       <SubType>Form</SubType>
@@ -392,6 +446,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Produto_fornecedor\Produto_fornecedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Tipo_movimento\CadastroTmv.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -442,9 +500,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Clientes.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\DataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -459,51 +514,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Fabricantes.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Formas_pagamento.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Fornecedores.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Itens_movimento.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Lojas.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Marcas.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Movimentos.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Operadoras_cartao.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Parcelas.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Produtos.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Produtos_fornecedores.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Tipos_movimento.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Unidades.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Usuarios.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Vendedores.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

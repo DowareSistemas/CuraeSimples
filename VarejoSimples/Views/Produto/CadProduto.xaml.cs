@@ -40,6 +40,7 @@ namespace VarejoSimples.Views.Produto
             txNcm.ToNumeric();
             this.controller = new ProdutosController();
             txDescricao.Focus();
+            
         }
 
         private void next_Click(object sender, RoutedEventArgs e)
@@ -93,7 +94,7 @@ namespace VarejoSimples.Views.Produto
             }
             catch (Exception ex)
             {
-                BStatus.Alert(ex.Message);
+                //BStatus.Alert(ex.Message);
             }
 
             txDescricao.Focus();
@@ -244,7 +245,8 @@ namespace VarejoSimples.Views.Produto
                 PesquisarProduto pp = new PesquisarProduto();
                 pp.ShowDialog();
 
-                FillProd(pp.Selecionado);
+               if (pp.Selecionado.Id > 0)
+                    FillProd(pp.Selecionado);
             }
         }
     }

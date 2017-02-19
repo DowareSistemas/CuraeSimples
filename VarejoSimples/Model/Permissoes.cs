@@ -18,8 +18,8 @@ namespace VarejoSimples.Model
         public int Usuario_id { get; set; }
         public int Rotina_id { get; set; }
         public bool Acesso { get; set; }
-        public bool Excluir { get; set; }
         public bool Salvar { get; set; }
+        public bool Excluir { get; set; }
     
         public virtual Rotinas Rotinas { get; set; }
         public virtual Usuarios Usuarios { get; set; }

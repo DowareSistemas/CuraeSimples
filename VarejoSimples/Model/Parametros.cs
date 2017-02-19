@@ -12,14 +12,11 @@ namespace VarejoSimples.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Tipos_movimento
+    public partial class Parametros
     {
-        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Computador { get; set; }
         public string Descricao { get; set; }
-        public int Movimentacao_itens { get; set; }
-        public int Movimentacao_valores { get; set; }
-        public bool Gera_comissao { get; set; }
-        public int Cfop { get; set; }
-        public bool Utiliza_fornecedor { get; set; }
+        public string Valor { get; set; }
     }
 }

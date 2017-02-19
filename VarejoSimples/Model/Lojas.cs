@@ -17,9 +17,9 @@ namespace VarejoSimples.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lojas()
         {
-            this.Vendedores = new HashSet<Vendedores>();
             this.Estoque = new HashSet<Estoque>();
             this.Movimentos_caixas = new HashSet<Movimentos_caixas>();
+            this.Vendedores = new HashSet<Vendedores>();
         }
     
         public int Id { get; set; }
@@ -28,18 +28,18 @@ namespace VarejoSimples.Model
         public string Cnpj { get; set; }
         public string Logradouro { get; set; }
         public string Bairro { get; set; }
+        public int Numero { get; set; }
         public string Municipio { get; set; }
         public string Uf { get; set; }
         public string Responsavel { get; set; }
         public string Telefone { get; set; }
         public string Celular { get; set; }
-        public int Numero { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vendedores> Vendedores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estoque> Estoque { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Movimentos_caixas> Movimentos_caixas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vendedores> Vendedores { get; set; }
     }
 }

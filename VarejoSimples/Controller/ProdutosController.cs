@@ -26,6 +26,13 @@ namespace VarejoSimples.Controller
 
                 if (db.Find(p.Id) == null)
                 {
+                    if (!string.IsNullOrWhiteSpace(p.Referencia))
+                        if (db.Where(e => e.Referencia.Equals(p.Referencia)) != null)
+                        {
+                            BStatus.Alert($"Já existe um produto com a referência '{p.Referencia}'");
+                            return false;
+                        }
+
                     p.Id = db.NextId(e => e.Id);
                     db.Save(p);
                 }
@@ -132,31 +139,31 @@ namespace VarejoSimples.Controller
 
         private bool Valid(Produtos p)
         {
-            if(string.IsNullOrWhiteSpace(p.Descricao))
+            if (string.IsNullOrWhiteSpace(p.Descricao))
             {
                 BStatus.Alert("A descrição do produto é obrigatória");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(p.Ean))
+            if (string.IsNullOrWhiteSpace(p.Ean))
             {
                 BStatus.Alert("O EAN é obrigatório");
                 return false;
             }
 
-            if(p.Ean.Length > 13)
+            if (p.Ean.Length > 13)
             {
                 BStatus.Alert("O EAN não pode conter mais de 13 caracteres");
                 return false;
             }
 
-            if(p.Unidade_id == 0)
+            if (p.Unidade_id == 0)
             {
                 BStatus.Alert("A unidade é obrigatória");
                 return false;
             }
 
-            if(string.IsNullOrEmpty(p.Ncm))
+            if (string.IsNullOrEmpty(p.Ncm))
             {
                 BStatus.Alert("Atenção: o NCM do produto não é obrigatório neste cadastro, porém, este produto não poderá ser incluido em uma NFC-e");
                 return true;

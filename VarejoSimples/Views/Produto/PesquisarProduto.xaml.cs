@@ -28,6 +28,7 @@ namespace VarejoSimples.Views.Produto
             dataGrid.AplicarPadroes();
             Pesquisar();
             txPesquisa.Focus();
+            txEstoque.ToNumeric();
         }
 
         private void Pesquisar()
@@ -83,10 +84,10 @@ namespace VarejoSimples.Views.Produto
                 return;
 
             fotoProduto.Source = null;
-            lbNomeProduto.Content = string.Empty;
-            lbMarca.Content = string.Empty;
-            lbLocal.Content = string.Empty;
-            lbEstoqueAtual.Content = "0";
+            txProduto.Text = string.Empty;
+            txMarca.Text = string.Empty;
+            txLocal.Text = string.Empty;
+            txEstoque.Text = "0";
 
             try
             {
@@ -100,11 +101,17 @@ namespace VarejoSimples.Views.Produto
             catch { }
 
             MarcasController mc = new MarcasController();
-            
-            lbNomeProduto.Content = p.Descricao;
-            lbMarca.Content = (mc.Find(p.Marca_id) == null ? string.Empty : mc.Find(p.Marca_id).Nome);
-            lbLocal.Content = p.Localizacao;
-            lbEstoqueAtual.Content = "0";
+
+            txProduto.Text = p.Descricao;
+            txMarca.Text = (mc.Find(p.Marca_id) == null ? string.Empty : mc.Find(p.Marca_id).Nome);
+            txLocal.Text = p.Localizacao;
+            txEstoque.Text = "0";
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Close();
         }
     }
 }

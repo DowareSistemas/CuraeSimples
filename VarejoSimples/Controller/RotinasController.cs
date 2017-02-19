@@ -14,6 +14,7 @@ using VarejoSimples.Views.Marca;
 using VarejoSimples.Views.Movimento;
 using VarejoSimples.Views.Operadora_cartao;
 using VarejoSimples.Views.Produto;
+using VarejoSimples.Views.Produto_fornecedor;
 using VarejoSimples.Views.Tipo_movimento;
 using VarejoSimples.Views.Unidade;
 using VarejoSimples.Views.Usuario;
@@ -42,83 +43,93 @@ namespace VarejoSimples.Controller
 
         public void ShowWindow(int rotina_id)
         {
-            switch(rotina_id)
+            try {
+                switch (rotina_id)
+                {
+                    case 1:
+                        CadLoja cl = new CadLoja();
+                        cl.ShowDialog();
+                        break;
+
+                    case 2:
+                        CadastroUsuarios cadUsu = new CadastroUsuarios();
+                        cadUsu.ShowDialog();
+                        break;
+
+                    case 3:
+                        CadPermissoes cp = new CadPermissoes();
+                        cp.ShowDialog();
+                        break;
+
+
+                    case 4:
+                        CadVendedor vc = new CadVendedor();
+                        vc.ShowDialog();
+                        break;
+
+                    case 5:
+                        CadCaixas cc = new CadCaixas();
+                        cc.ShowDialog();
+                        break;
+
+                    case 6:
+                        CadastroTmv ctmv = new CadastroTmv();
+                        ctmv.ShowDialog();
+                        break;
+
+                    case 7:
+                        CadFabricantes cf = new CadFabricantes();
+                        cf.ShowDialog();
+                        break;
+
+                    case 8:
+                        CadMarcas cm = new CadMarcas();
+                        cm.ShowDialog();
+                        break;
+
+                    case 9:
+                        CadOperadora op = new CadOperadora();
+                        op.ShowDialog();
+                        break;
+
+                    case 10:
+                        CadUnidade cadUn = new CadUnidade();
+                        cadUn.ShowDialog();
+                        break;
+
+                    case 11:
+                        CadProduto cadProd = new CadProduto();
+                        cadProd.ShowDialog();
+                        break;
+
+                    case 12:
+                        CadFornecedor cadFrn = new CadFornecedor();
+                        cadFrn.ShowDialog();
+                        break;
+
+                    case 13:
+                        CadCliente cCli = new CadCliente();
+                        cCli.ShowDialog();
+                        break;
+
+                    case 14:
+                        CadFormas_pag cadFpg = new CadFormas_pag();
+                        cadFpg.ShowDialog();
+                        break;
+
+                    case 15:
+                        LancamentoMovimentos lm = new LancamentoMovimentos();
+                        lm.ShowDialog();
+                        break;
+
+                    case 16:
+                        Produto_fornecedor pf = new Produto_fornecedor();
+                        pf.ShowDialog();
+                        break;
+                }
+            }catch
             {
-                case 1:
-                    CadLoja cl = new CadLoja();
-                    cl.ShowDialog();
-                    break;
 
-                case 2:
-                    CadastroUsuarios cadUsu = new CadastroUsuarios();
-                    cadUsu.ShowDialog();
-                    break;
-
-                case 3:
-                    CadPermissoes cp = new CadPermissoes();
-                    cp.ShowDialog();
-                    break;
-
-
-                case 4:
-                    CadVendedor vc = new CadVendedor();
-                    vc.ShowDialog();
-                    break;
-
-                case 5:
-                    CadCaixas cc = new CadCaixas();
-                    cc.ShowDialog();
-                    break;
-
-                case 6:
-                    CadastroTmv ctmv = new CadastroTmv();
-                    ctmv.ShowDialog();
-                    break;
-
-                case 7:
-                    CadFabricantes cf = new CadFabricantes();
-                    cf.ShowDialog();
-                    break;
-
-                case 8:
-                    CadMarcas cm = new CadMarcas();
-                    cm.ShowDialog();
-                    break;
-
-                case 9:
-                    CadOperadora op = new CadOperadora();
-                    op.ShowDialog();
-                    break;
-
-                case 10:
-                    CadUnidade cadUn = new CadUnidade();
-                    cadUn.ShowDialog();
-                    break;
-
-                case 11:
-                    CadProduto cadProd = new CadProduto();
-                    cadProd.ShowDialog();
-                    break;
-
-                case 12:
-                    CadFornecedor cadFrn = new CadFornecedor();
-                    cadFrn.ShowDialog();
-                    break;
-
-                case 13:
-                    CadCliente cCli = new CadCliente();
-                    cCli.ShowDialog();
-                    break;
-
-                case 14:
-                    CadFormas_pag cadFpg = new CadFormas_pag();
-                    cadFpg.ShowDialog();
-                    break;
-
-                case 15:
-                    LancamentoMovimentos lm = new LancamentoMovimentos();
-                    lm.ShowDialog();
-                    break;
             }
         }
     }

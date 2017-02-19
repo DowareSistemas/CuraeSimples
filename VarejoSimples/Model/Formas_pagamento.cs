@@ -23,12 +23,12 @@ namespace VarejoSimples.Model
     
         public int Id { get; set; }
         public string Descricao { get; set; }
+        public int Tipo_pagamento { get; set; }
         public int Tipo_intervalo { get; set; }
         public int Intervalo { get; set; }
         public int Dia_base { get; set; }
-        public int Operadora_cartao_id { get; set; }
-        public int Tipo_pagamento { get; set; }
         public int Parcelas { get; set; }
+        public int Operadora_cartao_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_pagamento> Itens_pagamento { get; set; }

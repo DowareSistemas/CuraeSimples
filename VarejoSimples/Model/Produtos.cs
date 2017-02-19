@@ -18,15 +18,15 @@ namespace VarejoSimples.Model
         public Produtos()
         {
             this.Estoque = new HashSet<Estoque>();
-            this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
             this.Itens_movimento = new HashSet<Itens_movimento>();
+            this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
         }
     
         public int Id { get; set; }
+        public string Descricao { get; set; }
         public string Referencia { get; set; }
         public string Ean { get; set; }
         public string Ncm { get; set; }
-        public string Descricao { get; set; }
         public decimal Valor_unit { get; set; }
         public int Unidade_id { get; set; }
         public decimal Aliquota { get; set; }
@@ -35,12 +35,12 @@ namespace VarejoSimples.Model
         public string Localizacao { get; set; }
         public byte[] Foto { get; set; }
     
-        public virtual Unidades Unidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estoque> Estoque { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
+        public virtual Unidades Unidades { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace VarejoSimples.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Unidades()
         {
+            this.Itens_movimento = new HashSet<Itens_movimento>();
             this.Produtos = new HashSet<Produtos>();
             this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
-            this.Itens_movimento = new HashSet<Itens_movimento>();
         }
     
         public int Id { get; set; }
@@ -27,10 +27,10 @@ namespace VarejoSimples.Model
         public string Nome { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produtos> Produtos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
     }
 }

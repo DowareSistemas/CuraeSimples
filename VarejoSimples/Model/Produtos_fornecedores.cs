@@ -21,6 +21,9 @@ namespace VarejoSimples.Model
         public decimal Fator_conversao { get; set; }
         public decimal Comissao { get; set; }
         public decimal Preco_custo { get; set; }
+        public int Movimento_entrada { get; set; }
+        public int Movimento_devolucao { get; set; }
+        public bool Consignado { get; set; }
     
         public virtual Fornecedores Fornecedores { get; set; }
         public virtual Produtos Produtos { get; set; }

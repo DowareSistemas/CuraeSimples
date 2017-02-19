@@ -7,16 +7,18 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Pesquisar Produto" Height="501" Width="1018">
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="Pesquisar Produto" Height="600" Width="1024">
     <Grid>
-        <Label x:Name="label" Content="Pesquisa" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="28" Margin="15,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="290" FontSize="14.667" Padding="0,5,0,0"/>
+        <Label x:Name="label" Content="Pesquisa" HorizontalAlignment="Left" Margin="6,0,0,212" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="14.667"/>
+        <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" Height="30" Margin="10,0,387,181" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="14.667" Padding="0,5,0,0"/>
 
-        <DataGrid x:Name="dataGrid" MouseDoubleClick="dataGrid_MouseDoubleClick" SelectionChanged="dataGrid_SelectionChanged" Margin="15,65,262,40">
+        <DataGrid x:Name="dataGrid" MouseDoubleClick="dataGrid_MouseDoubleClick" SelectionChanged="dataGrid_SelectionChanged" Margin="10,10,10,246">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Código" MinWidth="80" Width="Auto" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Referência" MinWidth="80" Width="Auto" Binding="{Binding Referencia}"/>
-                <DataGridTextColumn Header="Valor Unit. (R$)" MinWidth="100" Width="Auto" Binding="{Binding Valor_unit, StringFormat=N2}">
+                <DataGridTextColumn Header="Descrição" MinWidth="340" Width="Auto" Binding="{Binding Descricao}"/>
+                <DataGridTextColumn Header="Valor Unit. (R$)" MinWidth="120" Width="Auto" Binding="{Binding Valor_unit, StringFormat=N2}">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Style.Setters>
@@ -26,24 +28,23 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Unidade" MinWidth="80" Width="Auto" Binding="{Binding Unidades.Sigla}"/>
-                <DataGridTextColumn Header="Descrição" MinWidth="300" Width="Auto" Binding="{Binding Descricao}"/>
                 <DataGridTextColumn Header="Localização" MinWidth="120" Width="*" Binding="{Binding Localizacao}"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="btSelecionar" Content="_Selecionar" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="85" Height="25" Click="btSelecionar_Click"/>
-        <Button x:Name="btCancelar" Content="_Cancelar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Height="25" Click="btCancelar_Click"/>
-        <Border BorderBrush="#FFB6B6B6" BorderThickness="3" HorizontalAlignment="Right" Height="165" Margin="0,65,10,0" VerticalAlignment="Top" Width="247" CornerRadius="3">
+        <Button x:Name="btSelecionar" Content="_Selecionar" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="85" Height="30" Click="btSelecionar_Click"/>
+        <Button x:Name="btCancelar" Content="_Cancelar" HorizontalAlignment="Left" Margin="100,0,0,10" VerticalAlignment="Bottom" Width="75" Height="30" Click="btCancelar_Click"/>
+        <Border BorderBrush="#FFB6B6B6" BorderThickness="3" HorizontalAlignment="Right" Height="231" Margin="0,0,7,10" VerticalAlignment="Bottom" Width="374" CornerRadius="3">
             <Image x:Name="fotoProduto"/>
         </Border>
-        <Label x:Name="label1" Content="Produto" HorizontalAlignment="Right" Margin="0,231,209,0" VerticalAlignment="Top" FontSize="10.667" Foreground="#FF1DADFF"/>
-        <Label x:Name="lbNomeProduto" Content="" HorizontalAlignment="Right" Margin="0,255,7,0" VerticalAlignment="Top" FontSize="10.667" Width="250"/>
-        <Label x:Name="label1_Copy1" Content="Marca" HorizontalAlignment="Right" Margin="0,278,218,0" VerticalAlignment="Top" FontSize="10.667" Foreground="#FF1DADFF"/>
-        <Label x:Name="lbMarca" Content="" HorizontalAlignment="Right" Margin="0,302,7,0" VerticalAlignment="Top" FontSize="10.667" Width="250"/>
-        <Label x:Name="label1_Copy3" Content="Localizacao" HorizontalAlignment="Right" Margin="0,327,193,0" VerticalAlignment="Top" FontSize="10.667" Foreground="#FF1DADFF"/>
-        <Label x:Name="lbLocal" Content="" HorizontalAlignment="Right" Margin="0,351,7,0" VerticalAlignment="Top" FontSize="10.667" Width="250"/>
-        <Label x:Name="label1_Copy5" Content="Estoque atual" HorizontalAlignment="Right" Margin="0,376,183,0" VerticalAlignment="Top" FontSize="10.667" Foreground="#FF1DADFF"/>
-        <Label x:Name="lbEstoqueAtual" Content="0" HorizontalAlignment="Right" Margin="0,400,7,0" VerticalAlignment="Top" FontSize="10.667" Width="250"/>
+        <TextBox x:Name="txLocal" Height="30" IsReadOnly="True" Margin="395,484,387,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0"/>
+        <Label x:Name="label1_Copy1" Content="Marca" HorizontalAlignment="Left" Margin="7,454,0,0" VerticalAlignment="Top" FontSize="14.667" Foreground="Black" Width="55"/>
+        <Label x:Name="label1_Copy5" Content="Estoque" HorizontalAlignment="Left" Margin="311,454,0,0" VerticalAlignment="Top" FontSize="14.667" Foreground="Black" Width="75"/>
+        <Label x:Name="label1_Copy3" Content="Localizacao" HorizontalAlignment="Left" Margin="391,455,0,0" VerticalAlignment="Top" FontSize="14.667" Foreground="Black" RenderTransformOrigin="0.219,0.708"/>
+        <TextBox x:Name="txProduto" IsReadOnly="True" Height="30" Margin="10,420,387,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txMarca" IsReadOnly="True" Height="30" Margin="10,484,708,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txEstoque" Height="30" IsReadOnly="True"  Margin="315,484,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Text="0" HorizontalAlignment="Left" Width="75"/>
+        <Label x:Name="label1_Copy" Content="Produto" HorizontalAlignment="Left" Margin="6,391,0,0" VerticalAlignment="Top" FontSize="14.667" Foreground="Black"/>
 
     </Grid>
 </Window>

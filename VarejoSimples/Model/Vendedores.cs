@@ -17,10 +17,6 @@ namespace VarejoSimples.Model
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Apelido { get; set; }
-        public decimal Comissao { get; set; }
-        public bool Inativo { get; set; }
-        public int Usuario_id { get; set; }
-        public int Loja_id { get; set; }
         public string Celular1 { get; set; }
         public string Celular2 { get; set; }
         public string Logradouro { get; set; }
@@ -28,8 +24,12 @@ namespace VarejoSimples.Model
         public int Numero { get; set; }
         public string Municipio { get; set; }
         public string Uf { get; set; }
+        public decimal Comissao { get; set; }
+        public bool Inativo { get; set; }
+        public int Usuario_id { get; set; }
+        public int Loja_id { get; set; }
     
-        public virtual Usuarios Usuarios { get; set; }
         public virtual Lojas Lojas { get; set; }
+        public virtual Usuarios Usuarios { get; set; }
     }
 }

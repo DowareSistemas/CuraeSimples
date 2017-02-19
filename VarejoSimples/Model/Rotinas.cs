@@ -21,8 +21,8 @@ namespace VarejoSimples.Model
         }
     
         public int Id { get; set; }
-        public string Descricao { get; set; }
         public int Menu { get; set; }
+        public string Descricao { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permissoes> Permissoes { get; set; }

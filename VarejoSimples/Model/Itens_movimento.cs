@@ -15,7 +15,9 @@ namespace VarejoSimples.Model
     public partial class Itens_movimento
     {
         public int Id { get; set; }
+        public int Movimento_id { get; set; }
         public int Produto_id { get; set; }
+        public decimal Quant { get; set; }
         public decimal Valor_unit { get; set; }
         public decimal Aliquota { get; set; }
         public decimal Desconto { get; set; }
@@ -24,13 +26,13 @@ namespace VarejoSimples.Model
         public decimal Outros_valores { get; set; }
         public int Cfop { get; set; }
         public int Vendedor_id { get; set; }
-        public int Movimento_id { get; set; }
         public decimal Valor_final { get; set; }
-        public decimal Quant { get; set; }
-        public Nullable<int> Unidade_id { get; set; }
+        public int Unidade_id { get; set; }
+        public int Sublote { get; set; }
+        public string Lote { get; set; }
     
-        public virtual Movimentos Movimentos { get; set; }
         public virtual Produtos Produtos { get; set; }
         public virtual Unidades Unidades { get; set; }
+        public virtual Movimentos Movimentos { get; set; }
     }
 }

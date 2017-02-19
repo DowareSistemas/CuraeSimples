@@ -32,7 +32,7 @@
         <Label x:Name="label_Copy" Content="Descrição" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txDescricao" MaxLength="100" TabIndex="1" HorizontalAlignment="Left" Height="30" Margin="120,45,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="410" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy1" Content="Referência" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txReferencia" TabIndex="2" HorizontalAlignment="Left" Height="30" Margin="120,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="140" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txReferencia" TabIndex="2" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="120,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="140" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy2" Content="EAN" HorizontalAlignment="Left" Margin="282,80,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txEan" MaxLength="13" TabIndex="3" HorizontalAlignment="Left" Height="30" Margin="325,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="205" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy3" Content="NCM" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667"/>
