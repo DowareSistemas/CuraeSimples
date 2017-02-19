@@ -127,7 +127,7 @@ namespace VarejoSimples.Controller
                         pf.ShowDialog();
                         break;
                 }
-            }catch
+            }catch(Exception ex)
             {
 
             }

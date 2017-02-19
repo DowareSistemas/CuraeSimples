@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="Pesquisar Fornecedor" Height="466" Width="993">
+        Title="Pesquisar Fornecedor" Height="596" Width="993">
     <Grid>
         <Label x:Name="label" Content="Pesquisa" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="30" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" Padding="0,5,0,0" FontSize="14.667"/>

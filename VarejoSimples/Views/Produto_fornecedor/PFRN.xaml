@@ -1,0 +1,33 @@
+﻿<Window x:Class="VarejoSimples.Views.Produto_fornecedor.PFRN"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Produto_fornecedor"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="Parâmetros do relatório" Height="316" Width="408">
+    <Grid>
+        <Label x:Name="label" Content="Modelo" HorizontalAlignment="Left" Margin="8,4,0,0" VerticalAlignment="Top" FontSize="14.667" Width="70"/>
+        <ComboBox x:Name="cbModelos" SelectionChanged="cbModelos_SelectionChanged" Margin="10,34,10,0" VerticalAlignment="Top" Height="26" FontSize="14.667"/>
+
+        <Grid x:Name="GridFornecedor" Height="70" Margin="10,65,10,0" VerticalAlignment="Top">
+            <Label x:Name="label1" Content="Fornecedor" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.385" FontSize="14.667" Margin="7,0,0,0"/>
+            <TextBox x:Name="txCod_forn" HorizontalAlignment="Left" Height="30" Margin="10,30,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="55" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+            <Button x:Name="btSelecionarFornecedor" Content=". . ." HorizontalAlignment="Left" Margin="70,30,0,0" VerticalAlignment="Top" Width="41" Height="30" Click="btSelecionarFornecedor_Click"/>
+            <TextBox x:Name="txFornecedor" Height="30" Margin="116,30,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" FontSize="14.667" Padding="0,5,0,0"/>
+        </Grid>
+        <Button x:Name="btConfirmar" Content="_Confirmar" HorizontalAlignment="Right" Margin="0,0,95,10" VerticalAlignment="Bottom" Width="80" Height="25" Click="btConfirmar_Click"/>
+        <Button x:Name="btCancelar" Content="Ca_ncelar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="80" Height="25" Click="btCancelar_Click"/>
+        <Grid x:Name="GridProduto" Height="70" Margin="10,140,10,0" VerticalAlignment="Top">
+            <Label x:Name="label2" Content="Produto" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.385" FontSize="14.667" Margin="7,0,0,0"/>
+            <TextBox x:Name="txCod_prod" HorizontalAlignment="Left" Height="30" Margin="10,30,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="55" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+            <Button x:Name="btSelecionarProdutos" Content=". . ." HorizontalAlignment="Left" Margin="70,30,0,0" VerticalAlignment="Top" Width="41" Height="30" Click="btSelecionarProdutos_Click"/>
+            <TextBox x:Name="txProduto" Height="30" Margin="116,30,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" FontSize="14.667" Padding="0,5,0,0"/>
+        </Grid>
+
+    </Grid>
+</Window>

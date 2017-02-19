@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Produtos X Fornecedores" Height="426" Width="618">
+        Title="Produtos X Fornecedores" Height="426" Width="633">
     <Grid>
         <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
-            <Button x:Name="btSalvar" TabIndex="6" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
-            <Button x:Name="btCancelar" TabIndex="7" Content="_Cancelar" Margin="6,146,6,0" VerticalAlignment="Top" Click="btCancelar_Click" Height="30" FontSize="14.667"/>
-            <Button x:Name="btExcluir" TabIndex="6" Content="_Excluir" Margin="6,111,6,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btExcluir_Click" RenderTransformOrigin="0.5,0.5"/>
+            <Button x:Name="btSalvar" TabIndex="10" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
+            <Button x:Name="btCancelar" TabIndex="70" Content="_Cancelar" Margin="6,146,6,0" VerticalAlignment="Top" Click="btCancelar_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="btExcluir" TabIndex="60" Content="_Excluir" Margin="6,111,6,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btExcluir_Click" RenderTransformOrigin="0.5,0.5"/>
             <Button x:Name="prev" HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" Width="34" Height="33" Click="prev_Click">
                 <StackPanel>
                     <Image Source="/Curae Varejo (Simples);component/Images/prev.png" Height="25" Width="32" />
@@ -23,40 +23,41 @@
                     <Image Source="/Curae Varejo (Simples);component/Images/next.png" Height="30" Width="26" />
                 </StackPanel>
             </Button>
-            <Button x:Name="btNovo" TabIndex="7" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="btNovo" TabIndex="70" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="btRelatorio" TabIndex="70" Content="_Relatório" Margin="6,181,6,0" VerticalAlignment="Top" Click="btRelatorio_Click" Height="30" FontSize="14.667"/>
         </Grid>
         <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txCod" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="95,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0"/>
-        <TextBox x:Name="txCod_prod" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="95,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <TextBox x:Name="txCod_prod" HorizontalAlignment="Left" Height="30" Margin="95,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
         <Label x:Name="label_Copy" Content="Produto" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <Button x:Name="btSelecionarProduto" Content=". . ." HorizontalAlignment="Left" Margin="150,45,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarProduto_Click"/>
-        <TextBox x:Name="txProduto" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="190,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0"/>
-        <TextBox x:Name="txCod_forn" HorizontalAlignment="Left" Height="30" Margin="95,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <Button x:Name="btSelecionarProduto" TabIndex="1" Content=". . ." HorizontalAlignment="Left" Margin="150,45,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarProduto_Click"/>
+        <TextBox x:Name="txProduto" HorizontalAlignment="Left" Height="30" Margin="190,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+        <TextBox x:Name="txCod_forn" HorizontalAlignment="Left" Height="30" Margin="95,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
         <Label x:Name="label_Copy1" Content="Fornecedor" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <Button x:Name="btSelecionarForn" Content=". . ." HorizontalAlignment="Left" Margin="150,80,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarForn_Click"/>
-        <TextBox x:Name="txFornecedor" HorizontalAlignment="Left" Height="30" Margin="190,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0"/>
-        <TextBox x:Name="txCod_un" HorizontalAlignment="Left" Height="30" Margin="95,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <Button x:Name="btSelecionarForn" TabIndex="2" Content=". . ." HorizontalAlignment="Left" Margin="150,80,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarForn_Click"/>
+        <TextBox x:Name="txFornecedor" HorizontalAlignment="Left" Height="30" Margin="190,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+        <TextBox x:Name="txCod_un" HorizontalAlignment="Left" Height="30" Margin="95,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
         <Label x:Name="label_Copy2" Content="Unidade" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <Button x:Name="btSelecionarUnidade" Content=". . ." HorizontalAlignment="Left" Margin="150,115,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarUnidade_Click"/>
-        <TextBox x:Name="txUnidade" HorizontalAlignment="Left" Height="30" Margin="190,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0"/>
-        <TextBox x:Name="txCusto" HorizontalAlignment="Left" Height="30" Margin="95,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" FontSize="14.667" Padding="0,5,0,0" Text="0,00"/>
+        <Button x:Name="btSelecionarUnidade" TabIndex="3" Content=". . ." HorizontalAlignment="Left" Margin="150,115,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarUnidade_Click"/>
+        <TextBox x:Name="txUnidade" HorizontalAlignment="Left" Height="30" Margin="190,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="335" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+        <TextBox x:Name="txCusto" TabIndex="4" HorizontalAlignment="Left" Height="30" Margin="95,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" FontSize="14.667" Padding="0,5,0,0" Text="0,00"/>
         <Label x:Name="label_Copy3" Content="Custo (R$)" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" FontSize="14.667" Width="76"/>
-        <CheckBox x:Name="ckConsignado" Content="Produto por consignação" HorizontalAlignment="Left" Margin="95,230,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <CheckBox x:Name="ckConsignado" TabIndex="5" Checked="ckConsignado_Checked" Unchecked="ckConsignado_Unchecked" Content="Produto por consignação" HorizontalAlignment="Left" Margin="95,230,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Grid HorizontalAlignment="Left" Height="35" Margin="9,148,0,0" VerticalAlignment="Top" Width="190">
-            <TextBox x:Name="txFator_conv" HorizontalAlignment="Left" Height="30" Margin="86,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+            <TextBox x:Name="txFator_conv" TabIndex="3" HorizontalAlignment="Left" Height="30" Margin="86,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="1"/>
             <Label x:Name="label_Copy5" Content="Fator conv." HorizontalAlignment="Left" Margin="0,2,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="107" Margin="10,255,0,0" VerticalAlignment="Top" Width="515">
-            <TextBox x:Name="txComissao" HorizontalAlignment="Left" Height="30" Margin="102,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0,00"/>
+        <Grid x:Name="GridConsignacao" IsEnabled="False" HorizontalAlignment="Left" Height="107" Margin="10,255,0,0" VerticalAlignment="Top" Width="515">
+            <TextBox x:Name="txComissao" TabIndex="6" HorizontalAlignment="Left" Height="30" Margin="102,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0,00"/>
             <Label x:Name="label_Copy4" Content="Comissão (%)" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14.667" Margin="0,2,0,0"/>
-            <TextBox x:Name="txCod_movEntrada" HorizontalAlignment="Left" Height="30" Margin="163,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" RenderTransformOrigin="0.5,0.667"/>
+            <TextBox x:Name="txCod_movEntrada" HorizontalAlignment="Left" Height="30" Margin="163,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" RenderTransformOrigin="0.5,0.667" IsReadOnly="True"/>
             <Label x:Name="label_Copy6" Content="Movimento de entrada" HorizontalAlignment="Left" Margin="0,35,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-            <Button x:Name="btSelecionarMovEntrada" Content=". . ." HorizontalAlignment="Left" Margin="218,36,0,0" VerticalAlignment="Top" Width="35" Height="30" RenderTransformOrigin="0.5,0.5" Click="btSelecionarMovEntrada_Click"/>
-            <TextBox x:Name="txMovimentoEntrada" HorizontalAlignment="Left" Height="30" Margin="258,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0"/>
-            <TextBox x:Name="txCod_movDevol" HorizontalAlignment="Left" Height="30" Margin="163,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" RenderTransformOrigin="0.5,0.667"/>
+            <Button x:Name="btSelecionarMovEntrada" TabIndex="7" Content=". . ." HorizontalAlignment="Left" Margin="218,36,0,0" VerticalAlignment="Top" Width="35" Height="30" RenderTransformOrigin="0.5,0.5" Click="btSelecionarMovEntrada_Click"/>
+            <TextBox x:Name="txMovimentoEntrada" HorizontalAlignment="Left" Height="30" Margin="258,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+            <TextBox x:Name="txCod_movDevol" HorizontalAlignment="Left" Height="30" Margin="163,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" RenderTransformOrigin="0.5,0.667" IsReadOnly="True"/>
             <Label x:Name="label_Copy7" Content="Movimento de devol." HorizontalAlignment="Left" Margin="0,71,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-            <Button x:Name="btSelecionarMovDevolucao" Content=". . ." HorizontalAlignment="Left" Margin="218,71,0,0" VerticalAlignment="Top" Width="35" Height="30" RenderTransformOrigin="0.5,0.5" Click="btSelecionarMovDevolucao_Click"/>
-            <TextBox x:Name="txMovimentoDevol" HorizontalAlignment="Left" Height="30" Margin="258,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0"/>
+            <Button x:Name="btSelecionarMovDevolucao" TabIndex="8" Content=". . ." HorizontalAlignment="Left" Margin="218,71,0,0" VerticalAlignment="Top" Width="35" Height="30" RenderTransformOrigin="0.5,0.5" Click="btSelecionarMovDevolucao_Click"/>
+            <TextBox x:Name="txMovimentoDevol" HorizontalAlignment="Left" Height="30" Margin="258,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
         </Grid>
 
     </Grid>

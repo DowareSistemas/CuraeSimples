@@ -42,11 +42,19 @@ namespace VarejoSimples.Controller
         {
             txInput.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
             txInput.PreviewTextInput += TxInput_PreviewTextInput;
+            txInput.GotFocus += TxInput_GotFocus;
         }
 
         public static void ToNumeric(this TextBox txInput)
         {
             txInput.PreviewTextInput += TxInput_PreviewTextInput1;
+            txInput.GotFocus += TxInput_GotFocus;
+        }
+
+        private static void TxInput_GotFocus(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBox tx = (TextBox)sender;
+            tx.SelectAll();
         }
 
         private static void TxInput_PreviewTextInput1(object sender, TextCompositionEventArgs e)

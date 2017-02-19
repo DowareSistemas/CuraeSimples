@@ -1,1 +1,3 @@
 ﻿VND001=Listagem simples de vendedores
+PFRN001=Produtos por fornecedor (Único forn.)
+PFRN002=Fornecedores por produto (Único prod.)
