@@ -1,0 +1,58 @@
+﻿<Window x:Class="VarejoSimples.Views.Consultas.SaldosLotes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Consultas"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        Title="Saldos por Lotes" Height="600" Width="1024">
+    <Grid>
+        <DataGrid x:Name="dataGrid" Margin="10,63,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Produto" MinWidth="300" Width="*" Binding="{Binding Estoque.Produtos.Descricao}"/>
+                <DataGridTextColumn Header="Lote" MinWidth="100" Width="Auto" Binding="{Binding Estoque.Lote}"/>
+                <DataGridTextColumn Header="Sub-Lote" MinWidth="100" Width="Auto" Binding="{Binding Estoque.Sublote}"/>
+
+                <DataGridTextColumn Header="Unit. (R$)" MinWidth="120" Width="Auto" Binding="{Binding Estoque.Produtos.Valor_unit, StringFormat=N2}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Saldo" MinWidth="100" Width="Auto" Binding="{Binding Estoque.Quant, StringFormat=N2}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Valor (R$)" MinWidth="100" Width="Auto" Binding="{Binding Valor_saldo, StringFormat=N2}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Data entrada" MinWidth="120" Width="Auto" Binding="{Binding Estoque.Data_entrada, StringFormat=dd/MM/yyyy}"/>
+                <DataGridTextColumn Header="Hora entrada" MinWidth="120" Width="Auto" Binding="{Binding Estoque.Data_entrada, StringFormat=HH:mm:ss}"/>
+                <DataGridTextColumn Header="Dt. validade" MinWidth="120" Width="Auto" Binding="{Binding Estoque.Data_validade, StringFormat=dd/MM/yyyy}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="label" Content="Pesquisa" HorizontalAlignment="Left" Margin="7,0,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="28" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" FontSize="14.667" Padding="0,4,0,0"/>
+        <Button x:Name="btRelatorio" Content="_Relatório" HorizontalAlignment="Right" Margin="0,30,10,0" VerticalAlignment="Top" Width="75" Height="28" Click="btRelatorio_Click"/>
+
+    </Grid>
+</Window>

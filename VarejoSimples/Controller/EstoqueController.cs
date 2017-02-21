@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Windows;
+using VarejoSimples.Enums;
 using VarejoSimples.Model;
 using VarejoSimples.Repository;
 
@@ -48,6 +49,28 @@ namespace VarejoSimples.Controller
             }
             return false;
         }
+       
+
+        public List<Estoque> ProdutosVencendo(int diasApartirDaDataAtual, Tipo_produto_filtro_validade tipo )
+        {
+            DateTime data = DateTime.Now.AddDays(diasApartirDaDataAtual);
+            Expression<Func<Estoque, bool>> query = (e => e.Data_validade <= data);
+            query = query.And(e => e.Loja_id == UsuariosController.LojaAtual.Id);
+            query = query.And(e => e.Quant > 0);
+
+            switch (tipo)
+            {
+                case Tipo_produto_filtro_validade.APENAS_COM_LOTE:
+                    query = query.And(e => e.Lote != "");
+                    break;
+
+                case Tipo_produto_filtro_validade.APENAS_SEM_LOTE:
+                    query = query.And(e => e.Lote == "");
+                    break;
+            }
+
+            return db.Where(query).ToList();
+        }
 
         public List<Estoque> Search(string search, bool considera_lote = false)
         {
@@ -62,6 +85,7 @@ namespace VarejoSimples.Controller
             else
                 query = query.And(e => e.Lote == string.Empty);
 
+            query = query.And(e => (e.Loja_id == UsuariosController.LojaAtual.Id));
             return db.Where(query).ToList();
         }
 

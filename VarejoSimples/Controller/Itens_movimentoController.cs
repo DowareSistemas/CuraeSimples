@@ -43,7 +43,7 @@ namespace VarejoSimples.Controller
         internal string GetLastLote(bool cod_loja)
         {
             string lote = "";
-            Itens_movimento est = db.Where(e => e.Lote != "").OrderByDescending(e => e.Lote).FirstOrDefault();
+            Itens_movimento est = db.Where(e => e.Lote != "" && e.Movimentos.Loja_id == UsuariosController.LojaAtual.Id).OrderByDescending(e => e.Lote).FirstOrDefault();
 
             lote = (est == null
                 ? "A00000"

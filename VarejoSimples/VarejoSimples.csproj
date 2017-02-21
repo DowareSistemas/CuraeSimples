@@ -136,6 +136,14 @@
     <Compile Include="Controller_Reports\ReportController.cs" />
     <Compile Include="Controller_Reports\ReportDataSource.cs" />
     <Compile Include="Controller_Reports\ReportFile.cs" />
+    <Compile Include="DataSets\DsProdutosVencendoValidade.cs">
+      <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSets\DsProdutosVencendoValidade.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSets\DsSaldosFisicosFinanceiros.cs">
       <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
     </Compile>
@@ -152,6 +160,7 @@
     <Compile Include="Enums\Tipo_intervalo.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
+    <Compile Include="Enums\Tipo_produto_filtro_validade.cs" />
     <Compile Include="Enums\Tipo_recebimento.cs" />
     <Compile Include="Interfaces\ICaixas.cs" />
     <Compile Include="Interfaces\IClientes.cs" />
@@ -271,6 +280,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Relatorios\SLD003.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SLD003.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Relatorios\VND001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -314,6 +330,9 @@
     </Compile>
     <Compile Include="Views\Configuracao\Parametrizacao.xaml.cs">
       <DependentUpon>Parametrizacao.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\ProdutosVencendo.xaml.cs">
+      <DependentUpon>ProdutosVencendo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Consultas\SaldosFisicosFinan.xaml.cs">
       <DependentUpon>SaldosFisicosFinan.xaml</DependentUpon>
@@ -449,6 +468,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Configuracao\Parametrizacao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Consultas\ProdutosVencendo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -614,6 +637,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSets\DsProdutosVencendoValidade.xsc">
+      <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsProdutosVencendoValidade.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsProdutosVencendoValidade.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DsProdutosVencendoValidade.xss">
+      <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
+    </None>
     <None Include="DataSets\DsSaldosFisicosFinanceiros.xsc">
       <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
     </None>
@@ -670,6 +704,11 @@
     <Content Include="Relatorios\SLD002.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SLD002.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Relatorios\SLD003.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SLD003.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">

@@ -129,5 +129,11 @@ namespace VarejoSimples
             SaldosLotes sl = new SaldosLotes();
             sl.ShowDialog();
         }
+
+        private void btValidade_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ProdutosVencendo pv = new ProdutosVencendo();
+            pv.ShowDialog();
+        }
     }
 }
