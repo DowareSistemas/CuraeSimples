@@ -110,7 +110,15 @@ namespace VarejoSimples.Views.Configuracao
 
         private void btExcluir_Click(object sender, RoutedEventArgs e)
         {
-            
+            Parametros param = (Parametros)dataGrid.SelectedItem;
+            if (param == null)
+                return;
+            if (string.IsNullOrEmpty(param.Nome))
+                return;
+
+            controller.ExcluirRegra(param.Nome, param.Computador);
+            LimparCampos();
+            Pesquisar();
         }
     }
 }

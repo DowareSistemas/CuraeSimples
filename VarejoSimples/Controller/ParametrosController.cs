@@ -83,6 +83,28 @@ fatores que diferenciam a mesma.", "Atenção", MessageBoxButton.OK, MessageBoxI
             }
         }
 
+        public void ExcluirRegra(string parametro, string computador)
+        {
+            try
+            {
+                if(db.Where(p => p.Nome.Equals(parametro)).Count() == 1)
+                {
+                    MessageBox.Show("Não é possível excluir esta regra.", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
+
+                string sql = $"DELETE FROM Parametros WHERE Nome = '{parametro}' AND Computador = '{computador}'";
+                if (db.ExecSQL(sql))
+                    MessageBox.Show("Regra removida!", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Ocorreu um problema ao excluir a regra. Acione o suporte Doware.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Ocorreu um problema ao excluir a regra. Acione o suporte Doware.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         public void SetValorParametro(string parametro, string old_computador, string computador, string valor)
         {
             Parametros param = db.Where(p => p.Nome.Equals(parametro) && p.Computador.Equals(old_computador)).First();

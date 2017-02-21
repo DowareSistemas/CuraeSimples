@@ -49,9 +49,20 @@ namespace VarejoSimples.Controller
             return false;
         }
 
-        public List<Estoque> ListByProduto(string search)
+        public List<Estoque> Search(string search, bool considera_lote = false)
         {
-            return db.Where(e => e.Produtos.Descricao.Contains(search) && e.Lote == string.Empty).ToList();
+            Expression<Func<Estoque, bool>> query = (
+                e => e.Produtos.Descricao.Contains(search));
+
+            if (considera_lote)
+            {
+                query = query.Or(e => e.Lote.Equals(search));
+                query = query.And(e => e.Lote != "");
+            }
+            else
+                query = query.And(e => e.Lote == string.Empty);
+
+            return db.Where(query).ToList();
         }
 
         public string GeraProximoLote(string LoteAtual)
@@ -254,7 +265,7 @@ namespace VarejoSimples.Controller
 
             if (estoque.Produtos.Controla_lote)
                 return true;
-            
+
             estoque.Quant += quant;
             db.Update(estoque);
             return true;

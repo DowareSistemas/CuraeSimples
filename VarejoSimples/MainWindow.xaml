@@ -48,7 +48,7 @@
             <TreeViewItem Header="Consultas" Foreground="#FF042271">
                 <TreeViewItem Header="Estoque" Foreground="#FF042271">
                     <TreeViewItem Header="Saldos físicos e financeiros" MouseDoubleClick="TreeViewItem_MouseDoubleClick" Foreground="#FF042271"/>
-                    <TreeViewItem Header="Saldos por lote" Foreground="#FF042271"/>
+                    <TreeViewItem Header="Saldos por lote" x:Name="btSaldoLote" MouseDoubleClick="btSaldoLote_MouseDoubleClick" Foreground="#FF042271"/>
                     <TreeViewItem Header="Movimentações" Foreground="#FF042271"/>
                     <TreeViewItem Header="Rastreabilidade de lote" Foreground="#FF042271"/>
                 </TreeViewItem>

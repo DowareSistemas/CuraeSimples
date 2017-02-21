@@ -123,5 +123,11 @@ namespace VarejoSimples
             SaldosFisicosFinan sff = new SaldosFisicosFinan();
             sff.ShowDialog();
         }
+
+        private void btSaldoLote_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SaldosLotes sl = new SaldosLotes();
+            sl.ShowDialog();
+        }
     }
 }

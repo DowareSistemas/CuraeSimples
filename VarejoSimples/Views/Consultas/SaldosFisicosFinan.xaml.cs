@@ -36,7 +36,7 @@ namespace VarejoSimples.Views.Consultas
 
         private void Pesquisar()
         {
-            List<Estoque> list = controller.ListByProduto(txPesquisa.Text);
+            List<Estoque> list = controller.Search(txPesquisa.Text);
             if (list == null)
                 return;
 
@@ -53,7 +53,7 @@ namespace VarejoSimples.Views.Consultas
 
         private void btRelatorio_Click(object sender, RoutedEventArgs e)
         {
-            List<Estoque> list = controller.ListByProduto(txPesquisa.Text);
+            List<Estoque> list = controller.Search(txPesquisa.Text);
             if (list == null)
                 return;
 

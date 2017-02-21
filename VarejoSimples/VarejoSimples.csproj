@@ -144,6 +144,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DataSets\DsSaldosLotes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Tipo_intervalo.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
@@ -259,6 +264,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Relatorios\SLD002.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SLD002.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Relatorios\VND001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,8 +318,8 @@
     <Compile Include="Views\Consultas\SaldosFisicosFinan.xaml.cs">
       <DependentUpon>SaldosFisicosFinan.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Consultas\SelecionarConsulta.xaml.cs">
-      <DependentUpon>SelecionarConsulta.xaml</DependentUpon>
+    <Compile Include="Views\Consultas\SaldosLotes.xaml.cs">
+      <DependentUpon>SaldosLotes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Conversors.cs" />
     <Compile Include="Views\Fabricante\CadFabricantes.xaml.cs">
@@ -444,7 +456,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Consultas\SelecionarConsulta.xaml">
+    <Page Include="Views\Consultas\SaldosLotes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -613,6 +625,17 @@
     <None Include="DataSets\DsSaldosFisicosFinanceiros.xss">
       <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
     </None>
+    <None Include="DataSets\DsSaldosLotes.xsc">
+      <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsSaldosLotes.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsSaldosLotes.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DsSaldosLotes.xss">
+      <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
+    </None>
     <None Include="SX170220">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -642,6 +665,11 @@
     <Content Include="Relatorios\SLD001.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>SLD001.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Relatorios\SLD002.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SLD002.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">

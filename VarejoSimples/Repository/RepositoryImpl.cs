@@ -57,9 +57,12 @@ namespace VarejoSimples.Repository
             GC.SuppressFinalize(this);
         }
 
-        public bool ExecSQL(string sql, SqlParameter[] parameters)
+        public bool ExecSQL(string sql, SqlParameter[] parameters = null)
         {
-            int retorno = _context.Database.ExecuteSqlCommand(sql, parameters);
+            int retorno =(parameters == null
+                ? _context.Database.ExecuteSqlCommand(sql)
+                : _context.Database.ExecuteSqlCommand(sql, parameters));
+
             return (retorno == 1);
         }
 
