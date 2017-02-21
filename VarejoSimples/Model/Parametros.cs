@@ -18,5 +18,7 @@ namespace VarejoSimples.Model
         public string Computador { get; set; }
         public string Descricao { get; set; }
         public string Valor { get; set; }
+        public int Loja_id { get; set; }
+        public bool Permite_multi { get; set; }
     }
 }

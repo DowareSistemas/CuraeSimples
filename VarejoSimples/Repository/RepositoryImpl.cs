@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -33,7 +35,7 @@ namespace VarejoSimples.Repository
             hasTransaction = true;
             return _context.Database.BeginTransaction(isoLevel);
         }
-        
+
         public varejo_config Context
         {
             get
@@ -55,16 +57,28 @@ namespace VarejoSimples.Repository
             GC.SuppressFinalize(this);
         }
 
+        public bool ExecSQL(string sql, SqlParameter[] parameters)
+        {
+            int retorno = _context.Database.ExecuteSqlCommand(sql, parameters);
+            return (retorno == 1);
+        }
+
+        public void RollBack()
+        {
+            _context.Database.CurrentTransaction.Rollback();
+            hasTransaction = false;
+        }
+
         public void Commit()
         {
             try
             {
                 _context.SaveChanges();
-                if (hasTransaction) 
+                if (hasTransaction)
                     _context.Database.CurrentTransaction.Commit();
                 hasTransaction = false;
             }
-            catch(DbUpdateConcurrencyException concEx)
+            catch (DbUpdateConcurrencyException concEx)
             {
                 BStatus.Alert("A operação foi completada com erros por que o registro foi excluido por outro utilizador.");
             }

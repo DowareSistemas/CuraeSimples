@@ -11,7 +11,7 @@
         PreviewKeyDown="Window_PreviewKeyDown"
         Title="MainWindow" Height="600" Width="1024">
     <Grid>
-        <ListView SelectionChanged="listView_SelectionChanged" Cursor="Hand" x:Name="listView" HorizontalAlignment="Left" Margin="10,75,0,28" Width="395" FontSize="20">
+        <ListView SelectionChanged="listView_SelectionChanged" Cursor="Hand" x:Name="listView" HorizontalAlignment="Left" Margin="10,75,0,264" Width="395" FontSize="20">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="385" Header="Curae (Simples) - v1.0.00" />
@@ -23,6 +23,7 @@
             <ListViewItem Content="Estoque" x:Name="menu_3"/>
             <ListViewItem Content="Financeiro" x:Name="menu_4"/>
             <ListViewItem Content="Faturamento" x:Name="menu_5"/>
+            <ListViewItem Content="Configuração" x:Name="menu_6"/>
         </ListView>
         <Grid Height="28" VerticalAlignment="Bottom" Background="#FFE4E4E4">
             <Label x:Name="lbStatus" Content="Carregamento do sistema Ok!" Margin="35,0,10,0" Foreground="Black" Padding="5,3,5,5" FontSize="14.667"/>
@@ -34,7 +35,7 @@
         <Label x:Name="label_Copy" Content="Usuário" HorizontalAlignment="Left" Margin="610,0,0,0" VerticalAlignment="Top" FontSize="18.667" Foreground="#FF078EFF"/>
         <TextBox x:Name="txUsuario" HorizontalAlignment="Left" Height="35" Margin="610,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="240" FontSize="24" IsEnabled="False"/>
 
-        <DataGrid Background="White" MouseDoubleClick="dataGrid_MouseDoubleClick" x:Name="dataGrid" Margin="410,75,10,28">
+        <DataGrid Background="White" MouseDoubleClick="dataGrid_MouseDoubleClick" x:Name="dataGrid" Margin="410,75,10,33">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Rotina" MinWidth="120" Width="Auto" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Descrição" MinWidth="200" Width="*" Binding="{Binding Descricao}"/>
@@ -42,6 +43,17 @@
         </DataGrid>
         <Label x:Name="label_Copy1" Content="Iniciar rotina [F3]" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" FontSize="18.667" Foreground="#FF078EFF" Width="151"/>
         <TextBox x:Name="txCod_rotina" KeyDown="txCod_rotina_KeyDown" HorizontalAlignment="Right" Height="35" Margin="0,35,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151" FontSize="24" />
+      
+        <TreeView x:Name="treeView" FontSize="20" HorizontalAlignment="Left" Margin="10,305,0,33" Width="395" Foreground="#FF2752E2">
+            <TreeViewItem Header="Consultas" Foreground="#FF042271">
+                <TreeViewItem Header="Estoque" Foreground="#FF042271">
+                    <TreeViewItem Header="Saldos físicos e financeiros" MouseDoubleClick="TreeViewItem_MouseDoubleClick" Foreground="#FF042271"/>
+                    <TreeViewItem Header="Saldos por lote" Foreground="#FF042271"/>
+                    <TreeViewItem Header="Movimentações" Foreground="#FF042271"/>
+                    <TreeViewItem Header="Rastreabilidade de lote" Foreground="#FF042271"/>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
 
     </Grid>
 </Window>

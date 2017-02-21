@@ -34,6 +34,7 @@ namespace VarejoSimples.Model
         public int Marca_id { get; set; }
         public string Localizacao { get; set; }
         public byte[] Foto { get; set; }
+        public bool Controla_lote { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estoque> Estoque { get; set; }

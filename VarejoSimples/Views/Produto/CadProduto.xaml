@@ -38,26 +38,29 @@
         <Label x:Name="label_Copy3" Content="NCM" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txNcm" MaxLength="50" TabIndex="4" HorizontalAlignment="Left" Height="30" Margin="120,115,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="140" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy4" Content="Unidade" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txCod_unidade" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="120,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <TextBox x:Name="txCod_unidade" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="120,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
         <Button x:Name="btSelecionar_unidade" TabIndex="6" Content=". . ." Margin="175,150,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btSelecionar_unidade_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="35"/>
-        <TextBox x:Name="txNome_unidade" HorizontalAlignment="Left" Height="30" Margin="215,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txNome_unidade" HorizontalAlignment="Left" Height="30" Margin="215,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
         <Label x:Name="label_Copy5" Content="Valor Unit. (R$)" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txValor" TabIndex="6"  HorizontalAlignment="Left" Height="30" Margin="120,185,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="90" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <Label x:Name="label_Copy10" Content="Aliquota (%)" HorizontalAlignment="Left" Margin="215,186,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txAliquota" TabIndex="7"  HorizontalAlignment="Left" Height="30" Margin="315,186,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
         <Label x:Name="label_Copy6" Content="Fabricante" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txCod_fabricante" TabIndex="7" HorizontalAlignment="Left" Height="30" Margin="120,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
-        <Button x:Name="btSelecionar_fab" TabIndex="6" Content=". . ." Margin="175,220,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btSelecionar_fab_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="35"/>
-        <TextBox x:Name="txNome_fabricante" HorizontalAlignment="Left" Height="30" Margin="215,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txCod_fabricante" TabIndex="80" HorizontalAlignment="Left" Height="30" Margin="120,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
+        <Button x:Name="btSelecionar_fab" TabIndex="8" Content=". . ." Margin="175,220,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btSelecionar_fab_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="35"/>
+        <TextBox x:Name="txNome_fabricante" HorizontalAlignment="Left" Height="30" Margin="215,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
         <Label x:Name="label_Copy7" Content="Marca" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txCod_marca" TabIndex="8" HorizontalAlignment="Left" Height="30" Margin="120,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
-        <Button x:Name="btSelecionar_marca" TabIndex="6" Content=". . ." Margin="175,255,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btSelecionar_marca_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="35"/>
-        <TextBox x:Name="txNome_marca" HorizontalAlignment="Left" Height="30" Margin="215,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txCod_marca" TabIndex="80" HorizontalAlignment="Left" Height="30" Margin="120,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0" IsReadOnly="True"/>
+        <Button x:Name="btSelecionar_marca" TabIndex="9" Content=". . ." Margin="175,255,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btSelecionar_marca_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="35"/>
+        <TextBox x:Name="txNome_marca" HorizontalAlignment="Left" Height="30" Margin="215,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="150" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
         <Border BorderBrush="#FFB6B6B6" BorderThickness="3" HorizontalAlignment="Left" Height="155" Margin="370,140,0,0" VerticalAlignment="Top" Width="160" CornerRadius="3">
             <Image x:Name="fotoProduto"/>
         </Border>
         <Label x:Name="label_Copy8" Content="Localização" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txLocalizacao" MaxLength="50" TabIndex="9" HorizontalAlignment="Left" Height="30" Margin="120,290,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="155" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txLocalizacao" MaxLength="10" TabIndex="9" HorizontalAlignment="Left" Height="30" Margin="120,290,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="155" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy9" Content="Foto" HorizontalAlignment="Left" Margin="368,117,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lbSelecionarImagem" Content="Selecionar imagem" HorizontalAlignment="Left" Margin="420,291,0,0" VerticalAlignment="Top" Width="110" Foreground="#FF5AA3D6" Cursor="Hand" MouseDown="lbSelecionarImagem_MouseDown"/>
+        <CheckBox x:Name="ckControla_lote" TabIndex="11" Content="Controlado por lote" HorizontalAlignment="Left" Margin="120,325,0,0" VerticalAlignment="Top" FontSize="14.667"/>
 
     </Grid>
 </Window>

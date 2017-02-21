@@ -38,6 +38,7 @@ namespace VarejoSimples.Views.Produto
             txCod_marca.ToNumeric();
             txEan.ToNumeric();
             txNcm.ToNumeric();
+            txAliquota.ToMoney();
             this.controller = new ProdutosController();
             txDescricao.Focus();
             
@@ -66,6 +67,8 @@ namespace VarejoSimples.Views.Produto
             txCod_unidade.Text = p.Unidade_id.ToString();
             txNome_unidade.Text = p.Unidades.Nome;
             txValor.Text = p.Valor_unit.ToString("N2");
+            ckControla_lote.IsChecked = p.Controla_lote;
+            txAliquota.Text = p.Aliquota.ToString("N2");
 
             Fabricantes fab = new FabricantesController().Find(p.Fabricante_id);
             if (fab != null)
@@ -141,6 +144,8 @@ namespace VarejoSimples.Views.Produto
             p.Fabricante_id = int.Parse(txCod_fabricante.Text);
             p.Marca_id = int.Parse(txCod_marca.Text);
             p.Localizacao = txLocalizacao.Text;
+            p.Controla_lote = ckControla_lote.IsChecked.Value;
+            p.Aliquota = decimal.Parse(txAliquota.Text);
 
             if ((p.Foto == null) && !string.IsNullOrWhiteSpace(Path_arquivo_foto))
                 p.Foto = (string.IsNullOrEmpty(Path_arquivo_foto)
@@ -164,6 +169,8 @@ namespace VarejoSimples.Views.Produto
             txCod_fabricante.Text = "0";
             txNome_fabricante.Text = string.Empty;
             txCod_marca.Text = "0";
+            txAliquota.Text = "0,00";
+            ckControla_lote.IsChecked = false;
             txNome_marca.Text = string.Empty;
             txLocalizacao.Text = string.Empty;
             fotoProduto.Source = null;

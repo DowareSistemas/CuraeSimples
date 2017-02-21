@@ -17,6 +17,11 @@ namespace VarejoSimples.Controller
             db = new ProdutosRepository();
         }
 
+        public void SetContext(varejo_config v)
+        {
+            db.Context = v;
+        }
+
         public bool Save(Produtos p)
         {
             try
@@ -24,10 +29,11 @@ namespace VarejoSimples.Controller
                 if (!Valid(p))
                     return false;
 
+                db.Begin(System.Data.IsolationLevel.ReadCommitted);
                 if (db.Find(p.Id) == null)
                 {
                     if (!string.IsNullOrWhiteSpace(p.Referencia))
-                        if (db.Where(e => e.Referencia.Equals(p.Referencia)) != null)
+                        if (db.Where(e => e.Referencia.Equals(p.Referencia)).FirstOrDefault() != null)
                         {
                             BStatus.Alert($"Já existe um produto com a referência '{p.Referencia}'");
                             return false;
@@ -35,6 +41,20 @@ namespace VarejoSimples.Controller
 
                     p.Id = db.NextId(e => e.Id);
                     db.Save(p);
+
+                    if (!p.Controla_lote)
+                    {
+                        Estoque est = new Estoque();
+                        est.Produto_id = p.Id;
+                        est.Loja_id = UsuariosController.LojaAtual.Id;
+                        est.Data_entrada = DateTime.Now;
+                        est.Quant = 0;
+                        est.Lote = string.Empty;
+                        est.Sublote = string.Empty;
+
+                        EstoqueController ec = new EstoqueController();
+                        ec.Save(est, db.Context);
+                    }
                 }
                 else
                     db.Update(p);
@@ -43,8 +63,9 @@ namespace VarejoSimples.Controller
                 BStatus.Success("Produto salvo");
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                db.RollBack();
                 return false;
             }
         }
@@ -61,6 +82,11 @@ namespace VarejoSimples.Controller
                 if (!ValidRemove(id))
                     return false;
 
+                db.Begin(System.Data.IsolationLevel.ReadCommitted);
+
+                EstoqueController ec = new EstoqueController();
+                ec.RemoveByProduto(id, db.Context);
+
                 db.Remove(Find(id));
                 db.Commit();
                 BStatus.Success("Produto removido");
@@ -68,6 +94,7 @@ namespace VarejoSimples.Controller
             }
             catch
             {
+                db.RollBack();
                 return false;
             }
         }
@@ -101,14 +128,9 @@ namespace VarejoSimples.Controller
             return db.Where(p => p.Id < current_id).OrderByDescending(p => p.Id).FirstOrDefault();
         }
 
-        public Produtos Get(string search)
+        public Estoque Get(string search)
         {
-            Expression<Func<Produtos, bool>> expr = (p =>
-            p.Id.ToString().Equals(search) ||
-            p.Ean.Equals(search) ||
-            p.Referencia.Equals(search));
-
-            return db.Where(expr).FirstOrDefault();
+            return new EstoqueController().BuscarEstoqueProduto(search);
         }
 
         public List<Produtos> Search(string search)

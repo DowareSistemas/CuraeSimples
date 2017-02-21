@@ -110,7 +110,7 @@
     <Compile Include="Controller\BStatus.cs" />
     <Compile Include="Controller\CaixasController.cs" />
     <Compile Include="Controller\ClientesController.cs" />
-    <Compile Include="Controller\Expression.cs" />
+    <Compile Include="Controller\EstoqueController.cs" />
     <Compile Include="Controller\Extensions.cs" />
     <Compile Include="Controller\FabricantesController.cs" />
     <Compile Include="Controller\Formas_pagamentoController.cs" />
@@ -123,6 +123,7 @@
     <Compile Include="Controller\MovimentosController.cs" />
     <Compile Include="Controller\Movimentos_caixasController.cs" />
     <Compile Include="Controller\Operadoras_cartaoController.cs" />
+    <Compile Include="Controller\ParametrosController.cs" />
     <Compile Include="Controller\PermissoesController.cs" />
     <Compile Include="Controller\ProdutosController.cs" />
     <Compile Include="Controller\Produtos_fornecedoresController.cs" />
@@ -135,12 +136,21 @@
     <Compile Include="Controller_Reports\ReportController.cs" />
     <Compile Include="Controller_Reports\ReportDataSource.cs" />
     <Compile Include="Controller_Reports\ReportFile.cs" />
+    <Compile Include="DataSets\DsSaldosFisicosFinanceiros.cs">
+      <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSets\DsSaldosFisicosFinanceiros.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Tipo_intervalo.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
     <Compile Include="Enums\Tipo_recebimento.cs" />
     <Compile Include="Interfaces\ICaixas.cs" />
     <Compile Include="Interfaces\IClientes.cs" />
+    <Compile Include="Interfaces\IEstoque.cs" />
     <Compile Include="Interfaces\IFabricantes.cs" />
     <Compile Include="Interfaces\IFormas_pagamento.cs" />
     <Compile Include="Interfaces\IFornecedor.cs" />
@@ -150,6 +160,7 @@
     <Compile Include="Interfaces\IMovimentos.cs" />
     <Compile Include="Interfaces\IMovimentos_caixas.cs" />
     <Compile Include="Interfaces\IOperadoras_cartao.cs" />
+    <Compile Include="Interfaces\IParametros.cs" />
     <Compile Include="Interfaces\IPermissoes.cs" />
     <Compile Include="Interfaces\IProdutos.cs" />
     <Compile Include="Interfaces\IProdutos_fornecedores.cs" />
@@ -241,6 +252,13 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Relatorios\SLD001.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SLD001.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Relatorios\VND001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -250,6 +268,7 @@
     </Compile>
     <Compile Include="Repository\CaixasRepository.cs" />
     <Compile Include="Repository\ClientesRepository.cs" />
+    <Compile Include="Repository\EstoqueRepository.cs" />
     <Compile Include="Repository\FabricantesRepository.cs" />
     <Compile Include="Repository\Formas_pagamentoRepository.cs" />
     <Compile Include="Repository\FornecedoresRepository.cs" />
@@ -259,6 +278,7 @@
     <Compile Include="Repository\MovimentosRepository.cs" />
     <Compile Include="Repository\Movimentos_caixasRepository.cs" />
     <Compile Include="Repository\Operadoras_cartaoRepository.cs" />
+    <Compile Include="Repository\ParametrosRepository.cs" />
     <Compile Include="Repository\PermissoesRepository.cs" />
     <Compile Include="Repository\ProdutosRepository.cs" />
     <Compile Include="Repository\Produtos_fornecedoresRepository.cs" />
@@ -276,6 +296,18 @@
     </Compile>
     <Compile Include="Views\Cliente\PesquisarCliente.xaml.cs">
       <DependentUpon>PesquisarCliente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Configuracao\NovaRegraParametro.xaml.cs">
+      <DependentUpon>NovaRegraParametro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Configuracao\Parametrizacao.xaml.cs">
+      <DependentUpon>Parametrizacao.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\SaldosFisicosFinan.xaml.cs">
+      <DependentUpon>SaldosFisicosFinan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Consultas\SelecionarConsulta.xaml.cs">
+      <DependentUpon>SelecionarConsulta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Conversors.cs" />
     <Compile Include="Views\Fabricante\CadFabricantes.xaml.cs">
@@ -397,6 +429,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Cliente\PesquisarCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Configuracao\NovaRegraParametro.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Configuracao\Parametrizacao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Consultas\SaldosFisicosFinan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Consultas\SelecionarConsulta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -554,6 +602,20 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSets\DsSaldosFisicosFinanceiros.xsc">
+      <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsSaldosFisicosFinanceiros.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsSaldosFisicosFinanceiros.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DsSaldosFisicosFinanceiros.xss">
+      <DependentUpon>DsSaldosFisicosFinanceiros.xsd</DependentUpon>
+    </None>
+    <None Include="SX170220">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Resource Include="icone.ico" />
     <Resource Include="Images\novo.png" />
     <Resource Include="Images\pagamento.png" />
@@ -575,6 +637,11 @@
     <Content Include="Relatorios\PFRN002.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PFRN002.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Relatorios\SLD001.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>SLD001.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">

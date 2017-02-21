@@ -26,7 +26,7 @@ namespace VarejoSimples.Views.Movimento
     /// </summary>
     public partial class LancamentoMovimentos : Window
     {
-        private MovimentosController Controller { get; set; }
+        private MovimentosController Movimento_Controller { get; set; }
         private Tipos_movimento Tipo_movimento { get; set; }
         private decimal Desconto { get; set; }
         private decimal Acrescimo { get; set; }
@@ -38,8 +38,7 @@ namespace VarejoSimples.Views.Movimento
             dataGrid.AplicarPadroes();
             BStatus.Attach(2, lbStatus, image);
             Grid_Mov.IsEnabled = false;
-            Controller = new MovimentosController();
-
+           
             Desconto = 0;
             Acrescimo = 0;
             txValor_final.ToMoney();
@@ -56,6 +55,22 @@ namespace VarejoSimples.Views.Movimento
         private void btSelecionarTmv_Click(object sender, RoutedEventArgs e)
         {
             SelecionarTipoMov();
+        }
+
+        public bool FechaVenda()
+        {
+            try
+            {
+                
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return false;
         }
 
         private void SelecionarTipoMov()
@@ -141,17 +156,18 @@ namespace VarejoSimples.Views.Movimento
         {
             BStatus.Success("Abrindo movimento...");
 
+            Movimento_Controller = new MovimentosController();
             SelecionarTipoMov();
             SelecionarCliente_Fornecedor();
 
             if (!Tipo_movimento.Utiliza_fornecedor)
                 SelecionarVendedor();
 
-            Controller.AbreVenda(int.Parse(txCod_cliente_fornecedor.Text), int.Parse(txCod_tipo.Text));
+            Movimento_Controller.AbreMovimento(int.Parse(txCod_cliente_fornecedor.Text), int.Parse(txCod_tipo.Text));
             Grid_Mov.IsEnabled = true;
 
             txProduto.Focus();
-            dataGrid.ItemsSource = Controller.Itens_movimento;
+            dataGrid.ItemsSource = Movimento_Controller.Itens_movimento;
             BStatus.Success("Movimento iniciado!");
         }
 
@@ -182,7 +198,7 @@ namespace VarejoSimples.Views.Movimento
                 txProduto.Text = produto.Id.ToString();
             }
             else
-                produto = new ProdutosController().Get(txProduto.Text);
+                produto = new ProdutosController().Get(txProduto.Text).Produtos;
 
             if (produto == null)
             {
@@ -244,7 +260,7 @@ namespace VarejoSimples.Views.Movimento
             if (txProduto.Text == "0")
                 return;
 
-            Produtos prod = new ProdutosController().Get(txProduto.Text);
+            Produtos prod = new ProdutosController().Get(txProduto.Text).Produtos;
             if (prod == null)
                 return;
 
@@ -337,13 +353,23 @@ namespace VarejoSimples.Views.Movimento
         private void AdicionaItem()
         {
             Itens_movimento item = new Itens_movimento();
-            Produtos prod = new ProdutosController().Get(txProduto.Text);
+            Estoque est = new ProdutosController().Get(txProduto.Text);
+            Produtos prod = est.Produtos;
+
+            if(est.Quant <= 0)
+                if(ParametrosController.FindParametro("EST_SAIZERO").Valor.Equals("N"))
+                {
+                    MessageBox.Show($"Não é possível retirar o produto '{est.Produtos.Descricao}' do estoque porque o sistema está atualmente configurado para não permitir retiradas de estoque cujo o saldo atual é igual ou inferior a 0.", "EST_SAIZERO", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
 
             if (prod == null)
                 return;
 
             item.Produto_id = prod.Id;
             item.Produtos = prod;
+            item.Lote = est.Lote;
+            item.Sublote = est.Sublote;
             item.Aliquota = prod.Aliquota;
             item.Valor_unit = (Tipo_movimento.Utiliza_fornecedor
                  ? prod.Produtos_fornecedores.First(pf => pf.Fornecedor_id == int.Parse(txCod_cliente_fornecedor.Text)).Preco_custo
@@ -362,8 +388,8 @@ namespace VarejoSimples.Views.Movimento
 
             item.Unidade_id = item.Unidades.Id;
 
-            Controller.VendeItem(item);
-            dataGrid.ItemsSource = Controller.Itens_movimento;
+            Movimento_Controller.AdicionaItem(item);
+            dataGrid.ItemsSource = Movimento_Controller.Itens_movimento;
 
             txProduto.Text = "0";
             txValor_unit.Text = "0,00";
@@ -433,7 +459,11 @@ namespace VarejoSimples.Views.Movimento
         private void txAcrescimo_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculaTotalAcresc_Item();
+        }
 
+        private void btSalvar_Click(object sender, RoutedEventArgs e)
+        {
+            Movimento_Controller.FechaMovimento();
         }
     }
 }

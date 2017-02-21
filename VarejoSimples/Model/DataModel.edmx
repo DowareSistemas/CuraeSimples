@@ -86,8 +86,8 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Movimento_id" Type="int" Nullable="false" />
           <Property Name="Produto_id" Type="int" Nullable="false" />
-          <Property Name="Lote" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Sublote" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Lote" Type="varchar" MaxLength="50" />
+          <Property Name="Sublote" Type="varchar" MaxLength="10" />
           <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Valor_unit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Aliquota" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -181,6 +181,8 @@
           <Property Name="Computador" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Valor" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Loja_id" Type="int" Nullable="false" />
+          <Property Name="Permite_multi" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Parcelas">
           <Key>
@@ -223,6 +225,7 @@
           <Property Name="Marca_id" Type="int" Nullable="false" />
           <Property Name="Localizacao" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Foto" Type="varbinary(max)" />
+          <Property Name="Controla_lote" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Produtos_fornecedores">
           <Key>
@@ -838,8 +841,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Movimento_id" Type="Int32" Nullable="false" />
           <Property Name="Produto_id" Type="Int32" Nullable="false" />
-          <Property Name="Lote" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Sublote" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sublote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Quant" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Valor_unit" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Aliquota" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
@@ -948,6 +951,8 @@
           <Property Name="Computador" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Descricao" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Valor" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Loja_id" Type="Int32" Nullable="false" />
+          <Property Name="Permite_multi" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Parcelas">
           <Key>
@@ -996,6 +1001,7 @@
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Produ__00200768" FromRole="Produtos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Produtos_fornecedores" Relationship="Model.FK__Produtos___Produ__440B1D61" FromRole="Produtos" ToRole="Produtos_fornecedores" />
           <NavigationProperty Name="Unidades" Relationship="Model.FK__Produtos__Unidad__398D8EEE" FromRole="Produtos" ToRole="Unidades" />
+          <Property Name="Controla_lote" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Produtos_fornecedores">
           <Key>
@@ -1511,6 +1517,8 @@
           <EntitySetMapping Name="Parametros">
             <EntityTypeMapping TypeName="Model.Parametros">
               <MappingFragment StoreEntitySet="Parametros">
+                <ScalarProperty Name="Permite_multi" ColumnName="Permite_multi" />
+                <ScalarProperty Name="Loja_id" ColumnName="Loja_id" />
                 <ScalarProperty Name="Valor" ColumnName="Valor" />
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Computador" ColumnName="Computador" />
@@ -1548,6 +1556,7 @@
           <EntitySetMapping Name="Produtos">
             <EntityTypeMapping TypeName="Model.Produtos">
               <MappingFragment StoreEntitySet="Produtos">
+                <ScalarProperty Name="Controla_lote" ColumnName="Controla_lote" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="Localizacao" ColumnName="Localizacao" />
                 <ScalarProperty Name="Marca_id" ColumnName="Marca_id" />

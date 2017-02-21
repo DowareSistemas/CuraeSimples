@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Model;
 using VarejoSimples.Views;
+using VarejoSimples.Views.Consultas;
 
 namespace VarejoSimples
 {
@@ -28,7 +29,7 @@ namespace VarejoSimples
         private void NFCe()
         {
             Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
-            
+
             Declaracoes.aCFAbrir_NFCe_Daruma("17132107704", "Emerson T Almeida", "Rua Aimores", "15", "Retiro", "3306305",
                 "Volta Redonda", "RJ", "27275350");
 
@@ -36,16 +37,20 @@ namespace VarejoSimples
             Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
             Declaracoes.aCFEfetuarPagamento_NFCe_Daruma("Dinheiro", "5,89");
             int retorno = Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Mini");
-          
+
             MessageBox.Show(Declaracoes.TrataRetorno(retorno));
         }
 
         public MainWindow()
         {
-         //   NFCe();
+            //   NFCe();
             varejo_config db = new varejo_config();
             //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
             db.Database.CreateIfNotExists();
+
+         //   EstoqueController ec = new EstoqueController();
+          //  MessageBox.Show(ec.GeraProximoLote("A00002"));
+          //  Environment.Exit(0);
 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
@@ -111,6 +116,12 @@ namespace VarejoSimples
         {
             if (e.Key == Key.F3)
                 txCod_rotina.Focus();
+        }
+
+        private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SaldosFisicosFinan sff = new SaldosFisicosFinan();
+            sff.ShowDialog();
         }
     }
 }

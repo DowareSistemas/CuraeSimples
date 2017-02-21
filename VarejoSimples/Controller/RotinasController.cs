@@ -6,6 +6,7 @@ using VarejoSimples.Model;
 using VarejoSimples.Repository;
 using VarejoSimples.Views.Caixa;
 using VarejoSimples.Views.Cliente;
+using VarejoSimples.Views.Configuracao;
 using VarejoSimples.Views.Fabricante;
 using VarejoSimples.Views.Forma_pagto;
 using VarejoSimples.Views.Fornecedor;
@@ -22,7 +23,7 @@ using VarejoSimples.Views.Vendedor;
 
 namespace VarejoSimples.Controller
 {
-    public  class RotinasController
+    public class RotinasController
     {
         private RotinasRepository db = null;
 
@@ -43,7 +44,8 @@ namespace VarejoSimples.Controller
 
         public void ShowWindow(int rotina_id)
         {
-            try {
+            try
+            {
                 switch (rotina_id)
                 {
                     case 1:
@@ -126,8 +128,15 @@ namespace VarejoSimples.Controller
                         Produto_fornecedor pf = new Produto_fornecedor();
                         pf.ShowDialog();
                         break;
+
+                    case 29:
+
+                        Parametrizacao param = new Parametrizacao();
+                        param.ShowDialog();
+                        break;
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
