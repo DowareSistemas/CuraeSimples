@@ -29,6 +29,30 @@
           <Property Name="Uf" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="Cep" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
+        <EntityType Name="Documentos_fiscais">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Chave_acesso" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo_documento" Type="int" Nullable="false" />
+          <Property Name="Tipo_emissao" Type="int" Nullable="false" />
+          <Property Name="Modelo" Type="int" Nullable="false" />
+          <Property Name="Serie" Type="int" Nullable="false" />
+          <Property Name="Lote" Type="int" Nullable="false" />
+          <Property Name="Data_emissao" Type="datetime" Nullable="false" />
+          <Property Name="Ambiente" Type="int" Nullable="false" />
+          <Property Name="Protocolo_autorizacao" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Protocolo_denegado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Codigo_status" Type="int" Nullable="false" />
+          <Property Name="Descricao_status" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="Data_autorizacao" Type="datetime" Nullable="false" />
+          <Property Name="Cancelado" Type="bit" Nullable="false" />
+          <Property Name="Data_cancelamento" Type="bit" />
+          <Property Name="Protocolo_cancelamento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Inutilizado" Type="bit" Nullable="false" />
+          <Property Name="Data_inutilizacao" Type="datetime" />
+        </EntityType>
         <EntityType Name="Estoque">
           <Key>
             <PropertyRef Name="Id" />
@@ -143,9 +167,11 @@
           <Property Name="Usuario_id" Type="int" Nullable="false" />
           <Property Name="Cliente_id" Type="int" Nullable="false" />
           <Property Name="Fornecedor_id" Type="int" Nullable="false" />
-          <Property Name="Num_NF" Type="int" Nullable="false" />
+          <Property Name="Documento_id" Type="int" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="int" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="bit" Nullable="false" />
+          <Property Name="Loja_destino" Type="int" Nullable="false" />
+          <Property Name="Caixa_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Movimentos_caixas">
           <Key>
@@ -261,6 +287,7 @@
           <Property Name="Gera_comissao" Type="bit" Nullable="false" />
           <Property Name="Cfop" Type="int" Nullable="false" />
           <Property Name="Utiliza_fornecedor" Type="bit" Nullable="false" />
+          <Property Name="Transferencia_loja" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidades">
           <Key>
@@ -540,9 +567,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Mov_Caixa_MC19555">
+          <End Role="Caixas" Type="Self.Caixas" Multiplicity="1" />
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Caixas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="Caixa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Caixas" EntityType="Self.Caixas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documentos_fiscais" EntityType="Self.Documentos_fiscais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estoque" EntityType="Self.Estoque" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fabricantes" EntityType="Self.Fabricantes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Formas_pagamento" EntityType="Self.Formas_pagamento" Schema="dbo" store:Type="Tables" />
@@ -643,6 +683,10 @@
           <AssociationSet Name="FK__Vendedore__Usuar__6EF57B66" Association="Self.FK__Vendedore__Usuar__6EF57B66">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
+          </AssociationSet>
+          <AssociationSet Name="Mov_Caixa_MC19555" Association="Self.Mov_Caixa_MC19555">
+            <End Role="Caixas" EntitySet="Caixas" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -753,6 +797,11 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
+          <EntitySet Name="Documentos_fiscais" EntityType="Model.Documentos_fiscais" />
+          <AssociationSet Name="Mov_Caixa_MC19555" Association="Model.Mov_Caixa_MC19555">
+            <End Role="Caixas" EntitySet="Caixas" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -761,6 +810,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Movimentos_caixas" Relationship="Model.FK__Movimento__Caixa__08B54D69" FromRole="Caixas" ToRole="Movimentos_caixas" />
+          <NavigationProperty Name="Movimentos" Relationship="Model.Mov_Caixa_MC19555" FromRole="Caixas" ToRole="Movimentos" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -906,12 +956,14 @@
           <Property Name="Usuario_id" Type="Int32" Nullable="false" />
           <Property Name="Cliente_id" Type="Int32" Nullable="false" />
           <Property Name="Fornecedor_id" Type="Int32" Nullable="false" />
-          <Property Name="Num_NF" Type="Int32" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="Int32" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Movim__02084FDA" FromRole="Movimentos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Movim__7A672E12" FromRole="Movimentos" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Usuarios" Relationship="Model.FK__Movimento__Usuar__76969D2E" FromRole="Movimentos" ToRole="Usuarios" />
+          <Property Name="Documento_id" Type="Int32" Nullable="false" />
+          <Property Name="Caixa_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Caixas" Relationship="Model.Mov_Caixa_MC19555" FromRole="Movimentos" ToRole="Caixas" />
         </EntityType>
         <EntityType Name="Movimentos_caixas">
           <Key>
@@ -1041,6 +1093,7 @@
           <Property Name="Gera_comissao" Type="Boolean" Nullable="false" />
           <Property Name="Cfop" Type="Int32" Nullable="false" />
           <Property Name="Utiliza_fornecedor" Type="Boolean" Nullable="false" />
+          <Property Name="Transferencia_loja" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidades">
           <Key>
@@ -1329,6 +1382,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Documentos_fiscais">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Chave_acesso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_documento" Type="Int32" Nullable="false" />
+          <Property Name="Tipo_emissao" Type="Int32" Nullable="false" />
+          <Property Name="Modelo" Type="Int32" Nullable="false" />
+          <Property Name="Serie" Type="Int32" Nullable="false" />
+          <Property Name="Lote" Type="Int32" Nullable="false" />
+          <Property Name="Data_emissao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ambiente" Type="Int32" Nullable="false" />
+          <Property Name="Protocolo_autorizacao" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Protocolo_denegado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo_status" Type="Int32" Nullable="false" />
+          <Property Name="Descricao_status" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Data_autorizacao" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cancelado" Type="Boolean" Nullable="false" />
+          <Property Name="Data_cancelamento" Type="Boolean" />
+          <Property Name="Protocolo_cancelamento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Inutilizado" Type="Boolean" Nullable="false" />
+          <Property Name="Data_inutilizacao" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="Mov_Caixa_MC19555">
+          <End Type="Model.Caixas" Role="Caixas" Multiplicity="0..1" />
+          <End Type="Model.Movimentos" Role="Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Caixas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="Caixa_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1475,9 +1564,10 @@
           <EntitySetMapping Name="Movimentos">
             <EntityTypeMapping TypeName="Model.Movimentos">
               <MappingFragment StoreEntitySet="Movimentos">
+                <ScalarProperty Name="Caixa_id" ColumnName="Caixa_id" />
+                <ScalarProperty Name="Documento_id" ColumnName="Documento_id" />
                 <ScalarProperty Name="Trocou_vendedor" ColumnName="Trocou_vendedor" />
                 <ScalarProperty Name="Tipo_movimento_id" ColumnName="Tipo_movimento_id" />
-                <ScalarProperty Name="Num_NF" ColumnName="Num_NF" />
                 <ScalarProperty Name="Fornecedor_id" ColumnName="Fornecedor_id" />
                 <ScalarProperty Name="Cliente_id" ColumnName="Cliente_id" />
                 <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
@@ -1600,6 +1690,7 @@
           <EntitySetMapping Name="Tipos_movimento">
             <EntityTypeMapping TypeName="Model.Tipos_movimento">
               <MappingFragment StoreEntitySet="Tipos_movimento">
+                <ScalarProperty Name="Transferencia_loja" ColumnName="Transferencia_loja" />
                 <ScalarProperty Name="Utiliza_fornecedor" ColumnName="Utiliza_fornecedor" />
                 <ScalarProperty Name="Cfop" ColumnName="Cfop" />
                 <ScalarProperty Name="Gera_comissao" ColumnName="Gera_comissao" />
@@ -1647,6 +1738,31 @@
                 <ScalarProperty Name="Celular1" ColumnName="Celular1" />
                 <ScalarProperty Name="Apelido" ColumnName="Apelido" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documentos_fiscais">
+            <EntityTypeMapping TypeName="Model.Documentos_fiscais">
+              <MappingFragment StoreEntitySet="Documentos_fiscais">
+                <ScalarProperty Name="Data_inutilizacao" ColumnName="Data_inutilizacao" />
+                <ScalarProperty Name="Inutilizado" ColumnName="Inutilizado" />
+                <ScalarProperty Name="Protocolo_cancelamento" ColumnName="Protocolo_cancelamento" />
+                <ScalarProperty Name="Data_cancelamento" ColumnName="Data_cancelamento" />
+                <ScalarProperty Name="Cancelado" ColumnName="Cancelado" />
+                <ScalarProperty Name="Data_autorizacao" ColumnName="Data_autorizacao" />
+                <ScalarProperty Name="Descricao_status" ColumnName="Descricao_status" />
+                <ScalarProperty Name="Codigo_status" ColumnName="Codigo_status" />
+                <ScalarProperty Name="Protocolo_denegado" ColumnName="Protocolo_denegado" />
+                <ScalarProperty Name="Protocolo_autorizacao" ColumnName="Protocolo_autorizacao" />
+                <ScalarProperty Name="Ambiente" ColumnName="Ambiente" />
+                <ScalarProperty Name="Data_emissao" ColumnName="Data_emissao" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Tipo_emissao" ColumnName="Tipo_emissao" />
+                <ScalarProperty Name="Tipo_documento" ColumnName="Tipo_documento" />
+                <ScalarProperty Name="Chave_acesso" ColumnName="Chave_acesso" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

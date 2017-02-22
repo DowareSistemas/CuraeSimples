@@ -106,6 +106,7 @@ namespace VarejoSimples.Views.Movimento
 
         private void SelecionarCliente_Fornecedor()
         {
+            //FORNECEDOR
             if (Tipo_movimento.Utiliza_fornecedor)
             {
                 PesquisarFornecedor pf = new PesquisarFornecedor();
@@ -124,7 +125,9 @@ namespace VarejoSimples.Views.Movimento
                         : pf.Selecionado.Nome);
                 }
             }
-            else
+            
+            //CLIENTE
+            if(!Tipo_movimento.Utiliza_fornecedor)
             {
                 PesquisarCliente pc = new PesquisarCliente();
                 pc.ShowDialog();
@@ -356,12 +359,15 @@ namespace VarejoSimples.Views.Movimento
             Estoque est = new ProdutosController().Get(txProduto.Text);
             Produtos prod = est.Produtos;
 
-            if(est.Quant <= 0)
-                if(ParametrosController.FindParametro("EST_SAIZERO").Valor.Equals("N"))
-                {
-                    MessageBox.Show($"Não é possível retirar o produto '{est.Produtos.Descricao}' do estoque porque o sistema está atualmente configurado para não permitir retiradas de estoque cujo o saldo atual é igual ou inferior a 0.", "EST_SAIZERO", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                    return;
-                }
+            if (Tipo_movimento.Movimentacao_itens == (int)Tipo_movimentacao.SAIDA)
+            {
+                if (est.Quant <= 0)
+                    if (ParametrosController.FindParametro("EST_SAIZERO").Valor.Equals("N"))
+                    {
+                        MessageBox.Show($"Não é possível retirar o produto '{est.Produtos.Descricao}' do estoque porque o sistema está atualmente configurado para não permitir retiradas de estoque cujo o saldo atual é igual ou inferior a 0.", "EST_SAIZERO", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+            }
 
             if (prod == null)
                 return;

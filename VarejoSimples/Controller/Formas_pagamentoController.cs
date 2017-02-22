@@ -125,5 +125,10 @@ namespace VarejoSimples.Controller
         {
             return db.Where(f => f.Id < current_id).OrderByDescending(f => f.Id).FirstOrDefault();
         }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
     }
 }

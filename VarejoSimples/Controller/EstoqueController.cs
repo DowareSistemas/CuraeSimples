@@ -165,6 +165,22 @@ namespace VarejoSimples.Controller
             return LoteAtual;
         }
 
+        public void CriaLote(int produto_id, int loja_id, string lote, string sublote)
+        {
+            Estoque est = new Estoque();
+            est.Produto_id = produto_id;
+            est.Loja_id = loja_id;
+            est.Quant = 0;
+            est.Lote = lote;
+            est.Sublote = sublote;
+            Save(est);
+        }
+
+        public bool ExisteLote(string lote, string sublote)
+        {
+            return (db.Where(e => e.Lote.Equals(lote) && e.Sublote.Equals(sublote)).Count() > 0);
+        }
+
         public void RemoveByProduto(int produto_id, varejo_config v = null)
         {
             if (v != null)
@@ -287,8 +303,8 @@ namespace VarejoSimples.Controller
                 ? BuscarEstoqueProduto(produto_id.ToString())
                 : BuscarEstoqueProduto(lote));
 
-            if (estoque.Produtos.Controla_lote)
-                return true;
+//            if (estoque.Produtos.Controla_lote)
+ //               return true;
 
             estoque.Quant += quant;
             db.Update(estoque);

@@ -8,9 +8,8 @@
         WindowStartupLocation="CenterScreen"
        ResizeMode="NoResize"
         Closed="Window_Closed"
-        Title="Login" Height="306" Width="258">
+        Title="Login" Height="600" Width="1024">
     <Grid>
-        <Label x:Name="label" Content="Usuário" HorizontalAlignment="Left" Margin="7,50,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
         <Grid Height="50" VerticalAlignment="Top">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -18,18 +17,22 @@
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Label x:Name="label1" Content="Acesso" Margin="10,5,10,0" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FF4B689C" FontSize="21.333" Height="38"/>
         </Grid>
-        <TextBox x:Name="txUsuario" KeyDown="txUsuario_KeyDown" Height="23" Margin="10,76,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667"/>
-        <Label x:Name="label_Copy" Content="Senha" HorizontalAlignment="Left" Margin="7,104,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
-        <PasswordBox x:Name="txSenha" KeyDown="txSenha_KeyDown" PasswordChar="*" Height="23" Margin="10,130,10,0"  VerticalAlignment="Top" FontSize="14.667"/>
-        <Grid Height="47" VerticalAlignment="Bottom" Background="#FFEEEEEE">
-            <Button x:Name="btEntrar" Content="Entrar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Height="25" Click="btEntrar_Click"/>
-        </Grid>
-        <Label x:Name="label_Copy1" Content="Loja" HorizontalAlignment="Left" Margin="7,161,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
-        <TextBox x:Name="txCod_loja" Height="23" Margin="10,187,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" HorizontalAlignment="Left" Width="60"/>
-        <Button x:Name="btSelecionarLoja" Content=". . ." HorizontalAlignment="Left" Margin="75,187,0,0" VerticalAlignment="Top" Width="25" Height="23" Click="btSelecionarLoja_Click"/>
-        <TextBox x:Name="txNome_loja" Height="23" Margin="105,187,10,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667"/>
+        <Grid Height="47" VerticalAlignment="Bottom" Background="#FFEEEEEE"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="285" Margin="95,105,0,0" VerticalAlignment="Top" Width="480">
+            <Grid Margin="9">
+                <Label x:Name="label" Content="Usuário" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
+                <TextBox x:Name="txUsuario" KeyDown="txUsuario_KeyDown" Height="23" Margin="13,85,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" HorizontalAlignment="Left" Width="180"/>
+                <Label x:Name="label_Copy" Content="Senha" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
+                <PasswordBox x:Name="txSenha" KeyDown="txSenha_KeyDown" PasswordChar="*" Height="23" Margin="13,139,0,0"  VerticalAlignment="Top" FontSize="14.667" HorizontalAlignment="Left" Width="180"/>
+                <Label x:Name="label_Copy1" Content="Loja" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF191919"/>
+                <TextBox x:Name="txCod_loja" Height="23" Margin="13,196,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" HorizontalAlignment="Left" Width="60"/>
+                <Button x:Name="btSelecionarLoja" Content=". . ." HorizontalAlignment="Left" Margin="78,196,0,0" VerticalAlignment="Top" Width="25" Height="23" Click="btSelecionarLoja_Click"/>
+                <TextBox x:Name="txNome_loja" Height="23" Margin="108,196,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" HorizontalAlignment="Left" Width="85"/>
+                <Button x:Name="btEntrar" Content="Entrar" HorizontalAlignment="Right" Margin="0,0,267,16" VerticalAlignment="Bottom" Width="75" Height="25" Click="btEntrar_Click"/>
+                <Label x:Name="label1" Content="Seja bem-vindo" Margin="13,10,267,0" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FF4B689C" FontSize="21.333" Height="38"/>
+            </Grid>
+        </Border>
 
     </Grid>
 </Window>

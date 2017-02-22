@@ -81,6 +81,11 @@ namespace VarejoSimples.Controller
             return true;
         }
 
+        public void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
+
         public Tipos_movimento Find(int id)
         {
             return db.Find(id);

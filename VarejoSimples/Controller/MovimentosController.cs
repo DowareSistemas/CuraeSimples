@@ -20,22 +20,39 @@ namespace VarejoSimples.Controller
 
         private Movimentos Movimento { get; set; }
 
-        public void AbreMovimento(int cliente_id, int tipo_movimento)
+        public void AbreMovimento(int cliente_fornecedor_id, int tipo_movimento)
         {
             Movimento = new Movimentos();
-            Movimento.Cliente_id = cliente_id;
+
+            Tipos_movimento tipo = new Tipos_movimentoController().Find(tipo_movimento);
+
+            if (tipo.Utiliza_fornecedor)
+                InformarFornecedor(cliente_fornecedor_id);
+            else
+                InformarCliente(cliente_fornecedor_id);
+
             Movimento.Tipo_movimento_id = tipo_movimento;
             BStatus.Success("Movimento iniciado...");
         }
 
-        List<Itens_movimento> itens = null;
-        public bool FechaMovimento()
+        List<Itens_movimento> itens_mov = null;
+        List<Itens_pagamento> itens_pag = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Código do movimento caso seja efetuado com sucesso. Caso haja erros, retornará 0.</returns>
+        public int FechaMovimento()
         {
             try
             {
-                if (itens == null)
-                    itens = Movimento.Itens_movimento.ToList();
+                if (itens_mov == null)
+                    itens_mov = Movimento.Itens_movimento.ToList();
                 Movimento.Itens_movimento.Clear();
+
+                if (itens_pag == null)
+                    itens_pag = Movimento.Itens_pagamento.ToList();
+                Movimento.Itens_pagamento.Clear();
 
                 db.Begin(System.Data.IsolationLevel.ReadUncommitted);
 
@@ -51,27 +68,21 @@ namespace VarejoSimples.Controller
 
                 EstoqueController estoque_controller = new EstoqueController();
                 estoque_controller.SetContext(db.Context);
-                Tipos_movimento tipo_mov = new Tipos_movimentoController().Find(Movimento.Tipo_movimento_id);
+
+                Tipos_movimentoController tmc = new Tipos_movimentoController();
+                tmc.SetContext(db.Context);
+                Tipos_movimento tipo_mov = tmc.Find(Movimento.Tipo_movimento_id);
 
                 string lote = imc.GetLastLote(false);
                 lote = estoque_controller.GeraProximoLote(lote);
                 int sublote = 1;
-                
-                foreach (Itens_movimento item in itens)
+
+                #region Itens do movimento
+                foreach (Itens_movimento item in itens_mov)
                 {
                     item.Produtos = null;
                     item.Unidades = null;
                     item.Movimento_id = Movimento.Id;
-                    
-                    /*   estoques.Add(new Estoque()
-                       {
-                           Produto_id = item.Produto_id,
-                           Loja_id = UsuariosController.LojaAtual.Id,
-                           Quant = item.Quant,
-                           Lote = (string.IsNullOrEmpty(item.Lote)
-                                       ? null
-                                       : (item.Lote + "SL" + item.Sublote))
-                       }); */
 
                     Estoque e = new Estoque();
                     e.Produto_id = item.Produto_id;
@@ -89,6 +100,11 @@ namespace VarejoSimples.Controller
                     {
                         case (int)Tipo_movimentacao.ENTRADA:
 
+                            /*
+                                 O produto controla Lote, e a sua entrada é vinda de um Fornecedor.
+                                 Neste caso é gerado o seu Lote e inserido no estoque da 
+                                 loja em questão
+                            */
                             if (tipo_mov.Utiliza_fornecedor && prod.Controla_lote)
                             {
                                 e.Lote = lote;
@@ -98,11 +114,45 @@ namespace VarejoSimples.Controller
 
                                 sublote++;
                             }
-                            else
-                            if (!estoque_controller.InsereEstoque(e.Quant, e.Produto_id, e.Loja_id))
+
+                            /*
+                                 O produto controla Lote, porém sua entrada NÃO é proveniennte de um fornecedor.
+                                 Pode ser uma devolução, troca ou entrada por transferencia de loja.
+
+                                 Neste caso, é verificado se existe o lote em questão.
+                                 Caso não exista, será criado,
+                                 Caso exista, o Saldo em Estoque do mesmo será atualizado
+                            */
+                            if ((!tipo_mov.Utiliza_fornecedor) && prod.Controla_lote)
                             {
-                                db.RollBack();
-                                return false;
+                                if (!estoque_controller.ExisteLote(item.Lote, item.Sublote))
+                                    estoque_controller.CriaLote(item.Produto_id, Movimento.Loja_id, item.Lote, item.Sublote);
+
+                                if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, (item.Lote + "SL" + item.Sublote)))
+                                {
+                                    db.RollBack();
+                                    return 0;
+                                }
+                            }
+
+                            /*
+                                O produto NÃO controla lote, e sua entrada NÃO é proveniente de um fornecedor.
+                                Neste caso, o estoque será inserido levando em consideração o produto pelo seu código.
+
+                                OBS.: Quando um produto NÃO possui lotes em estoque, a tabela de Estoque só pode
+                                conter um unico registro referente ao produto em questão, considerando a Loja.
+
+                                Quando o produto POSSUI lotes em estoque, a tabela de estoque pode conter varios
+                                registros referente ao produto em questão, levando em consideração o Lote, Sub-Lote
+                                e respectiva Loja.
+                            */
+                            if (!tipo_mov.Utiliza_fornecedor && !prod.Controla_lote)
+                            {
+                                if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id))
+                                {
+                                    db.RollBack();
+                                    return 0;
+                                }
                             }
 
                             break;
@@ -112,10 +162,11 @@ namespace VarejoSimples.Controller
                             string loteEst = (string.IsNullOrEmpty(e.Lote)
                                 ? null
                                 : e.Lote);
+
                             if (!estoque_controller.RetiraEstoque(e.Quant, e.Produto_id, e.Loja_id, loteEst))
                             {
                                 db.RollBack();
-                                return false;
+                                return 0;
                             }
 
                             break;
@@ -138,19 +189,49 @@ namespace VarejoSimples.Controller
                     if (!imc.Save(item))
                     {
                         db.RollBack();
-                        return false;
+                        return 0;
                     }
                 }
+                #endregion
+
+                #region Itens do Pagamento
+                foreach(Itens_pagamento item_pg in itens_pag)
+                {
+                    Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
+                    fpg_controller.SetContext(db.Context);
+
+                    Movimentos_caixasController mov_caixa_c = new Movimentos_caixasController();
+                    mov_caixa_c.SetContext(db.Context);
+
+                    Formas_pagamento forma_pg = fpg_controller.Find(item_pg.Forma_pagamento_id);
+                    Movimentos_caixas mov_caixa;
+
+                    switch (forma_pg.Tipo_pagamento)
+                    {
+                        case (int)Tipo_pagamento.DINHEIRO:
+
+                            mov_caixa = new Movimentos_caixas();
+                            mov_caixa.Caixa_id = Movimento.Caixa_id;        
+
+                            break;
+                    }
+                }
+                #endregion
 
                 db.Commit();
                 BStatus.Success("Movimento salvo");
-                return true;
+                return Movimento.Id;
             }
             catch (Exception ex)
             {
                 db.RollBack();
-                return false;
+                return 0;
             }
+        }
+
+        internal void InformarFornecedor(int fornecedor_id)
+        {
+            Movimento.Fornecedor_id = fornecedor_id;
         }
 
         public List<Itens_movimento> Itens_movimento

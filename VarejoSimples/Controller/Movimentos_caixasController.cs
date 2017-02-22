@@ -34,5 +34,10 @@ namespace VarejoSimples.Controller
         {
             return db.Where(m => m.Caixa_id == caixa_id).Count();
         }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
     }
 }
