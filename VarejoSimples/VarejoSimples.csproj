@@ -125,6 +125,7 @@
     <Compile Include="Controller\Operadoras_cartaoController.cs" />
     <Compile Include="Controller\ParametrosController.cs" />
     <Compile Include="Controller\PermissoesController.cs" />
+    <Compile Include="Controller\Planos_contasController.cs" />
     <Compile Include="Controller\ProdutosController.cs" />
     <Compile Include="Controller\Produtos_fornecedoresController.cs" />
     <Compile Include="Controller\RotinasController.cs" />
@@ -157,9 +158,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Enums\Classe_plano_conta.cs" />
     <Compile Include="Enums\Tipo_intervalo.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
+    <Compile Include="Enums\Tipo_movimentacao_caixa.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
+    <Compile Include="Enums\Tipo_plano_conta.cs" />
     <Compile Include="Enums\Tipo_produto_filtro_validade.cs" />
     <Compile Include="Enums\Tipo_recebimento.cs" />
     <Compile Include="Interfaces\ICaixas.cs" />
@@ -176,6 +180,7 @@
     <Compile Include="Interfaces\IOperadoras_cartao.cs" />
     <Compile Include="Interfaces\IParametros.cs" />
     <Compile Include="Interfaces\IPermissoes.cs" />
+    <Compile Include="Interfaces\IPlanos_contas.cs" />
     <Compile Include="Interfaces\IProdutos.cs" />
     <Compile Include="Interfaces\IProdutos_fornecedores.cs" />
     <Compile Include="Interfaces\IRotinas.cs" />
@@ -183,6 +188,81 @@
     <Compile Include="Interfaces\IUnidades.cs" />
     <Compile Include="Interfaces\IUsuarios.cs" />
     <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Documentos_fiscais.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Planos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -239,6 +319,7 @@
     <Compile Include="Repository\Operadoras_cartaoRepository.cs" />
     <Compile Include="Repository\ParametrosRepository.cs" />
     <Compile Include="Repository\PermissoesRepository.cs" />
+    <Compile Include="Repository\Planos_contasRepository.cs" />
     <Compile Include="Repository\ProdutosRepository.cs" />
     <Compile Include="Repository\Produtos_fornecedoresRepository.cs" />
     <Compile Include="Repository\RepositoryImpl.cs" />
@@ -313,6 +394,12 @@
     </Compile>
     <Compile Include="Views\Operadora_cartao\PesquisarOperadora.xaml.cs">
       <DependentUpon>PesquisarOperadora.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Plano_conta\CadPlano_conta.xaml.cs">
+      <DependentUpon>CadPlano_conta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Plano_conta\SelecionarPlanoConta.xaml.cs">
+      <DependentUpon>SelecionarPlanoConta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Produto\CadProduto.xaml.cs">
       <DependentUpon>CadProduto.xaml</DependentUpon>
@@ -467,6 +554,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Operadora_cartao\PesquisarOperadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Plano_conta\CadPlano_conta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Plano_conta\SelecionarPlanoConta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

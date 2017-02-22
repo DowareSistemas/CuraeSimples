@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Title="Cadastro de Tipos de Movimento" Height="300" Width="538">
+        Title="Cadastro de Tipos de Movimento" Height="331" Width="558">
     <Grid>
         <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
             <Button x:Name="btSalvar" TabIndex="6" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
@@ -26,18 +26,22 @@
             </Button>
             <Button x:Name="btNovo" TabIndex="7" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
         </Grid>
-        <TextBox x:Name="txCod" TabIndex="1" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="169,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="55" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txCod" TabIndex="1" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="188,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="55" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="8,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txDescricao" TabIndex="2" HorizontalAlignment="Left" Height="30" Margin="169,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txDescricao" TabIndex="2" HorizontalAlignment="Left" Height="30" Margin="188,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy" Content="Descrição" HorizontalAlignment="Left" Margin="8,44,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <ComboBox x:Name="cbMov_valores" TabIndex="3" HorizontalAlignment="Left" Margin="169,79,0,0" VerticalAlignment="Top" Width="145" FontSize="14.667" Height="30"/>
-        <Label x:Name="label_Copy1" Content="Movimentação valores" HorizontalAlignment="Left" Margin="8,79,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <ComboBox x:Name="cbMov_itens" TabIndex="4" HorizontalAlignment="Left" Margin="169,114,0,0" VerticalAlignment="Top" Width="145" FontSize="14.667" Height="30"/>
-        <Label x:Name="label_Copy2" Content="Movimentação itens" HorizontalAlignment="Left" Margin="8,114,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txCfop" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="169,149,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86" FontSize="14.667" Padding="0,5,0,0"/>
+        <ComboBox x:Name="cbMov_valores" TabIndex="3" HorizontalAlignment="Left" Margin="189,114,0,0" VerticalAlignment="Top" Width="145" FontSize="14.667" Height="30"/>
+        <Label x:Name="label_Copy1" Content="Movimentação estoque" HorizontalAlignment="Left" Margin="8,79,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <ComboBox x:Name="cbMov_itens" TabIndex="4" HorizontalAlignment="Left" Margin="189,79,0,0" VerticalAlignment="Top" Width="145" FontSize="14.667" Height="30"/>
+        <Label x:Name="label_Copy2" Content="Movimentação financeira" HorizontalAlignment="Left" Margin="8,114,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCfop" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="188,149,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="86" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy3" Content="CFOP" HorizontalAlignment="Left" Margin="8,150,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <CheckBox x:Name="ckGera_comissao" TabIndex="6" Content="Gera comissão" HorizontalAlignment="Left" Margin="169,184,0,0" VerticalAlignment="Top" FontSize="14.667" Height="16"/>
-        <CheckBox x:Name="ckFornecedor" TabIndex="7" Content="Utiliza fornecedor" HorizontalAlignment="Left" Margin="169,205,0,0" VerticalAlignment="Top" FontSize="14.667" Height="16"/>
+        <CheckBox x:Name="ckGera_comissao" TabIndex="6" Content="Gera comissão" HorizontalAlignment="Left" Margin="188,185,0,0" VerticalAlignment="Top" FontSize="14.667" Height="16"/>
+        <CheckBox x:Name="ckFornecedor" TabIndex="7" Content="Utiliza fornecedor" HorizontalAlignment="Left" Margin="188,206,0,0" VerticalAlignment="Top" FontSize="14.667" Height="16"/>
+        <Label x:Name="label_Copy4" Content="Plano de conta" HorizontalAlignment="Left" Margin="10,231,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCod_plano_conta" HorizontalAlignment="Left" Height="30" Margin="189,230,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+        <TextBox x:Name="txPlano_conta" HorizontalAlignment="Left" Height="30" Margin="279,230,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" FontSize="14.667" Padding="0,5,0,0" IsReadOnly="True"/>
+        <Button x:Name="btSelecionar_plano_conta" Content=". . ." HorizontalAlignment="Left" Margin="239,230,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionar_conta_pai_Click"/>
 
     </Grid>
 </Window>

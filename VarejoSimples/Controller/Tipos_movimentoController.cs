@@ -41,9 +41,20 @@ namespace VarejoSimples.Controller
             }
         }
 
+        public int CountByPlano_conta(int plano_conta_id)
+        {
+            return db.Where(e => e.Plano_conta_id == plano_conta_id).Count();
+        }
+
         private bool Valid(Tipos_movimento tm)
         {
-            if(string.IsNullOrWhiteSpace(tm.Descricao))
+            if(tm.Plano_conta_id == 0)
+            {
+                BStatus.Alert("O plano de conta é obrigatório");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(tm.Descricao))
             {
                 BStatus.Alert("A descrição do tipo de movimento é obrigatória");
                 return false;

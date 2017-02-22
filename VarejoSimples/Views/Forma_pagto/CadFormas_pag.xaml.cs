@@ -107,7 +107,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 btSelecionarOperadora.IsEnabled = false;
             }
 
-            if (fpg.Tipo_pagamento == (int)Tipo_pagamento.CREDITO_CLIENTE)
+            if (fpg.Tipo_pagamento == (int)Tipo_pagamento.CREDITO)
             {
                 cbTipo_intervalo.IsEnabled = true;
                 txInterv_diaBase.IsEnabled = true;
@@ -204,7 +204,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 btSelecionarOperadora.IsEnabled = false;
             }
 
-            if (cbTipo_pagamento.SelectedIndex == (int)Tipo_pagamento.CREDITO_CLIENTE)
+            if (cbTipo_pagamento.SelectedIndex == (int)Tipo_pagamento.CREDITO)
             {
                 cbTipo_intervalo.IsEnabled = true;
                 txInterv_diaBase.IsEnabled = true;

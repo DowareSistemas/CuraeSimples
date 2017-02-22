@@ -14,6 +14,7 @@ using VarejoSimples.Views.Loja;
 using VarejoSimples.Views.Marca;
 using VarejoSimples.Views.Movimento;
 using VarejoSimples.Views.Operadora_cartao;
+using VarejoSimples.Views.Plano_conta;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.Produto_fornecedor;
 using VarejoSimples.Views.Tipo_movimento;
@@ -133,6 +134,12 @@ namespace VarejoSimples.Controller
 
                         Parametrizacao param = new Parametrizacao();
                         param.ShowDialog();
+                        break;
+
+                    case 30:
+
+                        CadPlano_conta cpc = new CadPlano_conta();
+                        cpc.ShowDialog();
                         break;
                 }
             }

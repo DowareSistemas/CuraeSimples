@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Model;
+using VarejoSimples.Views.Plano_conta;
 
 namespace VarejoSimples.Views.Tipo_movimento
 {
@@ -45,6 +46,8 @@ namespace VarejoSimples.Views.Tipo_movimento
 
             cbMov_itens.SelectedIndex = 0;
             cbMov_valores.SelectedIndex = 0;
+
+            txCod_plano_conta.ToNumeric();
         }
 
         private void btNovo_Click(object sender, RoutedEventArgs e)
@@ -62,7 +65,7 @@ namespace VarejoSimples.Views.Tipo_movimento
             Tipos_movimento tmv = (int.Parse(txCod.Text) == 0
                 ? new Tipos_movimento()
                 : controller.Find(int.Parse(txCod.Text)));
-
+            
             tmv.Id = int.Parse(txCod.Text);
             tmv.Descricao = txDescricao.Text;
             tmv.Movimentacao_itens = (int)cbMov_itens.SelectedValue;
@@ -72,6 +75,7 @@ namespace VarejoSimples.Views.Tipo_movimento
                 : int.Parse(txCfop.Text));
             tmv.Gera_comissao = ckGera_comissao.IsChecked.Value;
             tmv.Utiliza_fornecedor = ckFornecedor.IsChecked.Value;
+            tmv.Plano_conta_id = int.Parse(txCod_plano_conta.Text);
 
             if (controller.Save(tmv))
                 LimparCampos();
@@ -87,6 +91,8 @@ namespace VarejoSimples.Views.Tipo_movimento
             txDescricao.Focus();
             cbMov_itens.SelectedValue = 0;
             cbMov_valores.SelectedValue = 0;
+            txCod_plano_conta.Text = "0";
+            txPlano_conta.Text = string.Empty;
         }
 
         private void btCancelar_Click(object sender, RoutedEventArgs e)
@@ -106,6 +112,8 @@ namespace VarejoSimples.Views.Tipo_movimento
             txCfop.Text = tmv.Cfop.ToString();
             ckGera_comissao.IsChecked = tmv.Gera_comissao;
             ckFornecedor.IsChecked = tmv.Utiliza_fornecedor;
+            txCod_plano_conta.Text = tmv.Plano_conta_id.ToString();
+            txPlano_conta.Text = tmv.Planos_contas.Descricao;
         }
 
         private void next_Click(object sender, RoutedEventArgs e)
@@ -145,6 +153,17 @@ namespace VarejoSimples.Views.Tipo_movimento
 
                 FillTmv(pt.Selecionado);
             }
+        }
+
+        private void btSelecionar_conta_pai_Click(object sender, RoutedEventArgs e)
+        {
+            SelecionarPlanoConta spc = new SelecionarPlanoConta();
+            spc.ShowDialog();
+
+            txCod_plano_conta.Text = spc.Selecionado.Id.ToString();
+            txPlano_conta.Text = (spc.Selecionado.Id == 0
+                ? "Não selecionado"
+                : spc.Selecionado.Descricao);
         }
     }
 }

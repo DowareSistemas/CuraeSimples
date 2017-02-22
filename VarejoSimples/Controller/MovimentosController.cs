@@ -195,7 +195,7 @@ namespace VarejoSimples.Controller
                 #endregion
 
                 #region Itens do Pagamento
-                foreach(Itens_pagamento item_pg in itens_pag)
+                foreach (Itens_pagamento item_pg in itens_pag)
                 {
                     Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
                     fpg_controller.SetContext(db.Context);
@@ -206,12 +206,42 @@ namespace VarejoSimples.Controller
                     Formas_pagamento forma_pg = fpg_controller.Find(item_pg.Forma_pagamento_id);
                     Movimentos_caixas mov_caixa;
 
+
                     switch (forma_pg.Tipo_pagamento)
                     {
                         case (int)Tipo_pagamento.DINHEIRO:
 
                             mov_caixa = new Movimentos_caixas();
-                            mov_caixa.Caixa_id = Movimento.Caixa_id;        
+                            mov_caixa.Caixa_id = Movimento.Caixa_id;
+                            mov_caixa.Data = Movimento.Data;
+                            mov_caixa.Usuario_id = Movimento.Usuario_id;
+                            mov_caixa.Forma_pagamento_id = item_pg.Forma_pagamento_id;
+                            
+                            switch (tipo_mov.Movimentacao_valores)
+                            {
+                                case (int)Tipo_movimentacao.ENTRADA:
+                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
+                                    mov_caixa.Valor = item_pg.Valor;
+                                    break;
+
+                                case (int)Tipo_movimentacao.SAIDA:
+                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao.SAIDA;
+                                    mov_caixa.Valor = (item_pg.Valor * (-1));
+                                    break;
+                            }
+
+                            mov_caixa.Loja_id = Movimento.Loja_id;
+                            if(!mov_caixa_c.Save(mov_caixa))
+                            {
+                                db.RollBack();
+                                return 0;
+                            }
+
+                            break;
+
+                        case (int)Tipo_pagamento.CARTAO:
+
+
 
                             break;
                     }

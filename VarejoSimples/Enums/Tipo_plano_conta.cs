@@ -5,10 +5,9 @@ using System.Text;
 
 namespace VarejoSimples.Enums
 {
-    public enum Tipo_pagamento
+    public enum Tipo_plano_conta
     {
-        DINHEIRO = 0,
-        CARTAO = 1,
-        CREDITO = 2
+        SINTETICO = 0,
+        ANALITICO = 1
     }
 }

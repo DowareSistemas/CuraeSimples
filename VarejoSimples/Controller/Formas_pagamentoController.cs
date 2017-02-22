@@ -49,7 +49,7 @@ namespace VarejoSimples.Controller
                 return false;
             }
 
-            if (pg.Tipo_pagamento == (int)Tipo_pagamento.CREDITO_CLIENTE)
+            if (pg.Tipo_pagamento == (int)Tipo_pagamento.CREDITO)
             {
                 if (pg.Tipo_intervalo == (int)Tipo_intervalo.DATA_BASE)
                     if ((pg.Dia_base > 31) || (pg.Dia_base < 1))

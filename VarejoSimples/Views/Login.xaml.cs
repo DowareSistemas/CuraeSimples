@@ -82,5 +82,10 @@ namespace VarejoSimples.Views
             if (e.Key == Key.Enter)
                 EfetuaLogin();
         }
+
+        private void btSair_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }
