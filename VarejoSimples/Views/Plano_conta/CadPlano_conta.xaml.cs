@@ -50,6 +50,9 @@ namespace VarejoSimples.Views.Plano_conta
             cbTipo.DisplayMemberPath = "Value";
             cbTipo.SelectedValuePath = "Key";
             cbTipo.SelectedIndex = 0;
+
+            txDescricao.Focus();
+            txCod_conta_pai.ToNumeric();
         }
 
         private void ListaPlanosContas()
@@ -126,6 +129,8 @@ namespace VarejoSimples.Views.Plano_conta
                 txCod_conta_pai.Text = pc.Conta_pai.ToString();
                 txConta_pai.Text = controller.Find(pc.Conta_pai).Descricao;
             }
+
+            txDescricao.Focus();
         }
 
         private void btNovo_Click(object sender, RoutedEventArgs e)
@@ -164,6 +169,8 @@ namespace VarejoSimples.Views.Plano_conta
             txDescricao.Text = string.Empty;
             txCod_conta_pai.Text = "0";
             txConta_pai.Text = string.Empty;
+
+            txDescricao.Focus();
         }
 
         private void btExcluir_Click(object sender, RoutedEventArgs e)
