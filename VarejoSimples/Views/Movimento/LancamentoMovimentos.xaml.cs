@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Enums;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views.Cliente;
 using VarejoSimples.Views.Fornecedor;
@@ -38,7 +39,7 @@ namespace VarejoSimples.Views.Movimento
             dataGrid.AplicarPadroes();
             BStatus.Attach(2, lbStatus, image);
             Grid_Mov.IsEnabled = false;
-           
+
             Desconto = 0;
             Acrescimo = 0;
             txValor_final.ToMoney();
@@ -46,6 +47,7 @@ namespace VarejoSimples.Views.Movimento
             txValor_unit.ToMoney();
             txDesconto.ToMoney();
             txAcrescimo.ToMoney();
+            txTotal.ToMoney();
             lbDescricao_produto.Content = string.Empty;
 
             lbFatorConversao.Visibility = Visibility.Hidden;
@@ -61,11 +63,11 @@ namespace VarejoSimples.Views.Movimento
         {
             try
             {
-                
+
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -125,9 +127,9 @@ namespace VarejoSimples.Views.Movimento
                         : pf.Selecionado.Nome);
                 }
             }
-            
+
             //CLIENTE
-            if(!Tipo_movimento.Utiliza_fornecedor)
+            if (!Tipo_movimento.Utiliza_fornecedor)
             {
                 PesquisarCliente pc = new PesquisarCliente();
                 pc.ShowDialog();
@@ -231,9 +233,9 @@ namespace VarejoSimples.Views.Movimento
                  ? produto.Produtos_fornecedores.First(pf => pf.Fornecedor_id == int.Parse(txCod_cliente_fornecedor.Text)).Preco_custo.ToString("N2")
                  : produto.Valor_unit.ToString("N2"));
             txQuant.Text = "1";
+            txValor_final.Text = txValor_unit.Text;
             txQuant.Focus();
             txQuant.SelectAll();
-            txValor_final.Text = txValor_unit.Text;
         }
 
         private void MostraFatorConv(Produtos_fornecedores pf)
@@ -412,6 +414,8 @@ namespace VarejoSimples.Views.Movimento
             Acrescimo = 0;
             txDesconto.IsEnabled = true;
             txAcrescimo.IsEnabled = true;
+
+            RecalculaTotais();
         }
 
         private void btSelecionarProduto_Click(object sender, RoutedEventArgs e)
@@ -469,7 +473,68 @@ namespace VarejoSimples.Views.Movimento
 
         private void btSalvar_Click(object sender, RoutedEventArgs e)
         {
-            Movimento_Controller.FechaMovimento();
+            ITelaPagamentoMovimento iPagamento = new PagamentoRetaguarda();
+            iPagamento.Exibir(decimal.Parse(txTotal.Text));
+
+            string msg = $@"Confirma fechamento do movimento?";
+
+            if(iPagamento.Pago)
+            {
+                MessageBoxResult result = MessageBox.Show(msg, "Confirmação", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.No)
+                    return;
+
+                iPagamento.Itens_pagamento.ForEach(ip => Movimento_Controller.EfetuaPagamento(ip.Forma_pagamento_id, ip.Valor));
+                Movimento_Controller.FechaMovimento();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            BStatus.Dettach(2);
+        }
+
+        private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (dataGrid.Items.Count == 0)
+                return;
+
+            if (e.Key == Key.F3)
+                return;
+
+            Itens_movimento item = (Itens_movimento)dataGrid.SelectedItem;
+
+            if (item == null)
+                return;
+
+            if (e.Key == Key.Insert)
+                Movimento_Controller.IncrementaItem(item.Id);
+
+            if ((e.Key == Key.Delete) && Keyboard.Modifiers == ModifierKeys.Control)
+                Movimento_Controller.RemoveItem(item.Id);
+            else if (e.Key == Key.Delete)
+            {
+                if (Movimento_Controller.Itens_movimento.First(i => i.Id == item.Id).Quant - 1 == 0)
+                    Movimento_Controller.RemoveItem(item.Id);
+                else
+                    Movimento_Controller.DecrementaItem(item.Id);
+            }
+
+            dataGrid.ItemsSource = Movimento_Controller.Itens_movimento;
+            dataGrid.Focus();
+            RecalculaTotais();
+        }
+
+        private void Grid_Mov_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F3)
+                BuscarProduto(true);
+        }
+
+        private void RecalculaTotais()
+        {
+            decimal valor_total = Movimento_Controller.Itens_movimento.Sum(i => i.Valor_final);
+            txTotal.Text = valor_total.ToString("N2");
         }
     }
 }

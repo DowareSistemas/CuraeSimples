@@ -9,6 +9,7 @@ namespace VarejoSimples.Enums
     {
         ABERTURA = 0,
         ENTRADA = 1,
-        SAIDA = 2
+        SAIDA = 2,
+        FECHAMENTO = 3
     }
 }

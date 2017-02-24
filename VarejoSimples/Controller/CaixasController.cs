@@ -63,7 +63,7 @@ namespace VarejoSimples.Controller
                 return false;
             }
         }
-        
+
         private bool ValidRemove(int caixa_id)
         {
             if(new Movimentos_caixasController().CountByCaixa(caixa_id) > 0)

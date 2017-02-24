@@ -147,6 +147,11 @@ namespace VarejoSimples.Controller
             return true;
         }
 
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
+
         public List<Produtos_fornecedores> Search(string search)
         {
             return db.Where(p =>
@@ -163,6 +168,11 @@ namespace VarejoSimples.Controller
         public Produtos_fornecedores Prev(int current_id)
         {
             return db.Where(p => p.Id < current_id).OrderByDescending(p => p.Id).FirstOrDefault();
+        }
+
+        public Produtos_fornecedores Find(int produto_id, int fornecedor_id)
+        {
+            return db.Where(e => e.Produto_id == produto_id && e.Fornecedor_id == fornecedor_id).FirstOrDefault();
         }
 
         public Produtos_fornecedores Find(int id)

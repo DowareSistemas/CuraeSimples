@@ -299,7 +299,7 @@ namespace VarejoSimples.Controller
 
         public bool InsereEstoque(decimal quant, int produto_id, int loja_id, string lote = null)
         {
-            Estoque estoque = (lote == null
+            Estoque estoque = ((lote == null || lote.Equals("SL")) 
                 ? BuscarEstoqueProduto(produto_id.ToString())
                 : BuscarEstoqueProduto(lote));
 

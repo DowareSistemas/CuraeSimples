@@ -43,14 +43,12 @@ namespace VarejoSimples
 
         public MainWindow()
         {
-            //   NFCe();
+           // NFCe();
             varejo_config db = new varejo_config();
             //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
             db.Database.CreateIfNotExists();
 
-         //   EstoqueController ec = new EstoqueController();
-          //  MessageBox.Show(ec.GeraProximoLote("A00002"));
-          //  Environment.Exit(0);
+          //  new Movimentos_caixasController().CaixaAberto(1);
 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
@@ -70,6 +68,7 @@ namespace VarejoSimples
             listView.SelectedIndex = 0;
             txNomeLoja.Text = (UsuariosController.LojaAtual.Nome_fantasia + $" ({UsuariosController.LojaAtual.Razao_social})");
             txUsuario.Text = UsuariosController.UsuarioAtual.Nome;
+
         }
 
         private void Window_Closed(object sender, EventArgs e)

@@ -41,20 +41,17 @@ namespace VarejoSimples.Controller
 
                     p.Id = db.NextId(e => e.Id);
                     db.Save(p);
+                    
+                    Estoque est = new Estoque();
+                    est.Produto_id = p.Id;
+                    est.Loja_id = UsuariosController.LojaAtual.Id;
+                    est.Data_entrada = DateTime.Now;
+                    est.Quant = 0;
+                    est.Lote = string.Empty;
+                    est.Sublote = string.Empty;
 
-                    if (!p.Controla_lote)
-                    {
-                        Estoque est = new Estoque();
-                        est.Produto_id = p.Id;
-                        est.Loja_id = UsuariosController.LojaAtual.Id;
-                        est.Data_entrada = DateTime.Now;
-                        est.Quant = 0;
-                        est.Lote = string.Empty;
-                        est.Sublote = string.Empty;
-
-                        EstoqueController ec = new EstoqueController();
-                        ec.Save(est, db.Context);
-                    }
+                    EstoqueController ec = new EstoqueController();
+                    ec.Save(est, db.Context);
                 }
                 else
                     db.Update(p);

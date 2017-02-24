@@ -7,13 +7,13 @@ using System.Windows;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("VarejoSimples")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Curae Simples")]
+[assembly: AssemblyDescription("Software para gestão de pequenas empresas do segmento do varejo")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VarejoSimples")]
+[assembly: AssemblyCompany("Doware")]
+[assembly: AssemblyProduct("Varejo Simples")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Curae")]
 [assembly: AssemblyCulture("")]
 
 // Definir ComVisible como false torna invisíveis os tipos neste assembly

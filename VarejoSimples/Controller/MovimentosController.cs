@@ -46,6 +46,8 @@ namespace VarejoSimples.Controller
         {
             try
             {
+
+
                 if (itens_mov == null)
                     itens_mov = Movimento.Itens_movimento.ToList();
                 Movimento.Itens_movimento.Clear();
@@ -56,9 +58,13 @@ namespace VarejoSimples.Controller
 
                 db.Begin(System.Data.IsolationLevel.ReadUncommitted);
 
+                Movimentos_caixasController mov_caixa_c = new Movimentos_caixasController();
+                mov_caixa_c.SetContext(db.Context);
+
                 Movimento.Id = db.NextId(e => e.Id);
                 Movimento.Data = DateTime.Now;
-                Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
+                Movimento.Caixa_id = mov_caixa_c.GetCaixaAtualUsuario();
+                 Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
                 Movimento.Loja_id = UsuariosController.LojaAtual.Id;
 
                 db.Save(Movimento);
@@ -96,6 +102,9 @@ namespace VarejoSimples.Controller
                     pc.SetContext(db.Context);
                     Produtos prod = pc.Find(e.Produto_id);
 
+                    Produtos_fornecedoresController pForn_c = new Produtos_fornecedoresController();
+                    pForn_c.SetContext(db.Context);
+
                     switch (tipo_mov.Movimentacao_itens)
                     {
                         case (int)Tipo_movimentacao.ENTRADA:
@@ -110,9 +119,27 @@ namespace VarejoSimples.Controller
                                 e.Lote = lote;
                                 e.Sublote = sublote.ToString();
                                 e.Data_entrada = DateTime.Now;
+
+                                Produtos_fornecedores pf = pForn_c.Find(item.Produto_id, Movimento.Fornecedor_id);
+                                if (pf != null)
+                                    item.Quant = (item.Quant * pf.Fator_conversao);
+
                                 estoque_controller.Save(e);
 
                                 sublote++;
+                            }
+
+                            if (tipo_mov.Utiliza_fornecedor && !prod.Controla_lote)
+                            {
+                                Produtos_fornecedores pf = pForn_c.Find(item.Produto_id, Movimento.Fornecedor_id);
+                                if (pf != null)
+                                    item.Quant = (item.Quant * pf.Fator_conversao);
+
+                                if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, (item.Lote + "SL" + item.Sublote)))
+                                {
+                                    db.RollBack();
+                                    return 0;
+                                }
                             }
 
                             /*
@@ -200,23 +227,22 @@ namespace VarejoSimples.Controller
                     Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
                     fpg_controller.SetContext(db.Context);
 
-                    Movimentos_caixasController mov_caixa_c = new Movimentos_caixasController();
-                    mov_caixa_c.SetContext(db.Context);
-
                     Formas_pagamento forma_pg = fpg_controller.Find(item_pg.Forma_pagamento_id);
                     Movimentos_caixas mov_caixa;
-
 
                     switch (forma_pg.Tipo_pagamento)
                     {
                         case (int)Tipo_pagamento.DINHEIRO:
 
                             mov_caixa = new Movimentos_caixas();
-                            mov_caixa.Caixa_id = Movimento.Caixa_id;
+                            mov_caixa.Descricao = $"Movimento {Movimento.Id} ({(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA ? "ENTRADA" : "SAIDA")})";
+                            mov_caixa.Caixa_id = mov_caixa_c.GetCaixaAtualUsuario();
                             mov_caixa.Data = Movimento.Data;
+                            mov_caixa.Movimento_id = Movimento.Id;
                             mov_caixa.Usuario_id = Movimento.Usuario_id;
                             mov_caixa.Forma_pagamento_id = item_pg.Forma_pagamento_id;
-                            
+                            mov_caixa.Loja_id = UsuariosController.LojaAtual.Id;
+
                             switch (tipo_mov.Movimentacao_valores)
                             {
                                 case (int)Tipo_movimentacao.ENTRADA:
@@ -225,13 +251,12 @@ namespace VarejoSimples.Controller
                                     break;
 
                                 case (int)Tipo_movimentacao.SAIDA:
-                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao.SAIDA;
+                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
                                     mov_caixa.Valor = (item_pg.Valor * (-1));
                                     break;
                             }
 
-                            mov_caixa.Loja_id = Movimento.Loja_id;
-                            if(!mov_caixa_c.Save(mov_caixa))
+                            if (!mov_caixa_c.Save(mov_caixa))
                             {
                                 db.RollBack();
                                 return 0;
@@ -275,6 +300,25 @@ namespace VarejoSimples.Controller
         public void RemoveItem(int item_id)
         {
             Movimento.Itens_movimento.Remove(Movimento.Itens_movimento.Where(e => e.Id == item_id).First());
+        }
+
+        public void IncrementaItem(int item_id)
+        {
+            Itens_movimento item = Movimento.Itens_movimento.First(e => e.Id == item_id);
+
+            decimal valor_item = (item.Valor_final / item.Quant);
+            item.Quant += 1;
+            item.Valor_final += valor_item;
+        }
+
+
+        public void DecrementaItem(int item_id)
+        {
+            Itens_movimento item = Movimento.Itens_movimento.First(e => e.Id == item_id);
+
+            decimal valor_item = (item.Valor_final / item.Quant);
+            item.Quant -= 1;
+            item.Valor_final -= valor_item;
         }
 
         public void InformarCliente(int cliente_id)

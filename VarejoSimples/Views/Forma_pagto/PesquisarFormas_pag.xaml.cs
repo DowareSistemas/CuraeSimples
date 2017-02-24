@@ -67,5 +67,30 @@ namespace VarejoSimples.Views.Forma_pagto
         {
             Selecionar();
         }
+
+        private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+                    if (dataGrid.SelectedIndex == (dataGrid.Items.Count - 1))
+                    {
+                        Selecionar();
+                        return;
+                    }
+
+                    if ((dataGrid.SelectedIndex - 1) < 0)
+                    {
+                        Selecionar();
+                        return;
+                    }
+
+                    dataGrid.SelectedIndex -= 1;
+                    Selecionar();
+                }
+                catch { }
+            }
+        }
     }
 }

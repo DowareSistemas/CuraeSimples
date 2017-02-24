@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="PesquisarFormas_pag" Height="386" Width="618">
+        Title="PesquisarFormas_pag" Height="386" Width="533">
     <Grid>
         <Label x:Name="label" Content="Pesquisar" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="30" Margin="12,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="223" FontSize="14.667" Padding="0,5,0,0"/>
 
-        <DataGrid x:Name="dataGrid" MouseDoubleClick="dataGrid_MouseDoubleClick" Margin="12,65,10,40">
+        <DataGrid x:Name="dataGrid" PreviewKeyDown="dataGrid_PreviewKeyDown" MouseDoubleClick="dataGrid_MouseDoubleClick" Margin="12,65,10,40">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Código" MinWidth="80" Width="Auto" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Descrição" MinWidth="200" Width="*" Binding="{Binding Descricao}"/>

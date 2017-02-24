@@ -50,6 +50,16 @@ namespace VarejoSimples.Controller
             }
         }
 
+        internal static void Error(string v)
+        {
+            foreach (BStatusItem item in Itens)
+            {
+                string msg = v;
+                item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
+                item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+            }
+        }
+
         public static void ErrorOnFind(string entity, string exception)
         {
             foreach (BStatusItem item in Itens)
