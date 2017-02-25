@@ -110,12 +110,14 @@
     <Compile Include="Controller\BStatus.cs" />
     <Compile Include="Controller\CaixasController.cs" />
     <Compile Include="Controller\ClientesController.cs" />
+    <Compile Include="Controller\ContasController.cs" />
     <Compile Include="Controller\EstoqueController.cs" />
     <Compile Include="Controller\Extensions.cs" />
     <Compile Include="Controller\FabricantesController.cs" />
     <Compile Include="Controller\Formas_pagamentoController.cs" />
     <Compile Include="Controller\FornecedoresController.cs" />
     <Compile Include="Controller\Itens_movimentoController.cs" />
+    <Compile Include="Controller\Itens_pagamentoController.cs" />
     <Compile Include="Controller\LocalConfigController.cs" />
     <Compile Include="Controller\LogController.cs" />
     <Compile Include="Controller\LojasController.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Controller\Movimentos_caixasController.cs" />
     <Compile Include="Controller\Operadoras_cartaoController.cs" />
     <Compile Include="Controller\ParametrosController.cs" />
+    <Compile Include="Controller\ParcelasController.cs" />
     <Compile Include="Controller\PermissoesController.cs" />
     <Compile Include="Controller\Planos_contasController.cs" />
     <Compile Include="Controller\ProdutosController.cs" />
@@ -159,26 +162,34 @@
       <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
     </Compile>
     <Compile Include="Enums\Classe_plano_conta.cs" />
+    <Compile Include="Enums\Situacao_parcela.cs" />
+    <Compile Include="Enums\Tipo_conta.cs" />
+    <Compile Include="Enums\Tipo_entidade_parcela.cs" />
     <Compile Include="Enums\Tipo_intervalo.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
     <Compile Include="Enums\Tipo_movimentacao_caixa.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
+    <Compile Include="Enums\Tipo_parcela.cs" />
     <Compile Include="Enums\Tipo_plano_conta.cs" />
+    <Compile Include="Enums\Tipo_prazo_operadora.cs" />
     <Compile Include="Enums\Tipo_produto_filtro_validade.cs" />
     <Compile Include="Enums\Tipo_recebimento.cs" />
     <Compile Include="Interfaces\ICaixas.cs" />
     <Compile Include="Interfaces\IClientes.cs" />
+    <Compile Include="Interfaces\IContas.cs" />
     <Compile Include="Interfaces\IEstoque.cs" />
     <Compile Include="Interfaces\IFabricantes.cs" />
     <Compile Include="Interfaces\IFormas_pagamento.cs" />
     <Compile Include="Interfaces\IFornecedor.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
+    <Compile Include="Interfaces\IItens_pagamento.cs" />
     <Compile Include="Interfaces\ILojas.cs" />
     <Compile Include="Interfaces\IMarcas.cs" />
     <Compile Include="Interfaces\IMovimentos.cs" />
     <Compile Include="Interfaces\IMovimentos_caixas.cs" />
     <Compile Include="Interfaces\IOperadoras_cartao.cs" />
     <Compile Include="Interfaces\IParametros.cs" />
+    <Compile Include="Interfaces\IParcelas.cs" />
     <Compile Include="Interfaces\IPermissoes.cs" />
     <Compile Include="Interfaces\IPlanos_contas.cs" />
     <Compile Include="Interfaces\IProdutos.cs" />
@@ -189,6 +200,87 @@
     <Compile Include="Interfaces\IUnidades.cs" />
     <Compile Include="Interfaces\IUsuarios.cs" />
     <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Documentos_fiscais.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Planos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -233,17 +325,20 @@
     </Compile>
     <Compile Include="Repository\CaixasRepository.cs" />
     <Compile Include="Repository\ClientesRepository.cs" />
+    <Compile Include="Repository\ContasRepository.cs" />
     <Compile Include="Repository\EstoqueRepository.cs" />
     <Compile Include="Repository\FabricantesRepository.cs" />
     <Compile Include="Repository\Formas_pagamentoRepository.cs" />
     <Compile Include="Repository\FornecedoresRepository.cs" />
     <Compile Include="Repository\Itens_movimentoRepository.cs" />
+    <Compile Include="Repository\Itens_pagamentoRepository.cs" />
     <Compile Include="Repository\LojasRepository.cs" />
     <Compile Include="Repository\MarcasRepository.cs" />
     <Compile Include="Repository\MovimentosRepository.cs" />
     <Compile Include="Repository\Movimentos_caixasRepository.cs" />
     <Compile Include="Repository\Operadoras_cartaoRepository.cs" />
     <Compile Include="Repository\ParametrosRepository.cs" />
+    <Compile Include="Repository\ParcelasRepository.cs" />
     <Compile Include="Repository\PermissoesRepository.cs" />
     <Compile Include="Repository\Planos_contasRepository.cs" />
     <Compile Include="Repository\ProdutosRepository.cs" />
@@ -277,6 +372,12 @@
     </Compile>
     <Compile Include="Views\Consultas\SaldosLotes.xaml.cs">
       <DependentUpon>SaldosLotes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conta\CadContas.xaml.cs">
+      <DependentUpon>CadContas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Conta\PesquisarConta.xaml.cs">
+      <DependentUpon>PesquisarConta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Conversors.cs" />
     <Compile Include="Views\Fabricante\CadFabricantes.xaml.cs">
@@ -427,6 +528,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Consultas\SaldosLotes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conta\CadContas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Conta\PesquisarConta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

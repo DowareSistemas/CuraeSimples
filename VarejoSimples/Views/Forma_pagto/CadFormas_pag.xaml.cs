@@ -29,10 +29,12 @@ namespace VarejoSimples.Views.Forma_pagto
 
             txDescricao.Focus();
             controller = new Formas_pagamentoController();
-            List<KeyValuePair<int, string>> tipos_pag = new List<KeyValuePair<int, string>>();
-            tipos_pag.Add(new KeyValuePair<int, string>(0, "Dinheiro"));
-            tipos_pag.Add(new KeyValuePair<int, string>(1, "Cartão"));
-            tipos_pag.Add(new KeyValuePair<int, string>(2, "Crédito cliente"));
+            List<KeyValuePair<Tipo_pagamento, string>> tipos_pag = new List<KeyValuePair<Tipo_pagamento, string>>();
+            tipos_pag.Add(new KeyValuePair<Tipo_pagamento, string>(Tipo_pagamento.DINHEIRO, "DINHEIRO"));
+            tipos_pag.Add(new KeyValuePair<Tipo_pagamento, string>(Tipo_pagamento.CARTAO, "CARTÃO"));
+            tipos_pag.Add(new KeyValuePair<Tipo_pagamento, string>(Tipo_pagamento.CREDITO, "CRÉDITO CLIENTE"));
+            tipos_pag.Add(new KeyValuePair<Tipo_pagamento, string>(Tipo_pagamento.PRAZO, "Á PRAZO"));
+            tipos_pag.Add(new KeyValuePair<Tipo_pagamento, string>(Tipo_pagamento.CHEQUE, "CHEQUE"));
 
             cbTipo_pagamento.ItemsSource = tipos_pag;
             cbTipo_pagamento.DisplayMemberPath = "Value";
@@ -108,6 +110,22 @@ namespace VarejoSimples.Views.Forma_pagto
             }
 
             if (fpg.Tipo_pagamento == (int)Tipo_pagamento.CREDITO)
+            {
+                cbTipo_intervalo.IsEnabled = false;
+                txInterv_diaBase.IsEnabled = false;
+                txParcelas.IsEnabled = false;
+                btSelecionarOperadora.IsEnabled = false;
+            }
+
+            if(fpg.Tipo_pagamento == (int) Tipo_pagamento.CHEQUE)
+            {
+                cbTipo_intervalo.IsEnabled = true;
+                txInterv_diaBase.IsEnabled = true;
+                txParcelas.IsEnabled = true;
+                btSelecionarOperadora.IsEnabled = false;
+            }
+
+            if(fpg.Tipo_pagamento == (int) Tipo_pagamento.PRAZO)
             {
                 cbTipo_intervalo.IsEnabled = true;
                 txInterv_diaBase.IsEnabled = true;
@@ -196,7 +214,7 @@ namespace VarejoSimples.Views.Forma_pagto
 
         private void cbTipo_pagamento_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbTipo_pagamento.SelectedIndex == (int)Tipo_pagamento.DINHEIRO)
+            if ((Tipo_pagamento)cbTipo_pagamento.SelectedValue == Tipo_pagamento.DINHEIRO)
             {
                 cbTipo_intervalo.IsEnabled = false;
                 txInterv_diaBase.IsEnabled = false;
@@ -204,7 +222,15 @@ namespace VarejoSimples.Views.Forma_pagto
                 btSelecionarOperadora.IsEnabled = false;
             }
 
-            if (cbTipo_pagamento.SelectedIndex == (int)Tipo_pagamento.CREDITO)
+            if ((Tipo_pagamento)cbTipo_pagamento.SelectedValue ==Tipo_pagamento.CREDITO)
+            {
+                cbTipo_intervalo.IsEnabled = false;
+                txInterv_diaBase.IsEnabled = false;
+                txParcelas.IsEnabled = false;
+                btSelecionarOperadora.IsEnabled = false;
+            }
+
+            if((Tipo_pagamento )cbTipo_pagamento.SelectedValue == Tipo_pagamento.CHEQUE)
             {
                 cbTipo_intervalo.IsEnabled = true;
                 txInterv_diaBase.IsEnabled = true;
@@ -212,7 +238,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 btSelecionarOperadora.IsEnabled = false;
             }
 
-            if (cbTipo_pagamento.SelectedIndex == (int)Tipo_pagamento.CARTAO)
+            if ((Tipo_pagamento)cbTipo_pagamento.SelectedValue == Tipo_pagamento.CARTAO)
             {
                 cbTipo_intervalo.IsEnabled = false;
                 txInterv_diaBase.IsEnabled = false;

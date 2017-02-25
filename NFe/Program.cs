@@ -85,7 +85,7 @@ namespace NFe
                 xMun = "VOLTA REDONDA",
                 UF = "RJ",
                 CEP = "27275350",
-                IE = "17757547",
+                IE = "ISENTO",
                 CRT = "3"
             };
 
@@ -100,7 +100,7 @@ namespace NFe
                 xMun = "Volta Redonda",
                 UF = "RJ",
                 CEP = "27281440",
-                indIEDest = "9",
+                indIEDest = "2",
             };
 
             nfe.dets = new List<Model.det>();

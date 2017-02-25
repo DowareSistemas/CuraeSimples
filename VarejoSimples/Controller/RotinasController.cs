@@ -7,6 +7,7 @@ using VarejoSimples.Repository;
 using VarejoSimples.Views.Caixa;
 using VarejoSimples.Views.Cliente;
 using VarejoSimples.Views.Configuracao;
+using VarejoSimples.Views.Conta;
 using VarejoSimples.Views.Fabricante;
 using VarejoSimples.Views.Forma_pagto;
 using VarejoSimples.Views.Fornecedor;
@@ -140,6 +141,12 @@ namespace VarejoSimples.Controller
 
                         CadPlano_conta cpc = new CadPlano_conta();
                         cpc.ShowDialog();
+                        break;
+
+                    case 31:
+
+                        CadContas cadconta = new CadContas();
+                        cadconta.ShowDialog();
                         break;
                 }
             }

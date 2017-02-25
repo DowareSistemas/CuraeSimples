@@ -8,6 +8,27 @@ using VarejoSimples.Enums;
 
 namespace VarejoSimples.Views
 {
+    public class Tipo_contaConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return value;
+
+            switch(int.Parse(value.ToString()))
+            {
+                case (int)Tipo_conta.CONTA_BANCARIA: return "CONTA BANCÁRIA";
+                case (int)Tipo_conta.CONTA_CAIXA: return "CONTA CAIXA";
+            }
+
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class Classe_plano_contaConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

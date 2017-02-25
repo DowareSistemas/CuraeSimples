@@ -45,9 +45,13 @@ namespace VarejoSimples.Controller
             txInput.GotFocus += TxInput_GotFocus;
         }
 
-        public static void ToNumeric(this TextBox txInput)
+        public static void ToNumeric(this TextBox txInput, bool acceptTrace = false)
         {
-            txInput.PreviewTextInput += TxInput_PreviewTextInput1;
+            if (acceptTrace)
+                txInput.PreviewTextInput += TxInput_PreviewTextInput2;
+            else
+                txInput.PreviewTextInput += TxInput_PreviewTextInput1;
+
             txInput.GotFocus += TxInput_GotFocus;
         }
 
@@ -55,6 +59,15 @@ namespace VarejoSimples.Controller
         {
             TextBox tx = (TextBox)sender;
             tx.SelectAll();
+        }
+
+        private static void TxInput_PreviewTextInput2(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Last() == '-')
+                return;
+
+            Regex rgxNumbers = new Regex("[^0-9]+");
+            e.Handled = (rgxNumbers.IsMatch(e.Text));
         }
 
         private static void TxInput_PreviewTextInput1(object sender, TextCompositionEventArgs e)

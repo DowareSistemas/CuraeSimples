@@ -87,7 +87,7 @@ namespace VarejoSimples.Controller
                     m.Tipo_mov == (int)Tipo_movimentacao_caixa.ABERTURA
                 ).Max(m => m.Id);
 
-            return db.Find(ultimaAbertura).Id;
+            return db.Find(ultimaAbertura).Caixa_id;
         }
 
         private void FechaCaixa(int caixa_id, int usuario_id)

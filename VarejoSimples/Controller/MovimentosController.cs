@@ -46,8 +46,6 @@ namespace VarejoSimples.Controller
         {
             try
             {
-
-
                 if (itens_mov == null)
                     itens_mov = Movimento.Itens_movimento.ToList();
                 Movimento.Itens_movimento.Clear();
@@ -58,13 +56,12 @@ namespace VarejoSimples.Controller
 
                 db.Begin(System.Data.IsolationLevel.ReadUncommitted);
 
-                Movimentos_caixasController mov_caixa_c = new Movimentos_caixasController();
-                mov_caixa_c.SetContext(db.Context);
+                Movimentos_caixasController movimentos_caixaController = new Movimentos_caixasController();
+                movimentos_caixaController.SetContext(db.Context);
 
                 Movimento.Id = db.NextId(e => e.Id);
                 Movimento.Data = DateTime.Now;
-                Movimento.Caixa_id = mov_caixa_c.GetCaixaAtualUsuario();
-                 Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
+                Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
                 Movimento.Loja_id = UsuariosController.LojaAtual.Id;
 
                 db.Save(Movimento);
@@ -224,51 +221,101 @@ namespace VarejoSimples.Controller
                 #region Itens do Pagamento
                 foreach (Itens_pagamento item_pg in itens_pag)
                 {
+                    if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.NENHUM)
+                        continue;
+
+                    item_pg.Movimento_id = Movimento.Id;
+                    Itens_pagamentoController ipc = new Itens_pagamentoController();
+                    if (!ipc.Save(item_pg, db.Context))
+                    {
+                        db.RollBack();
+                        return 0;
+                    }
+
                     Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
                     fpg_controller.SetContext(db.Context);
+                    Formas_pagamento forma_pagamento = fpg_controller.Find(item_pg.Forma_pagamento_id);
 
-                    Formas_pagamento forma_pg = fpg_controller.Find(item_pg.Forma_pagamento_id);
-                    Movimentos_caixas mov_caixa;
+                    Movimentos_caixas movimento_caixa = new Movimentos_caixas();
+                    movimento_caixa.Descricao = $"Movimento {Movimento.Id} ({(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA ? "ENTRADA" : "SAIDA")})";
+                    movimento_caixa.Caixa_id = movimentos_caixaController.GetCaixaAtualUsuario();
+                    movimento_caixa.Data = Movimento.Data;
+                    movimento_caixa.Movimento_id = Movimento.Id;
+                    movimento_caixa.Usuario_id = Movimento.Usuario_id;
+                    movimento_caixa.Forma_pagamento_id = item_pg.Forma_pagamento_id;
+                    movimento_caixa.Loja_id = UsuariosController.LojaAtual.Id;
 
-                    switch (forma_pg.Tipo_pagamento)
+                    switch (forma_pagamento.Tipo_pagamento)
                     {
+                        #region DINHEIRO
                         case (int)Tipo_pagamento.DINHEIRO:
-
-                            mov_caixa = new Movimentos_caixas();
-                            mov_caixa.Descricao = $"Movimento {Movimento.Id} ({(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA ? "ENTRADA" : "SAIDA")})";
-                            mov_caixa.Caixa_id = mov_caixa_c.GetCaixaAtualUsuario();
-                            mov_caixa.Data = Movimento.Data;
-                            mov_caixa.Movimento_id = Movimento.Id;
-                            mov_caixa.Usuario_id = Movimento.Usuario_id;
-                            mov_caixa.Forma_pagamento_id = item_pg.Forma_pagamento_id;
-                            mov_caixa.Loja_id = UsuariosController.LojaAtual.Id;
 
                             switch (tipo_mov.Movimentacao_valores)
                             {
                                 case (int)Tipo_movimentacao.ENTRADA:
-                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
-                                    mov_caixa.Valor = item_pg.Valor;
+                                    movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
+                                    movimento_caixa.Valor = item_pg.Valor;
                                     break;
 
                                 case (int)Tipo_movimentacao.SAIDA:
-                                    mov_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
-                                    mov_caixa.Valor = (item_pg.Valor * (-1));
+                                    movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
+                                    movimento_caixa.Valor = (item_pg.Valor * (-1));
                                     break;
                             }
 
-                            if (!mov_caixa_c.Save(mov_caixa))
+                            break;
+                        #endregion
+
+                        #region CARTAO
+                        case (int)Tipo_pagamento.CARTAO:
+
+                            movimento_caixa.Valor = 0;
+
+                            Operadoras_cartaoController opController = new Operadoras_cartaoController();
+                            opController.SetContext(db.Context);
+                            Operadoras_cartao operadora = opController.Find(forma_pagamento.Operadora_cartao_id);
+
+                            Parcelas parcela = new Parcelas();
+                            parcela.Tipo_entidade = (int)Tipo_entidade_parcela.OPERADORA;
+                            parcela.Operadora_cartao_id = forma_pagamento.Operadora_cartao_id;
+                            parcela.Item_pagamento_id = item_pg.Id;
+                            parcela.Valor = item_pg.Valor;
+                            parcela.Situacao = (int)Situacao_parcela.EM_ABERTO;
+                            parcela.Data_lancamento = Movimento.Data;
+                            parcela.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
+
+                            parcela.Data_vencimento = (operadora.Tipo_recebimento == (int)Tipo_prazo_operadora.DIAS
+                                ? Movimento.Data.AddDays(operadora.Prazo_recebimento)
+                                : Movimento.Data.AddHours(operadora.Prazo_recebimento));
+
+                            parcela.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
+                                 ? (int)Tipo_parcela.RECEBER
+                                 : (int)Tipo_parcela.PAGAR);
+
+                            ParcelasController parcController = new ParcelasController();
+                            parcController.SetContext(db.Context);
+
+                            if (!parcController.Save(parcela))
                             {
                                 db.RollBack();
                                 return 0;
                             }
 
                             break;
+                        #endregion
 
-                        case (int)Tipo_pagamento.CARTAO:
-
+                        #region CHEQUE
+                        case (int)Tipo_pagamento.CHEQUE:
 
 
                             break;
+                            #endregion
+                    }
+
+                    if (!movimentos_caixaController.Save(movimento_caixa))
+                    {
+                        db.RollBack();
+                        return 0;
                     }
                 }
                 #endregion
