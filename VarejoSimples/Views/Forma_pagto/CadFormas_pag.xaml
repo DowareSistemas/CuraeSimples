@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Title="Cadastro de condições de pagamento" Height="332" Width="549">
+        Title="Cadastro de condições de pagamento" Height="336" Width="549">
     <Grid>
         <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
             <Button x:Name="btSalvar" TabIndex="6" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
@@ -43,6 +43,10 @@
         <TextBox x:Name="txNome_operadora" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="235,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy1" Content="Tipo intervalo" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667" Width="110"/>
         <ComboBox x:Name="cbTipo_intervalo" SelectionChanged="cbTipo_intervalo_SelectionChanged" TabIndex="2" HorizontalAlignment="Left" Margin="125,115,0,0" VerticalAlignment="Top" Width="220" Height="30" FontSize="14.667"/>
+        <Label x:Name="lbIntervalo_diaBase_Copy2" Content="Conta" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCod_conta" TabIndex="5" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="125,255,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="65" FontSize="14.667" Padding="0,5,0,0"/>
+        <Button x:Name="btSelecionarConta" Content=". . ." HorizontalAlignment="Left" Margin="195,255,0,0" VerticalAlignment="Top" Width="35" Height="30" Click="btSelecionarConta_Click"/>
+        <TextBox x:Name="txConta" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="235,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" FontSize="14.667" Padding="0,5,0,0"/>
 
     </Grid>
 </Window>

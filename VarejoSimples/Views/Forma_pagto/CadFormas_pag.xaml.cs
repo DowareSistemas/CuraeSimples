@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Enums;
 using VarejoSimples.Model;
+using VarejoSimples.Views.Conta;
 using VarejoSimples.Views.Operadora_cartao;
 
 namespace VarejoSimples.Views.Forma_pagto
@@ -50,6 +51,12 @@ namespace VarejoSimples.Views.Forma_pagto
 
             cbTipo_pagamento.SelectedIndex = 0;
             cbTipo_intervalo.SelectedIndex = 0;
+
+            txCod.ToNumeric();
+            txInterv_diaBase.ToNumeric();
+            txParcelas.ToNumeric();
+            txCod_operadora.ToNumeric();
+            txCod_conta.ToNumeric(); 
         }
 
         private void next_Click(object sender, RoutedEventArgs e)
@@ -82,6 +89,13 @@ namespace VarejoSimples.Views.Forma_pagto
             cbTipo_intervalo.SelectedIndex = fpg.Tipo_intervalo;
             cbTipo_pagamento.SelectedIndex = fpg.Tipo_pagamento;
             txParcelas.Text = fpg.Parcelas.ToString();
+            
+            if(fpg.Conta_id > 0)
+            {
+                Contas conta = new ContasController().Find(fpg.Conta_id);
+                txCod_conta.Text = conta.Id.ToString();
+                txConta.Text = conta.Nome;
+            }
 
             if (fpg.Tipo_intervalo == (int)Tipo_intervalo.DATA_BASE)
             {
@@ -115,6 +129,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = false;
                 txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = false;
             }
 
             if(fpg.Tipo_pagamento == (int) Tipo_pagamento.CHEQUE)
@@ -123,6 +138,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = true;
                 txParcelas.IsEnabled = true;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = true;
             }
 
             if(fpg.Tipo_pagamento == (int) Tipo_pagamento.PRAZO)
@@ -131,6 +147,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = true;
                 txParcelas.IsEnabled = true;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = true;
             }
 
             if (fpg.Tipo_intervalo == (int)Tipo_pagamento.CARTAO)
@@ -139,6 +156,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = false;
                 txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = true;
+                btSelecionarConta.IsEnabled = true;
             }
 
             txDescricao.Focus();
@@ -168,6 +186,7 @@ namespace VarejoSimples.Views.Forma_pagto
 
             fp.Parcelas = int.Parse(txParcelas.Text);
             fp.Operadora_cartao_id = int.Parse(txCod_operadora.Text);
+            fp.Conta_id = int.Parse(txCod_conta.Text);
 
             if (controller.Save(fp))
                 LimparCampos();
@@ -183,6 +202,8 @@ namespace VarejoSimples.Views.Forma_pagto
             txParcelas.Text = "0";
             txCod_operadora.Text = "0";
             txNome_operadora.Text = string.Empty;
+            txCod_conta.Text = "0";
+            txConta.Text = string.Empty;
 
             txDescricao.Focus();
         }
@@ -220,6 +241,7 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = false;
                 txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = false;
             }
 
             if ((Tipo_pagamento)cbTipo_pagamento.SelectedValue ==Tipo_pagamento.CREDITO)
@@ -228,14 +250,16 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = false;
                 txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = false;
             }
 
             if((Tipo_pagamento )cbTipo_pagamento.SelectedValue == Tipo_pagamento.CHEQUE)
             {
-                cbTipo_intervalo.IsEnabled = true;
-                txInterv_diaBase.IsEnabled = true;
-                txParcelas.IsEnabled = true;
+                cbTipo_intervalo.IsEnabled = false;
+                txInterv_diaBase.IsEnabled = false;
+                txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = true;
             }
 
             if ((Tipo_pagamento)cbTipo_pagamento.SelectedValue == Tipo_pagamento.CARTAO)
@@ -244,6 +268,16 @@ namespace VarejoSimples.Views.Forma_pagto
                 txInterv_diaBase.IsEnabled = false;
                 txParcelas.IsEnabled = false;
                 btSelecionarOperadora.IsEnabled = true;
+                btSelecionarConta.IsEnabled = true;
+            }
+
+            if((Tipo_pagamento)cbTipo_pagamento.SelectedValue == Tipo_pagamento.PRAZO)
+            {
+                cbTipo_intervalo.IsEnabled = true;
+                txInterv_diaBase.IsEnabled = true;
+                txParcelas.IsEnabled = true;
+                btSelecionarOperadora.IsEnabled = false;
+                btSelecionarConta.IsEnabled = true;
             }
         }
 
@@ -275,6 +309,17 @@ namespace VarejoSimples.Views.Forma_pagto
 
                 FillFpg(pF.Selecionado);
             }
+        }
+
+        private void btSelecionarConta_Click(object sender, RoutedEventArgs e)
+        {
+            PesquisarConta pc = new PesquisarConta(false);
+            pc.ShowDialog();
+
+            txCod_conta.Text = pc.Selecionado.Id.ToString();
+            txConta.Text = (pc.Selecionado.Id == 0
+                ? "Não selecionado"
+                : pc.Selecionado.Nome);
         }
     }
 }

@@ -102,6 +102,7 @@
           <Property Name="Dia_base" Type="int" Nullable="false" />
           <Property Name="Parcelas" Type="int" Nullable="false" />
           <Property Name="Operadora_cartao_id" Type="int" Nullable="false" />
+          <Property Name="Conta_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Fornecedores">
           <Key>
@@ -341,7 +342,7 @@
           <Property Name="Cfop" Type="int" Nullable="false" />
           <Property Name="Utiliza_fornecedor" Type="bit" Nullable="false" />
           <Property Name="Transferencia_loja" Type="bit" Nullable="false" />
-          <Property Name="Plano_conta_id" Type="int" />
+          <Property Name="Plano_conta_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Unidades">
           <Key>
@@ -658,7 +659,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Itens_Plan_148989">
-          <End Role="Planos_contas" Type="Self.Planos_contas" Multiplicity="0..1" />
+          <End Role="Planos_contas" Type="Self.Planos_contas" Multiplicity="1" />
           <End Role="Tipos_movimento" Type="Self.Tipos_movimento" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Planos_contas">
@@ -1029,6 +1030,7 @@
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Forma__7B5B524B" FromRole="Formas_pagamento" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Movimentos_caixas" Relationship="Model.FK__Movimento__Forma__55009F39" FromRole="Formas_pagamento" ToRole="Movimentos_caixas" />
           <NavigationProperty Name="Movimentos_contas" Relationship="Model.FK__Movimento__Forma__7A3223E8" FromRole="Formas_pagamento" ToRole="Movimentos_contas" />
+          <Property Name="Conta_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Fornecedores">
           <Key>
@@ -1280,7 +1282,7 @@
           <Property Name="Cfop" Type="Int32" Nullable="false" />
           <Property Name="Utiliza_fornecedor" Type="Boolean" Nullable="false" />
           <Property Name="Transferencia_loja" Type="Boolean" Nullable="false" />
-          <Property Name="Plano_conta_id" Type="Int32" />
+          <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Planos_contas" Relationship="Model.Itens_Plan_148989" FromRole="Tipos_movimento" ToRole="Planos_contas" />
         </EntityType>
         <EntityType Name="Unidades">
@@ -1751,6 +1753,7 @@
           <EntitySetMapping Name="Formas_pagamento">
             <EntityTypeMapping TypeName="Model.Formas_pagamento">
               <MappingFragment StoreEntitySet="Formas_pagamento">
+                <ScalarProperty Name="Conta_id" ColumnName="Conta_id" />
                 <ScalarProperty Name="Operadora_cartao_id" ColumnName="Operadora_cartao_id" />
                 <ScalarProperty Name="Parcelas" ColumnName="Parcelas" />
                 <ScalarProperty Name="Dia_base" ColumnName="Dia_base" />

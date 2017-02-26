@@ -59,10 +59,15 @@ namespace VarejoSimples.Controller
                 Movimentos_caixasController movimentos_caixaController = new Movimentos_caixasController();
                 movimentos_caixaController.SetContext(db.Context);
 
+                Tipos_movimentoController tmc = new Tipos_movimentoController();
+                tmc.SetContext(db.Context);
+                Tipos_movimento tipo_mov = tmc.Find(Movimento.Tipo_movimento_id);
+
                 Movimento.Id = db.NextId(e => e.Id);
                 Movimento.Data = DateTime.Now;
                 Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
                 Movimento.Loja_id = UsuariosController.LojaAtual.Id;
+                Movimento.Plano_conta_id = (int)tipo_mov.Plano_conta_id;
 
                 db.Save(Movimento);
 
@@ -71,10 +76,6 @@ namespace VarejoSimples.Controller
 
                 EstoqueController estoque_controller = new EstoqueController();
                 estoque_controller.SetContext(db.Context);
-
-                Tipos_movimentoController tmc = new Tipos_movimentoController();
-                tmc.SetContext(db.Context);
-                Tipos_movimento tipo_mov = tmc.Find(Movimento.Tipo_movimento_id);
 
                 string lote = imc.GetLastLote(false);
                 lote = estoque_controller.GeraProximoLote(lote);
