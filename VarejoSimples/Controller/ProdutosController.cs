@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -24,12 +26,15 @@ namespace VarejoSimples.Controller
 
         public bool Save(Produtos p)
         {
+            UnitOfWork unit = new UnitOfWork();
             try
             {
+                unit.BeginTransaction();
+                db.Context = unit.Context;
+
                 if (!Valid(p))
                     return false;
-
-                db.Begin(System.Data.IsolationLevel.ReadCommitted);
+               
                 if (db.Find(p.Id) == null)
                 {
                     if (!string.IsNullOrWhiteSpace(p.Referencia))
@@ -41,7 +46,7 @@ namespace VarejoSimples.Controller
 
                     p.Id = db.NextId(e => e.Id);
                     db.Save(p);
-                    
+
                     Estoque est = new Estoque();
                     est.Produto_id = p.Id;
                     est.Loja_id = UsuariosController.LojaAtual.Id;
@@ -51,18 +56,20 @@ namespace VarejoSimples.Controller
                     est.Sublote = string.Empty;
 
                     EstoqueController ec = new EstoqueController();
-                    ec.Save(est, db.Context);
+                    ec.SetContext(unit.Context);
+                    ec.Save(est);
                 }
                 else
                     db.Update(p);
 
                 db.Commit();
+                unit.Commit();
                 BStatus.Success("Produto salvo");
                 return true;
             }
             catch (Exception ex)
             {
-                db.RollBack();
+                unit.RollBack();
                 return false;
             }
         }

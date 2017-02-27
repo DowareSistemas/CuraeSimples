@@ -1,10 +1,12 @@
 ﻿using DarumaFramework_NFCe;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,9 +17,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
+using VarejoSimples.Views.Movimento.RecebimentoCheques;
 
 namespace VarejoSimples
 {
@@ -43,12 +47,11 @@ namespace VarejoSimples
 
         public MainWindow()
         {
-           // NFCe();
-            varejo_config db = new varejo_config();
+            // NFCe();
+          //  varejo_config db = new varejo_config();
             //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
-            db.Database.CreateIfNotExists();
+          //  db.Database.CreateIfNotExists();
 
-          //  new Movimentos_caixasController().CaixaAberto(1);
 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");

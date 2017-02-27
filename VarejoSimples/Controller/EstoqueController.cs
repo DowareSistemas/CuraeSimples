@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -25,12 +26,12 @@ namespace VarejoSimples.Controller
             db.Context = v;
         }
 
-        public bool Save(Estoque est, varejo_config v = null)
+        private bool auto_commit = true;
+
+        public bool Save(Estoque est)
         {
             try
             {
-                if (v != null)
-                    db.Context = v;
                 if (db.Find(est.Id) == null)
                 {
                     est.Id = db.NextId(e => e.Id);
@@ -39,7 +40,7 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(est);
 
-                if (v == null)
+                if (auto_commit)
                     db.Commit();
                 return true;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -19,6 +20,7 @@ namespace VarejoSimples.Controller
             db = new Produtos_fornecedoresRepository();
         }
 
+        private bool auto_commit = true;
         public bool Save(Produtos_fornecedores pf)
         {
             try
@@ -34,7 +36,8 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(pf);
 
-                db.Commit();
+                if (auto_commit)
+                    db.Commit();
                 BStatus.Success("Amarração Produto x Fornecedor salva com sucesso");
                 return true;
             }
@@ -58,7 +61,7 @@ namespace VarejoSimples.Controller
                 }
             }
 
-            if(pf.Preco_custo == p.Valor_unit)
+            if (pf.Preco_custo == p.Valor_unit)
             {
                 DialogResult dr = MessageBox.Show("O preço de custo é iguala ao valor unitário do produto. \nPortanto, o lucro sobre o produto é 0. \nDeseja salvar mesmo assim?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (dr == DialogResult.No)
@@ -147,9 +150,9 @@ namespace VarejoSimples.Controller
             return true;
         }
 
-        internal void SetContext(varejo_config context)
+        internal void SetContext(varejo_config v)
         {
-            db.Context = context;
+            db.Context = v;
         }
 
         public List<Produtos_fornecedores> Search(string search)
@@ -192,7 +195,7 @@ namespace VarejoSimples.Controller
 
         public List<Produtos_fornecedores> Get(Expression<Func<Produtos_fornecedores, bool>> query)
         {
-            return db.Where(query).ToList(); 
+            return db.Where(query).ToList();
         }
 
         public bool Remove(int id)

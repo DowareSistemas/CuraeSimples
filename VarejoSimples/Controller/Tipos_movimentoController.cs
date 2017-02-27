@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Model;
@@ -16,6 +17,8 @@ namespace VarejoSimples.Controller
             db = new Tipos_movimentoRepository();
         }
 
+        private bool auto_commit = true;
+
         public bool Save(Tipos_movimento tm)
         {
             try
@@ -31,7 +34,8 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(tm);
 
-                db.Commit();
+                if (auto_commit)
+                    db.Commit();
                 BStatus.Success("Tipo de movimento salvo");
                 return true;
             }
@@ -48,7 +52,7 @@ namespace VarejoSimples.Controller
 
         private bool Valid(Tipos_movimento tm)
         {
-            if(tm.Plano_conta_id == 0)
+            if (tm.Plano_conta_id == 0)
             {
                 BStatus.Alert("O plano de conta é obrigatório");
                 return false;
@@ -92,9 +96,9 @@ namespace VarejoSimples.Controller
             return true;
         }
 
-        public void SetContext(varejo_config context)
+        public void SetContext(varejo_config v)
         {
-            db.Context = context;
+            db.Context = v;
         }
 
         public Tipos_movimento Find(int id)

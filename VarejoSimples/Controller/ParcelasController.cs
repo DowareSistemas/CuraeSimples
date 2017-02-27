@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Model;
@@ -44,7 +45,6 @@ namespace VarejoSimples.Controller
         public void SetContext(varejo_config v)
         {
             db.Context = v;
-            auto_commit = false;
         }
     }
 }

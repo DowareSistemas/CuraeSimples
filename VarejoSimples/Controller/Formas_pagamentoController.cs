@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Enums;
@@ -17,6 +18,8 @@ namespace VarejoSimples.Controller
             db = new Repository.Formas_pagamentoRepository();
         }
 
+        bool auto_commit = true;
+
         public bool Save(Formas_pagamento pg)
         {
             try
@@ -31,7 +34,9 @@ namespace VarejoSimples.Controller
                 }
                 else
                     db.Update(pg);
-                db.Commit();
+
+                if (auto_commit)
+                    db.Commit();
                 BStatus.Success("Forma de pagamento salva");
                 return true;
             }
@@ -57,9 +62,9 @@ namespace VarejoSimples.Controller
                         BStatus.Alert("O dia base não pode ser menor que 1 ou passar de 31 ");
                         return false;
                     }
-                
-                if(pg.Tipo_intervalo == (int) Tipo_intervalo.INTERVALO)
-                    if(pg.Intervalo < 1)
+
+                if (pg.Tipo_intervalo == (int)Tipo_intervalo.INTERVALO)
+                    if (pg.Intervalo < 1)
                     {
                         BStatus.Alert("O intervalo não pode ser inferior a 1");
                         return false;
@@ -126,9 +131,9 @@ namespace VarejoSimples.Controller
             return db.Where(f => f.Id < current_id).OrderByDescending(f => f.Id).FirstOrDefault();
         }
 
-        internal void SetContext(varejo_config context)
+        internal void SetContext(varejo_config v)
         {
-            db.Context = context;
+            db.Context  = v;
         }
     }
 }

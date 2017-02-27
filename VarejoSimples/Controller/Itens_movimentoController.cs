@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Model;
@@ -26,6 +27,7 @@ namespace VarejoSimples.Controller
             try
             {
                 db.Save(item);
+                db.Commit();
                 return true;
             }
             catch (Exception ex)

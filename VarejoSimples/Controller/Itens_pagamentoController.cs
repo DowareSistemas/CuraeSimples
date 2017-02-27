@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Model;
@@ -16,13 +17,15 @@ namespace VarejoSimples.Controller
             db = new Itens_pagamentoRepository();
         }
 
-        public  bool Save(Itens_pagamento ip, varejo_config context)
+        bool auto_commit = true;
+
+        public  bool Save(Itens_pagamento ip)
         {
             try
             {
-                db.Context = context;
                 ip.Id = db.NextId(e => e.Id);
                 db.Save(ip);
+                db.Commit();
 
                 return true;
             }
@@ -30,6 +33,11 @@ namespace VarejoSimples.Controller
             {
                 return false;
             }
+        }
+
+        internal void SetContext(varejo_config v)
+        {
+            db.Context = v;
         }
     }
 }

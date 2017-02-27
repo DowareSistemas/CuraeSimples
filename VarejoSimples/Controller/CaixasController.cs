@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Model;
@@ -11,9 +12,23 @@ namespace VarejoSimples.Controller
     {
         private CaixasRepository db = null;
 
+        public varejo_config Context
+        {
+            get
+            {
+                return db.Context;
+            }
+        }
+
         public CaixasController()
         {
             db = new CaixasRepository();
+           
+        }
+
+        public DbContextTransaction BeginTx()
+        {
+            return db.Begin(System.Data.IsolationLevel.ReadUncommitted);
         }
 
         public bool Save(Caixas caixa)
@@ -84,6 +99,11 @@ namespace VarejoSimples.Controller
             }
 
             return true;
+        }
+
+        internal void SetContext(varejo_config c)
+        {
+            db.Context = c;
         }
 
         public List<Caixas> Search(string search)

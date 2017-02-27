@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -12,6 +13,7 @@ namespace VarejoSimples.Controller
     public class Operadoras_cartaoController
     {
         private Operadoras_cartaoRepository db = null;
+        private bool auto_commit = true;
 
         public Operadoras_cartaoController()
         {
@@ -32,7 +34,9 @@ namespace VarejoSimples.Controller
                 }
                 else
                     db.Update(oc);
-                db.Commit();
+
+                if (auto_commit)
+                    db.Commit();
                 BStatus.Success("Operadora de cartão salva");
                 return true;
             }
@@ -110,9 +114,9 @@ namespace VarejoSimples.Controller
             return db.Where(query).ToList();
         }
 
-        internal void SetContext(varejo_config context)
+        internal void SetContext(varejo_config v)
         {
-            db.Context = context;
+            db.Context = v;
         }
     }
 }

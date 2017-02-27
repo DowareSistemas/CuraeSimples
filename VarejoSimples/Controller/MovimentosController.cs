@@ -1,11 +1,16 @@
 ﻿using DarumaFramework_NFCe;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Enums;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Repository;
+using VarejoSimples.Views.Movimento.LancamentoCheque;
+using VarejoSimples.Views.Movimento.RecebimentoCheques;
 
 namespace VarejoSimples.Controller
 {
@@ -44,8 +49,12 @@ namespace VarejoSimples.Controller
         /// <returns>Código do movimento caso seja efetuado com sucesso. Caso haja erros, retornará 0.</returns>
         public int FechaMovimento()
         {
+            UnitOfWork unit = new UnitOfWork();
             try
             {
+                unit.BeginTransaction();
+                db.Context = unit.Context;
+
                 if (itens_mov == null)
                     itens_mov = Movimento.Itens_movimento.ToList();
                 Movimento.Itens_movimento.Clear();
@@ -53,29 +62,29 @@ namespace VarejoSimples.Controller
                 if (itens_pag == null)
                     itens_pag = Movimento.Itens_pagamento.ToList();
                 Movimento.Itens_pagamento.Clear();
-
-                db.Begin(System.Data.IsolationLevel.ReadUncommitted);
-
+                
                 Movimentos_caixasController movimentos_caixaController = new Movimentos_caixasController();
-                movimentos_caixaController.SetContext(db.Context);
+                movimentos_caixaController.SetContext(unit.Context);
 
                 Tipos_movimentoController tmc = new Tipos_movimentoController();
-                tmc.SetContext(db.Context);
+                tmc.SetContext(unit.Context);
+
                 Tipos_movimento tipo_mov = tmc.Find(Movimento.Tipo_movimento_id);
 
                 Movimento.Id = db.NextId(e => e.Id);
                 Movimento.Data = DateTime.Now;
                 Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
                 Movimento.Loja_id = UsuariosController.LojaAtual.Id;
-                Movimento.Plano_conta_id = (int)tipo_mov.Plano_conta_id;
+                Movimento.Plano_conta_id = tipo_mov.Plano_conta_id;
 
                 db.Save(Movimento);
+                db.Commit();
 
                 Itens_movimentoController imc = new Itens_movimentoController();
-                imc.SetContext(db.Context);
+                imc.SetContext(unit.Context);
 
                 EstoqueController estoque_controller = new EstoqueController();
-                estoque_controller.SetContext(db.Context);
+                estoque_controller.SetContext(unit.Context);
 
                 string lote = imc.GetLastLote(false);
                 lote = estoque_controller.GeraProximoLote(lote);
@@ -97,11 +106,11 @@ namespace VarejoSimples.Controller
                             : (item.Lote + "SL" + item.Sublote));
 
                     ProdutosController pc = new ProdutosController();
-                    pc.SetContext(db.Context);
+                    pc.SetContext(unit.Context);
                     Produtos prod = pc.Find(e.Produto_id);
 
                     Produtos_fornecedoresController pForn_c = new Produtos_fornecedoresController();
-                    pForn_c.SetContext(db.Context);
+                    pForn_c.SetContext(unit.Context);
 
                     switch (tipo_mov.Movimentacao_itens)
                     {
@@ -123,7 +132,6 @@ namespace VarejoSimples.Controller
                                     item.Quant = (item.Quant * pf.Fator_conversao);
 
                                 estoque_controller.Save(e);
-
                                 sublote++;
                             }
 
@@ -135,7 +143,7 @@ namespace VarejoSimples.Controller
 
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, (item.Lote + "SL" + item.Sublote)))
                                 {
-                                    db.RollBack();
+                                    unit.RollBack();
                                     return 0;
                                 }
                             }
@@ -155,7 +163,7 @@ namespace VarejoSimples.Controller
 
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, (item.Lote + "SL" + item.Sublote)))
                                 {
-                                    db.RollBack();
+                                    unit.RollBack();
                                     return 0;
                                 }
                             }
@@ -175,7 +183,7 @@ namespace VarejoSimples.Controller
                             {
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id))
                                 {
-                                    db.RollBack();
+                                    unit.RollBack();
                                     return 0;
                                 }
                             }
@@ -190,7 +198,7 @@ namespace VarejoSimples.Controller
 
                             if (!estoque_controller.RetiraEstoque(e.Quant, e.Produto_id, e.Loja_id, loteEst))
                             {
-                                db.RollBack();
+                                unit.RollBack();
                                 return 0;
                             }
 
@@ -213,7 +221,7 @@ namespace VarejoSimples.Controller
 
                     if (!imc.Save(item))
                     {
-                        db.RollBack();
+                        unit.RollBack();
                         return 0;
                     }
                 }
@@ -227,14 +235,17 @@ namespace VarejoSimples.Controller
 
                     item_pg.Movimento_id = Movimento.Id;
                     Itens_pagamentoController ipc = new Itens_pagamentoController();
-                    if (!ipc.Save(item_pg, db.Context))
+                    ipc.SetContext(unit.Context);
+
+                    if (!ipc.Save(item_pg))
                     {
-                        db.RollBack();
+                        unit.RollBack();
                         return 0;
                     }
 
                     Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
-                    fpg_controller.SetContext(db.Context);
+                    fpg_controller.SetContext(unit.Context);
+
                     Formas_pagamento forma_pagamento = fpg_controller.Find(item_pg.Forma_pagamento_id);
 
                     Movimentos_caixas movimento_caixa = new Movimentos_caixas();
@@ -245,6 +256,9 @@ namespace VarejoSimples.Controller
                     movimento_caixa.Usuario_id = Movimento.Usuario_id;
                     movimento_caixa.Forma_pagamento_id = item_pg.Forma_pagamento_id;
                     movimento_caixa.Loja_id = UsuariosController.LojaAtual.Id;
+
+                    ParcelasController parcController = new ParcelasController();
+                    parcController.SetContext(unit.Context);
 
                     switch (forma_pagamento.Tipo_pagamento)
                     {
@@ -264,6 +278,12 @@ namespace VarejoSimples.Controller
                                     break;
                             }
 
+                            if (!movimentos_caixaController.Save(movimento_caixa))
+                            {
+                                unit.RollBack();
+                                return 0;
+                            }
+
                             break;
                         #endregion
 
@@ -273,32 +293,30 @@ namespace VarejoSimples.Controller
                             movimento_caixa.Valor = 0;
 
                             Operadoras_cartaoController opController = new Operadoras_cartaoController();
-                            opController.SetContext(db.Context);
+                            opController.SetContext(unit.Context);
+
                             Operadoras_cartao operadora = opController.Find(forma_pagamento.Operadora_cartao_id);
 
-                            Parcelas parcela = new Parcelas();
-                            parcela.Tipo_entidade = (int)Tipo_entidade_parcela.OPERADORA;
-                            parcela.Operadora_cartao_id = forma_pagamento.Operadora_cartao_id;
-                            parcela.Item_pagamento_id = item_pg.Id;
-                            parcela.Valor = item_pg.Valor;
-                            parcela.Situacao = (int)Situacao_parcela.EM_ABERTO;
-                            parcela.Data_lancamento = Movimento.Data;
-                            parcela.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
+                            Parcelas parcela_cartao = new Parcelas();
+                            parcela_cartao.Tipo_entidade = (int)Tipo_entidade_parcela.OPERADORA;
+                            parcela_cartao.Operadora_cartao_id = forma_pagamento.Operadora_cartao_id;
+                            parcela_cartao.Item_pagamento_id = item_pg.Id;
+                            parcela_cartao.Valor = item_pg.Valor;
+                            parcela_cartao.Situacao = (int)Situacao_parcela.EM_ABERTO;
+                            parcela_cartao.Data_lancamento = Movimento.Data;
+                            parcela_cartao.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
 
-                            parcela.Data_vencimento = (operadora.Tipo_recebimento == (int)Tipo_prazo_operadora.DIAS
+                            parcela_cartao.Data_vencimento = (operadora.Tipo_recebimento == (int)Tipo_prazo_operadora.DIAS
                                 ? Movimento.Data.AddDays(operadora.Prazo_recebimento)
                                 : Movimento.Data.AddHours(operadora.Prazo_recebimento));
 
-                            parcela.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
+                            parcela_cartao.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
                                  ? (int)Tipo_parcela.RECEBER
                                  : (int)Tipo_parcela.PAGAR);
 
-                            ParcelasController parcController = new ParcelasController();
-                            parcController.SetContext(db.Context);
-
-                            if (!parcController.Save(parcela))
+                            if (!parcController.Save(parcela_cartao))
                             {
-                                db.RollBack();
+                                unit.RollBack();
                                 return 0;
                             }
 
@@ -308,26 +326,63 @@ namespace VarejoSimples.Controller
                         #region CHEQUE
                         case (int)Tipo_pagamento.CHEQUE:
 
+                            IRegistroCheques registroCheques;
+
+                            if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                                registroCheques = new RecebimentoCheques();
+                            else
+                                registroCheques = new LancamentoCheque();
+
+                            registroCheques.Exibir(item_pg.Valor);
+
+                            foreach (Cheque cheque in registroCheques.Cheques)
+                            {
+                                Parcelas parcela_cheque = new Parcelas();
+                                parcela_cheque.Tipo_entidade = Movimento.Cliente_id > 0 ? (int)Tipo_entidade_parcela.CLIENTE : (int) Tipo_entidade_parcela.FORNECEDOR;
+                                parcela_cheque.Item_pagamento_id = item_pg.Id;
+                                parcela_cheque.Valor =cheque.Valor;
+                                parcela_cheque.Situacao = (int)Situacao_parcela.EM_ABERTO;
+                                parcela_cheque.Data_lancamento = Movimento.Data;
+                                parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
+                                parcela_cheque.Data_vencimento = cheque.Data_deposito;
+                                parcela_cheque.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
+                                     ? (int)Tipo_parcela.RECEBER
+                                     : (int)Tipo_parcela.PAGAR);
+                                if (Movimento.Cliente_id > 0)
+                                    parcela_cheque.Cliente_id = Movimento.Cliente_id;
+                                else
+                                    parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
+
+                                if (parcela_cheque.Tipo_entidade == (int)Tipo_entidade_parcela.CLIENTE)
+                                {
+                                    parcela_cheque.Numero_cheque = cheque.Numero_cheque;
+                                    parcela_cheque.Banco = cheque.Banco;
+                                    parcela_cheque.Agencia = cheque.Agencia;
+                                    parcela_cheque.Dias_compensacao = cheque.Dias_compensacao;
+                                }
+                                else
+                                    parcela_cheque.Numero_cheque = cheque.Numero_cheque;
+
+                                if(!parcController.Save(parcela_cheque))
+                                {
+                                    unit.RollBack();
+                                    return 0;
+                                }
+                            }
 
                             break;
                             #endregion
                     }
-
-                    if (!movimentos_caixaController.Save(movimento_caixa))
-                    {
-                        db.RollBack();
-                        return 0;
-                    }
                 }
                 #endregion
-
-                db.Commit();
+                
+                unit.Commit();
                 BStatus.Success("Movimento salvo");
                 return Movimento.Id;
             }
             catch (Exception ex)
             {
-                db.RollBack();
+                unit.RollBack();
                 return 0;
             }
         }

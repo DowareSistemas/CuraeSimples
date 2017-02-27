@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using VarejoSimples.Enums;
@@ -25,11 +27,10 @@ namespace VarejoSimples.Controller
                 mc.Id = db.NextId(e => e.Id);
                 db.Save(mc);
 
-                if (auto_commit)
-                    db.Commit();
+                db.Commit();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -42,7 +43,6 @@ namespace VarejoSimples.Controller
 
         public void SetContext(varejo_config context)
         {
-            auto_commit = false;
             db.Context = context;
         }
 

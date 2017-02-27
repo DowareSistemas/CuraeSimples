@@ -81,6 +81,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="system.windows.controls.ribbon, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
@@ -134,6 +135,7 @@
     <Compile Include="Controller\RotinasController.cs" />
     <Compile Include="Controller\Tipos_movimentoController.cs" />
     <Compile Include="Controller\UnidadesController.cs" />
+    <Compile Include="Controller\UnitOfWork.cs" />
     <Compile Include="Controller\UsuariosController.cs" />
     <Compile Include="Controller\VendedoresController.cs" />
     <Compile Include="Controller_Reports\IControllerReport.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Interfaces\IFornecedor.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
     <Compile Include="Interfaces\IItens_pagamento.cs" />
+    <Compile Include="Interfaces\IRegistroCheques.cs" />
     <Compile Include="Interfaces\ILojas.cs" />
     <Compile Include="Interfaces\IMarcas.cs" />
     <Compile Include="Interfaces\IMovimentos.cs" />
@@ -200,6 +203,87 @@
     <Compile Include="Interfaces\IUnidades.cs" />
     <Compile Include="Interfaces\IUsuarios.cs" />
     <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Documentos_fiscais.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Planos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -332,11 +416,20 @@
     <Compile Include="Views\Marca\PesquisarMarca.xaml.cs">
       <DependentUpon>PesquisarMarca.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Movimento\LancamentoCheque\LancamentoCheque.xaml.cs">
+      <DependentUpon>LancamentoCheque.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Movimento\LancamentoMovimentos.xaml.cs">
       <DependentUpon>LancamentoMovimentos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Movimento\PagamentoRetaguarda.xaml.cs">
       <DependentUpon>PagamentoRetaguarda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimento\RecebimentoCheque\Adicionar.xaml.cs">
+      <DependentUpon>Adicionar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimento\RecebimentoCheque\RecebimentoCheques.xaml.cs">
+      <DependentUpon>RecebimentoCheques.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Operadora_cartao\CadOperadora.xaml.cs">
       <DependentUpon>CadOperadora.xaml</DependentUpon>
@@ -502,11 +595,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Movimento\LancamentoCheque\LancamentoCheque.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Movimento\LancamentoMovimentos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Movimento\PagamentoRetaguarda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Movimento\RecebimentoCheque\Adicionar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Movimento\RecebimentoCheque\RecebimentoCheques.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

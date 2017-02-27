@@ -267,6 +267,10 @@
           <Property Name="Parcela_anterior" Type="int" Nullable="false" />
           <Property Name="Num_documento" Type="varchar" MaxLength="60" />
           <Property Name="Movimento_conta_id" Type="int" Nullable="false" />
+          <Property Name="Numero_cheque" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Banco" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Agencia" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Dias_compensacao" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -818,6 +822,7 @@
         <EntityContainer Name="varejo_config" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Caixas" EntityType="Model.Caixas" />
           <EntitySet Name="Clientes" EntityType="Model.Clientes" />
+          <EntitySet Name="Contas" EntityType="Model.Contas" />
           <EntitySet Name="Documentos_fiscais" EntityType="Model.Documentos_fiscais" />
           <EntitySet Name="Estoque" EntityType="Model.Estoque" />
           <EntitySet Name="Fabricantes" EntityType="Model.Fabricantes" />
@@ -829,6 +834,7 @@
           <EntitySet Name="Marcas" EntityType="Model.Marcas" />
           <EntitySet Name="Movimentos" EntityType="Model.Movimentos" />
           <EntitySet Name="Movimentos_caixas" EntityType="Model.Movimentos_caixas" />
+          <EntitySet Name="Movimentos_contas" EntityType="Model.Movimentos_contas" />
           <EntitySet Name="Operadoras_cartao" EntityType="Model.Operadoras_cartao" />
           <EntitySet Name="Parametros" EntityType="Model.Parametros" />
           <EntitySet Name="Parcelas" EntityType="Model.Parcelas" />
@@ -845,6 +851,10 @@
             <End Role="Caixas" EntitySet="Caixas" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
           </AssociationSet>
+          <AssociationSet Name="FK__Movimento__Conta__793DFFAF" Association="Model.FK__Movimento__Conta__793DFFAF">
+            <End Role="Contas" EntitySet="Contas" />
+            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
+          </AssociationSet>
           <AssociationSet Name="FK__Estoque__Loja_id__4BAC3F29" Association="Model.FK__Estoque__Loja_id__4BAC3F29">
             <End Role="Lojas" EntitySet="Lojas" />
             <End Role="Estoque" EntitySet="Estoque" />
@@ -860,6 +870,10 @@
           <AssociationSet Name="FK__Movimento__Forma__55009F39" Association="Model.FK__Movimento__Forma__55009F39">
             <End Role="Formas_pagamento" EntitySet="Formas_pagamento" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Movimento__Forma__7A3223E8" Association="Model.FK__Movimento__Forma__7A3223E8">
+            <End Role="Formas_pagamento" EntitySet="Formas_pagamento" />
+            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
           </AssociationSet>
           <AssociationSet Name="FK__Produtos___Forne__208CD6FA" Association="Model.FK__Produtos___Forne__208CD6FA">
             <End Role="Fornecedores" EntitySet="Fornecedores" />
@@ -893,9 +907,17 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Movimentos" EntitySet="Movimentos" />
           </AssociationSet>
+          <AssociationSet Name="Mov_Plan_C_17980005" Association="Model.Mov_Plan_C_17980005">
+            <End Role="Planos_contas" EntitySet="Planos_contas" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
           <AssociationSet Name="FK__Movimento__Usuar__55F4C372" Association="Model.FK__Movimento__Usuar__55F4C372">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Movimentos_caixas" EntitySet="Movimentos_caixas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Movimento__Plano__7B264821" Association="Model.FK__Movimento__Plano__7B264821">
+            <End Role="Planos_contas" EntitySet="Planos_contas" />
+            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
           </AssociationSet>
           <AssociationSet Name="FK__Permissoe__Rotin__6477ECF3" Association="Model.FK__Permissoe__Rotin__6477ECF3">
             <End Role="Rotinas" EntitySet="Rotinas" />
@@ -925,24 +947,6 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
-          <EntitySet Name="Contas" EntityType="Model.Contas" />
-          <EntitySet Name="Movimentos_contas" EntityType="Model.Movimentos_contas" />
-          <AssociationSet Name="FK__Movimento__Conta__793DFFAF" Association="Model.FK__Movimento__Conta__793DFFAF">
-            <End Role="Contas" EntitySet="Contas" />
-            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Forma__7A3223E8" Association="Model.FK__Movimento__Forma__7A3223E8">
-            <End Role="Formas_pagamento" EntitySet="Formas_pagamento" />
-            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
-          </AssociationSet>
-          <AssociationSet Name="Mov_Plan_C_17980005" Association="Model.Mov_Plan_C_17980005">
-            <End Role="Planos_contas" EntitySet="Planos_contas" />
-            <End Role="Movimentos" EntitySet="Movimentos" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Movimento__Plano__7B264821" Association="Model.FK__Movimento__Plano__7B264821">
-            <End Role="Planos_contas" EntitySet="Planos_contas" />
-            <End Role="Movimentos_contas" EntitySet="Movimentos_contas" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -968,6 +972,24 @@
           <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Uf" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Cep" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Contas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="Banco_numero" Type="Int32" Nullable="false" />
+          <Property Name="Nome_banco" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Conta" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Titular" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Agencia" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Convenio" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Carteira" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nosso_numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Inativa" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Movimentos_contas" Relationship="Model.FK__Movimento__Conta__793DFFAF" FromRole="Contas" ToRole="Movimentos_contas" />
         </EntityType>
         <EntityType Name="Documentos_fiscais">
           <Key>
@@ -1027,10 +1049,10 @@
           <Property Name="Dia_base" Type="Int32" Nullable="false" />
           <Property Name="Parcelas" Type="Int32" Nullable="false" />
           <Property Name="Operadora_cartao_id" Type="Int32" Nullable="false" />
+          <Property Name="Conta_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Forma__7B5B524B" FromRole="Formas_pagamento" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Movimentos_caixas" Relationship="Model.FK__Movimento__Forma__55009F39" FromRole="Formas_pagamento" ToRole="Movimentos_caixas" />
           <NavigationProperty Name="Movimentos_contas" Relationship="Model.FK__Movimento__Forma__7A3223E8" FromRole="Formas_pagamento" ToRole="Movimentos_contas" />
-          <Property Name="Conta_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Fornecedores">
           <Key>
@@ -1125,10 +1147,10 @@
           <Property Name="Documento_id" Type="Int32" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="Int32" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="Boolean" Nullable="false" />
+          <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Movim__02084FDA" FromRole="Movimentos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Movim__7A672E12" FromRole="Movimentos" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Usuarios" Relationship="Model.FK__Movimento__Usuar__76969D2E" FromRole="Movimentos" ToRole="Usuarios" />
-          <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Planos_contas" Relationship="Model.Mov_Plan_C_17980005" FromRole="Movimentos" ToRole="Planos_contas" />
         </EntityType>
         <EntityType Name="Movimentos_caixas">
@@ -1149,6 +1171,27 @@
           <NavigationProperty Name="Formas_pagamento" Relationship="Model.FK__Movimento__Forma__55009F39" FromRole="Movimentos_caixas" ToRole="Formas_pagamento" />
           <NavigationProperty Name="Lojas" Relationship="Model.FK__Movimento__Loja___56E8E7AB" FromRole="Movimentos_caixas" ToRole="Lojas" />
           <NavigationProperty Name="Usuarios" Relationship="Model.FK__Movimento__Usuar__55F4C372" FromRole="Movimentos_caixas" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Movimentos_contas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Conta_id" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="Forma_pagamento_id" Type="Int32" Nullable="false" />
+          <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
+          <Property Name="Origem" Type="Int32" Nullable="false" />
+          <Property Name="Movimento_caixa_id" Type="Int32" Nullable="false" />
+          <Property Name="Num_documento" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Valor_original" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Desconto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Acrescimo" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Valor_final" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Contas" Relationship="Model.FK__Movimento__Conta__793DFFAF" FromRole="Movimentos_contas" ToRole="Contas" />
+          <NavigationProperty Name="Formas_pagamento" Relationship="Model.FK__Movimento__Forma__7A3223E8" FromRole="Movimentos_contas" ToRole="Formas_pagamento" />
+          <NavigationProperty Name="Planos_contas" Relationship="Model.FK__Movimento__Plano__7B264821" FromRole="Movimentos_contas" ToRole="Planos_contas" />
         </EntityType>
         <EntityType Name="Operadoras_cartao">
           <Key>
@@ -1194,6 +1237,10 @@
           <Property Name="Parcela_anterior" Type="Int32" Nullable="false" />
           <Property Name="Num_documento" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Movimento_conta_id" Type="Int32" Nullable="false" />
+          <Property Name="Numero_cheque" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Banco" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agencia" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Dias_compensacao" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -1217,9 +1264,9 @@
           <Property Name="Classe" Type="Int32" Nullable="false" />
           <Property Name="Tipo" Type="Int32" Nullable="false" />
           <Property Name="Conta_pai" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tipos_movimento" Relationship="Model.Itens_Plan_148989" FromRole="Planos_contas" ToRole="Tipos_movimento" />
           <NavigationProperty Name="Movimentos" Relationship="Model.Mov_Plan_C_17980005" FromRole="Planos_contas" ToRole="Movimentos" />
           <NavigationProperty Name="Movimentos_contas" Relationship="Model.FK__Movimento__Plano__7B264821" FromRole="Planos_contas" ToRole="Movimentos_contas" />
+          <NavigationProperty Name="Tipos_movimento" Relationship="Model.Itens_Plan_148989" FromRole="Planos_contas" ToRole="Tipos_movimento" />
         </EntityType>
         <EntityType Name="Produtos">
           <Key>
@@ -1344,6 +1391,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Movimento__Conta__793DFFAF">
+          <End Type="Model.Contas" Role="Contas" Multiplicity="1" />
+          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos_contas">
+              <PropertyRef Name="Conta_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Estoque__Loja_id__4BAC3F29">
           <End Type="Model.Lojas" Role="Lojas" Multiplicity="1" />
           <End Type="Model.Estoque" Role="Estoque" Multiplicity="*" />
@@ -1388,6 +1447,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Movimentos_caixas">
+              <PropertyRef Name="Forma_pagamento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Movimento__Forma__7A3223E8">
+          <End Type="Model.Formas_pagamento" Role="Formas_pagamento" Multiplicity="1" />
+          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Formas_pagamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos_contas">
               <PropertyRef Name="Forma_pagamento_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -1488,6 +1559,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Mov_Plan_C_17980005">
+          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="1" />
+          <End Type="Model.Movimentos" Role="Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planos_contas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="Plano_conta_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Movimento__Usuar__55F4C372">
           <End Type="Model.Usuarios" Role="Usuarios" Multiplicity="1" />
           <End Type="Model.Movimentos_caixas" Role="Movimentos_caixas" Multiplicity="*" />
@@ -1497,6 +1580,18 @@
             </Principal>
             <Dependent Role="Movimentos_caixas">
               <PropertyRef Name="Usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Movimento__Plano__7B264821">
+          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="1" />
+          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Planos_contas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos_contas">
+              <PropertyRef Name="Plano_conta_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1525,7 +1620,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Itens_Plan_148989">
-          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="0..1" />
+          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="1" />
           <End Type="Model.Tipos_movimento" Role="Tipos_movimento" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Planos_contas">
@@ -1584,93 +1679,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Contas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Tipo" Type="Int32" Nullable="false" />
-          <Property Name="Banco_numero" Type="Int32" Nullable="false" />
-          <Property Name="Nome_banco" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Conta" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="Titular" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Agencia" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="Convenio" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="Carteira" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Nosso_numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Inativa" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Movimentos_contas" Relationship="Model.FK__Movimento__Conta__793DFFAF" FromRole="Contas" ToRole="Movimentos_contas" />
-        </EntityType>
-        <EntityType Name="Movimentos_contas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Conta_id" Type="Int32" Nullable="false" />
-          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Tipo" Type="Int32" Nullable="false" />
-          <Property Name="Forma_pagamento_id" Type="Int32" Nullable="false" />
-          <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
-          <Property Name="Origem" Type="Int32" Nullable="false" />
-          <Property Name="Movimento_caixa_id" Type="Int32" Nullable="false" />
-          <Property Name="Num_documento" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="Valor_original" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Desconto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Acrescimo" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Valor_final" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <NavigationProperty Name="Contas" Relationship="Model.FK__Movimento__Conta__793DFFAF" FromRole="Movimentos_contas" ToRole="Contas" />
-          <NavigationProperty Name="Formas_pagamento" Relationship="Model.FK__Movimento__Forma__7A3223E8" FromRole="Movimentos_contas" ToRole="Formas_pagamento" />
-          <NavigationProperty Name="Planos_contas" Relationship="Model.FK__Movimento__Plano__7B264821" FromRole="Movimentos_contas" ToRole="Planos_contas" />
-        </EntityType>
-        <Association Name="FK__Movimento__Conta__793DFFAF">
-          <End Type="Model.Contas" Role="Contas" Multiplicity="1" />
-          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contas">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Movimentos_contas">
-              <PropertyRef Name="Conta_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Movimento__Forma__7A3223E8">
-          <End Type="Model.Formas_pagamento" Role="Formas_pagamento" Multiplicity="1" />
-          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Formas_pagamento">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Movimentos_contas">
-              <PropertyRef Name="Forma_pagamento_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Mov_Plan_C_17980005">
-          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="1" />
-          <End Type="Model.Movimentos" Role="Movimentos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Planos_contas">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Movimentos">
-              <PropertyRef Name="Plano_conta_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Movimento__Plano__7B264821">
-          <End Type="Model.Planos_contas" Role="Planos_contas" Multiplicity="1" />
-          <End Type="Model.Movimentos_contas" Role="Movimentos_contas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Planos_contas">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Movimentos_contas">
-              <PropertyRef Name="Plano_conta_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1698,6 +1706,24 @@
                 <ScalarProperty Name="Telefone" ColumnName="Telefone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Cpf" ColumnName="Cpf" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contas">
+            <EntityTypeMapping TypeName="Model.Contas">
+              <MappingFragment StoreEntitySet="Contas">
+                <ScalarProperty Name="Inativa" ColumnName="Inativa" />
+                <ScalarProperty Name="Nosso_numero" ColumnName="Nosso_numero" />
+                <ScalarProperty Name="Carteira" ColumnName="Carteira" />
+                <ScalarProperty Name="Convenio" ColumnName="Convenio" />
+                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
+                <ScalarProperty Name="Titular" ColumnName="Titular" />
+                <ScalarProperty Name="Conta" ColumnName="Conta" />
+                <ScalarProperty Name="Nome_banco" ColumnName="Nome_banco" />
+                <ScalarProperty Name="Banco_numero" ColumnName="Banco_numero" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1872,6 +1898,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Movimentos_contas">
+            <EntityTypeMapping TypeName="Model.Movimentos_contas">
+              <MappingFragment StoreEntitySet="Movimentos_contas">
+                <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
+                <ScalarProperty Name="Acrescimo" ColumnName="Acrescimo" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+                <ScalarProperty Name="Valor_original" ColumnName="Valor_original" />
+                <ScalarProperty Name="Num_documento" ColumnName="Num_documento" />
+                <ScalarProperty Name="Movimento_caixa_id" ColumnName="Movimento_caixa_id" />
+                <ScalarProperty Name="Origem" ColumnName="Origem" />
+                <ScalarProperty Name="Plano_conta_id" ColumnName="Plano_conta_id" />
+                <ScalarProperty Name="Forma_pagamento_id" ColumnName="Forma_pagamento_id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Conta_id" ColumnName="Conta_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Operadoras_cartao">
             <EntityTypeMapping TypeName="Model.Operadoras_cartao">
               <MappingFragment StoreEntitySet="Operadoras_cartao">
@@ -1899,6 +1944,10 @@
           <EntitySetMapping Name="Parcelas">
             <EntityTypeMapping TypeName="Model.Parcelas">
               <MappingFragment StoreEntitySet="Parcelas">
+                <ScalarProperty Name="Dias_compensacao" ColumnName="Dias_compensacao" />
+                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
+                <ScalarProperty Name="Banco" ColumnName="Banco" />
+                <ScalarProperty Name="Numero_cheque" ColumnName="Numero_cheque" />
                 <ScalarProperty Name="Movimento_conta_id" ColumnName="Movimento_conta_id" />
                 <ScalarProperty Name="Num_documento" ColumnName="Num_documento" />
                 <ScalarProperty Name="Parcela_anterior" ColumnName="Parcela_anterior" />
@@ -2038,43 +2087,6 @@
                 <ScalarProperty Name="Celular1" ColumnName="Celular1" />
                 <ScalarProperty Name="Apelido" ColumnName="Apelido" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contas">
-            <EntityTypeMapping TypeName="Model.Contas">
-              <MappingFragment StoreEntitySet="Contas">
-                <ScalarProperty Name="Inativa" ColumnName="Inativa" />
-                <ScalarProperty Name="Nosso_numero" ColumnName="Nosso_numero" />
-                <ScalarProperty Name="Carteira" ColumnName="Carteira" />
-                <ScalarProperty Name="Convenio" ColumnName="Convenio" />
-                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
-                <ScalarProperty Name="Titular" ColumnName="Titular" />
-                <ScalarProperty Name="Conta" ColumnName="Conta" />
-                <ScalarProperty Name="Nome_banco" ColumnName="Nome_banco" />
-                <ScalarProperty Name="Banco_numero" ColumnName="Banco_numero" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Movimentos_contas">
-            <EntityTypeMapping TypeName="Model.Movimentos_contas">
-              <MappingFragment StoreEntitySet="Movimentos_contas">
-                <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
-                <ScalarProperty Name="Acrescimo" ColumnName="Acrescimo" />
-                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
-                <ScalarProperty Name="Valor_original" ColumnName="Valor_original" />
-                <ScalarProperty Name="Num_documento" ColumnName="Num_documento" />
-                <ScalarProperty Name="Movimento_caixa_id" ColumnName="Movimento_caixa_id" />
-                <ScalarProperty Name="Origem" ColumnName="Origem" />
-                <ScalarProperty Name="Plano_conta_id" ColumnName="Plano_conta_id" />
-                <ScalarProperty Name="Forma_pagamento_id" ColumnName="Forma_pagamento_id" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="Conta_id" ColumnName="Conta_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
