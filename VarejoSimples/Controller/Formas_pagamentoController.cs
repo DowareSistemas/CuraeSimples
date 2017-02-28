@@ -80,6 +80,22 @@ namespace VarejoSimples.Controller
                 }
             }
 
+            if(pg.Tipo_pagamento == (int) Tipo_pagamento.CHEQUE)
+            {
+                if(pg.Conta_id == 0)
+                {
+                    BStatus.Alert("Uma conta do tipo BANCÁRIA é necessária para o tipo pagamento CHEQUE");
+                    return false;
+                }
+
+                Contas conta = new ContasController().Find(pg.Conta_id);
+                if(conta.Tipo != (int)Tipo_conta.CONTA_BANCARIA)
+                {
+                    BStatus.Alert("Uma conta do tipo BANCÁRIA é necessária para o tipo pagamento CHEQUE");
+                    return false;
+                }
+            }
+
             return true;
         }
 

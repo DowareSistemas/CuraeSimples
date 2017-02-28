@@ -271,6 +271,7 @@
           <Property Name="Banco" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Agencia" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Dias_compensacao" Type="int" Nullable="false" />
+          <Property Name="Conta" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -1237,10 +1238,11 @@
           <Property Name="Parcela_anterior" Type="Int32" Nullable="false" />
           <Property Name="Num_documento" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Movimento_conta_id" Type="Int32" Nullable="false" />
-          <Property Name="Numero_cheque" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Banco" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Agencia" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Dias_compensacao" Type="Int32" Nullable="false" />
+          <Property Name="Numero_cheque" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" DefaultValue="" />
+          <Property Name="Banco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" DefaultValue="" />
+          <Property Name="Agencia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" DefaultValue="" Nullable="false" />
+          <Property Name="Dias_compensacao" Type="Int32" DefaultValue="0" Nullable="false" />
+          <Property Name="Conta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" DefaultValue="" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -1944,6 +1946,7 @@
           <EntitySetMapping Name="Parcelas">
             <EntityTypeMapping TypeName="Model.Parcelas">
               <MappingFragment StoreEntitySet="Parcelas">
+                <ScalarProperty Name="Conta" ColumnName="Conta" />
                 <ScalarProperty Name="Dias_compensacao" ColumnName="Dias_compensacao" />
                 <ScalarProperty Name="Agencia" ColumnName="Agencia" />
                 <ScalarProperty Name="Banco" ColumnName="Banco" />

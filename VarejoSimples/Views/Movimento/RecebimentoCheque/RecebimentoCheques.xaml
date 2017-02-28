@@ -15,6 +15,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Banco" MinWidth="90" Width="*" Binding="{Binding Banco}"/>
                 <DataGridTextColumn Header="Agência" MinWidth="90" Width="Auto" Binding="{Binding Agencia}"/>
+                <DataGridTextColumn Header="Conta" MinWidth="90" Width="Auto" Binding="{Binding Conta}"/>
                 <DataGridTextColumn Header="Nro. Cheque" MinWidth="125" Width="Auto" Binding="{Binding Numero_cheque}"/>
                 <DataGridTextColumn Header="Dias compens." MinWidth="135" Width="Auto" Binding="{Binding Dias_compensacao}"/>
                 <DataGridTextColumn Header="Data depósito" MinWidth="140" Width="Auto" Binding="{Binding Data_deposito, StringFormat=dd/MM/yyyy}"/>

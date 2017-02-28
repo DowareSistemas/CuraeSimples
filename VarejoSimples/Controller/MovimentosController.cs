@@ -40,8 +40,9 @@ namespace VarejoSimples.Controller
             BStatus.Success("Movimento iniciado...");
         }
 
-        List<Itens_movimento> itens_mov = null;
-        List<Itens_pagamento> itens_pag = null;
+        private List<Itens_movimento> itens_mov = null;
+        private List<Itens_pagamento> itens_pag = null;
+        private decimal Troco { get; set; }
 
         /// <summary>
         /// 
@@ -62,7 +63,7 @@ namespace VarejoSimples.Controller
                 if (itens_pag == null)
                     itens_pag = Movimento.Itens_pagamento.ToList();
                 Movimento.Itens_pagamento.Clear();
-                
+
                 Movimentos_caixasController movimentos_caixaController = new Movimentos_caixasController();
                 movimentos_caixaController.SetContext(unit.Context);
 
@@ -234,6 +235,10 @@ namespace VarejoSimples.Controller
                         continue;
 
                     item_pg.Movimento_id = Movimento.Id;
+
+                    ContasController contas_controller = new ContasController();
+                    contas_controller.SetContext(unit.Context);
+
                     Itens_pagamentoController ipc = new Itens_pagamentoController();
                     ipc.SetContext(unit.Context);
 
@@ -326,21 +331,27 @@ namespace VarejoSimples.Controller
                         #region CHEQUE
                         case (int)Tipo_pagamento.CHEQUE:
 
+                            movimento_caixa.Valor = 0;
                             IRegistroCheques registroCheques;
 
                             if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 registroCheques = new RecebimentoCheques();
                             else
+                            {
                                 registroCheques = new LancamentoCheque();
+                                registroCheques.SetConta(contas_controller.Find(forma_pagamento.Conta_id));
+                            }
 
                             registroCheques.Exibir(item_pg.Valor);
 
                             foreach (Cheque cheque in registroCheques.Cheques)
                             {
                                 Parcelas parcela_cheque = new Parcelas();
-                                parcela_cheque.Tipo_entidade = Movimento.Cliente_id > 0 ? (int)Tipo_entidade_parcela.CLIENTE : (int) Tipo_entidade_parcela.FORNECEDOR;
+                                parcela_cheque.Tipo_entidade = (Movimento.Cliente_id > 0
+                                    ? (int)Tipo_entidade_parcela.CLIENTE
+                                    : (int)Tipo_entidade_parcela.FORNECEDOR);
                                 parcela_cheque.Item_pagamento_id = item_pg.Id;
-                                parcela_cheque.Valor =cheque.Valor;
+                                parcela_cheque.Valor = cheque.Valor;
                                 parcela_cheque.Situacao = (int)Situacao_parcela.EM_ABERTO;
                                 parcela_cheque.Data_lancamento = Movimento.Data;
                                 parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
@@ -359,11 +370,19 @@ namespace VarejoSimples.Controller
                                     parcela_cheque.Banco = cheque.Banco;
                                     parcela_cheque.Agencia = cheque.Agencia;
                                     parcela_cheque.Dias_compensacao = cheque.Dias_compensacao;
+                                    parcela_cheque.Conta = cheque.Conta;
                                 }
-                                else
-                                    parcela_cheque.Numero_cheque = cheque.Numero_cheque;
 
-                                if(!parcController.Save(parcela_cheque))
+                                if (parcela_cheque.Tipo_entidade == (int)Tipo_entidade_parcela.FORNECEDOR)
+                                {
+                                    parcela_cheque.Numero_cheque = cheque.Numero_cheque;
+                                    parcela_cheque.Banco = string.Empty;
+                                    parcela_cheque.Agencia = string.Empty;
+                                    parcela_cheque.Dias_compensacao = 0;
+                                    parcela_cheque.Conta = string.Empty;
+                                }
+
+                                if (!parcController.Save(parcela_cheque))
                                 {
                                     unit.RollBack();
                                     return 0;
@@ -371,11 +390,68 @@ namespace VarejoSimples.Controller
                             }
 
                             break;
+                        #endregion
+
+                        #region PRAZO
+                        case (int)Tipo_pagamento.PRAZO:
+
+                            DateTime data_base = (forma_pagamento.Tipo_intervalo == (int)Tipo_intervalo.DATA_BASE
+                                ? DateTime.Now.AddMonths(1)
+                                : DateTime.Now.AddDays(forma_pagamento.Intervalo)); //baseando a data para o mes sequente ao atual
+
+                            for (int i = 0; i < forma_pagamento.Parcelas; i++)
+                            {
+
+                                Parcelas parcela_prazo = new Parcelas();
+                                parcela_prazo.Tipo_entidade = (Movimento.Cliente_id > 0
+                                    ? (int)Tipo_entidade_parcela.CLIENTE
+                                    : (int)Tipo_entidade_parcela.FORNECEDOR);
+                                parcela_prazo.Item_pagamento_id = item_pg.Id;
+                                parcela_prazo.Valor = item_pg.Valor;
+                                parcela_prazo.Situacao = (int)Situacao_parcela.EM_ABERTO;
+                                parcela_prazo.Data_lancamento = Movimento.Data;
+                                parcela_prazo.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
+                                parcela_prazo.Numero_cheque = "0";
+                                parcela_prazo.Banco = string.Empty;
+                                parcela_prazo.Agencia = string.Empty;
+                                parcela_prazo.Dias_compensacao = 0;
+                                parcela_prazo.Conta = string.Empty;
+
+                                if (forma_pagamento.Tipo_intervalo == (int)Tipo_intervalo.DATA_BASE)
+                                {
+                                    data_base = new DateTime(data_base.Year, data_base.Month, forma_pagamento.Dia_base);
+                                    parcela_prazo.Data_vencimento = data_base;
+                                    data_base = data_base.AddMonths(1);
+                                }
+
+                                if (forma_pagamento.Tipo_intervalo == (int)Tipo_intervalo.INTERVALO)
+                                {
+                                    parcela_prazo.Data_vencimento = data_base;
+                                    data_base = data_base.AddDays(forma_pagamento.Intervalo);
+                                }
+                                
+                                parcela_prazo.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
+                                     ? (int)Tipo_parcela.RECEBER
+                                     : (int)Tipo_parcela.PAGAR);
+
+                                if (Movimento.Cliente_id > 0)
+                                    parcela_prazo.Cliente_id = Movimento.Cliente_id;
+                                else
+                                    parcela_prazo.Fornecedor_id = Movimento.Fornecedor_id;
+
+                                
+                                if (!parcController.Save(parcela_prazo))
+                                {
+                                    unit.RollBack();
+                                    return 0;
+                                }
+                            }
+                            break;
                             #endregion
                     }
                 }
                 #endregion
-                
+
                 unit.Commit();
                 BStatus.Success("Movimento salvo");
                 return Movimento.Id;

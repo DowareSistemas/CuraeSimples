@@ -11,6 +11,7 @@ namespace VarejoSimples.Interfaces
         List<Cheque> Cheques { get; set; }
 
         void Exibir(decimal valor_pagamento);
+        void SetConta(Contas conta);
     }
 
     public class Cheque
@@ -21,5 +22,6 @@ namespace VarejoSimples.Interfaces
         public DateTime Data_deposito { get; set; }
         public int Dias_compensacao { get; set; }
         public decimal Valor { get; set; }
+        public string Conta { get; set; }
     }
 }

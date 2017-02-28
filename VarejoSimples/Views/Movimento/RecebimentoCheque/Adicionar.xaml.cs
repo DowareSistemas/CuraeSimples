@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Interfaces;
+using VarejoSimples.Model;
 
 namespace VarejoSimples.Views.Movimento.RecebimentoCheque
 {
@@ -35,6 +36,15 @@ namespace VarejoSimples.Views.Movimento.RecebimentoCheque
 
         private void Salvar(bool close)
         {
+            if (string.IsNullOrWhiteSpace(txDias_compens.Text))
+                txDias_compens.Text = "0";
+
+            if(string.IsNullOrWhiteSpace(txNumero_cheque.Text))
+            {
+                MessageBox.Show("Informe o número do cheque", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
             if(txData_deposito.SelectedDate == null)
             {
                 MessageBox.Show("Informe a data do depósito", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -59,6 +69,12 @@ namespace VarejoSimples.Views.Movimento.RecebimentoCheque
                 return;
             }
 
+            if(string.IsNullOrWhiteSpace(txValor.Text))
+            {
+                MessageBox.Show("Informe o valor do cheque", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
             if(decimal.Parse(txValor.Text) == 0)
             {
                 MessageBox.Show("Informe o valor do cheque", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -70,6 +86,7 @@ namespace VarejoSimples.Views.Movimento.RecebimentoCheque
                 Numero_cheque = txNumero_cheque.Text,
                 Banco = txBanco.Text,
                 Agencia = txAgencia.Text,
+                Conta = txConta.Text,
                 Data_deposito = (DateTime)txData_deposito.SelectedDate,
                 Dias_compensacao = int.Parse(txDias_compens.Text),
                 Valor = decimal.Parse(txValor.Text)
@@ -108,6 +125,19 @@ namespace VarejoSimples.Views.Movimento.RecebimentoCheque
                     Fechar();
                     break;
             }
+        }
+
+        public void SetConta(Contas conta)
+        {
+            txBanco.Text = conta.Nome_banco;
+            txAgencia.Text = conta.Agencia;
+            txConta.Text = conta.Conta;
+
+            txBanco.IsEnabled = false;
+            txAgencia.IsEnabled = false;
+            txConta.IsEnabled = false;
+
+            txDias_compens.IsEnabled = false;
         }
 
         private void btSalvarEContinuar_Click(object sender, RoutedEventArgs e)

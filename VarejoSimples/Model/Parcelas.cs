@@ -14,6 +14,16 @@ namespace VarejoSimples.Model
     
     public partial class Parcelas
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Parcelas()
+        {
+            this.Numero_cheque = "";
+            this.Banco = "";
+            this.Agencia = "";
+            this.Dias_compensacao = 0;
+            this.Conta = "";
+        }
+    
         public int Id { get; set; }
         public int Item_pagamento_id { get; set; }
         public int Tipo_parcela { get; set; }
@@ -35,5 +45,6 @@ namespace VarejoSimples.Model
         public string Banco { get; set; }
         public string Agencia { get; set; }
         public int Dias_compensacao { get; set; }
+        public string Conta { get; set; }
     }
 }

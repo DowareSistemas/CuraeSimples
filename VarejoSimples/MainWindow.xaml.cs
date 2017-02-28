@@ -21,6 +21,7 @@ using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
+using VarejoSimples.Views.Movimento.LancamentoCheque;
 using VarejoSimples.Views.Movimento.RecebimentoCheques;
 
 namespace VarejoSimples
@@ -48,10 +49,14 @@ namespace VarejoSimples
         public MainWindow()
         {
             // NFCe();
-          //  varejo_config db = new varejo_config();
+            //  varejo_config db = new varejo_config();
             //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
-          //  db.Database.CreateIfNotExists();
+            //  db.Database.CreateIfNotExists();
 
+            IRegistroCheques rc = new LancamentoCheque();
+            Contas conta = new ContasController().Find(4);
+            rc.SetConta(conta);
+           // rc.Exibir(100);
 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");

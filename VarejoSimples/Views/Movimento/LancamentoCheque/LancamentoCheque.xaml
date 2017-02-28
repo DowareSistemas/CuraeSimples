@@ -8,8 +8,27 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Closing="Window_Closing"
-        Title="Lancamento Cheques" Height="321" Width="434">
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="Lancamento Cheques" Height="406" Width="723">
     <Grid>
-        
+        <Label x:Name="label" Content="Falta (R$)" HorizontalAlignment="Right" Margin="0,4,117,0" VerticalAlignment="Top" FontSize="13.333" Width="67" Foreground="#FFD11414"/>
+        <TextBox x:Name="txValor_faltando" TextChanged="txValor_faltando_TextChanged" HorizontalAlignment="Right" Height="28" Margin="0,4,10,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="102" FontSize="13.333" Padding="0,4,0,0" IsReadOnly="True"/>
+        <Label x:Name="label_Copy" Content="Valor pago (R$)" HorizontalAlignment="Right" Margin="0,4,307,0" VerticalAlignment="Top" FontSize="13.333" Width="100" Foreground="#FF09BB01"/>
+        <TextBox x:Name="txValor_pago" HorizontalAlignment="Right" Height="28" Margin="0,4,200,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="102" FontSize="13.333" Padding="0,4,0,0" IsReadOnly="True"/>
+
+        <DataGrid x:Name="dataGrid" Margin="10,37">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Banco" MinWidth="130" Width="*" Binding="{Binding Banco}"/>
+                <DataGridTextColumn Header="Agência" MinWidth="90" Width="Auto" Binding="{Binding Agencia}"/>
+                <DataGridTextColumn Header="Conta" MinWidth="130" Width="Auto" Binding="{Binding Conta}"/>
+                <DataGridTextColumn Header="Nro. Cheque" MinWidth="90" Width="Auto" Binding="{Binding Numero_cheque}"/>
+                <DataGridTextColumn Header="Data" MinWidth="100" Width="Auto" Binding="{Binding Data_deposito, StringFormat=dd/MM/yyyy}"/>
+                <DataGridTextColumn Header="Valor (R$)" MinWidth="125" Width="Auto" Binding="{Binding Valor}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btConfirmar" Content="_Confirmar" HorizontalAlignment="Right" Margin="0,0,10,6" VerticalAlignment="Bottom" Width="87" Height="25" Click="btConfirmar_Click"/>
+        <Button x:Name="btInserir" Content="_Inserir [Insert]" HorizontalAlignment="Right" Margin="0,0,102,6" VerticalAlignment="Bottom" Width="105" Height="25" Click="btInserir_Click"/>
+        <Button x:Name="btRemover" Content="_Remover [Delete]" HorizontalAlignment="Right" Margin="0,0,212,6" VerticalAlignment="Bottom" Width="115" Height="25" Click="btRemover_Click"/>
+
     </Grid>
 </Window>

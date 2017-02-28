@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Interfaces;
+using VarejoSimples.Model;
 using VarejoSimples.Views.Movimento.RecebimentoCheque;
 
 namespace VarejoSimples.Views.Movimento.RecebimentoCheques
@@ -118,6 +119,11 @@ namespace VarejoSimples.Views.Movimento.RecebimentoCheques
                     RemoverCheque();
                     break;
             }
+        }
+
+        public void SetConta(Contas conta)
+        {
+            throw new NotImplementedException();
         }
     }
 }

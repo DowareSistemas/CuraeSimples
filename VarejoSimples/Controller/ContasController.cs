@@ -151,5 +151,10 @@ namespace VarejoSimples.Controller
 
             return db.Where(query).ToList();
         }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
     }
 }

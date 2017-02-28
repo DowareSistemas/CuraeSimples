@@ -8,25 +8,28 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Title="Incluir cheque" Height="301" Width="463">
+        Title="Incluir cheque" Height="331" Width="463">
     <Grid>
         <Grid Height="41" VerticalAlignment="Bottom" Background="#FFECECEC">
-            <Button x:Name="btSalvar" TabIndex="8" Content="_Salvar [F1]" HorizontalAlignment="Right" Margin="0,8,225,8" Width="75" Click="btSalvar_Click"/>
-            <Button x:Name="btSalvarEContinuar" TabIndex="7" Content="_Salvar e continuar [F2]" HorizontalAlignment="Right" Margin="0,8,90,8" Width="130" Click="btSalvarEContinuar_Click"/>
-            <Button x:Name="btFechar" TabIndex="9" Content="Fechar [Esc]" HorizontalAlignment="Right" Margin="0,8,10,8" Width="75" Click="btFechar_Click"/>
+            <Button x:Name="btSalvar" TabIndex="9" Content="_Salvar [F1]" HorizontalAlignment="Right" Margin="0,8,225,8" Width="75" Click="btSalvar_Click"/>
+            <Button x:Name="btSalvarEContinuar" TabIndex="8" Content="_Salvar e continuar [F2]" HorizontalAlignment="Right" Margin="0,8,90,8" Width="130" Click="btSalvarEContinuar_Click"/>
+            <Button x:Name="btFechar" TabIndex="10" Content="Fechar [Esc]" HorizontalAlignment="Right" Margin="0,8,10,8" Width="75" Click="btFechar_Click"/>
         </Grid>
         <Label x:Name="label" Content="Banco" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" Width="110" FontSize="14.667"/>
         <TextBox x:Name="txBanco" TabIndex="2" CharacterCasing="Upper" Height="30" Margin="150,44,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label_Copy" Content="Agência" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top" Width="110" FontSize="14.667"/>
         <TextBox x:Name="txAgencia" TabIndex="3" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" FontSize="14.667" Padding="0,5,0,0"/>
-        <Label x:Name="label_Copy1" Content="Número cheque" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Width="125" FontSize="14.667"/>
-        <TextBox x:Name="txNumero_cheque" TabIndex="1" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" FontSize="14.667" Padding="0,5,0,0"/>
-        <Label x:Name="label_Copy2" Content="Dias compensação" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
-        <TextBox x:Name="txDias_compens" TabIndex="4" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="14.667" Padding="0,5,0,0"/>
-        <Label x:Name="label_Copy3" Content="Valor (R$)" HorizontalAlignment="Left" Margin="10,149,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
-        <TextBox x:Name="txValor" TabIndex="5" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" FontSize="14.667" Padding="0,5,0,0"/>
-        <DatePicker x:Name="txData_deposito" TabIndex="6" HorizontalAlignment="Left" Margin="150,184,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Padding="2,5,2,2" Width="185"/>
-        <Label x:Name="label_Copy4" Content="Data depósito" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
+        <Label x:Name="label_Copy5" Content="Conta" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" Width="110" FontSize="14.667"/>
+        <TextBox x:Name="txConta" TabIndex="4" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" FontSize="14.667" Padding="0,5,0,0"/>
 
+        <Label x:Name="label_Copy1" Content="Número cheque" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Width="125" FontSize="14.667"/>
+        <TextBox x:Name="txNumero_cheque" TabIndex="1" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <Label x:Name="label_Copy2" Content="Dias compensação" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
+        <TextBox x:Name="txDias_compens" TabIndex="5" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <Label x:Name="label_Copy3" Content="Valor (R$)" HorizontalAlignment="Left" Margin="10,183,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
+        <TextBox x:Name="txValor" TabIndex="6" CharacterCasing="Upper" HorizontalAlignment="Left" Height="30" Margin="150,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <DatePicker x:Name="txData_deposito" TabIndex="7" HorizontalAlignment="Left" Margin="150,218,0,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Padding="2,5,2,2" Width="185"/>
+        <Label x:Name="label_Copy4" Content="Data depósito" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" Width="135" FontSize="14.667"/>
+   
     </Grid>
 </Window>
