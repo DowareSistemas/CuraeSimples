@@ -14,6 +14,12 @@ namespace VarejoSimples.Model
     
     public partial class Tipos_movimento
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tipos_movimento()
+        {
+            this.Movimentos = new HashSet<Movimentos>();
+        }
+    
         public int Id { get; set; }
         public string Descricao { get; set; }
         public int Movimentacao_itens { get; set; }
@@ -25,5 +31,7 @@ namespace VarejoSimples.Model
         public int Plano_conta_id { get; set; }
     
         public virtual Planos_contas Planos_contas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Movimentos> Movimentos { get; set; }
     }
 }

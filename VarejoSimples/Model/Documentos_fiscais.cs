@@ -33,5 +33,6 @@ namespace VarejoSimples.Model
         public string Protocolo_cancelamento { get; set; }
         public bool Inutilizado { get; set; }
         public Nullable<System.DateTime> Data_inutilizacao { get; set; }
+        public int Numero_documento { get; set; }
     }
 }

@@ -69,6 +69,7 @@
           <Property Name="Protocolo_cancelamento" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Inutilizado" Type="bit" Nullable="false" />
           <Property Name="Data_inutilizacao" Type="datetime" />
+          <Property Name="Numero_documento" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Estoque">
           <Key>
@@ -687,6 +688,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Mov_Tp_1999800XBA">
+          <End Role="Tipos_movimento" Type="Self.Tipos_movimento" Multiplicity="1" />
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_movimento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="Tipo_movimento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Caixas" EntityType="Self.Caixas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
@@ -813,6 +826,10 @@
           </AssociationSet>
           <AssociationSet Name="Mov_Plan_C_17980005" Association="Self.Mov_Plan_C_17980005">
             <End Role="Planos_contas" EntitySet="Planos_contas" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
+          <AssociationSet Name="Mov_Tp_1999800XBA" Association="Self.Mov_Tp_1999800XBA">
+            <End Role="Tipos_movimento" EntitySet="Tipos_movimento" />
             <End Role="Movimentos" EntitySet="Movimentos" />
           </AssociationSet>
         </EntityContainer>
@@ -948,6 +965,10 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
+          <AssociationSet Name="Mov_Tp_1999800XBA" Association="Model.Mov_Tp_1999800XBA">
+            <End Role="Tipos_movimento" EntitySet="Tipos_movimento" />
+            <End Role="Movimentos" EntitySet="Movimentos" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -1015,6 +1036,7 @@
           <Property Name="Protocolo_cancelamento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Inutilizado" Type="Boolean" Nullable="false" />
           <Property Name="Data_inutilizacao" Type="DateTime" Precision="3" />
+          <Property Name="Numero_documento" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Estoque">
           <Key>
@@ -1153,6 +1175,7 @@
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Movim__7A672E12" FromRole="Movimentos" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Usuarios" Relationship="Model.FK__Movimento__Usuar__76969D2E" FromRole="Movimentos" ToRole="Usuarios" />
           <NavigationProperty Name="Planos_contas" Relationship="Model.Mov_Plan_C_17980005" FromRole="Movimentos" ToRole="Planos_contas" />
+          <NavigationProperty Name="Tipos_movimento" Relationship="Model.Mov_Tp_1999800XBA" FromRole="Movimentos" ToRole="Tipos_movimento" />
         </EntityType>
         <EntityType Name="Movimentos_caixas">
           <Key>
@@ -1333,6 +1356,7 @@
           <Property Name="Transferencia_loja" Type="Boolean" Nullable="false" />
           <Property Name="Plano_conta_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Planos_contas" Relationship="Model.Itens_Plan_148989" FromRole="Tipos_movimento" ToRole="Planos_contas" />
+          <NavigationProperty Name="Movimentos" Relationship="Model.Mov_Tp_1999800XBA" FromRole="Tipos_movimento" ToRole="Movimentos" />
         </EntityType>
         <EntityType Name="Unidades">
           <Key>
@@ -1681,6 +1705,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Mov_Tp_1999800XBA">
+          <End Type="Model.Tipos_movimento" Role="Tipos_movimento" Multiplicity="1" />
+          <End Type="Model.Movimentos" Role="Movimentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_movimento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Movimentos">
+              <PropertyRef Name="Tipo_movimento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1734,6 +1770,7 @@
           <EntitySetMapping Name="Documentos_fiscais">
             <EntityTypeMapping TypeName="Model.Documentos_fiscais">
               <MappingFragment StoreEntitySet="Documentos_fiscais">
+                <ScalarProperty Name="Numero_documento" ColumnName="Numero_documento" />
                 <ScalarProperty Name="Data_inutilizacao" ColumnName="Data_inutilizacao" />
                 <ScalarProperty Name="Inutilizado" ColumnName="Inutilizado" />
                 <ScalarProperty Name="Protocolo_cancelamento" ColumnName="Protocolo_cancelamento" />

@@ -11,6 +11,7 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
+        IsVisibleChanged="Window_IsVisibleChanged"
         Title="Login" Height="355" Width="695">
     <Grid>
         <Border BorderBrush="#FF0068FF" BorderThickness="1" HorizontalAlignment="Left" Height="325" VerticalAlignment="Top" Width="660" CornerRadius="10" Margin="10,10,0,0">

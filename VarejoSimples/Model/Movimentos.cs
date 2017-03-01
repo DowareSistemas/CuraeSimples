@@ -38,5 +38,6 @@ namespace VarejoSimples.Model
         public virtual ICollection<Itens_pagamento> Itens_pagamento { get; set; }
         public virtual Usuarios Usuarios { get; set; }
         public virtual Planos_contas Planos_contas { get; set; }
+        public virtual Tipos_movimento Tipos_movimento { get; set; }
     }
 }

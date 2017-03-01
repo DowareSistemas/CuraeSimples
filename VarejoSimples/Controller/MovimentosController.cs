@@ -40,6 +40,11 @@ namespace VarejoSimples.Controller
             BStatus.Success("Movimento iniciado...");
         }
 
+        internal Movimentos Find(int movimento_id)
+        {
+            return db.Find(movimento_id);
+        }
+
         private List<Itens_movimento> itens_mov = null;
         private List<Itens_pagamento> itens_pag = null;
         private decimal Troco { get; set; }
@@ -438,7 +443,6 @@ namespace VarejoSimples.Controller
                                     parcela_prazo.Cliente_id = Movimento.Cliente_id;
                                 else
                                     parcela_prazo.Fornecedor_id = Movimento.Fornecedor_id;
-
                                 
                                 if (!parcController.Save(parcela_prazo))
                                 {
@@ -489,7 +493,6 @@ namespace VarejoSimples.Controller
             item.Quant += 1;
             item.Valor_final += valor_item;
         }
-
 
         public void DecrementaItem(int item_id)
         {
@@ -582,6 +585,16 @@ namespace VarejoSimples.Controller
         public int CountByCliente(int cliente_id)
         {
             return db.Where(m => m.Cliente_id == cliente_id).Count();
+        }
+
+        public List<Movimentos> BuscaGenerica(string search, DateTime? data_inicio, DateTime? data_fim, int pagina_atual, int numero_registros)
+        {
+            return db.BuscaGenericaMovimentos(search, data_inicio, data_fim, db.Context, pagina_atual, numero_registros);
+        }
+
+        public int CountPaginacao(string search, DateTime? data_inicio, DateTime? data_fim)
+        {
+            return db.CountPaginacao(search, data_inicio, data_fim, db.Context);
         }
     }
 }

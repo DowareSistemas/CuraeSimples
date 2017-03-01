@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,18 +47,11 @@ namespace VarejoSimples
             MessageBox.Show(Declaracoes.TrataRetorno(retorno));
         }
 
-        public MainWindow()
+        public delegate void Complete();
+        public event Complete OnComplete;
+
+        public MainWindow(Iniciando ini)
         {
-            // NFCe();
-            //  varejo_config db = new varejo_config();
-            //  db.Database.Connection.ConnectionString = @"data source=tcp:192.168.0.199,1433;initial catalog=bancoteste;user id=sa;password=81547686;multipleactiveresultsets=True;application name=EntityFramework";
-            //  db.Database.CreateIfNotExists();
-
-            IRegistroCheques rc = new LancamentoCheque();
-            Contas conta = new ContasController().Find(4);
-            rc.SetConta(conta);
-           // rc.Exibir(100);
-
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
 
@@ -71,12 +65,21 @@ namespace VarejoSimples
             txCod_rotina.ToNumeric();
             txCod_rotina.Focus();
             this.Title = "Curae - Mini ERP";
-            Login l = new Login();
-            l.ShowDialog();
+
+            Login l = new Login(ini);
+            l.Show();
+           // ini.Close();
+
+            l.EfetuouLogin += L_EfetuouLogin;
+        }
+
+        private void L_EfetuouLogin()
+        {
             listView.SelectedIndex = 0;
             txNomeLoja.Text = (UsuariosController.LojaAtual.Nome_fantasia + $" ({UsuariosController.LojaAtual.Razao_social})");
             txUsuario.Text = UsuariosController.UsuarioAtual.Nome;
 
+            this.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)

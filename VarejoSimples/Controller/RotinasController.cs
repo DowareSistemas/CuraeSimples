@@ -148,6 +148,11 @@ namespace VarejoSimples.Controller
                         CadContas cadconta = new CadContas();
                         cadconta.ShowDialog();
                         break;
+
+                    case 32:
+                        ConsultaMovimentos consMov = new ConsultaMovimentos();
+                        consMov.ShowDialog();
+                        break;
                 }
             }
             catch (Exception ex)

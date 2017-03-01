@@ -75,6 +75,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="SQL2Search, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SQL2Search\bin\Debug\SQL2Search.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -99,6 +103,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
       <HintPath>..\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
@@ -176,6 +184,9 @@
     <Compile Include="Enums\Tipo_prazo_operadora.cs" />
     <Compile Include="Enums\Tipo_produto_filtro_validade.cs" />
     <Compile Include="Enums\Tipo_recebimento.cs" />
+    <Compile Include="Iniciando.xaml.cs">
+      <DependentUpon>Iniciando.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\ICaixas.cs" />
     <Compile Include="Interfaces\IClientes.cs" />
     <Compile Include="Interfaces\IContas.cs" />
@@ -416,6 +427,12 @@
     <Compile Include="Views\Marca\PesquisarMarca.xaml.cs">
       <DependentUpon>PesquisarMarca.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Movimento\ConsultaMovimentos.xaml.cs">
+      <DependentUpon>ConsultaMovimentos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Movimento\DetalhesMovimento.xaml.cs">
+      <DependentUpon>DetalhesMovimento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Movimento\LancamentoCheque\LancamentoCheque.xaml.cs">
       <DependentUpon>LancamentoCheque.xaml</DependentUpon>
     </Compile>
@@ -497,6 +514,10 @@
     <Compile Include="Views\Vendedor\PesquisarVendedor.xaml.cs">
       <DependentUpon>PesquisarVendedor.xaml</DependentUpon>
     </Compile>
+    <Page Include="Iniciando.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -592,6 +613,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Marca\PesquisarMarca.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Movimento\ConsultaMovimentos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Movimento\DetalhesMovimento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -725,6 +754,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Utilitarios\SQL2Search.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -773,6 +805,30 @@
     <Resource Include="Images\nfce.png" />
     <Resource Include="Images\impressao.png" />
     <Resource Include="Images\opcoes.png" />
+    <Resource Include="Images\anterior.png" />
+    <Resource Include="Images\primeiro.png" />
+    <Resource Include="Images\proximo.png" />
+    <Resource Include="Images\ultimo.png" />
+    <Resource Include="Images\atualizar.png" />
+    <Resource Include="Images\busca.png" />
+    <Resource Include="Images\loading.gif" />
+    <Resource Include="Images\ring.gif" />
+    <Content Include="Images\amarelo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\azul.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\cinza.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\laranja.png" />
+    <Content Include="Images\verde.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\vermelho.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Relatorios\VND001.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>VND001.cs</LastGenOutput>

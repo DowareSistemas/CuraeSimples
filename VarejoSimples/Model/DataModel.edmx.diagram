@@ -57,6 +57,7 @@
         <AssociationConnector Association="Model.FK__Produtos__Unidad__398D8EEE" />
         <AssociationConnector Association="Model.FK__Produtos___Unida__22751F6C" />
         <AssociationConnector Association="Model.FK__Vendedore__Usuar__6EF57B66" />
+        <AssociationConnector Association="Model.Mov_Tp_1999800XBA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

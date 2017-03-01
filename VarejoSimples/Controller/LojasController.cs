@@ -8,7 +8,7 @@ using VarejoSimples.Repository;
 
 namespace VarejoSimples.Controller
 {
-   public  class LojasController
+    public class LojasController
     {
         private LojasRepository db = null;
 
@@ -44,16 +44,23 @@ namespace VarejoSimples.Controller
 
         public List<Lojas> Search(string search)
         {
-            Expression<Func<Lojas, bool>> expr = (e =>
-                      e.Razao_social.Contains(search) ||
-                      e.Nome_fantasia.Contains(search) ||
-                      e.Cnpj.Equals(search));
+            try
+            {
+                Expression<Func<Lojas, bool>> expr = (e =>
+                          e.Razao_social.Contains(search) ||
+                          e.Nome_fantasia.Contains(search) ||
+                          e.Cnpj.Equals(search));
 
-            int id = 0;
-            if (int.TryParse(search, out id))
-                expr = expr.And(e => e.Id == int.Parse(search));
+                int id = 0;
+                if (int.TryParse(search, out id))
+                    expr = expr.And(e => e.Id == int.Parse(search));
 
-            return db.Where(expr).ToList();
+                return db.Where(expr).ToList();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         internal Lojas Find(int v)
@@ -78,43 +85,43 @@ namespace VarejoSimples.Controller
 
         private bool Valid(Lojas loja)
         {
-            if(string.IsNullOrWhiteSpace(loja.Nome_fantasia))
+            if (string.IsNullOrWhiteSpace(loja.Nome_fantasia))
             {
                 BStatus.Alert("O nome fantasia é obrigatório");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Razao_social))
+            if (string.IsNullOrWhiteSpace(loja.Razao_social))
             {
                 BStatus.Alert("A razão social é obrigatória");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Logradouro))
+            if (string.IsNullOrWhiteSpace(loja.Logradouro))
             {
                 BStatus.Alert("O logradouro é obrigatório");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Municipio))
+            if (string.IsNullOrWhiteSpace(loja.Municipio))
             {
                 BStatus.Alert("O município é obrigatório");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Bairro))
+            if (string.IsNullOrWhiteSpace(loja.Bairro))
             {
                 BStatus.Alert("O bairro é obrigatório");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Cnpj))
+            if (string.IsNullOrWhiteSpace(loja.Cnpj))
             {
                 BStatus.Alert("O CNPJ é obrigatório");
                 return false;
             }
 
-            if(string.IsNullOrWhiteSpace(loja.Uf))
+            if (string.IsNullOrWhiteSpace(loja.Uf))
             {
                 BStatus.Alert("A UF é obrigatória");
                 return false;
