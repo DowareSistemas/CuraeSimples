@@ -233,6 +233,8 @@ namespace VarejoSimples.Controller
                 }
                 #endregion
 
+                int numero_parcela = 1;
+                
                 #region Itens do Pagamento
                 foreach (Itens_pagamento item_pg in itens_pag)
                 {
@@ -308,28 +310,42 @@ namespace VarejoSimples.Controller
                             Operadoras_cartao operadora = opController.Find(forma_pagamento.Operadora_cartao_id);
 
                             Parcelas parcela_cartao = new Parcelas();
-                            parcela_cartao.Tipo_entidade = (int)Tipo_entidade_parcela.OPERADORA;
-                            parcela_cartao.Operadora_cartao_id = forma_pagamento.Operadora_cartao_id;
                             parcela_cartao.Item_pagamento_id = item_pg.Id;
                             parcela_cartao.Valor = item_pg.Valor;
                             parcela_cartao.Situacao = (int)Situacao_parcela.EM_ABERTO;
                             parcela_cartao.Data_lancamento = Movimento.Data;
-                            parcela_cartao.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
 
                             parcela_cartao.Data_vencimento = (operadora.Tipo_recebimento == (int)Tipo_prazo_operadora.DIAS
                                 ? Movimento.Data.AddDays(operadora.Prazo_recebimento)
                                 : Movimento.Data.AddHours(operadora.Prazo_recebimento));
+                            parcela_cartao.Portador = forma_pagamento.Conta_id;
 
-                            parcela_cartao.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
-                                 ? (int)Tipo_parcela.RECEBER
-                                 : (int)Tipo_parcela.PAGAR);
+                            if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                            {
+                                parcela_cartao.Tipo_parcela = (int)Tipo_parcela.RECEBER;
+                                parcela_cartao.Cliente_id = Movimento.Cliente_id;
+                            }
+
+                            if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
+                            {
+                                parcela_cartao.Tipo_parcela = (int)Tipo_parcela.PAGAR;
+                                parcela_cartao.Fornecedor_id = Movimento.Cliente_id;
+                            }
+
+                            parcela_cartao.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
+                            parcela_cartao.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
+                            parcela_cartao.Numero_cheque = string.Empty;
+                            parcela_cartao.Banco = string.Empty;
+                            parcela_cartao.Agencia = string.Empty;
+                            parcela_cartao.Dias_compensacao = 0;
+                            parcela_cartao.Conta = string.Empty;
 
                             if (!parcController.Save(parcela_cartao))
                             {
                                 unit.RollBack();
                                 return 0;
                             }
-
+                            numero_parcela++;
                             break;
                         #endregion
 
@@ -352,25 +368,34 @@ namespace VarejoSimples.Controller
                             foreach (Cheque cheque in registroCheques.Cheques)
                             {
                                 Parcelas parcela_cheque = new Parcelas();
-                                parcela_cheque.Tipo_entidade = (Movimento.Cliente_id > 0
-                                    ? (int)Tipo_entidade_parcela.CLIENTE
-                                    : (int)Tipo_entidade_parcela.FORNECEDOR);
+
                                 parcela_cheque.Item_pagamento_id = item_pg.Id;
                                 parcela_cheque.Valor = cheque.Valor;
                                 parcela_cheque.Situacao = (int)Situacao_parcela.EM_ABERTO;
                                 parcela_cheque.Data_lancamento = Movimento.Data;
-                                parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
+                                parcela_cheque.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
+                                parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
                                 parcela_cheque.Data_vencimento = cheque.Data_deposito;
-                                parcela_cheque.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
-                                     ? (int)Tipo_parcela.RECEBER
-                                     : (int)Tipo_parcela.PAGAR);
-                                if (Movimento.Cliente_id > 0)
-                                    parcela_cheque.Cliente_id = Movimento.Cliente_id;
-                                else
-                                    parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
 
-                                if (parcela_cheque.Tipo_entidade == (int)Tipo_entidade_parcela.CLIENTE)
+                                if(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
+                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
+                                    parcela_cheque.Cliente_id = Movimento.Cliente_id;
+                                }
+
+                                if(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
+                                {
+                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
+                                    parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
+                                }
+
+                                parcela_cheque.Portador = forma_pagamento.Conta_id;
+
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                                {
+                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
+                                    parcela_cheque.Cliente_id = Movimento.Cliente_id;
+
                                     parcela_cheque.Numero_cheque = cheque.Numero_cheque;
                                     parcela_cheque.Banco = cheque.Banco;
                                     parcela_cheque.Agencia = cheque.Agencia;
@@ -378,8 +403,11 @@ namespace VarejoSimples.Controller
                                     parcela_cheque.Conta = cheque.Conta;
                                 }
 
-                                if (parcela_cheque.Tipo_entidade == (int)Tipo_entidade_parcela.FORNECEDOR)
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
                                 {
+                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
+                                    parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
+
                                     parcela_cheque.Numero_cheque = cheque.Numero_cheque;
                                     parcela_cheque.Banco = string.Empty;
                                     parcela_cheque.Agencia = string.Empty;
@@ -392,6 +420,8 @@ namespace VarejoSimples.Controller
                                     unit.RollBack();
                                     return 0;
                                 }
+
+                                numero_parcela++;
                             }
 
                             break;
@@ -408,15 +438,14 @@ namespace VarejoSimples.Controller
                             {
 
                                 Parcelas parcela_prazo = new Parcelas();
-                                parcela_prazo.Tipo_entidade = (Movimento.Cliente_id > 0
-                                    ? (int)Tipo_entidade_parcela.CLIENTE
-                                    : (int)Tipo_entidade_parcela.FORNECEDOR);
+
                                 parcela_prazo.Item_pagamento_id = item_pg.Id;
-                                parcela_prazo.Valor = item_pg.Valor;
+                                parcela_prazo.Valor = (item_pg.Valor / forma_pagamento.Parcelas);
                                 parcela_prazo.Situacao = (int)Situacao_parcela.EM_ABERTO;
                                 parcela_prazo.Data_lancamento = Movimento.Data;
-                                parcela_prazo.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id}";
-                                parcela_prazo.Numero_cheque = "0";
+                                parcela_prazo.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
+                                parcela_prazo.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
+                                parcela_prazo.Numero_cheque = string.Empty ;
                                 parcela_prazo.Banco = string.Empty;
                                 parcela_prazo.Agencia = string.Empty;
                                 parcela_prazo.Dias_compensacao = 0;
@@ -434,21 +463,26 @@ namespace VarejoSimples.Controller
                                     parcela_prazo.Data_vencimento = data_base;
                                     data_base = data_base.AddDays(forma_pagamento.Intervalo);
                                 }
-                                
-                                parcela_prazo.Tipo_parcela = (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA
-                                     ? (int)Tipo_parcela.RECEBER
-                                     : (int)Tipo_parcela.PAGAR);
 
-                                if (Movimento.Cliente_id > 0)
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                                {
+                                    parcela_prazo.Tipo_parcela = (int)Tipo_parcela.RECEBER;
                                     parcela_prazo.Cliente_id = Movimento.Cliente_id;
-                                else
+                                }
+
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
+                                {
+                                    parcela_prazo.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                     parcela_prazo.Fornecedor_id = Movimento.Fornecedor_id;
-                                
+                                }
+
                                 if (!parcController.Save(parcela_prazo))
                                 {
                                     unit.RollBack();
                                     return 0;
                                 }
+
+                                numero_parcela++;
                             }
                             break;
                             #endregion

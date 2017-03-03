@@ -1,0 +1,94 @@
+﻿<Window x:Class="VarejoSimples.Views.Parcela.ConsultaParcelas"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Parcela"
+         xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        Closing="Window_Closing"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        IsVisibleChanged="Window_IsVisibleChanged"
+        Title="CR/CP" Height="600" Width="1024">
+    <Grid>
+        <DataGrid x:Name="dataGrid" Margin="10,35,10,39" RenderTransformOrigin="0.483,0.511">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Height="20" Source="{Binding ImgStatus}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="Código" MinWidth="75" Binding="{Binding Parcela.Id}"/>
+                <DataGridTextColumn Header="Nro. Documento" MinWidth="130" Binding="{Binding Parcela.Num_documento}"/>
+                <DataGridTextColumn Header="Portador" MinWidth="200" Binding="{Binding Portador}"/>
+                <DataGridTextColumn Header="Data lançamento" MinWidth="120" Binding="{Binding Parcela.Data_lancamento, StringFormat=dd/MM/yyyy}"/>
+                <DataGridTextColumn Header="Data vencimento" MinWidth="120" Binding="{Binding Parcela.Data_vencimento, StringFormat=dd/MM/yyyy}"/>
+                <DataGridTextColumn Header="Valor (R$)" MinWidth="110" Binding="{Binding Parcela.Valor}"/>
+                <DataGridTextColumn Header="Descrição" MinWidth="200" Binding="{Binding Parcela.Parcela_descricao}"/>
+                <DataGridTextColumn Header="Cliente" MinWidth="200" Binding="{Binding Cliente}"/>
+                <DataGridTextColumn Header="Fornecedor" MinWidth="200" Binding="{Binding Fornecedor}"/>
+                <DataGridTextColumn Header="Dias tolerância" MinWidth="115" Binding="{Binding Parcela.Dias_tolerancia}"/>
+                <DataGridTextColumn Header="Juros atraso (%)" MinWidth="120" Binding="{Binding Parcela.Juros_atrazo}"/>
+                <DataGridTextColumn Header="Parcela anterior" MinWidth="120" Binding="{Binding Parcela.Parcela_anterior}"/>
+                <DataGridTextColumn Header="Nro. Cheque" MinWidth="100" Binding="{Binding Parcela.Numero_cheque}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid x:Name="GridNavegacao" HorizontalAlignment="Left" Height="25" Margin="10,5,0,0" VerticalAlignment="Top" Width="460">
+            <Button x:Name="btAtualizar" HorizontalAlignment="Left" Margin="1,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btAtualizar_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/atualizar.png" Height="20" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btPrimeiro" HorizontalAlignment="Left" Margin="54,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btPrimeiro_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/primeiro.png" Height="18" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Border BorderBrush="#FF939393" BorderThickness="1" HorizontalAlignment="Left" Margin="43,0,0,0" Width="1"/>
+            <Button x:Name="btAnterior" HorizontalAlignment="Left" Margin="93,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btAnterior_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/anterior.png" Height="21" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btProximo" HorizontalAlignment="Left" Margin="132,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btProximo_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/proximo.png" Height="22" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="btUltimo" HorizontalAlignment="Left" Margin="171,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btUltimo_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/ultimo.png" Height="17" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Border BorderBrush="#FF939393" BorderThickness="1" HorizontalAlignment="Left" Margin="214,0,0,0" Width="1"/>
+            <Button x:Name="btBuscaDetalhada" HorizontalAlignment="Left" Margin="226,0,0,0" Width="34" Height="25" VerticalAlignment="Top" Click="btBuscaDetalhada_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/busca.png" Height="18" Width="30"/>
+                </StackPanel>
+            </Button>
+            <TextBox x:Name="txPagina_atual" IsEnabled="False" HorizontalAlignment="Left" Height="25" Margin="265,0,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="45" FontSize="14.667" Padding="0,2,0,0"/>
+            <Label x:Name="label" Content="/" HorizontalAlignment="Left" Margin="314,-8,0,0" FontSize="20" Width="12" Padding="0,5,0,0"/>
+            <TextBox x:Name="txNumero_paginas" IsEnabled="False" HorizontalAlignment="Left" Height="25" Margin="330,0,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="55" FontSize="14.667" Padding="0,2,0,0"/>
+            <Label x:Name="label_Copy" Content="-" HorizontalAlignment="Left" Margin="390,-8,-7,0" FontSize="20" Width="12" Padding="0,5,0,0"/>
+            <TextBox x:Name="txNumero_registros"  HorizontalAlignment="Left" Margin="402,0,0,0" TextWrapping="Wrap" Text="15" Width="55" FontSize="14.667" Padding="0,2,0,0"/>
+        </Grid>
+        <Image x:Name="imgLoading" Visibility="Hidden" gif:ImageBehavior.AnimatedSource="/Curae Varejo (Simples);component/Images/loading.gif" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="25" Margin="475,5,0,0" RenderTransformOrigin="0.4,0.6" />
+        <ComboBox x:Name="cbMes" SelectionChanged="cbMes_SelectionChanged" HorizontalAlignment="Right" Margin="0,5,266,0" VerticalAlignment="Top" Width="165" Height="25" FontSize="14.667"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Margin="10,0,0,10" Width="25" Height="24" VerticalAlignment="Bottom" Source="../../Images/verde.png"/>
+        <Label x:Name="label1" Content="Em aberto" HorizontalAlignment="Left" Margin="34,0,0,7" VerticalAlignment="Bottom" Width="81" FontSize="13.333"/>
+        <Image x:Name="image_Copy" HorizontalAlignment="Left" Margin="115,0,0,10" Width="25" Height="24" VerticalAlignment="Bottom" Source="../../Images/vermelho.png"/>
+        <Label x:Name="label1_Copy" Content="Baixado" HorizontalAlignment="Left" Margin="140,0,0,7" VerticalAlignment="Bottom" Width="81" FontSize="13.333"/>
+        <Image x:Name="image_Copy1" HorizontalAlignment="Left" Margin="207,0,0,10" Width="25" Height="24" VerticalAlignment="Bottom" Source="../../Images/amarelo.png"/>
+        <Label x:Name="label1_Copy1" Content="Renegociado" HorizontalAlignment="Left" Margin="231,0,0,7" VerticalAlignment="Bottom" Width="94" FontSize="13.333"/>
+        <Image x:Name="image_Copy2" HorizontalAlignment="Left" Margin="325,0,0,10" Width="25" Height="24" VerticalAlignment="Bottom" Source="../../Images/cinza.png"/>
+        <Label x:Name="label1_Copy2" Content="Cancelado" HorizontalAlignment="Left" Margin="350,0,0,7" VerticalAlignment="Bottom" Width="94" FontSize="13.333"/>
+        <Button x:Name="button" Content="_Baixa" HorizontalAlignment="Right" Margin="0,5,186,0" VerticalAlignment="Top" Width="75" Height="25"/>
+        <Button x:Name="button_Copy" Content="_Cancelamento" HorizontalAlignment="Right" Margin="0,5,90,0" VerticalAlignment="Top" Width="91" Height="25"/>
+        <Button x:Name="button_Copy1" Content="_Renegociar" HorizontalAlignment="Right" Margin="0,5,10,0" VerticalAlignment="Top" Width="75" Height="25"/>
+
+    </Grid>
+</Window>

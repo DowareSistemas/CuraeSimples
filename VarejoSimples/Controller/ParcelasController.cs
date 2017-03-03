@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using VarejoSimples.Enums;
 using VarejoSimples.Model;
 using VarejoSimples.Repository;
 
@@ -48,6 +49,11 @@ namespace VarejoSimples.Controller
             db.Context = v;
         }
 
+        public varejo_config GetContext()
+        {
+            return db.Context;
+        }
+
         internal List<Parcelas> ListByItens_pagamento(List<Itens_pagamento> itens_pagamento)
         {
             if (itens_pagamento == null)
@@ -55,15 +61,42 @@ namespace VarejoSimples.Controller
             if (itens_pagamento.Count == 0)
                 return new List<Parcelas>();
 
-            int item_id = itens_pagamento[0].Id;
-            Expression<Func<Parcelas, bool>> query = (e => e.Item_pagamento_id == item_id);
+            var itens_pg = new int[itens_pagamento.Count];
+            for (int i = 0; i < itens_pagamento.Count; i++)
+                itens_pg[i] = itens_pagamento[i].Id;
 
-            for (int i = 1; i < itens_pagamento.Count; i++)
-            {
-                item_id = itens_pagamento[i].Id;
-                query = query.Or(e => e.Item_pagamento_id == item_id);
-            }
-            return db.Where(query).ToList();
+            return db.Where(e => itens_pg.Contains(e.Item_pagamento_id)).ToList();
+        }
+
+        public List<Parcelas> BuscaBasica(Tipo_parcela tipo,
+            int pagina_atual,
+            int numero_registros, int mes)
+        {
+            DateTime mes_inicio = new DateTime(DateTime.Now.Year, mes, 1);
+            DateTime mes_fim = new DateTime(DateTime.Now.Year, mes, DateTime.DaysInMonth(DateTime.Now.Year, mes));
+
+            int tipo_parcela = (int)tipo;
+            return db.Where(e =>
+                    e.Tipo_parcela == tipo_parcela &&
+                    e.Data_vencimento >= mes_inicio &&
+                    e.Data_vencimento <= mes_fim)
+               .OrderBy(e => e.Data_vencimento)
+               .OrderBy(e => e.Situacao)
+               .Skip(pagina_atual).Take(numero_registros).ToList();
+        }
+
+        public int CountBusca(Tipo_parcela tipo, int mes)
+        {
+            DateTime mes_inicio = new DateTime(DateTime.Now.Year, mes, 1);
+            DateTime mes_fim = new DateTime(DateTime.Now.Year, mes, DateTime.DaysInMonth(DateTime.Now.Year, mes));
+
+            int tipo_parcela = (int)tipo;
+            int retorno = db.Where(e =>
+                    e.Tipo_parcela == tipo_parcela &&
+                    e.Data_vencimento >= mes_inicio &&
+                    e.Data_vencimento <= mes_fim).Count();
+
+            return retorno;
         }
     }
 }

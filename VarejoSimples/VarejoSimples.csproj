@@ -387,6 +387,15 @@
     <Compile Include="Views\Consultas\SaldosLotes.xaml.cs">
       <DependentUpon>SaldosLotes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConsutasCustomizadas\AlertaDesconhecido.xaml.cs">
+      <DependentUpon>AlertaDesconhecido.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsutasCustomizadas\ConsultaCustomizada.xaml.cs">
+      <DependentUpon>ConsultaCustomizada.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsutasCustomizadas\ParametroPesquisa.xaml.cs">
+      <DependentUpon>ParametroPesquisa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Conta\CadContas.xaml.cs">
       <DependentUpon>CadContas.xaml</DependentUpon>
     </Compile>
@@ -453,6 +462,9 @@
     </Compile>
     <Compile Include="Views\Operadora_cartao\PesquisarOperadora.xaml.cs">
       <DependentUpon>PesquisarOperadora.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Parcela\ConsultaParcelas.xaml.cs">
+      <DependentUpon>ConsultaParcelas.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Plano_conta\CadPlano_conta.xaml.cs">
       <DependentUpon>CadPlano_conta.xaml</DependentUpon>
@@ -564,6 +576,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ConsutasCustomizadas\AlertaDesconhecido.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConsutasCustomizadas\ConsultaCustomizada.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConsutasCustomizadas\ParametroPesquisa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Conta\CadContas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -649,6 +673,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Operadora_cartao\PesquisarOperadora.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Parcela\ConsultaParcelas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -754,6 +782,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Images\sql.png" />
     <Content Include="Utilitarios\SQL2Search.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

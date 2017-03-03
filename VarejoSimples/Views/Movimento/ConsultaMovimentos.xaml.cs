@@ -51,7 +51,6 @@ namespace VarejoSimples.Views.Movimento
             List<MovimentosAdapter> adapters = new List<MovimentosAdapter>();
 
             list.ForEach(e => adapters.Add(new MovimentosAdapter(e, Context)));
-
             dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = adapters), dataGrid);
 
             txPesquisa.Dispatcher.Invoke(new Action<TextBox>(tx => txPesquisa.IsEnabled = true), txPesquisa);
@@ -84,7 +83,8 @@ namespace VarejoSimples.Views.Movimento
             MovimentosController movController = new MovimentosController();
 
             int numero_paginas = 0;
-            numero_paginas = (movController.CountPaginacao(txPesquisa.Text, txData_inicio.SelectedDate, txData_fim.SelectedDate) / int.Parse(txNumero_registros.Text));
+            numero_paginas = (movController.CountPaginacao(txPesquisa.Text, txData_inicio.SelectedDate, txData_fim.SelectedDate)
+                / int.Parse(txNumero_registros.Text));
             txNumero_paginas.Text = numero_paginas.ToString();
 
             AcionarBusca();

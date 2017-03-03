@@ -15,6 +15,7 @@ using VarejoSimples.Views.Loja;
 using VarejoSimples.Views.Marca;
 using VarejoSimples.Views.Movimento;
 using VarejoSimples.Views.Operadora_cartao;
+using VarejoSimples.Views.Parcela;
 using VarejoSimples.Views.Plano_conta;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.Produto_fornecedor;
@@ -152,6 +153,11 @@ namespace VarejoSimples.Controller
                     case 32:
                         ConsultaMovimentos consMov = new ConsultaMovimentos();
                         consMov.ShowDialog();
+                        break;
+
+                    case 20:
+                        ConsultaParcelas cp_cp = new ConsultaParcelas(Enums.Tipo_parcela.RECEBER);
+                        cp_cp.ShowDialog();
                         break;
                 }
             }

@@ -14,22 +14,13 @@ namespace VarejoSimples.Model
     
     public partial class Parcelas
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Parcelas()
-        {
-            this.Numero_cheque = "";
-            this.Banco = "";
-            this.Agencia = "";
-            this.Dias_compensacao = 0;
-            this.Conta = "";
-        }
-    
         public int Id { get; set; }
         public int Item_pagamento_id { get; set; }
+        public int Movimento_conta_id { get; set; }
+        public string Num_documento { get; set; }
         public int Tipo_parcela { get; set; }
-        public int Tipo_entidade { get; set; }
+        public int Portador { get; set; }
         public int Cliente_id { get; set; }
-        public int Operadora_cartao_id { get; set; }
         public int Fornecedor_id { get; set; }
         public decimal Valor { get; set; }
         public System.DateTime Data_lancamento { get; set; }
@@ -39,12 +30,10 @@ namespace VarejoSimples.Model
         public decimal Juros_atraso { get; set; }
         public int Situacao { get; set; }
         public int Parcela_anterior { get; set; }
-        public string Num_documento { get; set; }
-        public int Movimento_conta_id { get; set; }
         public string Numero_cheque { get; set; }
         public string Banco { get; set; }
         public string Agencia { get; set; }
-        public int Dias_compensacao { get; set; }
         public string Conta { get; set; }
+        public int Dias_compensacao { get; set; }
     }
 }

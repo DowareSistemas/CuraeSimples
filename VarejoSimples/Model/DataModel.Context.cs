@@ -42,7 +42,6 @@ namespace VarejoSimples.Model
         public virtual DbSet<Movimentos_contas> Movimentos_contas { get; set; }
         public virtual DbSet<Operadoras_cartao> Operadoras_cartao { get; set; }
         public virtual DbSet<Parametros> Parametros { get; set; }
-        public virtual DbSet<Parcelas> Parcelas { get; set; }
         public virtual DbSet<Permissoes> Permissoes { get; set; }
         public virtual DbSet<Planos_contas> Planos_contas { get; set; }
         public virtual DbSet<Produtos> Produtos { get; set; }
@@ -52,5 +51,6 @@ namespace VarejoSimples.Model
         public virtual DbSet<Unidades> Unidades { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Vendedores> Vendedores { get; set; }
+        public virtual DbSet<Parcelas> Parcelas { get; set; }
     }
 }

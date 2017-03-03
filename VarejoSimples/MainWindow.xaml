@@ -11,7 +11,7 @@
         PreviewKeyDown="Window_PreviewKeyDown"
         Title="MainWindow" Height="600" Width="1024">
     <Grid>
-        <ListView SelectionChanged="listView_SelectionChanged" Cursor="Hand" x:Name="listView" HorizontalAlignment="Left" Margin="10,75,0,264" Width="395" FontSize="20">
+        <ListView SelectionChanged="listView_SelectionChanged" ScrollViewer.VerticalScrollBarVisibility="Auto" Cursor="Hand" x:Name="listView" HorizontalAlignment="Left" Margin="10,75,0,264" Width="395" FontSize="20">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="385" Header="Curae (Simples) - v1.0.00" />
@@ -24,6 +24,7 @@
             <ListViewItem Content="Financeiro" x:Name="menu_4"/>
             <ListViewItem Content="Faturamento" x:Name="menu_5"/>
             <ListViewItem Content="Configuração" x:Name="menu_6"/>
+            <ListViewItem Content="Consultas customizadas" MouseDown="mi_consultasCustomizadas_MouseDown" x:Name="mi_consultasCustomizadas"/>
         </ListView>
         <Grid Height="28" VerticalAlignment="Bottom" Background="#FFE4E4E4">
             <Label x:Name="lbStatus" Content="Carregamento do sistema Ok!" Margin="35,0,10,0" Foreground="Black" Padding="5,3,5,5" FontSize="14.667"/>
@@ -43,8 +44,8 @@
         </DataGrid>
         <Label x:Name="label_Copy1" Content="Iniciar rotina [F3]" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" FontSize="18.667" Foreground="#FF078EFF" Width="151"/>
         <TextBox x:Name="txCod_rotina" KeyDown="txCod_rotina_KeyDown" HorizontalAlignment="Right" Height="35" Margin="0,35,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="151" FontSize="24" />
-      
-        <TreeView x:Name="treeView" FontSize="20" HorizontalAlignment="Left" Margin="10,305,0,33" Width="395" Foreground="#FF2752E2">
+
+        <TreeView x:Name="treeView" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,33" Width="395" Foreground="#FF2752E2" Height="231" VerticalAlignment="Bottom">
             <TreeViewItem Header="Consultas" Foreground="#FF042271">
                 <TreeViewItem Header="Estoque" Foreground="#FF042271">
                     <TreeViewItem Header="Saldos físicos e financeiros" MouseDoubleClick="TreeViewItem_MouseDoubleClick" Foreground="#FF042271"/>

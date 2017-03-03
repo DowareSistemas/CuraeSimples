@@ -26,7 +26,6 @@ namespace VarejoSimples.Controller
         public void RollBack()
         {
             Context.Database.CurrentTransaction.Rollback();
-            Context.SaveChanges();
         }
 
         public void Commit()

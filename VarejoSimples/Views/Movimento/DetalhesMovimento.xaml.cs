@@ -90,6 +90,9 @@ namespace VarejoSimples.Views.Movimento
 
     public class ParcelaAdapter
     {
+        public int Id { get; set; }
+        public string Portador { get; set; }
+        public string Num_documento { get; set; }
         public BitmapImage ImgStatus { get; set; }
         public string Forma_pagamento { get; set; }
         public string Tipo { get; set; }
@@ -98,7 +101,16 @@ namespace VarejoSimples.Views.Movimento
 
         public ParcelaAdapter(Parcelas parcela, varejo_config context)
         {
+            Id = parcela.Id;
+            Num_documento = parcela.Num_documento;
             Data_vencimento = parcela.Data_vencimento;
+
+            if(parcela.Portador > 0)
+            {
+                Contas conta = context.Contas.Find(parcela.Portador);
+                Portador = conta.Nome;
+            }
+
             switch (parcela.Situacao)
             {
                 case (int)Situacao_parcela.EM_ABERTO:

@@ -253,26 +253,25 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Item_pagamento_id" Type="int" Nullable="false" />
+          <Property Name="Movimento_conta_id" Type="int" Nullable="false" />
+          <Property Name="Num_documento" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Tipo_parcela" Type="int" Nullable="false" />
-          <Property Name="Tipo_entidade" Type="int" Nullable="false" />
+          <Property Name="Portador" Type="int" Nullable="false" />
           <Property Name="Cliente_id" Type="int" Nullable="false" />
-          <Property Name="Operadora_cartao_id" Type="int" Nullable="false" />
           <Property Name="Fornecedor_id" Type="int" Nullable="false" />
           <Property Name="Valor" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Data_lancamento" Type="date" Nullable="false" />
           <Property Name="Data_vencimento" Type="date" Nullable="false" />
-          <Property Name="Parcela_descricao" Type="varchar" MaxLength="200" />
+          <Property Name="Parcela_descricao" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Dias_tolerancia" Type="int" Nullable="false" />
           <Property Name="Juros_atraso" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Situacao" Type="int" Nullable="false" />
           <Property Name="Parcela_anterior" Type="int" Nullable="false" />
-          <Property Name="Num_documento" Type="varchar" MaxLength="60" />
-          <Property Name="Movimento_conta_id" Type="int" Nullable="false" />
           <Property Name="Numero_cheque" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Banco" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Agencia" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Dias_compensacao" Type="int" Nullable="false" />
           <Property Name="Conta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dias_compensacao" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -855,7 +854,6 @@
           <EntitySet Name="Movimentos_contas" EntityType="Model.Movimentos_contas" />
           <EntitySet Name="Operadoras_cartao" EntityType="Model.Operadoras_cartao" />
           <EntitySet Name="Parametros" EntityType="Model.Parametros" />
-          <EntitySet Name="Parcelas" EntityType="Model.Parcelas" />
           <EntitySet Name="Permissoes" EntityType="Model.Permissoes" />
           <EntitySet Name="Planos_contas" EntityType="Model.Planos_contas" />
           <EntitySet Name="Produtos" EntityType="Model.Produtos" />
@@ -969,6 +967,7 @@
             <End Role="Tipos_movimento" EntitySet="Tipos_movimento" />
             <End Role="Movimentos" EntitySet="Movimentos" />
           </AssociationSet>
+          <EntitySet Name="Parcelas" EntityType="Model.Parcelas" />
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -1239,33 +1238,6 @@
           <Property Name="Valor" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="Loja_id" Type="Int32" Nullable="false" />
           <Property Name="Permite_multi" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Parcelas">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Item_pagamento_id" Type="Int32" Nullable="false" />
-          <Property Name="Tipo_parcela" Type="Int32" Nullable="false" />
-          <Property Name="Tipo_entidade" Type="Int32" Nullable="false" />
-          <Property Name="Cliente_id" Type="Int32" Nullable="false" />
-          <Property Name="Operadora_cartao_id" Type="Int32" Nullable="false" />
-          <Property Name="Fornecedor_id" Type="Int32" Nullable="false" />
-          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Data_lancamento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Data_vencimento" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Parcela_descricao" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Dias_tolerancia" Type="Int32" Nullable="false" />
-          <Property Name="Juros_atraso" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Situacao" Type="Int32" Nullable="false" />
-          <Property Name="Parcela_anterior" Type="Int32" Nullable="false" />
-          <Property Name="Num_documento" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="Movimento_conta_id" Type="Int32" Nullable="false" />
-          <Property Name="Numero_cheque" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" DefaultValue="" />
-          <Property Name="Banco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" DefaultValue="" />
-          <Property Name="Agencia" Type="String" MaxLength="20" FixedLength="false" Unicode="false" DefaultValue="" Nullable="false" />
-          <Property Name="Dias_compensacao" Type="Int32" DefaultValue="0" Nullable="false" />
-          <Property Name="Conta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" DefaultValue="" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -1717,6 +1689,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Parcelas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Item_pagamento_id" Type="Int32" Nullable="false" />
+          <Property Name="Movimento_conta_id" Type="Int32" Nullable="false" />
+          <Property Name="Num_documento" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo_parcela" Type="Int32" Nullable="false" />
+          <Property Name="Portador" Type="Int32" Nullable="false" />
+          <Property Name="Cliente_id" Type="Int32" Nullable="false" />
+          <Property Name="Fornecedor_id" Type="Int32" Nullable="false" />
+          <Property Name="Valor" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Data_lancamento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Data_vencimento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Parcela_descricao" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Dias_tolerancia" Type="Int32" Nullable="false" />
+          <Property Name="Juros_atraso" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Situacao" Type="Int32" Nullable="false" />
+          <Property Name="Parcela_anterior" Type="Int32" Nullable="false" />
+          <Property Name="Numero_cheque" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Banco" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Agencia" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Conta" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dias_compensacao" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1980,34 +1978,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Parcelas">
-            <EntityTypeMapping TypeName="Model.Parcelas">
-              <MappingFragment StoreEntitySet="Parcelas">
-                <ScalarProperty Name="Conta" ColumnName="Conta" />
-                <ScalarProperty Name="Dias_compensacao" ColumnName="Dias_compensacao" />
-                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
-                <ScalarProperty Name="Banco" ColumnName="Banco" />
-                <ScalarProperty Name="Numero_cheque" ColumnName="Numero_cheque" />
-                <ScalarProperty Name="Movimento_conta_id" ColumnName="Movimento_conta_id" />
-                <ScalarProperty Name="Num_documento" ColumnName="Num_documento" />
-                <ScalarProperty Name="Parcela_anterior" ColumnName="Parcela_anterior" />
-                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
-                <ScalarProperty Name="Juros_atraso" ColumnName="Juros_atraso" />
-                <ScalarProperty Name="Dias_tolerancia" ColumnName="Dias_tolerancia" />
-                <ScalarProperty Name="Parcela_descricao" ColumnName="Parcela_descricao" />
-                <ScalarProperty Name="Data_vencimento" ColumnName="Data_vencimento" />
-                <ScalarProperty Name="Data_lancamento" ColumnName="Data_lancamento" />
-                <ScalarProperty Name="Valor" ColumnName="Valor" />
-                <ScalarProperty Name="Fornecedor_id" ColumnName="Fornecedor_id" />
-                <ScalarProperty Name="Operadora_cartao_id" ColumnName="Operadora_cartao_id" />
-                <ScalarProperty Name="Cliente_id" ColumnName="Cliente_id" />
-                <ScalarProperty Name="Tipo_entidade" ColumnName="Tipo_entidade" />
-                <ScalarProperty Name="Tipo_parcela" ColumnName="Tipo_parcela" />
-                <ScalarProperty Name="Item_pagamento_id" ColumnName="Item_pagamento_id" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Permissoes">
             <EntityTypeMapping TypeName="Model.Permissoes">
               <MappingFragment StoreEntitySet="Permissoes">
@@ -2127,6 +2097,33 @@
                 <ScalarProperty Name="Celular1" ColumnName="Celular1" />
                 <ScalarProperty Name="Apelido" ColumnName="Apelido" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parcelas">
+            <EntityTypeMapping TypeName="Model.Parcelas">
+              <MappingFragment StoreEntitySet="Parcelas">
+                <ScalarProperty Name="Dias_compensacao" ColumnName="Dias_compensacao" />
+                <ScalarProperty Name="Conta" ColumnName="Conta" />
+                <ScalarProperty Name="Agencia" ColumnName="Agencia" />
+                <ScalarProperty Name="Banco" ColumnName="Banco" />
+                <ScalarProperty Name="Numero_cheque" ColumnName="Numero_cheque" />
+                <ScalarProperty Name="Parcela_anterior" ColumnName="Parcela_anterior" />
+                <ScalarProperty Name="Situacao" ColumnName="Situacao" />
+                <ScalarProperty Name="Juros_atraso" ColumnName="Juros_atraso" />
+                <ScalarProperty Name="Dias_tolerancia" ColumnName="Dias_tolerancia" />
+                <ScalarProperty Name="Parcela_descricao" ColumnName="Parcela_descricao" />
+                <ScalarProperty Name="Data_vencimento" ColumnName="Data_vencimento" />
+                <ScalarProperty Name="Data_lancamento" ColumnName="Data_lancamento" />
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Fornecedor_id" ColumnName="Fornecedor_id" />
+                <ScalarProperty Name="Cliente_id" ColumnName="Cliente_id" />
+                <ScalarProperty Name="Portador" ColumnName="Portador" />
+                <ScalarProperty Name="Tipo_parcela" ColumnName="Tipo_parcela" />
+                <ScalarProperty Name="Num_documento" ColumnName="Num_documento" />
+                <ScalarProperty Name="Movimento_conta_id" ColumnName="Movimento_conta_id" />
+                <ScalarProperty Name="Item_pagamento_id" ColumnName="Item_pagamento_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -22,6 +22,7 @@ using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
+using VarejoSimples.Views.ConsutasCustomizadas;
 using VarejoSimples.Views.Movimento.LancamentoCheque;
 using VarejoSimples.Views.Movimento.RecebimentoCheques;
 
@@ -51,7 +52,7 @@ namespace VarejoSimples
         public event Complete OnComplete;
 
         public MainWindow(Iniciando ini)
-        {
+        { 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
 
@@ -68,7 +69,6 @@ namespace VarejoSimples
 
             Login l = new Login(ini);
             l.Show();
-           // ini.Close();
 
             l.EfetuouLogin += L_EfetuouLogin;
         }
@@ -78,6 +78,13 @@ namespace VarejoSimples
             listView.SelectedIndex = 0;
             txNomeLoja.Text = (UsuariosController.LojaAtual.Nome_fantasia + $" ({UsuariosController.LojaAtual.Razao_social})");
             txUsuario.Text = UsuariosController.UsuarioAtual.Nome;
+
+            Parametros p = ParametrosController.FindParametro("CONS_CUST", true);
+            if (p == null)
+                listView.Items.Remove(mi_consultasCustomizadas);
+            else
+               if (p.Valor.Equals("N"))
+                listView.Items.Remove(mi_consultasCustomizadas);
 
             this.Show();
         }
@@ -89,9 +96,32 @@ namespace VarejoSimples
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int menu = int.Parse((listView.SelectedItem as ListViewItem).Name.Replace("menu_", ""));
-            List<Rotinas> list = new RotinasController().ListByMenu(menu);
-            dataGrid.ItemsSource = list;
+            try
+            {
+                int menu = int.Parse((listView.SelectedItem as ListViewItem).Name.Replace("menu_", ""));
+                List<Rotinas> list = new RotinasController().ListByMenu(menu);
+                dataGrid.ItemsSource = list;
+            }
+            catch
+            {
+                Parametros p = ParametrosController.FindParametro("CSQL_PATH");
+
+                List<Rotinas> r = new List<Rotinas>();
+                DirectoryInfo di = new DirectoryInfo(p.Valor);
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    if (!file.Name.EndsWith(".csql"))
+                        continue;
+                    r.Add(new Rotinas()
+                    {
+                        Id = 600,
+                        Menu = 600,
+                        Descricao = file.Name.Replace(".csql", "")
+                    });
+                }
+
+                dataGrid.ItemsSource = r;
+            }
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -99,6 +129,12 @@ namespace VarejoSimples
             try
             {
                 Rotinas r = (Rotinas)dataGrid.SelectedItem;
+                if(r.Id == 600)
+                {
+                    CarregaConsultaCustomizada(r.Descricao);
+                    return;
+                }
+
                 RotinasController rc = new RotinasController();
                 rc.ShowWindow(r.Id);
             }
@@ -106,6 +142,27 @@ namespace VarejoSimples
             {
 
             }
+        }
+
+        private void CarregaConsultaCustomizada(string nome)
+        {
+            Parametros p = ParametrosController.FindParametro("CSQL_PATH");
+
+            SQL2Search.Compiler.SQLEntityDecompiler decompiler = new SQL2Search.Compiler.SQLEntityDecompiler();
+            SQL2Search.Model.SQLEntity sqlEntity = decompiler.Decompile(p.Valor + nome + ".csql");
+
+            if(sqlEntity.Provider == null)
+            {
+                AlertaDesconhecido ad = new AlertaDesconhecido(nome, (p.Valor + nome + ".csql"), sqlEntity.CreationTime);
+                ad.ShowDialog();
+
+                if (!ad.Permitido)
+                    return;
+            }
+
+            ConsultaCustomizada cc = new ConsultaCustomizada();
+            cc.SetSqlEntity(sqlEntity);
+            cc.Start();
         }
 
         private void txCod_rotina_KeyDown(object sender, KeyEventArgs e)
@@ -144,6 +201,10 @@ namespace VarejoSimples
         {
             ProdutosVencendo pv = new ProdutosVencendo();
             pv.ShowDialog();
+        }
+
+        private void mi_consultasCustomizadas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
         }
     }
 }
