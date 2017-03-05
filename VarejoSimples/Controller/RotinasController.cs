@@ -11,6 +11,7 @@ using VarejoSimples.Views.Conta;
 using VarejoSimples.Views.Fabricante;
 using VarejoSimples.Views.Forma_pagto;
 using VarejoSimples.Views.Fornecedor;
+using VarejoSimples.Views.Lancamento_financ;
 using VarejoSimples.Views.Loja;
 using VarejoSimples.Views.Marca;
 using VarejoSimples.Views.Movimento;
@@ -156,8 +157,18 @@ namespace VarejoSimples.Controller
                         break;
 
                     case 20:
-                        ConsultaParcelas cp_cp = new ConsultaParcelas(Enums.Tipo_parcela.RECEBER);
+                        ConsultaParcelas cp_cp = new ConsultaParcelas(Enums.Tipo_parcela.PAGAR);
                         cp_cp.ShowDialog();
+                        break;
+
+                    case 21:
+                        ConsultaParcelas cp_cr = new ConsultaParcelas(Enums.Tipo_parcela.RECEBER);
+                        cp_cr.ShowDialog();
+                        break;
+
+                    case 33:
+                        Lancamentos lancamentos = new Lancamentos();
+                        lancamentos.ShowDialog();
                         break;
                 }
             }

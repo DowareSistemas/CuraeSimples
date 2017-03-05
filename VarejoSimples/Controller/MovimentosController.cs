@@ -388,9 +388,7 @@ namespace VarejoSimples.Controller
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                     parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
                                 }
-
-                                parcela_cheque.Portador = forma_pagamento.Conta_id;
-
+                                
                                 if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
@@ -408,6 +406,7 @@ namespace VarejoSimples.Controller
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                     parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
 
+                                    parcela_cheque.Portador = forma_pagamento.Conta_id;
                                     parcela_cheque.Numero_cheque = cheque.Numero_cheque;
                                     parcela_cheque.Banco = string.Empty;
                                     parcela_cheque.Agencia = string.Empty;
@@ -436,7 +435,6 @@ namespace VarejoSimples.Controller
 
                             for (int i = 0; i < forma_pagamento.Parcelas; i++)
                             {
-
                                 Parcelas parcela_prazo = new Parcelas();
 
                                 parcela_prazo.Item_pagamento_id = item_pg.Id;

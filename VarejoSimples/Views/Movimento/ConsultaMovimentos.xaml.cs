@@ -29,6 +29,7 @@ namespace VarejoSimples.Views.Movimento
             InitializeComponent();
 
             dataGrid.AplicarPadroes();
+            dataGrid.AlternatingRowBackground = Brushes.Lavender;
             txData_inicio.SelectedDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             txData_fim.SelectedDate = DateTime.Now;
 

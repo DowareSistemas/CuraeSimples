@@ -84,5 +84,10 @@ namespace VarejoSimples.Controller
         {
             return db.Where(p => p.Id > id).FirstOrDefault();
         }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
     }
 }

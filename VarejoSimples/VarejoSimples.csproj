@@ -127,6 +127,7 @@
     <Compile Include="Controller\FornecedoresController.cs" />
     <Compile Include="Controller\Itens_movimentoController.cs" />
     <Compile Include="Controller\Itens_pagamentoController.cs" />
+    <Compile Include="Controller\Lancamentos_financeirosController.cs" />
     <Compile Include="Controller\LocalConfigController.cs" />
     <Compile Include="Controller\LogController.cs" />
     <Compile Include="Controller\LojasController.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Controller\MovimentosController.cs" />
     <Compile Include="Controller\Movimentos_caixasController.cs" />
     <Compile Include="Controller\Operadoras_cartaoController.cs" />
+    <Compile Include="Controller\Pagamentos_lancamentosController.cs" />
     <Compile Include="Controller\ParametrosController.cs" />
     <Compile Include="Controller\ParcelasController.cs" />
     <Compile Include="Controller\PermissoesController.cs" />
@@ -172,10 +174,12 @@
       <DependentUpon>DsSaldosLotes.xsd</DependentUpon>
     </Compile>
     <Compile Include="Enums\Classe_plano_conta.cs" />
+    <Compile Include="Enums\Origem_lancamento.cs" />
     <Compile Include="Enums\Situacao_parcela.cs" />
     <Compile Include="Enums\Tipo_conta.cs" />
     <Compile Include="Enums\Tipo_entidade_parcela.cs" />
     <Compile Include="Enums\Tipo_intervalo.cs" />
+    <Compile Include="Enums\Tipo_lancamento.cs" />
     <Compile Include="Enums\Tipo_movimentacao.cs" />
     <Compile Include="Enums\Tipo_movimentacao_caixa.cs" />
     <Compile Include="Enums\Tipo_pagamento.cs" />
@@ -196,6 +200,8 @@
     <Compile Include="Interfaces\IFornecedor.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
     <Compile Include="Interfaces\IItens_pagamento.cs" />
+    <Compile Include="Interfaces\ILancamentos_financeiros.cs" />
+    <Compile Include="Interfaces\IPagamentos_lancamentos.cs" />
     <Compile Include="Interfaces\IRegistroCheques.cs" />
     <Compile Include="Interfaces\ILojas.cs" />
     <Compile Include="Interfaces\IMarcas.cs" />
@@ -210,10 +216,95 @@
     <Compile Include="Interfaces\IProdutos_fornecedores.cs" />
     <Compile Include="Interfaces\IRotinas.cs" />
     <Compile Include="Interfaces\ITelaPagamentoMovimento.cs" />
+    <Compile Include="Interfaces\ITelaTransferenciaConta.cs" />
     <Compile Include="Interfaces\ITipos_movimento.cs" />
     <Compile Include="Interfaces\IUnidades.cs" />
     <Compile Include="Interfaces\IUsuarios.cs" />
     <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Documentos_fiscais.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lancamentos_financeiros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pagamentos_lancamentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Planos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,11 +356,13 @@
     <Compile Include="Repository\FornecedoresRepository.cs" />
     <Compile Include="Repository\Itens_movimentoRepository.cs" />
     <Compile Include="Repository\Itens_pagamentoRepository.cs" />
+    <Compile Include="Repository\Lancamentos_financeirosRepository.cs" />
     <Compile Include="Repository\LojasRepository.cs" />
     <Compile Include="Repository\MarcasRepository.cs" />
     <Compile Include="Repository\MovimentosRepository.cs" />
     <Compile Include="Repository\Movimentos_caixasRepository.cs" />
     <Compile Include="Repository\Operadoras_cartaoRepository.cs" />
+    <Compile Include="Repository\Pagamentos_lancamentosRepository.cs" />
     <Compile Include="Repository\ParametrosRepository.cs" />
     <Compile Include="Repository\ParcelasRepository.cs" />
     <Compile Include="Repository\PermissoesRepository.cs" />
@@ -339,6 +432,30 @@
     </Compile>
     <Compile Include="Views\Fornecedor\PesquisarFornecedor.xaml.cs">
       <DependentUpon>PesquisarFornecedor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\CadLancamento.xaml.cs">
+      <DependentUpon>CadLancamento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Lancamentos.xaml.cs">
+      <DependentUpon>Lancamentos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\PagamentoLancamento.xaml.cs">
+      <DependentUpon>PagamentoLancamento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Transferencia\Confirmar.xaml.cs">
+      <DependentUpon>Confirmar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Transferencia\ContaDestino.xaml.cs">
+      <DependentUpon>ContaDestino.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Transferencia\ContaOrigem.xaml.cs">
+      <DependentUpon>ContaOrigem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Transferencia\Introducao.xaml.cs">
+      <DependentUpon>Introducao.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lancamento_financ\Transferencia\Transferencia.xaml.cs">
+      <DependentUpon>Transferencia.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -539,6 +656,38 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Lancamento_financ\CadLancamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Lancamentos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\PagamentoLancamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Transferencia\Confirmar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Transferencia\ContaDestino.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Transferencia\ContaOrigem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Transferencia\Introducao.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lancamento_financ\Transferencia\Transferencia.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -702,6 +851,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Resource Include="Images\sql.png" />
+    <Resource Include="Images\logo1.png" />
+    <Resource Include="Images\transferencia.png" />
+    <Content Include="Images\aprovado.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\reprovado.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Utilitarios\SQL2Search.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

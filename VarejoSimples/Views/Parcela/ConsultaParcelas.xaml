@@ -23,15 +23,35 @@
 
                 <DataGridTextColumn Header="Código" MinWidth="75" Binding="{Binding Parcela.Id}"/>
                 <DataGridTextColumn Header="Nro. Documento" MinWidth="130" Binding="{Binding Parcela.Num_documento}"/>
-                <DataGridTextColumn Header="Portador" MinWidth="200" Binding="{Binding Portador}"/>
+                <DataGridTextColumn Header="Portador / Conta caixa" MinWidth="200" Binding="{Binding Portador}"/>
                 <DataGridTextColumn Header="Data lançamento" MinWidth="120" Binding="{Binding Parcela.Data_lancamento, StringFormat=dd/MM/yyyy}"/>
                 <DataGridTextColumn Header="Data vencimento" MinWidth="120" Binding="{Binding Parcela.Data_vencimento, StringFormat=dd/MM/yyyy}"/>
-                <DataGridTextColumn Header="Valor (R$)" MinWidth="110" Binding="{Binding Parcela.Valor}"/>
+
+                <DataGridTextColumn Header="Valor (R$)" MinWidth="110" Binding="{Binding Parcela.Valor}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="Descrição" MinWidth="200" Binding="{Binding Parcela.Parcela_descricao}"/>
                 <DataGridTextColumn Header="Cliente" MinWidth="200" Binding="{Binding Cliente}"/>
                 <DataGridTextColumn Header="Fornecedor" MinWidth="200" Binding="{Binding Fornecedor}"/>
                 <DataGridTextColumn Header="Dias tolerância" MinWidth="115" Binding="{Binding Parcela.Dias_tolerancia}"/>
-                <DataGridTextColumn Header="Juros atraso (%)" MinWidth="120" Binding="{Binding Parcela.Juros_atrazo}"/>
+
+                <DataGridTextColumn Header="Juros atraso (%)" MinWidth="120" Binding="{Binding Parcela.Juros_atrazo}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Setters>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style.Setters>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                
                 <DataGridTextColumn Header="Parcela anterior" MinWidth="120" Binding="{Binding Parcela.Parcela_anterior}"/>
                 <DataGridTextColumn Header="Nro. Cheque" MinWidth="100" Binding="{Binding Parcela.Numero_cheque}"/>
             </DataGrid.Columns>

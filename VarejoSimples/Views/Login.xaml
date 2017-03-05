@@ -60,6 +60,7 @@
                 </Border>
                 <Label x:Name="label_Copy2" Content="Identifique-se abaixo para utilizar a linha de produtos" HorizontalAlignment="Left" Margin="9,30,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF4B689C" Width="342"/>
                 <Label x:Name="label_Copy3" Content="Doware Curae - Simples" HorizontalAlignment="Left" Margin="9,50,0,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="Black" Foreground="#FF4B689C" Width="342"/>
+                <Image x:Name="image" HorizontalAlignment="Right" Margin="0,30,10,10" Width="250" Source="/Curae Varejo (Simples);component/Images/logo1.png"/>
             </Grid>
         </Border>
 

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="VarejoSimples.Views.Lancamento_financ.Transferencia.Introducao"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VarejoSimples.Views.Lancamento_financ.Transferencia"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="445" Background="White">
+
+    <Grid Background="#FFF9F9F9">
+        <Label x:Name="label1" Content="Este assistente tem como objetivo registrar a transferência de valores entre&#xA;contas.&#xA;Esta operação é inteiramente simbólica e serve para controle financeiro&#xA;dos saldos nas contas cadastradas no sistema, não possuindo portanto,&#xA;quaisquer ligações com contas bancárias reais." Margin="10,58,10,0" VerticalAlignment="Top" Height="92"/>
+        <Grid Height="58" VerticalAlignment="Top" Background="White">
+            <Image x:Name="image" HorizontalAlignment="Left" Width="50" Source="/Curae Varejo (Simples);component/Images/transferencia.png" Margin="4,0,0,0"/>
+            <Label x:Name="label" Content="Assistente de transferência de valores entre &#xD;&#xA;contas" Margin="65,0,10,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Height="55"/>
+        </Grid>
+        <Label x:Name="label2" Content="Requisitos para realizar o procedimento:" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+
+        <DataGrid x:Name="dataGrid" Margin="10,176,10,10">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Height="15" Source="{Binding Img}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTextColumn MinWidth="200" Width="*" Header="Requisito" Binding="{Binding Descricao}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

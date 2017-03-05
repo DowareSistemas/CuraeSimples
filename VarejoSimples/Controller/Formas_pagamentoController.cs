@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using VarejoSimples.Enums;
 using VarejoSimples.Model;
@@ -99,6 +100,11 @@ namespace VarejoSimples.Controller
             return true;
         }
 
+        internal Formas_pagamento Get(Expression<Func<Formas_pagamento, bool>> query)
+        {
+            return db.Where(query).FirstOrDefault();
+        }
+
         public Formas_pagamento Find(int id)
         {
             return db.Find(id);
@@ -111,13 +117,19 @@ namespace VarejoSimples.Controller
                 Formas_pagamento fp = Find(id);
                 if (fp.Movimentos_caixas.Count > 0)
                 {
-                    BStatus.Alert("Não é possível excluir esta forma de pagamento. Ela está presente em uma ou mais movimentações de caixa");
+                    BStatus.Alert("Não é possível excluir esta condição de pagamento. Ela está presente em uma ou mais movimentações de caixa");
                     return false;
                 }
 
                 if (fp.Itens_pagamento.Count > 0)
                 {
-                    BStatus.Alert("Não é possível excluir esta forma de pagamenti. Ela está presente em um ou mais movimentos");
+                    BStatus.Alert("Não é possível excluir esta condição de pagamento. Ela está presente em um ou mais movimentos");
+                    return false;
+                }
+                
+                if(fp.Pagamentos_lancamentos.Count > 0)
+                {
+                    BStatus.Alert("Não é possível excluir esta condição de pagamento. Ela está presente em um ou mais lançamentos financeiros");
                     return false;
                 }
 

@@ -43,6 +43,11 @@ namespace VarejoSimples.Controller
             }
         }
 
+        public int Count(Expression<Func<Contas, bool>> query)
+        {
+            return db.Where(query).Count();
+        }
+
         private bool Valid(Contas conta)
         {
             if(string.IsNullOrWhiteSpace(conta.Nome))
@@ -119,9 +124,9 @@ namespace VarejoSimples.Controller
             try
             {
                 Contas conta = Find(id);
-                if(conta.Movimentos_contas.Count > 0)
+                if(conta.Lancamentos_financeiros.Count > 0)
                 {
-                    BStatus.Alert("Não é possível excluir esta conta. Ela está presente em uma ou mais movimentações.");
+                    BStatus.Alert("Não é possível excluir esta conta. Ela está presente em uma ou mais lancamentos financeiros.");
                     return false;
                 }
 
