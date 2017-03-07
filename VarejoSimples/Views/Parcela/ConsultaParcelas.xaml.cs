@@ -194,6 +194,17 @@ namespace VarejoSimples.Views.Parcela
             if (thread_busca.ThreadState == ThreadState.Running)
                 thread_busca.Abort();
         }
+
+        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ParcelaAdapter selecionado = (ParcelaAdapter)dataGrid.SelectedItem;
+            if (selecionado == null)
+                return;
+
+
+            DetalhesParcela detalhes = new DetalhesParcela(selecionado.Parcela.Id);
+            detalhes.ShowDialog();
+        }
     }
 
     public class ParcelaAdapter
@@ -203,10 +214,22 @@ namespace VarejoSimples.Views.Parcela
         public string Portador { get; set; }
         public string Cliente { get; set; }
         public string Fornecedor { get; set; }
+        public string Tipo { get; set; }
 
         public ParcelaAdapter(Parcelas parcela, varejo_config context)
         {
             Parcela = parcela;
+
+            switch(Parcela.Tipo_parcela)
+            {
+                case (int)Tipo_parcela.PAGAR:
+                    Tipo = "PAGAR";
+                    break;
+
+                case (int)Tipo_parcela.RECEBER:
+                    Tipo = "RECEBER";
+                    break; 
+            }
 
             Application.Current.Dispatcher.BeginInvoke(new Action(() =>
             {

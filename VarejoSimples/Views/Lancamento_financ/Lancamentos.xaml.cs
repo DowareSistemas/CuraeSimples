@@ -210,6 +210,17 @@ namespace VarejoSimples.Views.Lancamento_financ
 
             AcionarBusca();
         }
+
+        private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Lancamentos_financeirosAdapter adapter = (Lancamentos_financeirosAdapter)dataGrid.SelectedItem;
+
+            if (adapter == null)
+                return;
+            
+            DetalhesLancamento detalhes = new DetalhesLancamento(adapter.Lancamento.Id);
+            detalhes.ShowDialog();
+        }
     }
 
     public class Lancamentos_financeirosAdapter

@@ -436,6 +436,9 @@
     <Compile Include="Views\Lancamento_financ\CadLancamento.xaml.cs">
       <DependentUpon>CadLancamento.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lancamento_financ\DetalhesLancamento.xaml.cs">
+      <DependentUpon>DetalhesLancamento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lancamento_financ\Lancamentos.xaml.cs">
       <DependentUpon>Lancamentos.xaml</DependentUpon>
     </Compile>
@@ -501,6 +504,9 @@
     </Compile>
     <Compile Include="Views\Parcela\ConsultaParcelas.xaml.cs">
       <DependentUpon>ConsultaParcelas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Parcela\DetalhesParcela.xaml.cs">
+      <DependentUpon>DetalhesParcela.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Plano_conta\CadPlano_conta.xaml.cs">
       <DependentUpon>CadPlano_conta.xaml</DependentUpon>
@@ -660,6 +666,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Lancamento_financ\DetalhesLancamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Lancamento_financ\Lancamentos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -745,6 +755,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Parcela\ConsultaParcelas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Parcela\DetalhesParcela.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -856,6 +870,7 @@
     <Content Include="Images\aprovado.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\ir_para.png" />
     <Content Include="Images\reprovado.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -267,6 +267,11 @@ namespace VarejoSimples.Controller
             }
         }
 
+        internal Lancamentos_financeiros Find(int lancamento_id)
+        {
+            return db.Find(lancamento_id);
+        }
+
         private bool Valid(Lancamentos_financeiros lf)
         {
             if (lf.Conta_id == 0)

@@ -26,11 +26,9 @@ namespace VarejoSimples.Controller
 
         public bool Save(Produtos p)
         {
-            UnitOfWork unit = new UnitOfWork();
             try
             {
-                unit.BeginTransaction();
-                db.Context = unit.Context;
+                db.Begin(System.Data.IsolationLevel.ReadUncommitted);
 
                 if (!Valid(p))
                     return false;
@@ -56,20 +54,19 @@ namespace VarejoSimples.Controller
                     est.Sublote = string.Empty;
 
                     EstoqueController ec = new EstoqueController();
-                    ec.SetContext(unit.Context);
+                    ec.SetContext(db.Context);
                     ec.Save(est);
                 }
                 else
                     db.Update(p);
 
                 db.Commit();
-                unit.Commit();
                 BStatus.Success("Produto salvo");
                 return true;
             }
             catch (Exception ex)
             {
-                unit.RollBack();
+                db.RollBack();
                 return false;
             }
         }

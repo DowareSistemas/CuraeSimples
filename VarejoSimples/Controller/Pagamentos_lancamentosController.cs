@@ -37,5 +37,10 @@ namespace VarejoSimples.Controller
         {
             db.Context = context;
         }
+
+        internal Lancamentos_financeiros FindLancamentoByPagamentoId(int pagamento_lancamento_id)
+        {
+            return db.Find(pagamento_lancamento_id).Lancamentos_financeiros;
+        }
     }
 }

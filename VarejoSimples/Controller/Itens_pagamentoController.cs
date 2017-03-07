@@ -39,5 +39,10 @@ namespace VarejoSimples.Controller
         {
             db.Context = v;
         }
+
+        internal Movimentos FindMovimentoByCodItemPg(int item_pagamento_id)
+        {
+            return db.Find(item_pagamento_id).Movimentos;
+        }
     }
 }

@@ -13,19 +13,19 @@
         <Label x:Name="label" Content="Data" HorizontalAlignment="Left" Margin="6,12,0,0" VerticalAlignment="Top" Width="60" Height="24" Padding="5"/>
         <ComboBox x:Name="cbTipo" TabIndex="3" HorizontalAlignment="Right" Margin="0,42,10,0" VerticalAlignment="Top" Width="187"/>
         <Label x:Name="label_Copy" Content="Tipo" HorizontalAlignment="Right" Margin="0,40,202,0" VerticalAlignment="Top" Width="45" Padding="5,3,5,5" Height="24"/>
-        <TextBox x:Name="txNum_documento" TabIndex="2" HorizontalAlignment="Left" Height="23" Margin="110,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="180" Padding="0,2,0,0"/>
+        <TextBox x:Name="txNum_documento" TabIndex="2" HorizontalAlignment="Left" Height="23" Margin="110,41,0,0" VerticalAlignment="Top" Width="180" Padding="0,2,0,0"/>
         <Label x:Name="label_Copy1" Content="Documento" HorizontalAlignment="Left" Margin="6,41,0,0" VerticalAlignment="Top" Width="78" Padding="5,4,5,5" Height="23"/>
-        <TextBox x:Name="txValor_original" TabIndex="5" HorizontalAlignment="Left" Height="23" Margin="160,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
+        <TextBox x:Name="txValor_original" TabIndex="5" HorizontalAlignment="Left" Height="23" Margin="160,99,0,0" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
         <Label x:Name="label_Copy2" Content="Valor original (R$)" HorizontalAlignment="Left" Margin="6,99,0,0" VerticalAlignment="Top" Width="105" Padding="5,4,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
-        <TextBox x:Name="txDesconto" TabIndex="6" HorizontalAlignment="Left" Height="23" Margin="160,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
+        <TextBox x:Name="txDesconto" TabIndex="6" HorizontalAlignment="Left" Height="23" Margin="160,127,0,0" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
         <Label x:Name="label_Copy3" Content="Desconto (%)" HorizontalAlignment="Left" Margin="6,127,0,0" VerticalAlignment="Top" Width="105" Padding="5,4,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
-        <TextBox x:Name="txAcrescimo" TabIndex="7" HorizontalAlignment="Left" Height="23" Margin="160,155,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
+        <TextBox x:Name="txAcrescimo" TabIndex="7" HorizontalAlignment="Left" Height="23" Margin="160,155,0,0" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
         <Label x:Name="label_Copy4" Content="Acréscimo (%)" HorizontalAlignment="Left" Margin="6,155,0,0" VerticalAlignment="Top" Width="105" Padding="5,4,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
-        <TextBox x:Name="txDespesas_acessorias" TabIndex="8" HorizontalAlignment="Left" Height="23" Margin="160,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
+        <TextBox x:Name="txDespesas_acessorias" TabIndex="8" HorizontalAlignment="Left" Height="23" Margin="160,183,0,0" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
         <Label x:Name="label_Copy5" Content="Despesas acessórias (R$)" HorizontalAlignment="Left" Margin="6,183,0,0" VerticalAlignment="Top" Width="140" Padding="5,4,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
-        <TextBox x:Name="txValor_final" TabIndex="9" HorizontalAlignment="Left" Height="23" Margin="160,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
+        <TextBox x:Name="txValor_final" TabIndex="9" HorizontalAlignment="Left" Height="23" Margin="160,211,0,0" VerticalAlignment="Top" Width="85" Padding="0,2,0,0" Text="0,00"/>
         <Label x:Name="label_Copy6" Content="Valor final (R$)" HorizontalAlignment="Left" Margin="6,211,0,0" VerticalAlignment="Top" Width="140" Padding="5,4,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
-        <TextBox x:Name="txDescricao" TabIndex="10" Height="112" Margin="250,122,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="txDescricao" VerticalScrollBarVisibility="Visible" TabIndex="10" Height="112" Margin="250,122,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy7" Content="Descrição detalhada:" HorizontalAlignment="Left" Margin="250,99,0,0" VerticalAlignment="Top" Width="195" Padding="2,3,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
         <Label x:Name="label_Copy8" Content="Conta" HorizontalAlignment="Right" Margin="0,12,202,0" VerticalAlignment="Top" Width="45" Padding="5,3,5,0" Height="23" RenderTransformOrigin="0.526,0.5"/>
         <TextBox x:Name="txConta" TabIndex="80" HorizontalAlignment="Right" Height="23" Margin="0,12,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" Padding="0,2,0,0" IsEnabled="False"/>

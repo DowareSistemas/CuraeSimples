@@ -28,28 +28,28 @@
             <Button x:Name="btNovo" TabIndex="70" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
         </Grid>
         <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txCod" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="95,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="75" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txCod" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="95,10,0,0" TextWrapping="NoWrap" Text="0" VerticalAlignment="Top" Width="75" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1" Content="Nome" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txNome" TabIndex="1" HorizontalAlignment="Left" Height="30" Margin="95,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txNome" TabIndex="1" HorizontalAlignment="Left" Height="30" Margin="95,45,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy" Content="CNPJ" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="14.667"/>
 
-        <xctk:MaskedTextBox x:Name="txCnpj" TabIndex="2" Mask="00,000,000/0000-00" HorizontalAlignment="Left" Margin="95,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="200"/>
+        <xctk:MaskedTextBox x:Name="txCnpj" TabIndex="2" Mask="00,000,000/0000-00" HorizontalAlignment="Left" Margin="95,80,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="200"/>
         <Label x:Name="label1_Copy1" Content="Logradouro" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txLogradouro" TabIndex="3" HorizontalAlignment="Left" Height="30" Margin="95,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txLogradouro" TabIndex="3" HorizontalAlignment="Left" Height="30" Margin="95,115,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy2" Content="Bairro" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txBairro" TabIndex="4" HorizontalAlignment="Left" Height="30" Margin="95,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txBairro" TabIndex="4" HorizontalAlignment="Left" Height="30" Margin="95,150,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy3" Content="Número" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txNumero" TabIndex="6" HorizontalAlignment="Left" Height="30" Margin="95,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="65" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
+        <TextBox x:Name="txNumero" TabIndex="6" HorizontalAlignment="Left" Height="30" Margin="95,220,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="65" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
         <Label x:Name="label1_Copy4" Content="CEP" HorizontalAlignment="Left" Margin="175,220,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <xctk:MaskedTextBox x:Name="txCep" TabIndex="7" Mask="00,000-000" HorizontalAlignment="Left" Margin="220,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="100" Text="00,000-000"/>
+        <xctk:MaskedTextBox x:Name="txCep" TabIndex="7" Mask="00,000-000" HorizontalAlignment="Left" Margin="220,219,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="100" Text="00,000-000"/>
         <Label x:Name="label1_Copy5" Content="Município" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txMunicipio" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="95,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txMunicipio" TabIndex="5" HorizontalAlignment="Left" Height="30" Margin="95,185,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy6" Content="UF" HorizontalAlignment="Left" Margin="338,219,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txUf" TabIndex="8" MaxLength="2" HorizontalAlignment="Left" Height="30" Margin="370,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="45" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txUf" TabIndex="8" MaxLength="2" HorizontalAlignment="Left" Height="30" Margin="370,219,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="45" FontSize="14.667" Padding="0,5,0,0"/>
         <Label x:Name="label1_Copy7" Content="Telefone" HorizontalAlignment="Left" Margin="10,255,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <xctk:MaskedTextBox x:Name="txTel" TabIndex="9" Mask="(00)0000-0000" HorizontalAlignment="Left" Margin="95,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="125" Text="00,000-000"/>
+        <xctk:MaskedTextBox x:Name="txTel" TabIndex="9" Mask="(00)0000-0000" HorizontalAlignment="Left" Margin="95,255,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" Height="30" Width="125" Text="00,000-000"/>
         <Label x:Name="label1_Copy8" Content="Email" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" FontSize="14.667"/>
-        <TextBox x:Name="txEmail" TabIndex="10" HorizontalAlignment="Left" Height="30" Margin="95,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
+        <TextBox x:Name="txEmail" TabIndex="10" HorizontalAlignment="Left" Height="30" Margin="95,290,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="320" FontSize="14.667" Padding="0,5,0,0"/>
 
     </Grid>
 </Window>

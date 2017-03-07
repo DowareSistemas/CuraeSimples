@@ -134,7 +134,7 @@ namespace VarejoSimples.Views.Produto
                 ? new Produtos()
                 : pc.Find(int.Parse(txCod.Text)));
 
-            p.Id = int.Parse(txCod.Text);
+          //  p.Id = int.Parse(txCod.Text);
             p.Descricao = txDescricao.Text;
             p.Ean = txEan.Text;
             p.Referencia = txReferencia.Text;

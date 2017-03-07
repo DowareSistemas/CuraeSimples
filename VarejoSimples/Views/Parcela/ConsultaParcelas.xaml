@@ -11,7 +11,7 @@
         IsVisibleChanged="Window_IsVisibleChanged"
         Title="CR/CP" Height="600" Width="1024">
     <Grid>
-        <DataGrid x:Name="dataGrid" Margin="10,35,10,39" RenderTransformOrigin="0.483,0.511">
+        <DataGrid MouseDoubleClick="dataGrid_MouseDoubleClick" x:Name="dataGrid" Margin="10,35,10,39" RenderTransformOrigin="0.483,0.511">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>

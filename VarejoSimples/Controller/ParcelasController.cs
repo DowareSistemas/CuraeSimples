@@ -44,6 +44,11 @@ namespace VarejoSimples.Controller
             }
         }
 
+        public Parcelas Find(int parcela_id)
+        {
+            return db.Find(parcela_id);
+        }
+
         public void SetContext(varejo_config v)
         {
             db.Context = v;
@@ -52,6 +57,26 @@ namespace VarejoSimples.Controller
         public varejo_config GetContext()
         {
             return db.Context;
+        }
+
+        public bool ExisteParcelaAnterior(int parcela_atual)
+        {
+            return (db.Where(e => e.Parcela_anterior == parcela_atual).Count() > 0);
+        }
+
+        public List<Parcelas> ListByPagamentosLancamento(List<Pagamentos_lancamentos> itens)
+        {
+            if (itens == null)
+                return new List<Parcelas>();
+            if (itens.Count == 0)
+                return new List<Parcelas>();
+
+            var itens_pg = new int[itens.Count];
+            for (int i = 0; i < itens.Count; i++)
+                itens_pg[i] = itens[i].Id;
+
+            return db.Where(e => itens_pg.Contains(e.Pagamento_lancamento_id)).ToList();
+
         }
 
         internal List<Parcelas> ListByItens_pagamento(List<Itens_pagamento> itens_pagamento)
