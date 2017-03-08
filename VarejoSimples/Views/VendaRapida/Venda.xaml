@@ -1,0 +1,122 @@
+﻿<Window x:Class="VarejoSimples.Views.VendaRapida.Venda"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.VendaRapida"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"  
+        WindowState="Maximized"
+        Title="Venda rápida" Height="600" Width="1024">
+    <Grid>
+        <Grid Height="40" VerticalAlignment="Top" Background="#FFB93A3A">
+            <Button x:Name="button" HorizontalAlignment="Left" Width="46" Background="#FFA02A2A" BorderBrush="#FFA02A2A">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/pdv_opcoes.png" Height="30" Width="30"/>
+                </StackPanel>
+            </Button>
+            <Label x:Name="label4" Content="Vendedor:" HorizontalAlignment="Right" Margin="0,2,360,0" VerticalAlignment="Top" Padding="0" Foreground="White"/>
+            <Label x:Name="label4_Copy" Content="Marcos Vinícius" HorizontalAlignment="Right" Margin="0,16,184,0" VerticalAlignment="Top" Padding="0" Foreground="White" Height="22" Width="230" FontSize="16"/>
+            <Label x:Name="label5" Content="08/03/2017 10:49:52" HorizontalAlignment="Right" Margin="0,5,10,5" Width="169" FontSize="17.333" Padding="5,2,5,5" Foreground="White"/>
+        </Grid>
+        <Border BorderBrush="#FFB93A3A" BorderThickness="1" HorizontalAlignment="Right" Height="260" Margin="0,45,5,0" VerticalAlignment="Top" Width="369">
+            <Grid>
+                <Grid Height="34" VerticalAlignment="Top" Background="#FFB93A3A">
+                    <Label x:Name="label" Content="Grupos de produtos" HorizontalAlignment="Left" Foreground="White" Margin="4,0,0,0" FontSize="17.333"/>
+                </Grid>
+                <ScrollViewer  ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="scroll" Margin="0,39,0,0">
+                    <Grid>
+                        <StackPanel x:Name="sp_grupos" />
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <Border BorderBrush="#FFB93A3A" BorderThickness="1" HorizontalAlignment="Right" Margin="0,310,5,5" Width="369">
+            <Grid>
+                <Grid Height="34" VerticalAlignment="Top" Background="#FFB93A3A">
+                    <Label x:Name="label1" Content="Produtos" HorizontalAlignment="Left" Foreground="White" Margin="4,0,0,0" FontSize="17.333"/>
+                </Grid>
+                <ScrollViewer  ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="scroll1" Margin="0,39,0,0">
+                    <Grid>
+                        <StackPanel  x:Name="stackPanel1" />
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <Border BorderBrush="#FFB93A3A" BorderThickness="1" Margin="5,45,379,163">
+            <Grid x:Name="GridContainer"/>
+        </Border>
+        <Border BorderBrush="#FFB93A3A" BorderThickness="1" Height="83" Margin="5,0,379,75" VerticalAlignment="Bottom">
+            <Grid Height="83" VerticalAlignment="Top">
+                <Grid Background="#FFB93A3A" Margin="2,42,2,0" Height="37" VerticalAlignment="Top">
+                    <Label x:Name="label2" Content="TOTAL:" HorizontalAlignment="Left" Foreground="White" Margin="4,0,0,0" FontSize="26.667" Padding="5,0,5,5"/>
+                    <Label x:Name="label2_Copy" HorizontalContentAlignment="Right" Content="R$  29,99" HorizontalAlignment="Right" Foreground="White" FontSize="26.667" Width="145" Padding="5,0,5,5"/>
+                </Grid>
+                <Grid Background="#FFB93A3A" Margin="2,0,2,44" Height="37" VerticalAlignment="Bottom">
+                    <Label x:Name="label3" Content="CLIENTE:" HorizontalAlignment="Left" Foreground="White" Margin="4,0,0,0" FontSize="26.667" Padding="5,0,5,5"/>
+                    <Label x:Name="label2_Copy1" Content="NÃO INFORMADO" Foreground="White" FontSize="26.667" Padding="5,0,5,5" Margin="122,0,0,0"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Button x:Name="button_Copy" HorizontalAlignment="Right" Width="78" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="0,0,546,5" Height="65" VerticalAlignment="Bottom">
+            <Button.Content>
+                <Grid Height="60" Width="75">
+                    <Grid Margin="0,0,0,14">
+                        <StackPanel Margin="-1,0,0,0">
+                            <Image Source="/Curae Varejo (Simples);component/Images/pdv_acrescimo.png" Height="46"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Foreground="White" Height="17" VerticalAlignment="Bottom" FontSize="10.667" TextAlignment="Center"><Run Text="Acréscimo"/><Run Text=" [F8]"/></TextBlock>
+                </Grid>
+            </Button.Content>
+
+        </Button>
+        <Button x:Name="button_Copy1" HorizontalAlignment="Right" Width="78" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="0,0,463,5" Height="65" VerticalAlignment="Bottom">
+            <Grid Height="60" Width="73">
+                <Grid Margin="8,5,6,17">
+                    <StackPanel Margin="-1,0,0,0">
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_desconto.png" Height="33"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock Text="Desconto [F9]"  Margin="1,0,0,0" Foreground="White" FontSize="10.667" Height="17" VerticalAlignment="Bottom" TextAlignment="Center"/>
+            </Grid>
+
+        </Button>
+        <Button x:Name="button_Copy2" HorizontalAlignment="Left" Width="78" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="5,0,0,5" Height="65" VerticalAlignment="Bottom">
+            <Grid Height="60" Width="73">
+                <Grid Margin="8,5,6,17">
+                    <StackPanel Margin="-1,0,0,0">
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_buscacliente.png" Height="33"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock  Margin="1,0,0,0" Foreground="White" FontSize="10.667" Height="17" VerticalAlignment="Bottom" TextAlignment="Center"><Run Text="Cliente "/><Run Text="[F6]"/></TextBlock>
+            </Grid>
+
+        </Button>
+        <Button x:Name="button_Copy3" HorizontalAlignment="Left" Width="78" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="88,0,0,5" Height="65" VerticalAlignment="Bottom">
+            <Grid Height="60" Width="73">
+                <Grid Margin="8,5,6,17">
+                    <StackPanel Margin="-1,0,0,0">
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_buscaproduto.png" Height="33"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock  Margin="1,0,0,0" Foreground="White" FontSize="10.667" Height="17" VerticalAlignment="Bottom" TextAlignment="Center"><Run Text="Produto "/><Run Text="[F"/><Run Text="7"/><Run Text="]"/></TextBlock>
+            </Grid>
+
+        </Button>
+        <Button x:Name="button_Copy4" HorizontalAlignment="Right" Width="79" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="0,0,379,5" Height="65" VerticalAlignment="Bottom">
+            <Grid Height="60" Width="73">
+                <Grid Margin="8,5,6,17">
+                    <StackPanel Margin="-1,0,0,0">
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_pagamento.png" Height="33"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock  Margin="1,0,0,0" Foreground="White" FontSize="10.667" Height="17" VerticalAlignment="Bottom" TextAlignment="Center"><Run Text="Fechar [F"/><Run Text="1"/><Run Text="0]"/></TextBlock>
+            </Grid>
+
+        </Button>
+
+    </Grid>
+</Window>

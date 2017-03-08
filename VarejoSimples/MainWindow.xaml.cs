@@ -25,6 +25,7 @@ using VarejoSimples.Views.Consultas;
 using VarejoSimples.Views.ConsutasCustomizadas;
 using VarejoSimples.Views.Movimento.LancamentoCheque;
 using VarejoSimples.Views.Movimento.RecebimentoCheques;
+using VarejoSimples.Views.VendaRapida;
 
 namespace VarejoSimples
 {
@@ -86,7 +87,9 @@ namespace VarejoSimples
                if (p.Valor.Equals("N"))
                 listView.Items.Remove(mi_consultasCustomizadas);
 
-            this.Show();
+            //  this.Show();
+            Venda venda = new Venda();
+            venda.ShowDialog();
         }
 
         private void Window_Closed(object sender, EventArgs e)

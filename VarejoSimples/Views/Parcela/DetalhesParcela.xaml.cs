@@ -69,7 +69,7 @@ namespace VarejoSimples.Views.Parcela
             txJuros_atraso.Text = parcela.Juros_atraso.ToString();
             txObs.Text = parcela.Parcela_descricao;
 
-            if(!string.IsNullOrEmpty(parcela.Numero_cheque))
+            if (!string.IsNullOrEmpty(parcela.Numero_cheque))
             {
                 gp_cheque.IsEnabled = true;
 
@@ -79,14 +79,14 @@ namespace VarejoSimples.Views.Parcela
                 txDias_compensacao.Text = parcela.Dias_compensacao.ToString();
                 txConta.Text = parcela.Conta;
 
-                if(parcela.Tipo_parcela == (int)Tipo_parcela.PAGAR)
+                if (parcela.Tipo_parcela == (int)Tipo_parcela.PAGAR)
                     gp_cheque.IsEnabled = false;
             }
 
-            switch(parcela.Situacao)
+            switch (parcela.Situacao)
             {
                 case (int)Situacao_parcela.PAGA:
-                   txSituacao.Text =  "PAGA";
+                    txSituacao.Text = "PAGA";
                     break;
 
                 case (int)Situacao_parcela.EM_ABERTO:
@@ -111,7 +111,7 @@ namespace VarejoSimples.Views.Parcela
                 ? Visibility.Visible
                 : Visibility.Hidden);
         }
-       
+
         private void Run_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Itens_pagamentoController itens_pg = new Itens_pagamentoController();
