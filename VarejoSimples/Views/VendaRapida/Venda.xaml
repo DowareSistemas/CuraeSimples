@@ -20,6 +20,7 @@
             <Label x:Name="label4" Content="Vendedor:" HorizontalAlignment="Right" Margin="0,2,360,0" VerticalAlignment="Top" Padding="0" Foreground="White"/>
             <Label x:Name="label4_Copy" Content="Marcos Vinícius" HorizontalAlignment="Right" Margin="0,16,184,0" VerticalAlignment="Top" Padding="0" Foreground="White" Height="22" Width="230" FontSize="16"/>
             <Label x:Name="label5" Content="08/03/2017 10:49:52" HorizontalAlignment="Right" Margin="0,5,10,5" Width="169" FontSize="17.333" Padding="5,2,5,5" Foreground="White"/>
+            <Label x:Name="label5_Copy" Content="Curae PDV - Bares e Restaurantes" Margin="51,5,494,5" FontSize="17.333" Padding="5,2,5,5" Foreground="White"/>
         </Grid>
         <Border BorderBrush="#FFB93A3A" BorderThickness="1" HorizontalAlignment="Right" Height="260" Margin="0,45,5,0" VerticalAlignment="Top" Width="369">
             <Grid>
@@ -40,7 +41,7 @@
                 </Grid>
                 <ScrollViewer  ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="scroll1" Margin="0,39,0,0">
                     <Grid>
-                        <StackPanel  x:Name="stackPanel1" />
+                        <StackPanel  x:Name="sp_produtos" />
                     </Grid>
                 </ScrollViewer>
             </Grid>
@@ -106,7 +107,7 @@
             </Grid>
 
         </Button>
-        <Button x:Name="button_Copy4" HorizontalAlignment="Right" Width="79" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="0,0,379,5" Height="65" VerticalAlignment="Bottom">
+        <Button x:Name="btFecharVenda" HorizontalAlignment="Right" Width="79" Background="#FFA02A2A" BorderBrush="#FFA02A2A" Margin="0,0,379,5" Height="65" VerticalAlignment="Bottom" Click="btFecharVenda_Click">
             <Grid Height="60" Width="73">
                 <Grid Margin="8,5,6,17">
                     <StackPanel Margin="-1,0,0,0">

@@ -143,5 +143,10 @@ fatores que diferenciam a mesma.", "Atenção", MessageBoxButton.OK, MessageBoxI
                 p.Descricao.Contains(text) ||
                 p.Computador.Equals(text)).ToList();
         }
+
+        public List<Parametros> ParametrosPagamentoPDV()
+        {
+            return db.ListParametrosPagamentosPDV(db.Context);
+        }
     }
 }

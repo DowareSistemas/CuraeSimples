@@ -42,5 +42,7 @@ namespace NFe.Model
         public string vSeg { get; set; }
         public string vDesc { get; set; }
         public string vOutro { get; set; }
+        public string PIS_CST { get; internal set; }
+        public string COFINS_CST { get; internal set; }
     }
 }

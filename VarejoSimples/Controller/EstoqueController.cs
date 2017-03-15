@@ -247,9 +247,7 @@ namespace VarejoSimples.Controller
             (p.Lote.Equals("")));
 
             est = db.Where(expr).OrderBy(p => p.Lote).FirstOrDefault();
-            return (est == null
-                ? new Estoque()
-                : est);
+            return est;
         }
 
         public Estoque BuscarPorLote(string lote)

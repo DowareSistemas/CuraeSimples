@@ -5,6 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VarejoSimples", "VarejoSimples\VarejoSimples.csproj", "{DB069171-2717-4065-98D2-863D149730C9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{32DD59C9-E643-403C-BCA2-6487CC823918} = {32DD59C9-E643-403C-BCA2-6487CC823918}
 		{768A94EA-4C6E-4E6D-8B14-926AD07B40C4} = {768A94EA-4C6E-4E6D-8B14-926AD07B40C4}
 	EndProjectSection
 EndProject

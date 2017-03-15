@@ -21,9 +21,9 @@ namespace VarejoSimples.Views.VendaRapida
     /// </summary>
     public partial class CardGrupo : UserControl, ICardPair
     {
-        private Produtos Produto1 { get; set; }
-        private Produtos Produto2 { get; set; }
-        private Produtos Produto3 { get; set; }
+        private Grupos_produtos Grupo1 { get; set; }
+        private Grupos_produtos Grupo2 { get; set; }
+        private Grupos_produtos Grupo3 { get; set; }
 
         public CardGrupo()
         {
@@ -38,29 +38,29 @@ namespace VarejoSimples.Views.VendaRapida
 
         public void FillNewObject(Object obj)
         {
-            Produtos produto = (Produtos)obj;
+            Grupos_produtos grupo = (Grupos_produtos)obj;
 
             if (brd1.Visibility == Visibility.Hidden)
             {
                 brd1.Visibility = Visibility.Visible;
-                lbName1.Text = produto.Descricao;
-                Produto1 = produto;
+                lbName1.Text = grupo.Nome;
+                Grupo1 = grupo;
                 return;
             }
 
             if (brd2.Visibility == Visibility.Hidden)
             {
                 brd2.Visibility = Visibility.Visible;
-                lbName2.Text = produto.Referencia;
-                Produto2 = produto;
+                lbName2.Text = grupo.Nome;
+                Grupo2 = grupo;
                 return;
             }
 
             if (brd3.Visibility == Visibility.Hidden)
             {
                 brd3.Visibility = Visibility.Visible;
-                lbName3.Text = produto.Descricao;
-                Produto3 = produto;
+                lbName3.Text = grupo.Nome;
+                Grupo3 = grupo;
             }
         }
 
@@ -112,7 +112,7 @@ namespace VarejoSimples.Views.VendaRapida
             brd3.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("White");
             lbName3.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFB93A3A");
 
-            MonitorSelecaoProduto.Instance.AcionarSelecao(Produto3);
+            MonitorSelecaoGrupo.Instance.AcionarSelecao(Grupo3);
         }
 
         private void brd1_MouseDown(object sender, MouseButtonEventArgs e)
@@ -123,7 +123,7 @@ namespace VarejoSimples.Views.VendaRapida
             brd1.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("White");
             lbName1.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFB93A3A");
 
-            MonitorSelecaoProduto.Instance.AcionarSelecao(Produto1);
+            MonitorSelecaoGrupo.Instance.AcionarSelecao(Grupo1);
         }
 
         private void brd2_MouseDown(object sender, MouseButtonEventArgs e)
@@ -134,7 +134,7 @@ namespace VarejoSimples.Views.VendaRapida
             brd2.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("White");
             lbName2.Foreground = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFB93A3A");
 
-            MonitorSelecaoProduto.Instance.AcionarSelecao(Produto2);
+            MonitorSelecaoGrupo.Instance.AcionarSelecao(Grupo2);
         }
     }
 }

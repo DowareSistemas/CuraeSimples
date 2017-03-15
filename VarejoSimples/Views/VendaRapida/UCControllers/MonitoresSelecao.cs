@@ -6,6 +6,35 @@ using VarejoSimples.Model;
 
 namespace VarejoSimples.Views.VendaRapida.UCControllers
 {
+    public class MonitorSelecaoGrupo
+    {
+        public delegate void SelecaoGrupo(Grupos_produtos grupo);
+        public event SelecaoGrupo GrupoSelecionado;
+
+        private MonitorSelecaoGrupo()
+        {
+
+        }
+
+        public void AcionarSelecao(Grupos_produtos grupo)
+        {
+            if (GrupoSelecionado != null)
+                GrupoSelecionado(grupo);
+        }
+
+        private static MonitorSelecaoGrupo instance = null;
+        public static MonitorSelecaoGrupo Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new MonitorSelecaoGrupo();
+
+                return instance;
+            }
+        }
+    }
+
     public class MonitorSelecaoProduto
     {
         public delegate void SelecaoProduto(Produtos produto);

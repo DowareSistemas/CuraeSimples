@@ -21,19 +21,59 @@ namespace VarejoSimples.Views.VendaRapida
     /// </summary>
     public partial class Venda : Window
     {
+        bool VendaAberta { get; set; }
+        private ItensVenda ItensVenda { get; set; }
         public Venda()
         {
             InitializeComponent();
 
             GridContainer.Children.Add(new LogoEmpresa());
 
+            /* GRUPOS PRODUTOS */
             AuxiliarSp controllerSp = new AuxiliarSp();
-            controllerSp.Initialize(sp_grupos, typeof(CardGrupo), true);
+            controllerSp.Begin(sp_grupos, typeof(CardGrupo), true);
 
-            List<Produtos> list = new ProdutosController().Search("");
+            List<Grupos_produtos> list = new Grupos_produtosController().Search("");
 
             list.ForEach(e => controllerSp.AddObject(e));
-            controllerSp.VerifyLastAndComplete();
+            controllerSp.End();
+            MonitorSelecaoGrupo.Instance.GrupoSelecionado += Instance_GrupoSelecionado;
+            MonitorSelecaoProduto.Instance.ProdutoSelecionado += Instance_ProdutoSelecionado;
+            VendaAberta = false;
+        }
+
+        private void Instance_GrupoSelecionado(Grupos_produtos grupo)
+        {
+            sp_produtos.Children.Clear();
+
+            AuxiliarSp controllerSp = new AuxiliarSp();
+            controllerSp.Begin(sp_produtos, typeof(CardProdutos), false);
+
+            foreach (Produtos produto in grupo.Produtos)
+                controllerSp.AddObject(produto);
+
+            controllerSp.End();
+        }
+
+        private void Instance_ProdutoSelecionado(Produtos produto)
+        {
+            if(!VendaAberta)
+            {
+                GridContainer.Children.Clear();
+                ItensVenda = new ItensVenda();
+                GridContainer.Children.Add(ItensVenda);
+
+                VendaAberta = true;
+            }
+
+            ItensVenda.AdicionaItem(produto, 1);
+        }
+
+        private void btFecharVenda_Click(object sender, RoutedEventArgs e)
+        {
+            GridContainer.Children.Clear();
+            GridContainer.Children.Add(new LogoEmpresa());
+            VendaAberta = false;
         }
     }
 }

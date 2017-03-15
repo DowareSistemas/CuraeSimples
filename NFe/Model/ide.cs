@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace NFe.Model
 {
+    [Serializable]
     public class ide
     {
+        [XmlElement(ElementName = "cUF")]
         public string cUF { get; set; }
         public string cNF { get; set; }
         /// <summary>

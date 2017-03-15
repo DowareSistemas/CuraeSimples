@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="VarejoSimples.Views.PDV.CardPagamento"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
+             mc:Ignorable="d" d:DesignWidth="419" Height="40">
+    <Grid Background="#FFFDFDFD">
+        <Border BorderBrush="#FFE6E6E6" BorderThickness="0,1">
+            <Grid>
+                <TextBlock x:Name="lbDescricao" FontSize="20" Padding="0,0,0,0"  HorizontalAlignment="Left" Margin="5,3,0,3" RenderTransformOrigin="0.395,0.577" Width="275" MouseDown="TextBlock_MouseDown" TouchDown="lbDescricao_TouchDown"/>
+                <Label x:Name="lbValor" Content="R$ 0,00" HorizontalAlignment="Right" Width="132" HorizontalContentAlignment="Right" FontSize="20" Margin="0,0,2,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

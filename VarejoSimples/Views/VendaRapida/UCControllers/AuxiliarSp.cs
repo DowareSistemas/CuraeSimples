@@ -15,7 +15,7 @@ namespace VarejoSimples.Views.VendaRapida.UCControllers
 
         public List<ICardPair> CardPairs { get; set; }
 
-        public void Initialize(StackPanel sp, Type cardType, bool handleSelection)
+        public void Begin(StackPanel sp, Type cardType, bool handleSelection)
         {
             StackPanel = sp;
             CardType = cardType;
@@ -49,7 +49,7 @@ namespace VarejoSimples.Views.VendaRapida.UCControllers
             }
         }
 
-        public void VerifyLastAndComplete()
+        public void End()
         {
             if(cardPair != null)
                 StackPanel.Children.Add(cardPair.CurrentUserControl);

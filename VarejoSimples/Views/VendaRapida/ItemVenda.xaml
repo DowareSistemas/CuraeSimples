@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="VarejoSimples.Views.VendaRapida.ItemVenda"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VarejoSimples.Views.VendaRapida"
+             mc:Ignorable="d" d:DesignWidth="638" Height="86.651" >
+
+    <!-- d:DesignWidth="638" Height="120" -->
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="235*"/>
+            <ColumnDefinition Width="130*"/>
+            <ColumnDefinition Width="273*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="#FFC3C3C3" BorderThickness="2" Margin="2,1,2,0" CornerRadius="1" Grid.ColumnSpan="3" Height="84" VerticalAlignment="Top">
+            <Grid Background="White" Margin="0,0,0,-2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="109*"/>
+                    <ColumnDefinition Width="120*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="140*"/>
+                    <ColumnDefinition Width="127*"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1" Height="2" Margin="0,0,0,45" VerticalAlignment="Bottom" Grid.ColumnSpan="5"/>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1,1,1,2" Margin="-1,35,0,0">
+                    <Grid Margin="0,1">
+                        <Label x:Name="label" Content="Item" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.441,0.385" Padding="0"/>
+                        <Label x:Name="lbNumero_item" HorizontalContentAlignment="Center" Content="2" Margin="4,15,3,0" VerticalAlignment="Top" FontSize="20" Height="26" Padding="0"/>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1,1,1,2" Grid.Column="2" Margin="0,35,0,0">
+                    <Grid Margin="0,1,0,0">
+                        <Label x:Name="label1" Content="Quantidade" HorizontalAlignment="Left" Margin="4,-1,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.441,0.385" Width="81" Padding="0"/>
+                        <Label x:Name="lbQuantidade" HorizontalContentAlignment="Center" Content="2" Margin="4,0,3,0" VerticalAlignment="Bottom" FontSize="20" Height="28" Padding="0"/>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1,1,1,2" Grid.Column="3" Margin="0,35,0,0">
+                    <Grid Margin="0,1">
+                        <Label x:Name="label2" Content="Valor unitário (R$)" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.441,0.385" Padding="0"/>
+                        <Label x:Name="lbValor_unitario" HorizontalContentAlignment="Center" Content="2,99" Margin="4,0,3,0" VerticalAlignment="Bottom" FontSize="20" Height="28" Padding="0"/>
+                    </Grid>
+                </Border>
+                <Label x:Name="lbDescricao" Content="Refrigerante Fanta Laranja Lata 350 ML" Margin="6,0,4,0" FontSize="24" Padding="0" Grid.ColumnSpan="5" Height="35" VerticalAlignment="Top"/>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1,1,1,2" Grid.Column="1" Margin="0,35,0,0">
+                    <Grid Margin="0,-1,0,1">
+                        <Label x:Name="label3" Content="Unidade" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.441,0.385" Padding="0"/>
+                        <Label x:Name="lbUnidade" HorizontalContentAlignment="Center" Content="UN" Margin="4,0,3,2" VerticalAlignment="Bottom" FontSize="20" Height="26" Padding="0"/>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="#FFC7C7C7" BorderThickness="1,1,1,2" Margin="0,35,-1,0" Grid.Column="4">
+                    <Grid Margin="0,1">
+                        <Label x:Name="label4" Content="Total (R$)" HorizontalAlignment="Left" Margin="4,-1,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.441,0.385" Padding="0"/>
+                        <Label x:Name="lbTotal" HorizontalContentAlignment="Center" Content="2,99" Margin="4,0,3,0" VerticalAlignment="Bottom" FontSize="20" Height="26" Padding="0"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

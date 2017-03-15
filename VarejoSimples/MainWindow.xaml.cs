@@ -4,28 +4,14 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using VarejoSimples.Controller;
-using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
 using VarejoSimples.Views.ConsutasCustomizadas;
-using VarejoSimples.Views.Movimento.LancamentoCheque;
-using VarejoSimples.Views.Movimento.RecebimentoCheques;
-using VarejoSimples.Views.VendaRapida;
 
 namespace VarejoSimples
 {
@@ -53,7 +39,7 @@ namespace VarejoSimples
         public event Complete OnComplete;
 
         public MainWindow(Iniciando ini)
-        { 
+        {
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
 
@@ -87,9 +73,7 @@ namespace VarejoSimples
                if (p.Valor.Equals("N"))
                 listView.Items.Remove(mi_consultasCustomizadas);
 
-            //  this.Show();
-            Venda venda = new Venda();
-            venda.ShowDialog();
+            this.Show();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -132,7 +116,7 @@ namespace VarejoSimples
             try
             {
                 Rotinas r = (Rotinas)dataGrid.SelectedItem;
-                if(r.Id == 600)
+                if (r.Id == 600)
                 {
                     CarregaConsultaCustomizada(r.Descricao);
                     return;
@@ -154,7 +138,7 @@ namespace VarejoSimples
             SQL2Search.Compiler.SQLEntityDecompiler decompiler = new SQL2Search.Compiler.SQLEntityDecompiler();
             SQL2Search.Model.SQLEntity sqlEntity = decompiler.Decompile(p.Valor + nome + ".csql");
 
-            if(sqlEntity.Provider == null)
+            if (sqlEntity.Provider == null)
             {
                 AlertaDesconhecido ad = new AlertaDesconhecido(nome, (p.Valor + nome + ".csql"), sqlEntity.CreationTime);
                 ad.ShowDialog();

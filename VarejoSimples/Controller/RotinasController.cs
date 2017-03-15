@@ -17,6 +17,7 @@ using VarejoSimples.Views.Marca;
 using VarejoSimples.Views.Movimento;
 using VarejoSimples.Views.Operadora_cartao;
 using VarejoSimples.Views.Parcela;
+using VarejoSimples.Views.PDV;
 using VarejoSimples.Views.Plano_conta;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.Produto_fornecedor;
@@ -169,6 +170,11 @@ namespace VarejoSimples.Controller
                     case 33:
                         Lancamentos lancamentos = new Lancamentos();
                         lancamentos.ShowDialog();
+                        break;
+
+                    case 34:
+                        PDV pdv = new PDV();
+                        pdv.ShowDialog();
                         break;
                 }
             }

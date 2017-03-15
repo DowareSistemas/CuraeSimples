@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using VarejoSimples.Enums;
 using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
@@ -234,7 +236,7 @@ namespace VarejoSimples.Controller
                 #endregion
 
                 int numero_parcela = 1;
-                
+
                 #region Itens do Pagamento
                 foreach (Itens_pagamento item_pg in itens_pag)
                 {
@@ -377,18 +379,18 @@ namespace VarejoSimples.Controller
                                 parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
                                 parcela_cheque.Data_vencimento = cheque.Data_deposito;
 
-                                if(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
                                     parcela_cheque.Cliente_id = Movimento.Cliente_id;
                                 }
 
-                                if(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
+                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                     parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
                                 }
-                                
+
                                 if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
@@ -443,7 +445,7 @@ namespace VarejoSimples.Controller
                                 parcela_prazo.Data_lancamento = Movimento.Data;
                                 parcela_prazo.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
                                 parcela_prazo.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
-                                parcela_prazo.Numero_cheque = string.Empty ;
+                                parcela_prazo.Numero_cheque = string.Empty;
                                 parcela_prazo.Banco = string.Empty;
                                 parcela_prazo.Agencia = string.Empty;
                                 parcela_prazo.Dias_compensacao = 0;
@@ -499,6 +501,95 @@ namespace VarejoSimples.Controller
             }
         }
 
+        internal void NFCe()
+        {
+            int retorno = 0;
+          //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+            Clientes cliente = new ClientesController().Find(Movimento.Cliente_id);
+            retorno = Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
+
+            if (cliente != null)
+                Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
+                cliente.Municipio, cliente.Uf, cliente.Cep);
+            else
+                retorno = Declaracoes.aCFAbrir_NFCe_Daruma("", "", "", "", "", "",
+                  "", "", "");
+
+            foreach (Itens_movimento item in Itens_movimento)
+            {
+                Produtos produto = new ProdutosController().Find(item.Produto_id);
+
+                string aliquota = (produto.Aliquota == 0
+                    ? "F1"
+                    : produto.Aliquota.ToString("N2").Replace(",", "."));
+
+                string tipoDescAcresc = (item.Desconto == 0
+                    ? "A$"
+                    : "D$");
+
+                string valorDescAcresc = (item.Desconto == 0
+                    ? item.Acrescimo.ToString("N2")
+                    : item.Desconto.ToString("N2"));
+
+                string codigoItem = (produto.Controla_lote
+                    ? item.Lote + "SL" + item.Sublote
+                    : produto.Id.ToString());
+
+                retorno = Declaracoes.aCFVenderCompleto_NFCe_Daruma(aliquota, item.Quant.ToString("N2"),
+                      item.Valor_unit.ToString("N2"), tipoDescAcresc, valorDescAcresc, codigoItem, produto.Ncm, item.Cfop.ToString(), produto.Unidades.Sigla,
+                      produto.Descricao, "");
+
+                if (retorno != 1)
+                {
+                    MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. Iniciando o cancelamento...", "Erro", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                    Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                    return;
+                }
+            }
+
+            Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
+            List<Itens_pagamento> itens_pagamento = itens_pag;
+
+            foreach (Itens_pagamento item in itens_pagamento)
+            {
+                Formas_pagamento fpg = new Formas_pagamentoController().Find(item.Forma_pagamento_id);
+                Declaracoes.aCFEfetuarPagamento_NFCe_Daruma(fpg.Descricao, item.Valor.ToString("N2"));
+            }
+
+            retorno = Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Doware Sistemas");
+
+            if (retorno == 1)
+            {
+                string diretorio = @"C:\NFC-e\DANFEs\";
+                var directory = new DirectoryInfo(diretorio);
+                FileInfo danfe = directory.GetFiles()
+                             .OrderByDescending(f => f.LastWriteTime)
+                             .First();
+
+                Parametros parametro = ParametrosController.FindParametro("NF_IMPPADRAO", true);
+                if(parametro == null)
+                {
+                    MessageBox.Show("Não foi possível imprimir a DANFE por que o parâmetro de sistema não foi informado ou seu valor não pode ser reconhecido. \n\nAcione o suporte Doware.", "NF_IMPPADRAO", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                string parametrosSpool = $@"{danfe.FullName};{parametro.Valor}";
+
+                File.WriteAllText(Directory.GetCurrentDirectory() + @"\PARAMS.txt", "");
+                StreamWriter writer = new StreamWriter(Directory.GetCurrentDirectory() + @"\PARAMS.txt");
+                writer.WriteLine(parametrosSpool);
+                writer.Close();
+
+                System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + @"\Utilitarios\NFCe_Spool.exe");
+            }
+        }
+
+        public decimal GetTotalParcial()
+        {
+            return Itens_movimento.Sum(e => e.Valor_final);
+        }
+
         internal void InformarFornecedor(int fornecedor_id)
         {
             Movimento.Fornecedor_id = fornecedor_id;
@@ -530,6 +621,12 @@ namespace VarejoSimples.Controller
         {
             Itens_movimento item = Movimento.Itens_movimento.First(e => e.Id == item_id);
 
+            if ((item.Quant - 1) == 0)
+            {
+                Movimento.Itens_movimento.Remove(item);
+                return;
+            }
+
             decimal valor_item = (item.Valor_final / item.Quant);
             item.Quant -= 1;
             item.Valor_final -= valor_item;
@@ -550,6 +647,16 @@ namespace VarejoSimples.Controller
         {
             Itens_movimento item = Movimento.Itens_movimento.Where(e => e.Id == item_id).First();
             item.Valor_final = (item.Valor_final - (item.Valor_final / 100 * percent));
+        }
+
+        public void AplicarDescontoGeralPercent(decimal percent)
+        {
+            Itens_movimento.ForEach(e => AplicarDescontoPerc(e.Id, percent));
+        }
+
+        public void AplicarDescontoGeralReais(decimal valor)
+        {
+            Itens_movimento.ForEach(e => AplicarDescontoReais(e.Id, valor));
         }
 
         public bool EfetuaPagamento(int forma_pagamento_id, decimal valor)
@@ -583,7 +690,16 @@ namespace VarejoSimples.Controller
                 : Movimento.Itens_movimento.OrderByDescending(e => e.Id).FirstOrDefault().Id + 1);
 
             item.Id = id;
-            Movimento.Itens_movimento.Add(item);
+
+            Itens_movimento itemExistente = Movimento.Itens_movimento.FirstOrDefault(e => e.Produto_id == item.Produto_id);
+            if (itemExistente != null)
+            {
+                decimal valor_item = (itemExistente.Valor_final / itemExistente.Quant);
+                itemExistente.Quant += item.Quant;
+                itemExistente.Valor_final += (valor_item * item.Quant);
+            }
+            else
+                Movimento.Itens_movimento.Add(item);
         }
 
         private bool ValidItem(Itens_movimento item)

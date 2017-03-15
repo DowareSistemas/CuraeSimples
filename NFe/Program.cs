@@ -1,8 +1,11 @@
 ﻿using NFe.Controller;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace NFe
 {
@@ -30,11 +33,15 @@ namespace NFe
                 digitoRetorno = 11 - resto;
             }
 
-            return  digitoRetorno.ToString();
+            return digitoRetorno.ToString();
         }
 
         static void Main(string[] args)
         {
+            NFeLoader loader = new NFeLoader(@"C:\Temp\13140311707347000195650030000004591064552496-nfe.xml");
+            NFe.Model.NFe nfeDisco = loader.Load();
+            return;
+
             string uf = "33";
             string aamm = DateTime.Now.ToString("yyMM");
             string cnpj = "24203304000114";

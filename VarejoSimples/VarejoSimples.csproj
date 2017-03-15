@@ -75,6 +75,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="NFe">
+      <HintPath>..\NFe\bin\Release\NFe.dll</HintPath>
+    </Reference>
     <Reference Include="SQL2Search, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SQL2Search\bin\Debug\SQL2Search.dll</HintPath>
@@ -125,6 +128,7 @@
     <Compile Include="Controller\FabricantesController.cs" />
     <Compile Include="Controller\Formas_pagamentoController.cs" />
     <Compile Include="Controller\FornecedoresController.cs" />
+    <Compile Include="Controller\Grupos_produtosController.cs" />
     <Compile Include="Controller\Itens_movimentoController.cs" />
     <Compile Include="Controller\Itens_pagamentoController.cs" />
     <Compile Include="Controller\Lancamentos_financeirosController.cs" />
@@ -198,6 +202,7 @@
     <Compile Include="Interfaces\IFabricantes.cs" />
     <Compile Include="Interfaces\IFormas_pagamento.cs" />
     <Compile Include="Interfaces\IFornecedor.cs" />
+    <Compile Include="Interfaces\IGrupos_produtos.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
     <Compile Include="Interfaces\IItens_pagamento.cs" />
     <Compile Include="Interfaces\ILancamentos_financeiros.cs" />
@@ -221,6 +226,93 @@
     <Compile Include="Interfaces\IUnidades.cs" />
     <Compile Include="Interfaces\IUsuarios.cs" />
     <Compile Include="Interfaces\IVendedores.cs" />
+    <Compile Include="Model\Caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Clientes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Documentos_fiscais.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Estoque.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fabricantes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Formas_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Grupos_produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Itens_pagamento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lancamentos_financeiros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Lojas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Marcas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Movimentos_caixas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Operadoras_cartao.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pagamentos_lancamentos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parametros.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Permissoes.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Planos_contas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Produtos_fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tipos_movimento.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Unidades.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Usuarios.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Vendedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -270,6 +362,7 @@
     <Compile Include="Repository\FabricantesRepository.cs" />
     <Compile Include="Repository\Formas_pagamentoRepository.cs" />
     <Compile Include="Repository\FornecedoresRepository.cs" />
+    <Compile Include="Repository\Grupos_produtosRepository.cs" />
     <Compile Include="Repository\Itens_movimentoRepository.cs" />
     <Compile Include="Repository\Itens_pagamentoRepository.cs" />
     <Compile Include="Repository\Lancamentos_financeirosRepository.cs" />
@@ -424,6 +517,18 @@
     <Compile Include="Views\Parcela\DetalhesParcela.xaml.cs">
       <DependentUpon>DetalhesParcela.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\CardPagamento.xaml.cs">
+      <DependentUpon>CardPagamento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\ItemVendaPdv.xaml.cs">
+      <DependentUpon>ItemVendaPdv.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\PainelItensVenda.xaml.cs">
+      <DependentUpon>PainelItensVenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\PDV.xaml.cs">
+      <DependentUpon>PDV.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Plano_conta\CadPlano_conta.xaml.cs">
       <DependentUpon>CadPlano_conta.xaml</DependentUpon>
     </Compile>
@@ -478,8 +583,20 @@
     <Compile Include="Views\VendaRapida\CardGrupo.xaml.cs">
       <DependentUpon>CardGrupo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VendaRapida\CardProdutos.xaml.cs">
+      <DependentUpon>CardProdutos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VendaRapida\ItemVenda.xaml.cs">
+      <DependentUpon>ItemVenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VendaRapida\ItensVenda.xaml.cs">
+      <DependentUpon>ItensVenda.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VendaRapida\LogoEmpresa.xaml.cs">
       <DependentUpon>LogoEmpresa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\PagamentosPDV.xaml.cs">
+      <DependentUpon>PagamentosPDV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VendaRapida\UCControllers\AuxiliarSp.cs" />
     <Compile Include="Views\VendaRapida\UCControllers\ICardPair.cs" />
@@ -690,6 +807,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\CardPagamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\ItemVendaPdv.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\PainelItensVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\PDV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Plano_conta\CadPlano_conta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -754,7 +887,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\VendaRapida\CardProdutos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VendaRapida\ItemVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VendaRapida\ItensVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VendaRapida\LogoEmpresa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\PagamentosPDV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -818,6 +967,7 @@
     <Resource Include="Images\pdv_buscaproduto.png" />
     <Resource Include="Images\pdv_buscacliente.png" />
     <Resource Include="Images\pdv_pagamento.png" />
+    <Resource Include="Images\pdv_menu_black.png" />
     <Content Include="Images\reprovado.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -947,7 +1097,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\PDV\UiControllers\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />

@@ -16,18 +16,37 @@ namespace NFCe_Spool
 {
     public partial class Form1 : Form
     {
+        string arquivoDanfe = string.Empty;
+        string impressora = string.Empty;
+
         public Form1()
         {
+            string parametros = "";
+            string line = "";
+            StreamReader reader = new StreamReader(Directory.GetCurrentDirectory() + @"\PARAMS.txt");
+            while ((line = reader.ReadLine()) != null)
+            {
+                parametros += line;
+            }
+            reader.Close();
+
+            if (parametros != null)
+            {
+                string[] pair = parametros.Split(';');
+                arquivoDanfe = pair[0];
+                impressora = pair[1].TrimStart();
+            }
+
             InitializeComponent();
             this.Show();
         }
 
         private void Resize()
         {
-            PdfReader reader = new PdfReader(@"C:\xml\nota.pdf");
+            PdfReader reader = new PdfReader(arquivoDanfe);
             Document doc = new Document();
             PdfWriter writer = PdfWriter.GetInstance(doc,
-            new FileStream(@"c:\xml\Out.PDF", FileMode.Create));
+            new FileStream(@"c:\Temp\Out.PDF", FileMode.Create));
             doc.Open();
             PdfContentByte cb = writer.DirectContent;
             PdfImportedPage page = writer.GetImportedPage(reader, 1); //page #1
@@ -38,9 +57,10 @@ namespace NFCe_Spool
 
         private void Print()
         {
-            try {
+            try
+            {
                 Spire.Pdf.PdfDocument doc = new Spire.Pdf.PdfDocument();
-                doc.LoadFromFile(@"c:\xml\Out.PDF");
+                doc.LoadFromFile(@"c:\Temp\Out.PDF");
                 doc.PageScaling = PdfPrintPageScaling.ActualSize;
 
                 PrintDialog dialogPrint = new PrintDialog();
@@ -60,10 +80,10 @@ namespace NFCe_Spool
 
                 PrintDocument printDoc = doc.PrintDocument;
                 dialogPrint.Document = printDoc;
-                printDoc.PrinterSettings.PrinterName = "EPSON TM-T20 Receipt";
+                printDoc.PrinterSettings.PrinterName = impressora;
                 printDoc.Print();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"Ocorreu um problema ao processar a DANFE.\n{ex.Message}", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
