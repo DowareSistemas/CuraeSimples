@@ -32,7 +32,7 @@ namespace VarejoSimples.Views.PDV
             set
             {
                 valorpago = value;
-                lbValor.Content = valorpago.ToString("N2");
+                lbValor.Content = $"R$ {valorpago.ToString("N2")}";
             }
         }
 

@@ -18,9 +18,9 @@
             <Label x:Name="label_Copy1" Content="Produto" VerticalAlignment="Top" Height="30" FontSize="14.667" Margin="100,0,112,0"/>
             <Label x:Name="label_Copy2" Content="Sub-total (R$)" HorizontalAlignment="Right" VerticalAlignment="Top" Height="30" Width="107" FontSize="14.667"/>
         </Grid>
-        <Grid Height="42" VerticalAlignment="Bottom" Background="#FF008561">
-            <Label x:Name="label1" Content="TOTAL" HorizontalAlignment="Left" Margin="10,-2,0,2" Foreground="White" FontSize="33.333" Width="111" Padding="5,0,5,5"/>
-            <Label x:Name="lbTotalParcial" Content="R$ 199,00" HorizontalAlignment="Right" Foreground="White" FontSize="33.333" Width="185" HorizontalContentAlignment="Right" Margin="0,-2,10,2" Padding="5,0,5,5"/>
+        <Grid Height="55" VerticalAlignment="Bottom" Background="#FF008561">
+            <Label x:Name="label1" Content="TOTAL" HorizontalAlignment="Left" Margin="10,0,0,2" Foreground="White" FontSize="40" Width="160" Padding="5,0,5,5"/>
+            <Label x:Name="lbTotalParcial" Content="R$ 199,00" HorizontalAlignment="Right" Foreground="White" FontSize="40" Width="305" HorizontalContentAlignment="Right" Margin="0,0,10,2" Padding="5,0,5,5"/>
         </Grid>
     </Grid>
 </UserControl>

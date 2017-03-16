@@ -13,6 +13,8 @@
                 <Label x:Name="lbDescricao" Content="NOTEBOOK SAMSUNG CORE i5 8GB 500GB TELA 14&quot;" FontSize="18" Padding="0,0,0,0" VerticalAlignment="Top" Margin="104,2,6,0" HorizontalContentAlignment="Left" />
                 <Label x:Name="lbValor_unit" Content="1 UN x R$ 1400,00 - R$ 300,00" FontSize="18" Padding="0,0,0,0" VerticalAlignment="Top" Margin="0,31,145,0" HorizontalAlignment="Right" Width="285" HorizontalContentAlignment="Right" />
                 <Label x:Name="lbTotal_item" Content="R$ 1400,00" FontSize="18" Padding="0,0,0,0" VerticalAlignment="Top" Margin="435,31,10,0" FontWeight="Bold" HorizontalContentAlignment="Right" />
+                <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="8,0,0,5" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="14.667"><Hyperlink NavigateUri="http://search.msn.com"><Run Text="CANCELAR"/></Hyperlink></TextBlock>
+                <TextBlock x:Name="textBlock3_Copy" HorizontalAlignment="Left" Margin="95,0,0,5" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="14.667"><Hyperlink NavigateUri="http://search.msn.com"><Run Text="DESCONTO"/></Hyperlink></TextBlock>
             </Grid>
         </Border>
     </Grid>

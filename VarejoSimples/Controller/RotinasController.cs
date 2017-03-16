@@ -8,6 +8,7 @@ using VarejoSimples.Views.Caixa;
 using VarejoSimples.Views.Cliente;
 using VarejoSimples.Views.Configuracao;
 using VarejoSimples.Views.Conta;
+using VarejoSimples.Views.DocEntrada;
 using VarejoSimples.Views.Fabricante;
 using VarejoSimples.Views.Forma_pagto;
 using VarejoSimples.Views.Fornecedor;
@@ -175,6 +176,11 @@ namespace VarejoSimples.Controller
                     case 34:
                         PDV pdv = new PDV();
                         pdv.ShowDialog();
+                        break;
+
+                    case 27:
+                        DocumentoEntrada docEnt = new DocumentoEntrada();
+                        docEnt.ShowDialog();
                         break;
                 }
             }

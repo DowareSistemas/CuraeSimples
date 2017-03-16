@@ -501,19 +501,51 @@ namespace VarejoSimples.Controller
             }
         }
 
+        private void LogNFCe(string msg)
+        {
+            StreamWriter writer = null;
+            try
+            {
+                if (!Directory.Exists(@"C:\Temp\"))
+                    Directory.CreateDirectory(@"C:\Temp\");
+
+                string fileName = $@"C:\Temp\MOV{Movimento.Id}-NFCe.log";
+
+                writer = (File.Exists(fileName)
+                    ? File.AppendText(fileName)
+                    : new StreamWriter(fileName));
+
+                writer.WriteLine($" [{DateTime.Now.ToString()}]: {msg}");
+                writer.Close();
+            }
+            catch (Exception ex)
+            {
+                if (writer != null)
+                    writer.Close();
+            }
+        }
+
         internal void NFCe()
         {
             int retorno = 0;
-          //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+            //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
             Clientes cliente = new ClientesController().Find(Movimento.Cliente_id);
-            retorno = Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
-
+        
             if (cliente != null)
-                Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
-                cliente.Municipio, cliente.Uf, cliente.Cep);
+                retorno = Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
+                 cliente.Municipio, cliente.Uf, cliente.Cep);
             else
                 retorno = Declaracoes.aCFAbrir_NFCe_Daruma("", "", "", "", "", "",
                   "", "", "");
+
+           LogNFCe($"aCFAbrir_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
+
+            if (retorno != 1)
+            {
+                MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. \nAcione o suporte Doware.", "Erro NFC-e", MessageBoxButton.OK, MessageBoxImage.Error);
+                Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                return;
+            }
 
             foreach (Itens_movimento item in Itens_movimento)
             {
@@ -539,26 +571,76 @@ namespace VarejoSimples.Controller
                       item.Valor_unit.ToString("N2"), tipoDescAcresc, valorDescAcresc, codigoItem, produto.Ncm, item.Cfop.ToString(), produto.Unidades.Sigla,
                       produto.Descricao, "");
 
+                string msg = $@"aCFVenderCompleto_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}
+    Aliquita.....: {aliquota}
+    Quant........: {item.Quant}
+    Valor_unit...: {item.Valor_unit.ToString("N2")}
+    Tp. Desc/Acr.: {tipoDescAcresc}
+    Vl. Desc/Acr.: {valorDescAcresc}
+    Cod. Item....: {codigoItem}
+    NCM..........: {produto.Ncm}
+    CFOP.........: {item.Cfop}
+    Unidade......: {produto.Unidades.Sigla}
+    Produto......: {produto.Descricao}
+";
+                LogNFCe(msg);
+
                 if (retorno != 1)
                 {
-                    MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. Iniciando o cancelamento...", "Erro", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. Acione o suporte Doware.", "Erro NFC-e", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
                     Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
                     return;
                 }
             }
 
-            Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
+            retorno = Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
+
+            LogNFCe("aCFTotalizar_NFCe_Daruma - " + Declaracoes.TrataRetorno(retorno));
+
             List<Itens_pagamento> itens_pagamento = itens_pag;
 
             foreach (Itens_pagamento item in itens_pagamento)
             {
                 Formas_pagamento fpg = new Formas_pagamentoController().Find(item.Forma_pagamento_id);
-                Declaracoes.aCFEfetuarPagamento_NFCe_Daruma(fpg.Descricao, item.Valor.ToString("N2"));
+                retorno = Declaracoes.aCFEfetuarPagamento_NFCe_Daruma(fpg.Descricao, item.Valor.ToString("N2"));
+
+                string msg = $@"aCFEfetuarPagamento_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}
+
+    Condição pgto.....: {fpg.Descricao}
+    Valor.............: {item.Valor.ToString("N2")}
+";
+
+                LogNFCe(msg);
+
+                if(retorno != 1)
+                {
+                    MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. \nAcione o suporte Doware.", "Erro NFC-e", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                    return;
+                }
             }
 
             retorno = Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Doware Sistemas");
 
+            LogNFCe($@"tCFEncerrar_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
+
+            if(retorno != 1)
+            {
+                StringBuilder sbCodigo = new StringBuilder(10);
+                StringBuilder sbMensagem = new StringBuilder(1000);
+
+                Declaracoes.rAvisoErro_NFCe_Daruma(sbCodigo, sbMensagem);
+                LogNFCe($@"tCFEncerrar_NFCe_Daruma - ERRO
+
+Codigo.....: {sbCodigo.ToString()}
+Mensagem...: {sbMensagem.ToString()}");
+
+                MessageBox.Show($"A NFC-e não foi autorizada! \nErro: {sbCodigo.ToString()} \nMensagem SEFAZ: {sbMensagem.ToString()}");
+                Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                return;
+            }
+            
             if (retorno == 1)
             {
                 string diretorio = @"C:\NFC-e\DANFEs\";
@@ -568,9 +650,15 @@ namespace VarejoSimples.Controller
                              .First();
 
                 Parametros parametro = ParametrosController.FindParametro("NF_IMPPADRAO", true);
-                if(parametro == null)
+                if (parametro == null)
                 {
-                    MessageBox.Show("Não foi possível imprimir a DANFE por que o parâmetro de sistema não foi informado ou seu valor não pode ser reconhecido. \n\nAcione o suporte Doware.", "NF_IMPPADRAO", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Não foi possível imprimir a DANFE por que o parâmetro de sistema 'NF_IMPPADRAO' não foi informado ou seu valor não pode ser reconhecido. \n\nAcione o suporte Doware.", "NF_IMPPADRAO", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
+
+                if (parametro.Valor == null || parametro.Valor == "")
+                {
+                    MessageBox.Show("Não foi possível imprimir a DANFE por que o parâmetro de sistema 'NF_IMPPADRAO' não foi informado ou seu valor não pode ser reconhecido. \n\nAcione o suporte Doware.", "NF_IMPPADRAO", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
                 }
 

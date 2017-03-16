@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
         WindowState="Maximized"
         WindowStyle="None"
-        Title="PDV" Height="600" Width="1024">
+        ResizeMode="NoResize"
+        Title="PDV" d:DesignHeight="600" d:DesignWidth="1024">
     <Grid Background="#FFFDFDFD">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -46,14 +46,17 @@
                 </Border>
             </Grid>
         </Border>
-        <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="135" Margin="2,312,0,0" VerticalAlignment="Top">
+        <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="193" Margin="2,312,0,0" VerticalAlignment="Top">
             <Grid>
-                <Button x:Name="btCancelarItem" Content="Cancelar item [F6]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667"/>
-                <Button x:Name="button_Copy1" Content="Desconto [F7]" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" RenderTransformOrigin="0.535,0.528"/>
-                <Button x:Name="btPagamento" Content="Pagamento [F9]" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
-                <Button x:Name="button_Copy3" Content="Cliente [F8]" HorizontalAlignment="Left" Margin="288,10,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667"/>
-                <Button x:Name="btNFCe" Content="NFC-e [F10]" HorizontalAlignment="Left" Margin="150,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btNFCe_Click"/>
-                <Button x:Name="btNaoFiscal" Content="Impressão [F11]" HorizontalAlignment="Left" Margin="288,68,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
+                <Button x:Name="btCancelarItem" Content="Cancelar item [F1]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667"/>
+                <Button x:Name="button_Copy1" Content="Desconto [F2]" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" RenderTransformOrigin="0.535,0.528"/>
+                <Button x:Name="btPagamento" Content="Pagamento [F6]" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
+                <Button x:Name="button_Copy3" Content="Cliente [F4]" HorizontalAlignment="Left" Margin="288,10,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667"/>
+                <Button x:Name="btNFCe" Content="NFC-e [F9]" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btNFCe_Click"/>
+                <Button x:Name="btNaoFiscal" Content="Impressão [F10]" HorizontalAlignment="Left" Margin="148,128,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" />
+                <Button x:Name="btNaoFiscal_Copy" Content="Encerrar [F11]" HorizontalAlignment="Left" Margin="288,128,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
+                <Button x:Name="btNaoFiscal_Copy1" Content="Importar&#xA;pedido [F7]" HorizontalAlignment="Left" Margin="148,68,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667"/>
+                <Button x:Name="btNaoFiscal_Copy2" Content="Salvar como&#xA;pedido [F8]" HorizontalAlignment="Left" Margin="288,68,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
             </Grid>
         </Border>
         <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="107" Margin="2,205,0,0" VerticalAlignment="Top">

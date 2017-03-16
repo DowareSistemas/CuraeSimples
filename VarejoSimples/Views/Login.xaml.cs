@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DarumaFramework_NFCe;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,15 +26,13 @@ namespace VarejoSimples.Views
         public delegate void LoginEfetuado();
         public event LoginEfetuado EfetuouLogin;
 
-        public Login(Iniciando ini)
+        public Login()
         {
             InitializeComponent();
-            Start(ini);
         }
 
-        private void Start(Iniciando ini)
+        public void Start(Iniciando ini)
         {
-
             LojasController lc = new LojasController();
             Lojas loja = null;
             new Thread(() =>

@@ -93,14 +93,10 @@ namespace VarejoSimples.Controller
 
                     if (e.Text.Equals(".") && txInput.Text.Contains(","))
                         return;
-
-                    /*   if (e.Text.Equals(".") && txInput.Text.Contains("."))
-                           return; */
-
+                    
                     if (e.Text.Equals(",") && txInput.Text.Contains(","))
                         return;
-
-
+                    
                     if (e.Text.Equals(".") && (txInput.Text.Last().Equals('.') || txInput.Text.Last().Equals(',')))
                         return;
 

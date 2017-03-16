@@ -145,7 +145,7 @@ namespace NFe.Controller
                 {
                     foreach (XmlNode endNode in node.ChildNodes)
                     {
-                        if (endNode.Name.Equals("xLogr"))
+                        if (endNode.Name.Equals("xLgr"))
                             emit.xLogr = endNode.InnerText;
 
                         if (endNode.Name.Equals("nro"))
@@ -156,6 +156,9 @@ namespace NFe.Controller
 
                         if (endNode.Name.Equals("cMun"))
                             emit.cMun = endNode.InnerText;
+
+                        if (endNode.Name.Equals("xMun"))
+                            emit.xMun = endNode.InnerText;
 
                         if (endNode.Name.Equals("UF"))
                             emit.UF = endNode.InnerText;

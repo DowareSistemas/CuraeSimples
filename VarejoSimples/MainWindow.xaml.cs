@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +13,7 @@ using VarejoSimples.Model;
 using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
 using VarejoSimples.Views.ConsutasCustomizadas;
+using VarejoSimples.Views.PDV;
 
 namespace VarejoSimples
 {
@@ -54,9 +56,10 @@ namespace VarejoSimples
             txCod_rotina.Focus();
             this.Title = "Curae - Mini ERP";
 
-            Login l = new Login(ini);
+            Login l = new Login();
+            l.Visibility = Visibility.Hidden;
+            l.Start(ini) ;
             l.Show();
-
             l.EfetuouLogin += L_EfetuouLogin;
         }
 
@@ -72,6 +75,11 @@ namespace VarejoSimples
             else
                if (p.Valor.Equals("N"))
                 listView.Items.Remove(mi_consultasCustomizadas);
+
+            new Thread(() =>
+            {
+                Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
+            }).Start();
 
             this.Show();
         }

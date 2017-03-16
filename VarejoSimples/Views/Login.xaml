@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:VarejoSimples.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-       ResizeMode="NoResize"
+        ResizeMode="NoResize"
         Closed="Window_Closed"
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
         IsVisibleChanged="Window_IsVisibleChanged"
-        Title="Login" Height="355" Width="695">
+        Title="Login" Height="355" Width="695"
+        Visibility="Hidden">
     <Grid>
         <Border BorderBrush="#FF0068FF" BorderThickness="1" HorizontalAlignment="Left" Height="325" VerticalAlignment="Top" Width="660" CornerRadius="10" Margin="10,10,0,0">
             <Border.Background>
