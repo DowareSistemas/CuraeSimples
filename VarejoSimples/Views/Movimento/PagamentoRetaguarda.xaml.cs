@@ -52,7 +52,7 @@ namespace VarejoSimples.Views.Movimento
         {
             txValorMovimento.Text = valor_movimento.ToString("N2");
             txValorFaltando.Text = valor_movimento.ToString("N2");
-
+            
             this.ShowDialog();
         }
 

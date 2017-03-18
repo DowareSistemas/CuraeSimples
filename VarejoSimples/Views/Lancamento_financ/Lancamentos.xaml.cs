@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Enums;
 using VarejoSimples.Model;
+using VarejoSimples.Tasks;
 using VarejoSimples.Views.Conta;
 
 namespace VarejoSimples.Views.Lancamento_financ
@@ -24,8 +25,6 @@ namespace VarejoSimples.Views.Lancamento_financ
     public partial class Lancamentos : Window
     {
         private int Conta_id { get; set; }
-        private varejo_config context = new varejo_config();
-        private Thread thread_busca;
 
         public Lancamentos()
         {
@@ -46,6 +45,7 @@ namespace VarejoSimples.Views.Lancamento_financ
             {
                 Conta_id = pc.Selecionado.Id;
                 lbNomeConta.Content = pc.Selecionado.Nome;
+                AcionarBusca();
             }
         }
 
@@ -72,46 +72,23 @@ namespace VarejoSimples.Views.Lancamento_financ
             cbMes.SelectedValue = DateTime.Now.Month;
         }
 
-        private void BuscaBasica(int pagina_atual, int numero_registros, int mes)
-        {
-            if (Conta_id == 0)
-                return;
-
-            string saldoConta = context.Contas.Find(Conta_id).Saldo.ToString("N2");
-
-            Lancamentos_financeirosController controller = new Lancamentos_financeirosController();
-
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = false), GridNavegacao);
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = null), dataGrid);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Visible), imgLoading);
-
-            List<Lancamentos_financeiros> list = controller.BuscaSimples(pagina_atual, numero_registros, mes, Conta_id);
-            List<Lancamentos_financeirosAdapter> listAdp = new List<Lancamentos_financeirosAdapter>();
-            list.ForEach(e => listAdp.Add(new Lancamentos_financeirosAdapter(e, context)));
-
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = true), GridNavegacao);
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = listAdp), dataGrid);
-            lbSaldoConta.Dispatcher.Invoke(new Action<Label>(lb => lbSaldoConta.Content = saldoConta), lbSaldoConta);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Hidden), imgLoading);
-            thread_busca.Abort();
-        }
-
         private void AcionarBusca()
         {
-            context = new varejo_config();
+            if (!initializado)
+                return;
+
             int pagina_atual = (int.Parse(txPagina_atual.Text) * int.Parse(txNumero_registros.Text));
             int numero_registros = int.Parse(txNumero_registros.Text);
             int mes = (int)cbMes.SelectedValue;
 
-            thread_busca = new Thread(() =>
-            BuscaBasica(pagina_atual, numero_registros, mes));
-            thread_busca.Start();
+            LancamentosFinanceirosTask lfTask = new LancamentosFinanceirosTask(this);
+            lfTask.Execute(new int[] { pagina_atual, numero_registros, mes, Conta_id });
         }
 
         private void btAtualizar_Click(object sender, RoutedEventArgs e)
         {
             Lancamentos_financeirosController controller = new Lancamentos_financeirosController();
-            
+
             int numero_paginas = 0;
             numero_paginas = (controller.CountBusca((int)cbMes.SelectedValue, Conta_id) / int.Parse(txNumero_registros.Text));
             txNumero_paginas.Text = numero_paginas.ToString();
@@ -184,10 +161,10 @@ namespace VarejoSimples.Views.Lancamento_financ
             AcionarBusca();
         }
 
-        bool feito = false;
+        bool initializado = false;
         private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (feito)
+            if (initializado)
                 return;
             enabledChangeCb = true;
             LoadComboBox();
@@ -198,9 +175,9 @@ namespace VarejoSimples.Views.Lancamento_financ
             dataGrid.FontSize = 15;
             dataGrid.MinRowHeight = 20;
             dataGrid.AlternatingRowBackground = Brushes.Lavender;
+
+            initializado = true;
             SelecionarConta();
-            AcionarBusca();
-            feito = true;
         }
 
         private void btTransferencia_Click(object sender, RoutedEventArgs e)
@@ -217,7 +194,7 @@ namespace VarejoSimples.Views.Lancamento_financ
 
             if (adapter == null)
                 return;
-            
+
             DetalhesLancamento detalhes = new DetalhesLancamento(adapter.Lancamento.Id);
             detalhes.ShowDialog();
         }

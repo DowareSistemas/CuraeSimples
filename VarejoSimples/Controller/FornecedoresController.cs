@@ -102,5 +102,10 @@ namespace VarejoSimples.Controller
 
             return true;
         }
+
+        internal bool Existe(string cnpj)
+        {
+            return db.Where(e => e.Cnpj.Equals(cnpj)).Count() > 0;
+        }
     }
 }

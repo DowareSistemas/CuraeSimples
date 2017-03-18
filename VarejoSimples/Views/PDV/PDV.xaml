@@ -9,6 +9,7 @@
         WindowState="Maximized"
         WindowStyle="None"
         ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
         Title="PDV" d:DesignHeight="600" d:DesignWidth="1024">
     <Grid Background="#FFFDFDFD">
         <Grid.ColumnDefinitions>
@@ -18,7 +19,7 @@
         <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Height="40" VerticalAlignment="Top" Background="#FFE6E6E6" Grid.ColumnSpan="2">
             <Grid>
                 <Label x:Name="label" Content="Curae PDV" Margin="384,0" FontSize="20" HorizontalContentAlignment="Center"/>
-                <Button x:Name="btMenu" HorizontalAlignment="Left" Width="50" BorderBrush="#FF999999" Margin="0,0,0,-2" BorderThickness="1,1,1,2" Background="#FFDEDEDE">
+                <Button x:Name="btMenu" HorizontalAlignment="Left" Width="50" BorderBrush="#FF999999" BorderThickness="1,1,1,0" Background="#FFDEDEDE">
                     <Button.Content>
                         <StackPanel>
                             <Image Source="/Curae Varejo (Simples);component/Images/pdv_menu_black.png" Height="33" Width="42" />
@@ -53,10 +54,10 @@
                 <Button x:Name="btPagamento" Content="Pagamento [F6]" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
                 <Button x:Name="button_Copy3" Content="Cliente [F4]" HorizontalAlignment="Left" Margin="288,10,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667"/>
                 <Button x:Name="btNFCe" Content="NFC-e [F9]" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btNFCe_Click"/>
-                <Button x:Name="btNaoFiscal" Content="Impressão [F10]" HorizontalAlignment="Left" Margin="148,128,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" />
-                <Button x:Name="btNaoFiscal_Copy" Content="Encerrar [F11]" HorizontalAlignment="Left" Margin="288,128,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
+                <Button x:Name="btNaoFiscal" Content="Impressão [F10]" HorizontalAlignment="Left" Margin="148,128,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" Click="btNaoFiscal_Click" />
+                <Button x:Name="btEncerrar" Content="Encerrar [F11]" HorizontalAlignment="Left" Margin="288,128,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" Click="btEncerrar_Click" />
                 <Button x:Name="btNaoFiscal_Copy1" Content="Importar&#xA;pedido [F7]" HorizontalAlignment="Left" Margin="148,68,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667"/>
-                <Button x:Name="btNaoFiscal_Copy2" Content="Salvar como&#xA;pedido [F8]" HorizontalAlignment="Left" Margin="288,68,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
+                <Button x:Name="btSalvarPedido" Content="Salvar como&#xA;pedido [F8]" HorizontalAlignment="Left" Margin="288,68,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
             </Grid>
         </Border>
         <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="107" Margin="2,205,0,0" VerticalAlignment="Top">

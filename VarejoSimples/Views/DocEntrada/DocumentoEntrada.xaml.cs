@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
+using VarejoSimples.Interfaces;
+using VarejoSimples.Model;
+using VarejoSimples.Views.Movimento;
 
 namespace VarejoSimples.Views.DocEntrada
 {
@@ -22,75 +25,82 @@ namespace VarejoSimples.Views.DocEntrada
     /// </summary>
     public partial class DocumentoEntrada : Window
     {
+        private NFe.Model.NFe NFe { get; set; }
+        
+        private bool CadastrarFornecedor { get; set; }
+        private bool AtualizarCustoProdutos { get; set; }
+        private bool AdicionarAmarracaoPF { get; set; }
+        
+
         public DocumentoEntrada()
         {
             InitializeComponent();
-
+            
             NFeLoader nfeLoader = new NFeLoader(@"C:\Temp\13140311707347000195650030000004591064552496-nfe.xml");
-            NFe.Model.NFe nfe = nfeLoader.Load();
+            NFe = nfeLoader.Load();
 
-            if (nfe.dest.CNPJ != UsuariosController.LojaAtual.Cnpj)
+            if (NFe.dest.CNPJ != UsuariosController.LojaAtual.Cnpj)
             {
                 MessageBoxResult mResult = MessageBox.Show("Esta nota não é destinada a sua empresa. \nSua importação poderá gerar inconsistências na parte financeira do sistema e após executado, esta operação não poderá ser revertida. \n\nTem certeza que deseja continuar?", "AVISO", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mResult == MessageBoxResult.No)
                     Close();
             }
 
-            txCod_nf.Text = nfe.ide.cNF;
-            txTipo_documento.Text = (nfe.ide.mod == "65"
+            txCod_nf.Text = NFe.ide.cNF;
+            txTipo_documento.Text = (NFe.ide.mod == "65"
                 ? "NF-e"
                 : "NFC-e");
-            txNumero_nf.Text = nfe.ide.nNF;
-            txSerie_nf.Text = nfe.ide.serie;
-            txOperacao.Text = nfe.ide.natOp;
-            txData_emissao.Text = Convert.ToDateTime(nfe.ide.dhEmi).ToString("dd/MM/yyyy");
-            txNome_emit.Text = nfe.emit.xNome;
-            txLogradouro.Text = nfe.emit.xLogr;
-            txNumero_emit.Text = nfe.emit.nro;
-            txUF.Text = nfe.emit.UF;
-            txBairro.Text = nfe.emit.xBairro;
-            txMunicipio.Text = nfe.emit.xMun;
-            txCNPJ.Text = nfe.emit.CNPJ;
-            txIE.Text = nfe.emit.IE;
+            txNumero_nf.Text = NFe.ide.nNF;
+            txSerie_nf.Text = NFe.ide.serie;
+            txOperacao.Text = NFe.ide.natOp;
+            txData_emissao.Text = Convert.ToDateTime(NFe.ide.dhEmi).ToString("dd/MM/yyyy");
+            txNome_emit.Text = NFe.emit.xNome;
+            txLogradouro.Text = NFe.emit.xLogr;
+            txNumero_emit.Text = NFe.emit.nro;
+            txUF.Text = NFe.emit.UF;
+            txBairro.Text = NFe.emit.xBairro;
+            txMunicipio.Text = NFe.emit.xMun;
+            txCNPJ.Text = NFe.emit.CNPJ;
+            txIE.Text = NFe.emit.IE;
 
-            if (!string.IsNullOrEmpty(nfe.total.vBC))
-                txBC_icms.Text = nfe.total.vBC;
+            if (!string.IsNullOrEmpty(NFe.total.vBC))
+                txBC_icms.Text = NFe.total.vBC;
 
-            if (!string.IsNullOrEmpty(nfe.total.vICMS))
-                txIcms.Text = nfe.total.vICMS;
+            if (!string.IsNullOrEmpty(NFe.total.vICMS))
+                txIcms.Text = NFe.total.vICMS;
 
-            if (!string.IsNullOrEmpty(nfe.total.vBCST))
-                txBC_icms_st.Text = nfe.total.vBCST;
+            if (!string.IsNullOrEmpty(NFe.total.vBCST))
+                txBC_icms_st.Text = NFe.total.vBCST;
 
-            if (!string.IsNullOrEmpty(nfe.total.vST))
-                txIcms_st.Text = nfe.total.vST;
+            if (!string.IsNullOrEmpty(NFe.total.vST))
+                txIcms_st.Text = NFe.total.vST;
 
-            if (!string.IsNullOrEmpty(nfe.total.vProd))
-                txTotalProd.Text = nfe.total.vProd;
+            if (!string.IsNullOrEmpty(NFe.total.vProd))
+                txTotalProd.Text = NFe.total.vProd;
 
-            if (!string.IsNullOrEmpty(nfe.total.vFrete))
-                txFrete.Text = nfe.total.vFrete;
+            if (!string.IsNullOrEmpty(NFe.total.vFrete))
+                txFrete.Text = NFe.total.vFrete;
 
-            if (!string.IsNullOrEmpty(nfe.total.vDesc))
-                txDesconto.Text = nfe.total.vDesc;
+            if (!string.IsNullOrEmpty(NFe.total.vDesc))
+                txDesconto.Text = NFe.total.vDesc;
 
-            if (!string.IsNullOrEmpty(nfe.total.vIPI))
-                txIpi.Text = nfe.total.vIPI;
+            if (!string.IsNullOrEmpty(NFe.total.vIPI))
+                txIpi.Text = NFe.total.vIPI;
 
-            if (!string.IsNullOrEmpty(nfe.total.vPIS))
-                txPis.Text = nfe.total.vPIS;
+            if (!string.IsNullOrEmpty(NFe.total.vPIS))
+                txPis.Text = NFe.total.vPIS;
 
-            if (!string.IsNullOrEmpty(nfe.total.vCOFINS))
-                txCofins.Text = nfe.total.vCOFINS;
+            if (!string.IsNullOrEmpty(NFe.total.vCOFINS))
+                txCofins.Text = NFe.total.vCOFINS;
 
-            if (!string.IsNullOrEmpty(nfe.total.vOutro))
-                txOutros.Text = nfe.total.vOutro;
+            if (!string.IsNullOrEmpty(NFe.total.vOutro))
+                txOutros.Text = NFe.total.vOutro;
 
-            if (!string.IsNullOrEmpty(nfe.total.vNF))
-                txTotal_nf.Text = nfe.total.vNF;
+            if (!string.IsNullOrEmpty(NFe.total.vNF))
+                txTotal_nf.Text = NFe.total.vNF;
 
             List<DetAdapter> listAdp = new List<DetAdapter>();
-            nfe.dets.ForEach(e => listAdp.Add(new DetAdapter(e)));
+            NFe.dets.ForEach(e => listAdp.Add(new DetAdapter(e)));
 
             dataGrid.AplicarPadroes();
             dataGrid.FontSize = 14;
@@ -98,9 +108,17 @@ namespace VarejoSimples.Views.DocEntrada
             dataGrid.ItemsSource = listAdp;
         }
 
-        private void txNumero_emit_Copy1_TextChanged(object sender, TextChangedEventArgs e)
+        private void btConfirmar_Click(object sender, RoutedEventArgs e)
         {
+            ITelaPagamentoMovimento pagamento = new PagamentoRetaguarda();
+            pagamento.Exibir(decimal.Parse(NFe.total.vNF.Replace(".", ",")));
 
+            FornecedoresController fController = new FornecedoresController();
+            if(!fController.Existe(NFe.emit.CNPJ))
+            {
+                //TODO fazer o cadastro
+            }
+            
         }
     }
 

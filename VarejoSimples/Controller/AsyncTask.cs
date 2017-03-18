@@ -3,38 +3,55 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace VarejoSimples.Controller
 {
     public abstract class AsyncTask<TParams, TProgress, TReturn>
     {
-        private TReturn vResult;
-        private TParams vParams;
-        private BackgroundWorker worker = null;
+        private bool Cancelable = false;
+        private TReturn Result { get; set; }
+        private TParams Params { get; set; }
+        private BackgroundWorker MainWorker { get; set; }
+
         public abstract TReturn DoInBackGround(TParams param);
         public abstract void OnPostExecute(TReturn result);
         public abstract void OnProgressUpdate(TProgress progress);
         public abstract void OnPreExecute();
+
         public void UpdateProgress(TProgress progress)
         {
-            worker.ReportProgress(0, progress);
+            MainWorker.ReportProgress(0, progress);
+        }
+
+        public void Cancel()
+        {
+
+            if (!Cancelable)
+            {
+                MessageBox.Show("Uma AsynkTask não pode ser cancelada antes ou após DoInBackground.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MainWorker.CancelAsync();
         }
 
         public void Execute(TParams prms)
         {
             OnPreExecute();
-            vParams = prms;
+            Params = prms;
 
-            worker = new BackgroundWorker();
-            worker.DoWork += Worker_DoWork;
-            worker.ProgressChanged += Worker_ProgressChanged;
-            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-            worker.RunWorkerAsync();
+            MainWorker = new BackgroundWorker();
+            MainWorker.DoWork += Worker_DoWork;
+            MainWorker.ProgressChanged += Worker_ProgressChanged;
+            MainWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            
+            MainWorker.RunWorkerAsync();
         }
 
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            OnPostExecute(vResult);
+            OnPostExecute(Result);
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -44,7 +61,9 @@ namespace VarejoSimples.Controller
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            vResult = DoInBackGround(vParams);
+            Cancelable = true;
+            Result = DoInBackGround(Params);
+            Cancelable = false;
         }
     }
 }

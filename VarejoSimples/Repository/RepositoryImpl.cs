@@ -59,7 +59,7 @@ namespace VarejoSimples.Repository
 
         public bool ExecSQL(string sql, SqlParameter[] parameters = null)
         {
-            int retorno =(parameters == null
+            int retorno = (parameters == null
                 ? _context.Database.ExecuteSqlCommand(sql)
                 : _context.Database.ExecuteSqlCommand(sql, parameters));
 

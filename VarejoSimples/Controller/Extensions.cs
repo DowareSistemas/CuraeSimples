@@ -145,6 +145,43 @@ namespace VarejoSimples.Controller
             dt.Cursor = Cursors.Hand;
             dt.HorizontalGridLinesBrush = Brushes.LightGray;
             dt.VerticalGridLinesBrush = Brushes.LightGray;
+
+            dt.KeyDown += Dt_KeyDown;
+        }
+
+        private static void Dt_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                DataGrid dataGrid = (sender as DataGrid);
+               // dataGrid.Focus();
+
+                if (dataGrid.Items.Count == 0)
+                    return;
+
+                if(e.Key == Key.Insert)
+                {
+                    if ((dataGrid.SelectedIndex - 1) < 0)
+                        return;
+              
+                    dataGrid.SelectedItem = dataGrid.SelectedItems[dataGrid.SelectedIndex - 1];
+                }
+
+                if (e.Key == Key.Down)
+                {
+                    if ((dataGrid.SelectedIndex + 1) > (dataGrid.Items.Count - 1))
+                        return;
+
+                    dataGrid.SelectedIndex += 1;
+                }
+                else
+                {
+                    if ((dataGrid.SelectedIndex - 1) < 0)
+                        return;
+                    dataGrid.SelectedIndex -= 1;
+                }
+            }
+            catch { }
         }
 
         public static Expression<T> Compose<T>(this Expression<T> first, Expression<T> second, Func<Expression, Expression, Expression> merge)

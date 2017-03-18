@@ -109,34 +109,34 @@
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-        <Button x:Name="button" Content="Ca_ncelar" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Height="25"/>
-        <Button x:Name="button_Copy" Content="_Confirmar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Height="25"/>
+        <Button x:Name="btCancelar" Content="Ca_ncelar" HorizontalAlignment="Right" Margin="0,0,90,10" VerticalAlignment="Bottom" Width="75" Height="25"/>
+        <Button x:Name="btConfirmar" Content="_Confirmar" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Height="25" Click="btConfirmar_Click"/>
         <GroupBox x:Name="groupBox_Copy1" Header="Totais (R$)" HorizontalAlignment="Left" Margin="675,10,0,0" VerticalAlignment="Top" Height="136" Width="331">
             <Grid Margin="-2,0,-2,-2">
                 <Label x:Name="label_Copy12" Content="BC. ICMS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" Height="24"/>
                 <TextBox x:Name="txBC_icms" HorizontalAlignment="Left" Height="23" Margin="61,1,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy13" Content="ICMS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="49" Margin="114,0,0,0" Height="24" Padding="2,5,5,5"/>
-                <TextBox x:Name="txIcms" HorizontalAlignment="Left" Height="23" Margin="164,1,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txIcms" HorizontalAlignment="Left" Height="23" Margin="164,1,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False"  HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy14" Content="BC. ST" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" Margin="0,28,0,0" Height="24"/>
                 <TextBox x:Name="txBC_icms_st" Height="23" Margin="61,29,212,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy15" Content="ICMS ST" HorizontalAlignment="Left" VerticalAlignment="Top" Width="49" Margin="114,28,0,0" Height="23" Padding="2,5,0,5"/>
-                <TextBox x:Name="txIcms_st" HorizontalAlignment="Left" Height="23" Margin="164,29,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txIcms_st" HorizontalAlignment="Left" Height="23" Margin="164,29,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False"  HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy16" Content="Produtos" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" Margin="0,56,0,0" Height="24"/>
                 <TextBox x:Name="txTotalProd" Height="23" Margin="61,57,212,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy17" Content="Frete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="49" Margin="114,56,0,0" Height="23" Padding="2,5,5,5"/>
-                <TextBox x:Name="txFrete" HorizontalAlignment="Left" Height="23" Margin="164,56,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txFrete" HorizontalAlignment="Left" Height="23" Margin="164,56,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy18" Content="IPI" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" Margin="0,84,0,0" Height="26"/>
                 <TextBox x:Name="txIpi" Height="23" Margin="61,85,212,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy19" Content="PIS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="49" Margin="114,85,0,0" Height="23" Padding="2,5,5,5"/>
-                <TextBox x:Name="txPis" HorizontalAlignment="Left" Height="23" Margin="164,85,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txPis" HorizontalAlignment="Left" Height="23" Margin="164,85,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False"  HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy20" Content="COFINS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="47" Margin="219,1,0,0" Height="23" Padding="5,5,0,5"/>
-                <TextBox x:Name="txCofins" HorizontalAlignment="Left" Height="23" Margin="271,1,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txCofins" HorizontalAlignment="Left" Height="23" Margin="271,1,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy21" Content="Outros" HorizontalAlignment="Left" VerticalAlignment="Top" Width="47" Margin="219,29,0,0" Height="23" Padding="5,5,0,5"/>
-                <TextBox x:Name="txOutros" HorizontalAlignment="Left" Height="23" Margin="271,29,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txOutros" HorizontalAlignment="Left" Height="23" Margin="271,29,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False"  HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy22" Content="Total" HorizontalAlignment="Left" VerticalAlignment="Top" Width="47" Margin="219,85,0,0" Height="23" Padding="5,5,0,5"/>
-                <TextBox x:Name="txTotal_nf" HorizontalAlignment="Left" Height="23" Margin="271,85,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txTotal_nf" HorizontalAlignment="Left" Height="23" Margin="271,85,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False"  HorizontalContentAlignment="Right"/>
                 <Label x:Name="label_Copy23" Content="Desc." HorizontalAlignment="Left" VerticalAlignment="Top" Width="47" Margin="219,57,0,0" Height="23" Padding="5,5,0,5"/>
-                <TextBox x:Name="txDesconto" HorizontalAlignment="Left" Height="23" Margin="271,57,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" TextChanged="txNumero_emit_Copy1_TextChanged" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txDesconto" HorizontalAlignment="Left" Height="23" Margin="271,57,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="50" Padding="0,3,0,0" IsEnabled="False" HorizontalContentAlignment="Right"/>
             </Grid>
         </GroupBox>
 

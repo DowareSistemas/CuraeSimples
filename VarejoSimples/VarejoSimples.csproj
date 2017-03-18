@@ -386,6 +386,8 @@
     <Compile Include="Repository\UnidadesRepository.cs" />
     <Compile Include="Repository\UsuariosRepository.cs" />
     <Compile Include="Repository\VendedoresRepository.cs" />
+    <Compile Include="Tasks\ConsultaParcelasTask.cs" />
+    <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
     <Compile Include="Views\Caixa\CadCaixas.xaml.cs">
       <DependentUpon>CadCaixas.xaml</DependentUpon>
     </Compile>
@@ -521,6 +523,9 @@
     </Compile>
     <Compile Include="Views\Parcela\DetalhesParcela.xaml.cs">
       <DependentUpon>DetalhesParcela.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\BuscaProdutoPDV.xaml.cs">
+      <DependentUpon>BuscaProdutoPDV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDV\CardPagamento.xaml.cs">
       <DependentUpon>CardPagamento.xaml</DependentUpon>
@@ -819,6 +824,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\BuscaProdutoPDV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PDV\CardPagamento.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -984,6 +993,7 @@
     <Resource Include="Images\pdv_buscacliente.png" />
     <Resource Include="Images\pdv_pagamento.png" />
     <Resource Include="Images\pdv_menu_black.png" />
+    <Resource Include="Images\pdv_close.png" />
     <Content Include="Images\questao.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1117,7 +1127,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tasks\" />
     <Folder Include="Views\PDV\UiControllers\" />
   </ItemGroup>
   <ItemGroup>

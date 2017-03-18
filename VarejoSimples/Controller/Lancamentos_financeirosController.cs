@@ -267,6 +267,11 @@ namespace VarejoSimples.Controller
             }
         }
 
+        internal varejo_config GetContext()
+        {
+            return db.Context;
+        }
+
         internal Lancamentos_financeiros Find(int lancamento_id)
         {
             return db.Find(lancamento_id);

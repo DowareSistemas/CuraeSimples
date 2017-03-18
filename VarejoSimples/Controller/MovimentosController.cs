@@ -500,7 +500,7 @@ namespace VarejoSimples.Controller
                 return 0;
             }
         }
-
+        
         private void LogNFCe(string msg)
         {
             StreamWriter writer = null;
@@ -687,18 +687,28 @@ Mensagem...: {sbMensagem.ToString()}");
         {
             get
             {
-                return Movimento.Itens_movimento.ToList();
+                return Movimento.Itens_movimento.OrderBy(e => e.Id).ToList();
             }
         }
 
         public void RemoveItem(int item_id)
         {
-            Movimento.Itens_movimento.Remove(Movimento.Itens_movimento.Where(e => e.Id == item_id).First());
+            Itens_movimento imv = Movimento.Itens_movimento.Where(e => e.Id == item_id).FirstOrDefault();
+            if (imv == null)
+                return;
+
+            Movimento.Itens_movimento.Remove(imv);
+
+            int id = 0;
+            foreach (Itens_movimento item in Itens_movimento)
+                item.Id = (id += 1);
         }
 
         public void IncrementaItem(int item_id)
         {
-            Itens_movimento item = Movimento.Itens_movimento.First(e => e.Id == item_id);
+            Itens_movimento item = Movimento.Itens_movimento.FirstOrDefault(e => e.Id == item_id);
+            if (item == null)
+                return;
 
             decimal valor_item = (item.Valor_final / item.Quant);
             item.Quant += 1;
@@ -707,11 +717,13 @@ Mensagem...: {sbMensagem.ToString()}");
 
         public void DecrementaItem(int item_id)
         {
-            Itens_movimento item = Movimento.Itens_movimento.First(e => e.Id == item_id);
+            Itens_movimento item = Movimento.Itens_movimento.FirstOrDefault(e => e.Id == item_id);
+            if (item == null)
+                return;
 
             if ((item.Quant - 1) == 0)
             {
-                Movimento.Itens_movimento.Remove(item);
+                RemoveItem(item_id);
                 return;
             }
 
@@ -727,13 +739,19 @@ Mensagem...: {sbMensagem.ToString()}");
 
         public void AplicarDescontoReais(int item_id, decimal valor)
         {
-            Itens_movimento item = Movimento.Itens_movimento.Where(e => e.Id == item_id).First();
+            Itens_movimento item = Movimento.Itens_movimento.Where(e => e.Id == item_id).FirstOrDefault();
+            if (item == null)
+                return;
+
             item.Valor_final -= valor;
         }
 
         public void AplicarDescontoPerc(int item_id, decimal percent)
         {
-            Itens_movimento item = Movimento.Itens_movimento.Where(e => e.Id == item_id).First();
+            Itens_movimento item = Movimento.Itens_movimento.Where(e => e.Id == item_id).FirstOrDefault();
+            if (item == null)
+                return;
+
             item.Valor_final = (item.Valor_final - (item.Valor_final / 100 * percent));
         }
 
@@ -821,6 +839,18 @@ Mensagem...: {sbMensagem.ToString()}");
         public int CountByCliente(int cliente_id)
         {
             return db.Where(m => m.Cliente_id == cliente_id).Count();
+        }
+
+        public void DecrementaItem(Estoque estoque)
+        {
+            Itens_movimento item = null;
+            if (estoque.Produtos.Controla_lote)
+                item = Itens_movimento.FirstOrDefault(e => e.Lote.Equals(estoque.Lote) && e.Sublote.Equals(estoque.Sublote));
+            else
+                item = Itens_movimento.FirstOrDefault(e => e.Produto_id == estoque.Produto_id);
+
+            if (item != null)
+                DecrementaItem(item.Id);
         }
 
         public List<Movimentos> BuscaGenerica(string search, DateTime? data_inicio, DateTime? data_fim, int pagina_atual, int numero_registros)

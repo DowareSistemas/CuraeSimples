@@ -50,9 +50,8 @@ namespace VarejoSimples.Controller
             }
             return false;
         }
-       
 
-        public List<Estoque> ProdutosVencendo(int diasApartirDaDataAtual, Tipo_produto_filtro_validade tipo )
+        public List<Estoque> ProdutosVencendo(int diasApartirDaDataAtual, Tipo_produto_filtro_validade tipo)
         {
             DateTime data = DateTime.Now.AddDays(diasApartirDaDataAtual);
             Expression<Func<Estoque, bool>> query = (e => e.Data_validade <= data);
@@ -156,7 +155,7 @@ namespace VarejoSimples.Controller
 
                 numeroLote++;
                 LoteAtual = (letraLote.ToString() + numeroLote.ToString().PadLeft((6 - numeroLote.ToString().Length), '0'));
-                return UsuariosController.LojaAtual.Id + LoteAtual;
+                return LoteAtual;
             }
             catch (Exception ex)
             {
@@ -250,6 +249,29 @@ namespace VarejoSimples.Controller
             return est;
         }
 
+        public List<Estoque> ListarEstoqueProdutos(string desc_cod_ref, string marca, string fabricante)
+        {
+            int id = 0;
+            int.TryParse(desc_cod_ref, out id);
+
+            var q = (from estoque in db.Context.Estoque.AsEnumerable()
+                     join produtos in db.Context.Produtos.AsEnumerable() on estoque.Produto_id equals produtos.Id
+                     join marcas in db.Context.Marcas.DefaultIfEmpty() on produtos.Marca_id equals marcas.Id
+                     join fabricantes in db.Context.Fabricantes.DefaultIfEmpty() on produtos.Fabricante_id equals fabricantes.Id
+
+                     where
+                     (produtos.Descricao.Contains(desc_cod_ref) ||
+                      produtos.Referencia.Contains(desc_cod_ref) ||
+                      produtos.Ean.Contains(desc_cod_ref) ||
+                      produtos.Id == id) &&
+                      marcas.Nome.Contains(marca) &&
+                      fabricantes.Nome.Contains(fabricante)
+
+                     select estoque).Skip(0).Take(1000).ToList();
+
+            return q;
+        }
+
         public Estoque BuscarPorLote(string lote)
         {
             try
@@ -298,12 +320,12 @@ namespace VarejoSimples.Controller
 
         public bool InsereEstoque(decimal quant, int produto_id, int loja_id, string lote = null)
         {
-            Estoque estoque = ((lote == null || lote.Equals("SL")) 
+            Estoque estoque = ((lote == null || lote.Equals("SL"))
                 ? BuscarEstoqueProduto(produto_id.ToString())
                 : BuscarEstoqueProduto(lote));
 
-//            if (estoque.Produtos.Controla_lote)
- //               return true;
+            //            if (estoque.Produtos.Controla_lote)
+            //               return true;
 
             estoque.Quant += quant;
             db.Update(estoque);

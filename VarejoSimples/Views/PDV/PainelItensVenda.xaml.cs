@@ -62,7 +62,7 @@ namespace VarejoSimples.Views.PDV
             MovimentosController.RemoveItem(item_id);
             RefreshItens();
         }
-
+        
         public void InformaCliente(int cliente_id)
         {
             MovimentosController.InformarCliente(cliente_id);
@@ -71,6 +71,12 @@ namespace VarejoSimples.Views.PDV
         public void IncrementaItem(int item_id)
         {
             MovimentosController.IncrementaItem(item_id);
+            RefreshItens();
+        }
+
+        public void DecrementaItem(Estoque estoque)
+        {
+            MovimentosController.DecrementaItem(estoque);
             RefreshItens();
         }
 
@@ -100,10 +106,6 @@ namespace VarejoSimples.Views.PDV
         public void Encerrar()
         {
            Movimento_atual =  MovimentosController.FechaMovimento();
-            if (Movimento_atual > 0)
-                MessageBox.Show("Movimento salvo");
-            else
-                MessageBox.Show("Deu erro");
         }
 
         public decimal GetValorParcial()

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Enums;
 using VarejoSimples.Model;
+using VarejoSimples.Tasks;
 
 namespace VarejoSimples.Views.Parcela
 {
@@ -26,7 +27,6 @@ namespace VarejoSimples.Views.Parcela
 
         varejo_config Context = new varejo_config();
         private bool enabledChangeCb = false;
-        private Thread thread_busca;
 
         public ConsultaParcelas(Tipo_parcela tipo)
         {
@@ -54,28 +54,8 @@ namespace VarejoSimples.Views.Parcela
             int numero_registros = int.Parse(txNumero_registros.Text);
             int mes = (int)cbMes.SelectedValue;
 
-            thread_busca = new Thread(() =>
-            BuscaGenerica(pagina_atual, numero_registros, mes, Tipo));
-            thread_busca.Start();
-        }
-
-        private void BuscaGenerica(int pagina_atual, int numero_registros, int mes, Tipo_parcela tipo)
-        {
-            ParcelasController controller = new ParcelasController();
-
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = false), GridNavegacao);
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = null), dataGrid);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Visible), imgLoading);
-
-            List<Parcelas> list = controller.BuscaBasica(tipo, pagina_atual, numero_registros, mes);
-            List<ParcelaAdapter> listAdp = new List<ParcelaAdapter>();
-            list.ForEach(e => listAdp.Add(new ParcelaAdapter(e, Context)));
-
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = true), GridNavegacao);
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = listAdp), dataGrid);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Hidden), imgLoading);
-
-            thread_busca.Abort();
+            ConsultaParcelasTask task = new ConsultaParcelasTask(this);
+            task.Execute(new object[] { Tipo, pagina_atual, numero_registros, mes });
         }
 
         private void btAtualizar_Click(object sender, RoutedEventArgs e)
@@ -191,8 +171,7 @@ namespace VarejoSimples.Views.Parcela
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (thread_busca.ThreadState == ThreadState.Running)
-                thread_busca.Abort();
+
         }
 
         private void dataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

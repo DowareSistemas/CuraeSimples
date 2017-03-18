@@ -41,6 +41,7 @@ namespace VarejoSimples.Views.PDV
             btConfirmar.IsEnabled = false;
             lbDicaEnter.Visibility = Visibility.Hidden;
             ValorTotal = valorTotal;
+            txValorPagar.Text = valorTotal.ToString("N2");
 
             lbTotal.Content = $"R$ {ValorTotal.ToString("N2")}";
             lbFalta.Content = $"R$ {ValorTotal.ToString("N2")}";
@@ -48,12 +49,6 @@ namespace VarejoSimples.Views.PDV
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if((e.Key == Key.Enter) && Keyboard.Modifiers == ModifierKeys.Control)
-            {
-                Confirmar();
-                return;
-            }
-
             switch (e.Key)
             {
                 case Key.F1:
@@ -85,12 +80,15 @@ namespace VarejoSimples.Views.PDV
         {
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
-                Itens_pagamento.Add(new Model.Itens_pagamento()
-                {
-                    Formas_pagamento = Fpg_Atual,
-                    Forma_pagamento_id = Fpg_Atual.Id,
-                    Valor = decimal.Parse(txValorPagar.Text),
-                });
+                if (Itens_pagamento.FirstOrDefault(i => i.Forma_pagamento_id == Fpg_Atual.Id) != null)
+                    Itens_pagamento.First(i => i.Forma_pagamento_id == Fpg_Atual.Id).Valor = decimal.Parse(txValorPagar.Text);
+                else
+                    Itens_pagamento.Add(new Model.Itens_pagamento()
+                    {
+                        Formas_pagamento = Fpg_Atual,
+                        Forma_pagamento_id = Fpg_Atual.Id,
+                        Valor = decimal.Parse(txValorPagar.Text),
+                    });
 
                 foreach (CardPagamento cp in sp_formas_pag.Children)
                     if (cp.Atalho == AtalhoAtual)
@@ -122,6 +120,11 @@ namespace VarejoSimples.Views.PDV
                 btConfirmar.IsEnabled = (decimal.Parse(lbFalta.Content.ToString().Replace("R$ ", string.Empty)) == 0
                     ? true
                     : false);
+
+                if (btConfirmar.IsEnabled)
+                    btConfirmar.Focus();
+
+                txValorPagar.Text = lbFalta.Content.ToString().Replace("R$ ", string.Empty);
             }
         }
 
