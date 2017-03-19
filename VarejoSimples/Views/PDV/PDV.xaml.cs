@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Enums;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.VendaRapida;
@@ -22,10 +23,10 @@ namespace VarejoSimples.Views.PDV
     /// <summary>
     /// Lógica interna para PDV.xaml
     /// </summary>
-    public partial class PDV : Window
+    public partial class PDV : Window, IPDV
     {
         private bool VendaAberta { get; set; }
-        private PainelItensVenda PainelVenda = null;
+        public IPainelVenda PainelVenda { get; set; }
         private bool Pago { get; set; }
 
         private Tipos_movimento Tipo_movimento_id_venda { get; set; }
@@ -33,7 +34,7 @@ namespace VarejoSimples.Views.PDV
         Tipo_operacao_atual Operacao_atual { get; set; }
 
         List<KeyValuePair<int, Formas_pagamento>> Atalhos_pagamentos { get; set; }
-        
+
         public PDV()
         {
             InitializeComponent();
@@ -45,6 +46,8 @@ namespace VarejoSimples.Views.PDV
             Setup();
             txProduto.Focus();
             Pago = false;
+            txQuant.ToMoney();
+            txQuant.IsEnabled = false;
 
             MonitorInsereRemove.Instance.ItemInserido += Instance_ItemInserido;
             MonitorInsereRemove.Instance.ItemRemovido += Instance_ItemRemovido;
@@ -52,9 +55,6 @@ namespace VarejoSimples.Views.PDV
 
         private void Setup()
         {
-            btNFCe.IsEnabled = false;
-            btEncerrar.IsEnabled = false;
-            btNaoFiscal.IsEnabled = false;
             btPagamento.IsEnabled = false;
             string parametroAtual = "";
 
@@ -66,8 +66,8 @@ namespace VarejoSimples.Views.PDV
 
                 #region PAGAMENTOS
                 List<Parametros> parametrosPagamentos = parametros.ParametrosPagamentoPDV();
-               
-                foreach(Parametros param in parametrosPagamentos)
+
+                foreach (Parametros param in parametrosPagamentos)
                 {
                     if (param.Valor == null || param.Valor == "0" || param.Valor == "" || param.Valor == "NA")
                         continue;
@@ -166,30 +166,24 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
         }
 
-        private void txProduto_KeyDown(object sender, KeyEventArgs e)
+        public void VendeItem(Estoque estoque = null)
         {
-            if (e.Key == Key.F3)
-                ShowPesquisaProduto();
+            if (estoque == null)
+                estoque = new ProdutosController().Get(txProduto.Text);
 
-            if (e.Key == Key.Enter)
-                VendeItem();
-        }
-
-        private void VendeItem()
-        {
-            Estoque estoque = new ProdutosController().Get(txProduto.Text);
             if (estoque == null)
                 return;
             if (string.IsNullOrEmpty(txQuant.Text))
                 txQuant.Text = "1";
-            
+
             if (!VendaAberta)
             {
+                PainelVenda = new PainelItensVenda();
                 VendaAberta = true;
                 PainelVenda = new PainelItensVenda();
                 PainelVenda.AbreVenda(Tipo_movimento_id_venda.Id);
                 GridContainer.Children.Clear();
-                GridContainer.Children.Add(PainelVenda);
+                GridContainer.Children.Add(PainelVenda.CurrentUserControl);
                 btPagamento.IsEnabled = true;
             }
 
@@ -211,6 +205,8 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             txProduto.Text = string.Empty;
             txQuant.Text = "1";
             txProduto.Focus();
+            txQuant.IsEnabled = false;
+            lbQuant.Content = "Quantidade";
         }
 
         private void ShowPesquisaProduto()
@@ -221,11 +217,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
         private void Instance_ItemInserido(Estoque estoque)
         {
-            txProduto.Text = (estoque.Produtos.Controla_lote
-                ? $"{estoque.Lote}SL{estoque.Sublote}"
-                : estoque.Produto_id.ToString());
-
-            VendeItem();
+            VendeItem(estoque);
         }
 
         private void Instance_ItemRemovido(Estoque estoque)
@@ -250,71 +242,64 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             if (!btPagamento.IsEnabled)
                 return;
 
-            PagamentosPDV pagamentos = new PagamentosPDV(Atalhos_pagamentos, PainelVenda.GetValorParcial());
+            PagamentosPDV pagamentos = new PagamentosPDV(Atalhos_pagamentos, PainelVenda.GetValorParcial(), this);
             pagamentos.ShowDialog();
 
             if (pagamentos.Pago)
             {
+                VendaAberta = false;
+                GridContainer.Children.Clear();
+                GridContainer.Children.Add(new LogoEmpresa());
+                PainelVenda = null;
+
                 btPagamento.IsEnabled = false;
-                btNFCe.IsEnabled = true;
-                btEncerrar.IsEnabled = true;
-                btNaoFiscal.IsEnabled = true;
-
-                pagamentos.Itens_pagamento.ForEach(i => PainelVenda.EfetuaPagamento(i.Forma_pagamento_id, i.Valor));
-                PainelVenda.Encerrar();
             }
-        }
-
-        private void btNFCe_Click(object sender, RoutedEventArgs e)
-        {
-            NFCe();
-        }
-
-        private void NFCe()
-        {
-            if (!btNFCe.IsEnabled)
-                return;
-
-            PainelVenda.NFCe();
-            Encerrar();
-        }
-
-        private void btEncerrar_Click(object sender, RoutedEventArgs e)
-        {
-            Encerrar();
         }
 
         private void Encerrar()
         {
-            if (!btEncerrar.IsEnabled)
-                return;
 
-            VendaAberta = false;
-            GridContainer.Children.Clear();
-            GridContainer.Children.Add(new LogoEmpresa());
-            PainelVenda = null;
-
-            btPagamento.IsEnabled = false;
-            btNFCe.IsEnabled = false;
-            btEncerrar.IsEnabled = false;
-            btNaoFiscal.IsEnabled = false;
-        }
-
-        private void btNaoFiscal_Click(object sender, RoutedEventArgs e)
-        {
-            Encerrar();
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F6)
                 ShowPagamento();
+        }
 
-            if (e.Key == Key.F9)
-                NFCe();
+        private void txQuant_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                VendeItem();
+        }
 
-            if (e.Key == Key.F11)
-                Encerrar();
+        private void txProduto_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txProduto.Text.Contains("*"))
+            {
+                txProduto.Text = string.Empty;
+                lbQuant.Content = "Quantidade *";
+                txQuant.IsEnabled = true;
+                txQuant.SelectAll();
+            }
+        }
+
+        private void txProduto_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F3)
+                ShowPesquisaProduto();
+
+            if (e.Key == Key.Enter)
+            {
+                if (lbQuant.Content.ToString().Contains("*"))
+                {
+                    txQuant.Focus();
+                    txQuant.SelectAll();
+                    return;
+                }
+                else
+                    VendeItem();
+            }
         }
     }
 }

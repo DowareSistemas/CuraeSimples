@@ -29,6 +29,37 @@ using VarejoSimples.Views.Vendedor;
 
 namespace VarejoSimples.Controller
 {
+    public class ListaRotinasCache
+    {
+        private static ListaRotinasCache instance = null;
+        
+        public static ListaRotinasCache Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new ListaRotinasCache();
+
+                return instance;
+            }
+        }
+
+        private List<Rotinas> Rotinas { get; set; }
+
+        public void Add(List<Rotinas> rotinas)
+        {
+            rotinas.ForEach(e => Rotinas.Add(e));
+        }
+
+        public List<Rotinas> Find(Func<Rotinas, bool> query)
+        {
+            if (Rotinas == null)
+                Rotinas = new List<Model.Rotinas>();
+
+            return Rotinas.Where(query).ToList();
+        }
+    }
+
     public class RotinasController
     {
         private RotinasRepository db = null;
@@ -40,7 +71,15 @@ namespace VarejoSimples.Controller
 
         public List<Rotinas> ListByMenu(int menu)
         {
-            return db.Where(e => e.Menu == menu).ToList();
+            List<Rotinas> cache = ListaRotinasCache.Instance.Find(e => e.Menu == menu);
+            if (cache != null)
+                if (cache.Count > 0)
+                    return cache;
+
+            cache =  db.Where(e => e.Menu == menu).ToList();
+            ListaRotinasCache.Instance.Add(cache);
+
+            return cache;
         }
 
         public List<Rotinas> ListAll()

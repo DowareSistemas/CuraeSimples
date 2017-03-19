@@ -165,7 +165,7 @@ namespace VarejoSimples.Repository
         {
             try
             {
-                return _context.Set<T>().Where(query);
+                return _context.Set<T>().Where(query).AsNoTracking();
             }
             catch (Exception ex)
             {

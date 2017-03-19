@@ -209,6 +209,8 @@
     <Compile Include="Interfaces\IItens_pagamento.cs" />
     <Compile Include="Interfaces\ILancamentos_financeiros.cs" />
     <Compile Include="Interfaces\IPagamentos_lancamentos.cs" />
+    <Compile Include="Interfaces\IPainelVenda.cs" />
+    <Compile Include="Interfaces\IPDV.cs" />
     <Compile Include="Interfaces\IRegistroCheques.cs" />
     <Compile Include="Interfaces\ILojas.cs" />
     <Compile Include="Interfaces\IMarcas.cs" />

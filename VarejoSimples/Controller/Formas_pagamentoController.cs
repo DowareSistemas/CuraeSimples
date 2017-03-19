@@ -110,6 +110,12 @@ namespace VarejoSimples.Controller
             return db.Find(id);
         }
 
+        public bool ExisteCondicaoPagamentoTipo(Tipo_pagamento tipo_pg)
+        {
+            int tipo_pag = (int)tipo_pg;
+            return (db.Where(e => e.Tipo_pagamento == tipo_pag).Count() > 0);
+        }
+
         public bool Remove(int id)
         {
             try

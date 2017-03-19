@@ -126,6 +126,7 @@ namespace VarejoSimples.Views.Movimento
             if (decimal.Parse(txValorFaltando.Text) > 0)
                 return;
 
+            Troco = decimal.Parse(txTroco.Text);
             Pago = true;
             Close();
         }

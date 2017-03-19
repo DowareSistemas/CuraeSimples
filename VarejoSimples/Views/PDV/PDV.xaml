@@ -31,12 +31,12 @@
         <Border BorderBrush="#FF999999" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Left" Margin="0,40,0,0" Width="2"/>
         <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="165" Margin="2,40,0,0" VerticalAlignment="Top">
             <Grid Margin="1">
-                <Label x:Name="label1" Content="Produto (F3 - Abrir consulta)" VerticalAlignment="Top" Margin="10,4,5,0" FontSize="20" Padding="0"/>
-                <TextBox x:Name="txProduto" KeyDown="txProduto_KeyDown" Height="38" Margin="10,32,10,0" VerticalAlignment="Top" Background="#FFF7F7F7" HorizontalContentAlignment="Center" FontSize="24"/>
+                <Label x:Name="label1" Content="Produto (F3)" VerticalAlignment="Top" Margin="10,4,5,0" FontSize="20" Padding="0"/>
+                <TextBox x:Name="txProduto" KeyDown="txProduto_KeyDown" TextChanged="txProduto_TextChanged" Height="38" Margin="10,32,10,0" VerticalAlignment="Top" Background="#FFF7F7F7" HorizontalContentAlignment="Center" FontSize="24"/>
                 <Border BorderBrush="#FF999999" BorderThickness="1" Height="73" Margin="10,0,0,6" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="161">
                     <Grid Margin="1">
-                        <Label x:Name="label2" Content="Quantidade" VerticalAlignment="Top" Margin="10,0" FontSize="20" Padding="0"/>
-                        <TextBox x:Name="txQuant" Height="38" Margin="10,27,10,0" VerticalAlignment="Top" Background="#FFF7F7F7" HorizontalContentAlignment="Right" FontSize="24" Text="1"/>
+                        <Label x:Name="lbQuant" Content="Quantidade" VerticalAlignment="Top" Margin="10,0" FontSize="20" Padding="0"/>
+                        <TextBox x:Name="txQuant" KeyDown="txQuant_KeyDown" Height="38" Margin="10,27,10,0" VerticalAlignment="Top" Background="#FFF7F7F7" HorizontalContentAlignment="Right" FontSize="24" Text="1"/>
                     </Grid>
                 </Border>
                 <Border BorderBrush="#FF999999" BorderThickness="1" Height="73" Margin="0,0,10,6" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="239">
@@ -53,9 +53,6 @@
                 <Button x:Name="button_Copy1" Content="Desconto [F2]" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" RenderTransformOrigin="0.535,0.528"/>
                 <Button x:Name="btPagamento" Content="Pagamento [F6]" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
                 <Button x:Name="button_Copy3" Content="Cliente [F4]" HorizontalAlignment="Left" Margin="288,10,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667"/>
-                <Button x:Name="btNFCe" Content="NFC-e [F9]" HorizontalAlignment="Left" Margin="10,128,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btNFCe_Click"/>
-                <Button x:Name="btNaoFiscal" Content="Impressão [F10]" HorizontalAlignment="Left" Margin="148,128,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" Click="btNaoFiscal_Click" />
-                <Button x:Name="btEncerrar" Content="Encerrar [F11]" HorizontalAlignment="Left" Margin="288,128,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" Click="btEncerrar_Click" />
                 <Button x:Name="btNaoFiscal_Copy1" Content="Importar&#xA;pedido [F7]" HorizontalAlignment="Left" Margin="148,68,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667"/>
                 <Button x:Name="btSalvarPedido" Content="Salvar como&#xA;pedido [F8]" HorizontalAlignment="Left" Margin="288,68,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" />
             </Grid>

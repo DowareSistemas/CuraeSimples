@@ -11,7 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
+using VarejoSimples.Tasks;
 using VarejoSimples.Views.PDV;
 
 namespace VarejoSimples.Views.PDV
@@ -27,10 +29,14 @@ namespace VarejoSimples.Views.PDV
         private int AtalhoAtual { get; set; }
         private decimal ValorTotal { get; set; }
         public bool Pago { get; set; }
-        public PagamentosPDV(List<KeyValuePair<int, Formas_pagamento>> atalhosPagamentos, decimal valorTotal)
+
+        public IPDV IPdv { get; set; }
+
+        public PagamentosPDV(List<KeyValuePair<int, Formas_pagamento>> atalhosPagamentos, decimal valorTotal, IPDV pdv)
         {
             InitializeComponent();
 
+            IPdv = pdv;
             Pago = false;
             Atalhos = atalhosPagamentos;
             Itens_pagamento = new List<Model.Itens_pagamento>();
@@ -39,7 +45,11 @@ namespace VarejoSimples.Views.PDV
             lbForma_pagamento.Content = "Pressione uma das teclas ao lado";
             txValorPagar.IsEnabled = false;
             btConfirmar.IsEnabled = false;
+            btNFCe.IsEnabled = false;
+            btImpressao.IsEnabled = false;
+            btEncerrar.IsEnabled = false;
             lbDicaEnter.Visibility = Visibility.Hidden;
+            lbProgresso.Visibility = Visibility.Hidden;
             ValorTotal = valorTotal;
             txValorPagar.Text = valorTotal.ToString("N2");
 
@@ -57,6 +67,18 @@ namespace VarejoSimples.Views.PDV
 
                 case Key.F2:
                     MostraFormaPagamento(2);
+                    break;
+
+                case Key.F6:
+                    NFCe();
+                    break;
+
+                case Key.F7:
+                    Impressao();
+                    break;
+
+                case Key.F8:
+                    Encerrar();
                     break;
             }
         }
@@ -140,7 +162,65 @@ namespace VarejoSimples.Views.PDV
 
         private void Confirmar()
         {
-            Pago = btConfirmar.IsEnabled;
+            if (!btConfirmar.IsEnabled)
+                return;
+
+            decimal troco = decimal.Parse(lbTroco.Content.ToString().Replace("R$ ", string.Empty));
+            Itens_pagamento.ForEach(i => IPdv.PainelVenda.EfetuarPagamento(i.Forma_pagamento_id, i.Valor));
+            if (IPdv.PainelVenda.Encerrar(troco))
+            {
+                Pago = true;
+                lbProgresso.Visibility = Visibility.Hidden;
+                btNFCe.IsEnabled = true;
+                btImpressao.IsEnabled = true;
+                btEncerrar.IsEnabled = true;
+                btCancelar.IsEnabled = false;
+                btConfirmar.IsEnabled = false;
+            }
+            else
+                MessageBox.Show("Ocorreu um problema ao efetuar o Movimento. \nAcione o suporte Doware.", "ERRO", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void btNFCe_Click(object sender, RoutedEventArgs e)
+        {
+            NFCe();
+            Close();
+        }
+
+        private void NFCe()
+        {
+            if (!btNFCe.IsEnabled)
+                return;
+
+            IPdv.PainelVenda.NFCe();
+            Close();
+        }
+
+        private void btImpressao_Click(object sender, RoutedEventArgs e)
+        {
+            Impressao();
+        }
+
+        private void Impressao()
+        {
+            if (!btImpressao.IsEnabled)
+                return;
+
+            //TODO: impressao nao fiscal
+
+            Close();
+        }
+
+        private void btEncerrar_Click(object sender, RoutedEventArgs e)
+        {
+            Encerrar();
+        }
+
+        private void Encerrar()
+        {
+            if (!btEncerrar.IsEnabled)
+                return;
+
             Close();
         }
     }

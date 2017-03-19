@@ -239,37 +239,12 @@ namespace VarejoSimples.Controller
             if (est != null)
                 return est;
 
-            Expression<Func<Estoque, bool>> expr = (p =>
-            (p.Produto_id.ToString().Equals(search) ||
-             p.Produtos.Ean.Equals(search) ||
-             p.Produtos.Referencia.Equals(search)) &&
-            (p.Lote.Equals("")));
-
-            est = db.Where(expr).OrderBy(p => p.Lote).FirstOrDefault();
-            return est;
+            return db.BuscarEstoqueProduto(search);
         }
 
         public List<Estoque> ListarEstoqueProdutos(string desc_cod_ref, string marca, string fabricante)
         {
-            int id = 0;
-            int.TryParse(desc_cod_ref, out id);
-
-            var q = (from estoque in db.Context.Estoque.AsEnumerable()
-                     join produtos in db.Context.Produtos.AsEnumerable() on estoque.Produto_id equals produtos.Id
-                     join marcas in db.Context.Marcas.DefaultIfEmpty() on produtos.Marca_id equals marcas.Id
-                     join fabricantes in db.Context.Fabricantes.DefaultIfEmpty() on produtos.Fabricante_id equals fabricantes.Id
-
-                     where
-                     (produtos.Descricao.Contains(desc_cod_ref) ||
-                      produtos.Referencia.Contains(desc_cod_ref) ||
-                      produtos.Ean.Contains(desc_cod_ref) ||
-                      produtos.Id == id) &&
-                      marcas.Nome.Contains(marca) &&
-                      fabricantes.Nome.Contains(fabricante)
-
-                     select estoque).Skip(0).Take(1000).ToList();
-
-            return q;
+            return db.ListarEstoqueProdutos(desc_cod_ref, marca, fabricante);
         }
 
         public Estoque BuscarPorLote(string lote)

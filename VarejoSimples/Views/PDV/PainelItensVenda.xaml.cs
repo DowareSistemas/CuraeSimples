@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
+using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
 
 namespace VarejoSimples.Views.PDV
@@ -19,7 +20,7 @@ namespace VarejoSimples.Views.PDV
     /// <summary>
     /// Interação lógica para PainelItensVenda.xam
     /// </summary>
-    public partial class PainelItensVenda : UserControl
+    public partial class PainelItensVenda : UserControl, IPainelVenda
     {
         private MovimentosController MovimentosController = null;
         private int Movimento_atual { get; set; }
@@ -98,14 +99,15 @@ namespace VarejoSimples.Views.PDV
             RefreshItens();
         }
 
-        public void EfetuaPagamento(int forma_pagamento_id, decimal valor)
+        public void EfetuarPagamento(int forma_pagamento_id, decimal valor)
         {
             MovimentosController.EfetuaPagamento(forma_pagamento_id, valor);
         }
 
-        public void Encerrar()
+        public bool Encerrar(decimal troco)
         {
-           Movimento_atual =  MovimentosController.FechaMovimento();
+           Movimento_atual =  MovimentosController.FechaMovimento(troco);
+            return (Movimento_atual > 0);
         }
 
         public decimal GetValorParcial()
@@ -113,9 +115,17 @@ namespace VarejoSimples.Views.PDV
             return MovimentosController.GetTotalParcial();
         }
 
-        internal void NFCe()
+        public void NFCe()
         {
             MovimentosController.NFCe();
+        }
+
+        public UserControl CurrentUserControl
+        {
+            get
+            {
+                return this;
+            }
         }
     }
 }

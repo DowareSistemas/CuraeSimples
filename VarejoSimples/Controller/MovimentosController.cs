@@ -55,9 +55,9 @@ namespace VarejoSimples.Controller
         /// 
         /// </summary>
         /// <returns>Código do movimento caso seja efetuado com sucesso. Caso haja erros, retornará 0.</returns>
-        public int FechaMovimento()
+        public int FechaMovimento(decimal troco)
         {
-            UnitOfWork unit = new UnitOfWork();
+            UnitOfWork unit = new UnitOfWork(true);
             try
             {
                 unit.BeginTransaction();
@@ -74,6 +74,9 @@ namespace VarejoSimples.Controller
                 Movimentos_caixasController movimentos_caixaController = new Movimentos_caixasController();
                 movimentos_caixaController.SetContext(unit.Context);
 
+                Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
+                fpg_controller.SetContext(unit.Context);
+
                 Tipos_movimentoController tmc = new Tipos_movimentoController();
                 tmc.SetContext(unit.Context);
 
@@ -87,6 +90,30 @@ namespace VarejoSimples.Controller
 
                 db.Save(Movimento);
                 db.Commit();
+
+                if (troco > 0)
+                {
+                    int tipo_pg_dinheiro = (int)Tipo_pagamento.DINHEIRO;
+                    Formas_pagamento fpgTroco = fpg_controller.Get(e => e.Tipo_pagamento == tipo_pg_dinheiro);
+
+                    Movimentos_caixas mcTroco = new Movimentos_caixas();
+                    mcTroco.Descricao = $"Movimento {Movimento.Id} (TROCO)";
+                    mcTroco.Caixa_id = movimentos_caixaController.GetCaixaAtualUsuario();
+                    mcTroco.Data = Movimento.Data;
+                    mcTroco.Movimento_id = Movimento.Id;
+                    mcTroco.Usuario_id = Movimento.Usuario_id;
+                    mcTroco.Forma_pagamento_id = fpgTroco.Id;
+                    mcTroco.Loja_id = UsuariosController.LojaAtual.Id;
+                    mcTroco.Tipo_mov = (int)Tipo_movimentacao_caixa.TROCO;
+                    mcTroco.Valor = (troco * (-1));
+
+                    if (!movimentos_caixaController.Save(mcTroco))
+                    {
+                        unit.RollBack();
+                        return 0;
+                    }
+                }
+
 
                 Itens_movimentoController imc = new Itens_movimentoController();
                 imc.SetContext(unit.Context);
@@ -257,9 +284,6 @@ namespace VarejoSimples.Controller
                         return 0;
                     }
 
-                    Formas_pagamentoController fpg_controller = new Formas_pagamentoController();
-                    fpg_controller.SetContext(unit.Context);
-
                     Formas_pagamento forma_pagamento = fpg_controller.Find(item_pg.Forma_pagamento_id);
 
                     Movimentos_caixas movimento_caixa = new Movimentos_caixas();
@@ -378,19 +402,7 @@ namespace VarejoSimples.Controller
                                 parcela_cheque.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
                                 parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
                                 parcela_cheque.Data_vencimento = cheque.Data_deposito;
-
-                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
-                                {
-                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
-                                    parcela_cheque.Cliente_id = Movimento.Cliente_id;
-                                }
-
-                                if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
-                                {
-                                    parcela_cheque.Tipo_parcela = (int)Tipo_parcela.PAGAR;
-                                    parcela_cheque.Fornecedor_id = Movimento.Fornecedor_id;
-                                }
-
+ 
                                 if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
@@ -500,7 +512,7 @@ namespace VarejoSimples.Controller
                 return 0;
             }
         }
-        
+
         private void LogNFCe(string msg)
         {
             StreamWriter writer = null;
@@ -530,7 +542,7 @@ namespace VarejoSimples.Controller
             int retorno = 0;
             //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
             Clientes cliente = new ClientesController().Find(Movimento.Cliente_id);
-        
+
             if (cliente != null)
                 retorno = Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
                  cliente.Municipio, cliente.Uf, cliente.Cep);
@@ -538,7 +550,7 @@ namespace VarejoSimples.Controller
                 retorno = Declaracoes.aCFAbrir_NFCe_Daruma("", "", "", "", "", "",
                   "", "", "");
 
-           LogNFCe($"aCFAbrir_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
+            LogNFCe($"aCFAbrir_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
 
             if (retorno != 1)
             {
@@ -595,9 +607,7 @@ namespace VarejoSimples.Controller
             }
 
             retorno = Declaracoes.aCFTotalizar_NFCe_Daruma("D%", "0,00");
-
             LogNFCe("aCFTotalizar_NFCe_Daruma - " + Declaracoes.TrataRetorno(retorno));
-
             List<Itens_pagamento> itens_pagamento = itens_pag;
 
             foreach (Itens_pagamento item in itens_pagamento)
@@ -613,7 +623,7 @@ namespace VarejoSimples.Controller
 
                 LogNFCe(msg);
 
-                if(retorno != 1)
+                if (retorno != 1)
                 {
                     MessageBox.Show("Ocorreu um problema ao emitir a NFC-e. \nAcione o suporte Doware.", "Erro NFC-e", MessageBoxButton.OK, MessageBoxImage.Error);
                     Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
@@ -622,10 +632,9 @@ namespace VarejoSimples.Controller
             }
 
             retorno = Declaracoes.tCFEncerrar_NFCe_Daruma("NFC-e emitida via Curae ERP - Doware Sistemas");
-
             LogNFCe($@"tCFEncerrar_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
 
-            if(retorno != 1)
+            if (retorno != 1)
             {
                 StringBuilder sbCodigo = new StringBuilder(10);
                 StringBuilder sbMensagem = new StringBuilder(1000);
@@ -637,17 +646,19 @@ Codigo.....: {sbCodigo.ToString()}
 Mensagem...: {sbMensagem.ToString()}");
 
                 MessageBox.Show($"A NFC-e não foi autorizada! \nErro: {sbCodigo.ToString()} \nMensagem SEFAZ: {sbMensagem.ToString()}");
-                Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                retorno = Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
+                LogNFCe($"tCFCancelar_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
                 return;
             }
-            
+
             if (retorno == 1)
             {
                 string diretorio = @"C:\NFC-e\DANFEs\";
                 var directory = new DirectoryInfo(diretorio);
                 FileInfo danfe = directory.GetFiles()
-                             .OrderByDescending(f => f.LastWriteTime)
-                             .First();
+                    .Where(f => f.Name.Contains("DANFE"))
+                    .OrderByDescending(f => f.LastWriteTime)
+                    .First();
 
                 Parametros parametro = ParametrosController.FindParametro("NF_IMPPADRAO", true);
                 if (parametro == null)
@@ -784,6 +795,13 @@ Mensagem...: {sbMensagem.ToString()}");
 
             BStatus.Success("Forma de pagamento registrada");
             return true;
+        }
+
+        public void CancelaPagamento(int forma_pagamento_id)
+        {
+            Itens_pagamento item = Movimento.Itens_pagamento.FirstOrDefault(e => e.Forma_pagamento_id == forma_pagamento_id);
+            if (item != null)
+                Movimento.Itens_pagamento.Remove(item);
         }
 
         public void AdicionaItem(Itens_movimento item)

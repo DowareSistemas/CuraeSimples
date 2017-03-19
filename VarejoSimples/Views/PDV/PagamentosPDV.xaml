@@ -38,8 +38,12 @@
             <Label x:Name="lbForma_pagamento_Copy" Content="Valor (R$)" VerticalAlignment="Top" Margin="372,84,0,0" FontSize="22.667" HorizontalAlignment="Left" Width="148"/>
             <TextBox x:Name="txValorPagar" KeyDown="txValorPagar_KeyDown" HorizontalAlignment="Right" Height="35" Margin="0,89,10,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top" Width="135" FontSize="22.667"/>
             <Label x:Name="lbDicaEnter" Content="Pressione ENTER para &#xD;&#xA;adicionar o pagamento" HorizontalAlignment="Right" Margin="0,124,14,0" VerticalAlignment="Top" Width="135" Height="46"/>
-            <Button x:Name="btConfirmar" Content="Confirmar [Ctrl + Enter]" HorizontalAlignment="Right" Margin="0,310,10,0" VerticalAlignment="Top" Width="155" Height="35" FontSize="13.333" Click="btConfirmar_Click"/>
-            <Button x:Name="btCancelar" Content="Cancelar [Esc]" HorizontalAlignment="Right" Margin="0,310,170,0" VerticalAlignment="Top" Width="105" Height="35" FontSize="13.333" Click="btCancelar_Click"/>
+            <Button x:Name="btConfirmar" Content="Confirmar (Enter)" HorizontalAlignment="Right" Margin="0,273,10,0" VerticalAlignment="Top" Width="110" Height="35" FontSize="13.333" Click="btConfirmar_Click"/>
+            <Button x:Name="btCancelar" Content="Cancelar (Esc)" HorizontalAlignment="Right" Margin="0,273,125,0" VerticalAlignment="Top" Width="110" Height="35" FontSize="13.333" Click="btCancelar_Click"/>
+            <Button x:Name="btNFCe" Content="NFC-e (F6)" HorizontalAlignment="Right" Margin="0,313,240,0" VerticalAlignment="Top" Width="118" Click="btNFCe_Click" Height="35" FontSize="14.667"/>
+            <Button x:Name="btImpressao" Content="Impressao (F7)" HorizontalAlignment="Right" Margin="0,313,125,0" VerticalAlignment="Top" Width="110" Click="btImpressao_Click" Height="35" FontSize="14.667"/>
+            <Button x:Name="btEncerrar" Content="Encerrar (F8)" HorizontalAlignment="Right" Margin="0,313,10,0" VerticalAlignment="Top" Width="110" Click="btEncerrar_Click" Height="35" FontSize="14.667"/>
+            <Label x:Name="lbProgresso" Content="Gravando movimento..." HorizontalAlignment="Left" Margin="370,195,0,0" VerticalAlignment="Top" Width="348" FontSize="16"/>
         </Grid>
 
     </Grid>

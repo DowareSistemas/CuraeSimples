@@ -28,9 +28,8 @@ namespace VarejoSimples.Controller
         {
             ParameterExpression replacement;
             if (map.TryGetValue(p, out replacement))
-            {
                 p = replacement;
-            }
+
             return base.VisitParameter(p);
         }
     }
@@ -164,7 +163,7 @@ namespace VarejoSimples.Controller
                     if ((dataGrid.SelectedIndex - 1) < 0)
                         return;
               
-                    dataGrid.SelectedItem = dataGrid.SelectedItems[dataGrid.SelectedIndex - 1];
+                    dataGrid.SelectedItem = dataGrid.SelectedItems[dataGrid.SelectedIndex + 1];
                 }
 
                 if (e.Key == Key.Down)

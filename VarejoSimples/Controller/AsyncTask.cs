@@ -13,6 +13,7 @@ namespace VarejoSimples.Controller
         private TReturn Result { get; set; }
         private TParams Params { get; set; }
         private BackgroundWorker MainWorker { get; set; }
+        private int Progress = 0;
 
         public abstract TReturn DoInBackGround(TParams param);
         public abstract void OnPostExecute(TReturn result);
@@ -21,12 +22,11 @@ namespace VarejoSimples.Controller
 
         public void UpdateProgress(TProgress progress)
         {
-            MainWorker.ReportProgress(0, progress);
+            MainWorker.ReportProgress((Progress++), progress);
         }
 
         public void Cancel()
         {
-
             if (!Cancelable)
             {
                 MessageBox.Show("Uma AsynkTask não pode ser cancelada antes ou após DoInBackground.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -42,6 +42,7 @@ namespace VarejoSimples.Controller
             Params = prms;
 
             MainWorker = new BackgroundWorker();
+            MainWorker.WorkerReportsProgress = true;
             MainWorker.DoWork += Worker_DoWork;
             MainWorker.ProgressChanged += Worker_ProgressChanged;
             MainWorker.RunWorkerCompleted += Worker_RunWorkerCompleted;

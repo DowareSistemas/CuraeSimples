@@ -485,7 +485,7 @@ namespace VarejoSimples.Views.Movimento
                     return;
 
                 iPagamento.Itens_pagamento.ForEach(ip => Movimento_Controller.EfetuaPagamento(ip.Forma_pagamento_id, ip.Valor));
-                Movimento_Controller.FechaMovimento();
+                Movimento_Controller.FechaMovimento(iPagamento.Troco);
             }
         }
 

@@ -10,9 +10,19 @@ namespace VarejoSimples.Controller
     {
         public varejo_config Context { get; set; }
 
-        public UnitOfWork()
+        public UnitOfWork(bool configureContextForPerformance = false)
         {
             Context = new varejo_config();
+
+            if(configureContextForPerformance)
+            {
+                Context.Configuration.AutoDetectChangesEnabled = false;
+                Context.Configuration.EnsureTransactionsForFunctionsAndCommands = false;
+                Context.Configuration.LazyLoadingEnabled = false;
+                Context.Configuration.ProxyCreationEnabled = false;
+                Context.Configuration.UseDatabaseNullSemantics = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;
+            }
         }
 
         public void BeginTransaction(System.Data.IsolationLevel? isoLevel = null)

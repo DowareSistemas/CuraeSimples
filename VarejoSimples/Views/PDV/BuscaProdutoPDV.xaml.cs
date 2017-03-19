@@ -21,6 +21,7 @@ namespace VarejoSimples.Views.PDV
     /// </summary>
     public partial class BuscaProdutoPDV : Window
     {
+        List<Estoque> ListEstoque = null;
         public BuscaProdutoPDV()
         {
             InitializeComponent();

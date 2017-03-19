@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Title="BuscaProdutoPDV" Height="625" Width="900">
+        Title="BuscaProdutoPDV" Height="600" Width="900">
     <Grid Background="#FF999999">
         <Grid Height="35" VerticalAlignment="Top" Background="#FFF0F0F0" Margin="2,2,2,0">
             <Label x:Name="label" Content="Localizar produto" HorizontalAlignment="Left" Margin="10,3,0,0" FontSize="20" Padding="5,0" Height="27" VerticalAlignment="Top"/>
@@ -20,7 +20,7 @@
             </Button>
         </Grid>
         <Grid Margin="2,39,2,2" Background="White">
-            <DataGrid x:Name="dataGrid" KeyDown="dataGrid_KeyDown" PreviewKeyDown="dataGrid_PreviewKeyDown" VerticalAlignment="Top" Height="371" Margin="10,10,10,0">
+            <DataGrid x:Name="dataGrid" KeyDown="dataGrid_KeyDown" PreviewKeyDown="dataGrid_PreviewKeyDown" VerticalAlignment="Top" Height="299" Margin="10,10,10,0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Código" MinWidth="80" Binding="{Binding Produtos.Id}"/>
                     <DataGridTextColumn Header="EAN" MinWidth="80" Binding="{Binding Produtos.Ean}"/>
@@ -32,15 +32,15 @@
                     <DataGridTextColumn Header="Lote" MinWidth="100" Binding="{Binding Lote}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Label x:Name="label1" Content="F1 - Descrição / Cód. / EAN / Ref. " HorizontalAlignment="Left" Margin="10,386,0,0" VerticalAlignment="Top" FontSize="16" Width="243"/>
-            <TextBox x:Name="txDescricao" HorizontalAlignment="Left" Height="31" Margin="258,386,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
-            <Label x:Name="label1_Copy" Content="F2 - Marca" HorizontalAlignment="Left" Margin="10,422,0,0" VerticalAlignment="Top" FontSize="16" Width="241"/>
-            <TextBox x:Name="txMarca" HorizontalAlignment="Left" Height="31" Margin="258,422,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
-            <Label x:Name="label1_Copy1" Content="F3 - Fabricante" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" FontSize="16" Width="253"/>
-            <TextBox x:Name="txFabricante" HorizontalAlignment="Left" Height="31" Margin="258,458,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
+            <Label x:Name="label1" Content="F1 - Descrição / Cód. / EAN / Ref. " HorizontalAlignment="Left" Margin="10,316,0,0" VerticalAlignment="Top" FontSize="16" Width="243"/>
+            <TextBox x:Name="txDescricao" HorizontalAlignment="Left" Height="31" Margin="10,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
+            <Label x:Name="label1_Copy" Content="F2 - Marca" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top" FontSize="16" Width="153"/>
+            <TextBox x:Name="txMarca" HorizontalAlignment="Left" Height="31" Margin="10,414,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
+            <Label x:Name="label1_Copy1" Content="F3 - Fabricante" HorizontalAlignment="Left" Margin="10,450,0,0" VerticalAlignment="Top" FontSize="16" Width="123"/>
+            <TextBox x:Name="txFabricante" HorizontalAlignment="Left" Height="31" Margin="10,481,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" FontSize="16" Padding="0,4,0,0"/>
             <Button x:Name="btBuscar" Content="Buscar [F5]" HorizontalAlignment="Left" Margin="403,0,0,10" VerticalAlignment="Bottom" Width="118" Height="32" FontSize="16" Click="btBuscar_Click"/>
             <Button x:Name="btInserir" Content="Inserir na venda [Insert]" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="183" Height="32" FontSize="16" Click="btInserir_Click"/>
-            <Border BorderBrush="#FFB6B6B6" BorderThickness="3" HorizontalAlignment="Right" Height="188" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="303" CornerRadius="3">
+            <Border BorderBrush="#FFB6B6B6" BorderThickness="3" HorizontalAlignment="Right" Height="235" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="303" CornerRadius="3">
                 <Image x:Name="fotoProduto"/>
             </Border>
             <Button x:Name="btRemover" Content="Remover da venda [Delete]" HorizontalAlignment="Left" Margin="198,0,0,10" VerticalAlignment="Bottom" Width="200" Height="32" FontSize="16" Click="btRemover_Click"/>
