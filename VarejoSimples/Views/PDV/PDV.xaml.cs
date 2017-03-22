@@ -166,15 +166,27 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
         }
 
-        public void VendeItem(Estoque estoque = null)
+        public void VendeItem(Estoque estoqueParam = null)
         {
+            Estoque estoque = estoqueParam;
             if (estoque == null)
                 estoque = new ProdutosController().Get(txProduto.Text);
-
             if (estoque == null)
                 return;
             if (string.IsNullOrEmpty(txQuant.Text))
                 txQuant.Text = "1";
+
+            if (estoqueParam == null)
+                if (estoque.Produtos.Controla_grade && estoque.Grade_id != txProduto.Text)
+                {
+                    SelecionarGrade sg = new SelecionarGrade(estoque.Produtos);
+                    sg.ShowDialog();
+
+                    if (sg.Selecionado.Id == 0)
+                        return;
+
+                    estoque = sg.Selecionado;
+                }
 
             if (!VendaAberta)
             {
@@ -200,6 +212,9 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             itemMov.Cfop = (Operacao_atual == Tipo_operacao_atual.VENDA
                 ? Tipo_movimento_id_venda.Cfop
                 : Tipo_movimento_id_devolucao.Cfop);
+            itemMov.Lote = estoque.Lote;
+            itemMov.Sublote = estoque.Sublote;
+            itemMov.Grade_id = estoque.Grade_id;
 
             PainelVenda.VendeItem(itemMov);
             txProduto.Text = string.Empty;
@@ -263,6 +278,9 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.F4)
+                ShowPesquisaCliente();
+
             if (e.Key == Key.F6)
                 ShowPagamento();
         }
@@ -284,7 +302,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
         }
 
-        private void txProduto_KeyDown(object sender, KeyEventArgs e)
+        private void txProduto_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F3)
                 ShowPesquisaProduto();
@@ -300,6 +318,17 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
                 else
                     VendeItem();
             }
+        }
+
+        private void btCliente_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPesquisaCliente();
+        }
+
+        private void ShowPesquisaCliente()
+        {
+            BuscaClientePdv bc = new BuscaClientePdv();
+            bc.ShowDialog();
         }
     }
 }

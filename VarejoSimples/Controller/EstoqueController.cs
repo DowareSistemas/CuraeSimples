@@ -28,10 +28,13 @@ namespace VarejoSimples.Controller
 
         private bool auto_commit = true;
 
-        public bool Save(Estoque est)
+        public bool Save(Estoque est, bool controla_grade = false)
         {
             try
             {
+                if (controla_grade)
+                    DeletarTodosProdutosEstoque(est.Produto_id);
+
                 if (db.Find(est.Id) == null)
                 {
                     est.Id = db.NextId(e => e.Id);
@@ -40,8 +43,7 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(est);
 
-                if (auto_commit)
-                    db.Commit();
+                db.Commit();
                 return true;
             }
             catch (Exception ex)
@@ -49,6 +51,19 @@ namespace VarejoSimples.Controller
 
             }
             return false;
+        }
+
+        private bool DeletarTodosProdutosEstoque(int produto_id)
+        {
+            List<Estoque> estoques = db.Where(e => e.Produto_id == produto_id && e.Grade_id == null).ToList();
+
+            foreach (Estoque est in estoques)
+            {
+                db.Context.Estoque.Attach(est);
+                db.Remove(est);
+            }
+
+            return true;
         }
 
         public List<Estoque> ProdutosVencendo(int diasApartirDaDataAtual, Tipo_produto_filtro_validade tipo)
@@ -165,6 +180,25 @@ namespace VarejoSimples.Controller
             return LoteAtual;
         }
 
+        internal bool RemoveByGrade(string grade_id)
+        {
+            try
+            {
+                Estoque est = db.Where(e => e.Grade_id.Equals(grade_id)).FirstOrDefault();
+                if (est == null)
+                    return true;
+
+                db.Context.Estoque.Attach(est);
+                db.Remove(est);
+                db.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public void CriaLote(int produto_id, int loja_id, string lote, string sublote)
         {
             Estoque est = new Estoque();
@@ -235,9 +269,13 @@ namespace VarejoSimples.Controller
 
         public Estoque BuscarEstoqueProduto(string search)
         {
-            Estoque est = BuscarPorLote(search);
-            if (est != null)
-                return est;
+            Estoque estoque = BuscarPorLote(search);
+            if (estoque != null)
+                return estoque;
+
+            estoque = BuscarPorGrade(search);
+            if (estoque != null)
+                return estoque;
 
             return db.BuscarEstoqueProduto(search);
         }
@@ -245,6 +283,11 @@ namespace VarejoSimples.Controller
         public List<Estoque> ListarEstoqueProdutos(string desc_cod_ref, string marca, string fabricante)
         {
             return db.ListarEstoqueProdutos(desc_cod_ref, marca, fabricante);
+        }
+
+        public Estoque BuscarPorGrade(string grade)
+        {
+            return db.Where(e => e.Grade_id.Equals(grade)).FirstOrDefault();
         }
 
         public Estoque BuscarPorLote(string lote)
@@ -262,11 +305,16 @@ namespace VarejoSimples.Controller
             }
         }
 
-        public bool RetiraEstoque(decimal quant, int produto_id, int loja_id, string lote = null)
+        public bool RetiraEstoque(decimal quant, int produto_id, int loja_id, string lote = null, string grade_id = null)
         {
-            Estoque estoque = (lote == null
-                ? BuscarEstoqueProduto(produto_id.ToString())
-                : BuscarEstoqueProduto(lote));
+            Estoque estoque = null;
+
+            if ((lote == null || lote.Equals("SL")) && grade_id == null)
+                estoque = BuscarEstoqueProduto(produto_id.ToString());
+            else if (lote != null)
+                estoque = BuscarEstoqueProduto(lote);
+            else if (grade_id != null)
+                estoque = BuscarPorGrade(grade_id);
 
             if (estoque == null)
             {
@@ -293,11 +341,16 @@ namespace VarejoSimples.Controller
             return true;
         }
 
-        public bool InsereEstoque(decimal quant, int produto_id, int loja_id, string lote = null)
+        public bool InsereEstoque(decimal quant, int produto_id, int loja_id, string lote = null, string grade_id = null)
         {
-            Estoque estoque = ((lote == null || lote.Equals("SL"))
-                ? BuscarEstoqueProduto(produto_id.ToString())
-                : BuscarEstoqueProduto(lote));
+            Estoque estoque = null;
+
+            if ((lote == null || lote.Equals("SL")) && grade_id == null)
+                estoque = BuscarEstoqueProduto(produto_id.ToString());
+            else if (lote != null)
+                estoque = BuscarEstoqueProduto(lote);
+            else if (grade_id != null)
+                estoque = BuscarPorGrade(grade_id);
 
             //            if (estoque.Produtos.Controla_lote)
             //               return true;

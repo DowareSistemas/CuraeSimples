@@ -139,6 +139,7 @@ namespace VarejoSimples.Controller
                     e.Lote = (string.IsNullOrEmpty(item.Lote)
                             ? null
                             : (item.Lote + "SL" + item.Sublote));
+                    e.Grade_id = item.Grade_id;
 
                     ProdutosController pc = new ProdutosController();
                     pc.SetContext(unit.Context);
@@ -168,6 +169,8 @@ namespace VarejoSimples.Controller
 
                                 estoque_controller.Save(e);
                                 sublote++;
+
+                                break;
                             }
 
                             if (tipo_mov.Utiliza_fornecedor && !prod.Controla_lote)
@@ -181,6 +184,8 @@ namespace VarejoSimples.Controller
                                     unit.RollBack();
                                     return 0;
                                 }
+
+                                break;
                             }
 
                             /*
@@ -201,6 +206,19 @@ namespace VarejoSimples.Controller
                                     unit.RollBack();
                                     return 0;
                                 }
+
+                                break;
+                            }
+
+                            if(prod.Controla_grade)
+                            {
+                                if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, null, item.Grade_id))
+                                {
+                                    unit.RollBack();
+                                    return 0;
+                                }
+
+                                break;
                             }
 
                             /*
@@ -221,6 +239,8 @@ namespace VarejoSimples.Controller
                                     unit.RollBack();
                                     return 0;
                                 }
+
+                                break;
                             }
 
                             break;
@@ -231,7 +251,7 @@ namespace VarejoSimples.Controller
                                 ? null
                                 : e.Lote);
 
-                            if (!estoque_controller.RetiraEstoque(e.Quant, e.Produto_id, e.Loja_id, loteEst))
+                            if (!estoque_controller.RetiraEstoque(e.Quant, e.Produto_id, e.Loja_id, loteEst, item.Grade_id))
                             {
                                 unit.RollBack();
                                 return 0;
@@ -537,7 +557,7 @@ namespace VarejoSimples.Controller
             }
         }
 
-        internal void NFCe()
+        public void NFCe()
         {
             int retorno = 0;
             //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
@@ -580,7 +600,7 @@ namespace VarejoSimples.Controller
                     : produto.Id.ToString());
 
                 retorno = Declaracoes.aCFVenderCompleto_NFCe_Daruma(aliquota, item.Quant.ToString("N2"),
-                      item.Valor_unit.ToString("N2"), tipoDescAcresc, valorDescAcresc, codigoItem, produto.Ncm, item.Cfop.ToString(), produto.Unidades.Sigla,
+                      item.Valor_unit.ToString("N2").Replace(".", ""), tipoDescAcresc, valorDescAcresc, codigoItem, produto.Ncm, item.Cfop.ToString(), produto.Unidades.Sigla,
                       produto.Descricao, "");
 
                 string msg = $@"aCFVenderCompleto_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}
@@ -613,7 +633,7 @@ namespace VarejoSimples.Controller
             foreach (Itens_pagamento item in itens_pagamento)
             {
                 Formas_pagamento fpg = new Formas_pagamentoController().Find(item.Forma_pagamento_id);
-                retorno = Declaracoes.aCFEfetuarPagamento_NFCe_Daruma(fpg.Descricao, item.Valor.ToString("N2"));
+                retorno = Declaracoes.aCFEfetuarPagamento_NFCe_Daruma(fpg.Descricao, item.Valor.ToString("N2").Replace(".", ""));
 
                 string msg = $@"aCFEfetuarPagamento_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}
 
@@ -815,7 +835,11 @@ Mensagem...: {sbMensagem.ToString()}");
 
             item.Id = id;
 
-            Itens_movimento itemExistente = Movimento.Itens_movimento.FirstOrDefault(e => e.Produto_id == item.Produto_id);
+            Itens_movimento itemExistente = Movimento.Itens_movimento.FirstOrDefault(e => 
+            e.Produto_id == item.Produto_id && 
+            (e.Lote == item.Lote && e.Sublote == item.Sublote) &&
+            e.Grade_id == item.Grade_id);
+
             if (itemExistente != null)
             {
                 decimal valor_item = (itemExistente.Valor_final / itemExistente.Quant);

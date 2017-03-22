@@ -12,19 +12,18 @@ namespace VarejoSimples.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Estoque
+    public partial class Cores
     {
-        public int Id { get; set; }
-        public int Produto_id { get; set; }
-        public int Loja_id { get; set; }
-        public decimal Quant { get; set; }
-        public string Lote { get; set; }
-        public string Sublote { get; set; }
-        public Nullable<System.DateTime> Data_entrada { get; set; }
-        public Nullable<System.DateTime> Data_validade { get; set; }
-        public string Grade_id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cores()
+        {
+            this.Grades_produtos = new HashSet<Grades_produtos>();
+        }
     
-        public virtual Lojas Lojas { get; set; }
-        public virtual Produtos Produtos { get; set; }
+        public int Id { get; set; }
+        public string Descricao { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grades_produtos> Grades_produtos { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+﻿<Window x:Class="VarejoSimples.Views.PDV.SelecionarGrade"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="SelecionarGrade" Height="409" Width="604">
+    <Grid Background="#FF999999">
+        <Grid Margin="2" Background="White">
+            <Grid Height="35" VerticalAlignment="Top" Background="#FFF0F0F0">
+                <Label x:Name="label" Content="Selecionar variação de produto" HorizontalAlignment="Left" Margin="10,4,0,0" FontSize="20" Padding="5,0" Height="27" VerticalAlignment="Top" Width="518"/>
+                <Button x:Name="btFechar" Click="btFechar_Click" HorizontalAlignment="Right" Width="41" BorderThickness="0" Margin="0,1,1,1">
+                    <StackPanel>
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_close.png" Height="22"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <DataGrid x:Name="dataGrid" PreviewKeyDown="dataGrid_PreviewKeyDown" Margin="5,66,5,31">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Código" MinWidth="120" Binding="{Binding Identificador}"/>
+                    <DataGridTextColumn Header="Cor" MinWidth="150" Width="*" Binding="{Binding Cores.Descricao}"/>
+                    <DataGridTextColumn Header="Tamanho" MinWidth="200" Binding="{Binding Tamanhos.Descricao}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label x:Name="lbDescricaoProduto" Content="Label" Margin="5,35,5,0" VerticalAlignment="Top" Height="31" FontSize="16" Foreground="#FF09A6FF"/>
+            <Label x:Name="label1" Content="ENTER - Seleciona o item na lista              ESC - Cancelar" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Bottom" Height="31" FontSize="14.667" Width="585"/>
+        </Grid>
+
+    </Grid>
+</Window>

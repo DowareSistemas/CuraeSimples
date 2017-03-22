@@ -47,6 +47,13 @@
           <Property Name="Inativa" Type="bit" Nullable="false" />
           <Property Name="Saldo" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Cores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="Documentos_fiscais">
           <Key>
             <PropertyRef Name="Id" />
@@ -84,6 +91,7 @@
           <Property Name="Sublote" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Data_entrada" Type="datetime" />
           <Property Name="Data_validade" Type="date" />
+          <Property Name="Grade_id" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Fabricantes">
           <Key>
@@ -122,6 +130,15 @@
           <Property Name="Cep" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Uf" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Grades_produtos">
+          <Key>
+            <PropertyRef Name="Identificador" />
+          </Key>
+          <Property Name="Identificador" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Produto_id" Type="int" Nullable="false" />
+          <Property Name="Tamanho_id" Type="int" Nullable="false" />
+          <Property Name="Cor_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Grupos_produtos">
           <Key>
             <PropertyRef Name="Id" />
@@ -150,6 +167,7 @@
           <Property Name="Vendedor_id" Type="int" Nullable="false" />
           <Property Name="Valor_final" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Unidade_id" Type="int" Nullable="false" />
+          <Property Name="Grade_id" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Itens_pagamento">
           <Key>
@@ -334,6 +352,7 @@
           <Property Name="Foto" Type="varbinary(max)" />
           <Property Name="Controla_lote" Type="bit" Nullable="false" />
           <Property Name="Grupo_id" Type="int" Nullable="false" />
+          <Property Name="Controla_grade" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Produtos_fornecedores">
           <Key>
@@ -357,6 +376,13 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Menu" Type="int" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tamanhos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Tipos_movimento">
           <Key>
@@ -431,6 +457,42 @@
             </Principal>
             <Dependent Role="Estoque">
               <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades_pr__Cor_i__27C3E46E">
+          <End Role="Cores" Type="Self.Cores" Multiplicity="1" />
+          <End Role="Grades_produtos" Type="Self.Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Cor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades_pr__Produ__25DB9BFC">
+          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
+          <End Role="Grades_produtos" Type="Self.Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades_pr__Taman__26CFC035">
+          <End Role="Tamanhos" Type="Self.Tamanhos" Multiplicity="1" />
+          <End Role="Grades_produtos" Type="Self.Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tamanhos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Tamanho_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -762,11 +824,13 @@
           <EntitySet Name="Caixas" EntityType="Self.Caixas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contas" EntityType="Self.Contas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cores" EntityType="Self.Cores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documentos_fiscais" EntityType="Self.Documentos_fiscais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estoque" EntityType="Self.Estoque" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fabricantes" EntityType="Self.Fabricantes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Formas_pagamento" EntityType="Self.Formas_pagamento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Fornecedores" EntityType="Self.Fornecedores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grades_produtos" EntityType="Self.Grades_produtos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grupos_produtos" EntityType="Self.Grupos_produtos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Itens_movimento" EntityType="Self.Itens_movimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Itens_pagamento" EntityType="Self.Itens_pagamento" Schema="dbo" store:Type="Tables" />
@@ -784,6 +848,7 @@
           <EntitySet Name="Produtos" EntityType="Self.Produtos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produtos_fornecedores" EntityType="Self.Produtos_fornecedores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rotinas" EntityType="Self.Rotinas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tamanhos" EntityType="Self.Tamanhos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipos_movimento" EntityType="Self.Tipos_movimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unidades" EntityType="Self.Unidades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
@@ -795,6 +860,18 @@
           <AssociationSet Name="FK__Estoque__Produto__4AB81AF0" Association="Self.FK__Estoque__Produto__4AB81AF0">
             <End Role="Produtos" EntitySet="Produtos" />
             <End Role="Estoque" EntitySet="Estoque" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades_pr__Cor_i__27C3E46E" Association="Self.FK__Grades_pr__Cor_i__27C3E46E">
+            <End Role="Cores" EntitySet="Cores" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades_pr__Produ__25DB9BFC" Association="Self.FK__Grades_pr__Produ__25DB9BFC">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades_pr__Taman__26CFC035" Association="Self.FK__Grades_pr__Taman__26CFC035">
+            <End Role="Tamanhos" EntitySet="Tamanhos" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
           </AssociationSet>
           <AssociationSet Name="FK__Itens_mov__Movim__02084FDA" Association="Self.FK__Itens_mov__Movim__02084FDA">
             <End Role="Movimentos" EntitySet="Movimentos" />
@@ -1055,6 +1132,21 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
+          <EntitySet Name="Cores" EntityType="Model.Cores" />
+          <EntitySet Name="Grades_produtos" EntityType="Model.Grades_produtos" />
+          <EntitySet Name="Tamanhos" EntityType="Model.Tamanhos" />
+          <AssociationSet Name="FK__Grades_pr__Cor_i__27C3E46E" Association="Model.FK__Grades_pr__Cor_i__27C3E46E">
+            <End Role="Cores" EntitySet="Cores" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades_pr__Produ__25DB9BFC" Association="Model.FK__Grades_pr__Produ__25DB9BFC">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades_pr__Taman__26CFC035" Association="Model.FK__Grades_pr__Taman__26CFC035">
+            <End Role="Tamanhos" EntitySet="Tamanhos" />
+            <End Role="Grades_produtos" EntitySet="Grades_produtos" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -1139,6 +1231,7 @@
           <Property Name="Data_validade" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Lojas" Relationship="Model.FK__Estoque__Loja_id__4BAC3F29" FromRole="Estoque" ToRole="Lojas" />
           <NavigationProperty Name="Produtos" Relationship="Model.FK__Estoque__Produto__4AB81AF0" FromRole="Estoque" ToRole="Produtos" />
+          <Property Name="Grade_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Fabricantes">
           <Key>
@@ -1213,6 +1306,7 @@
           <NavigationProperty Name="Movimentos" Relationship="Model.FK__Itens_mov__Movim__02084FDA" FromRole="Itens_movimento" ToRole="Movimentos" />
           <NavigationProperty Name="Produtos" Relationship="Model.FK__Itens_mov__Produ__00200768" FromRole="Itens_movimento" ToRole="Produtos" />
           <NavigationProperty Name="Unidades" Relationship="Model.FK__Itens_mov__Unida__01142BA1" FromRole="Itens_movimento" ToRole="Unidades" />
+          <Property Name="Grade_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Itens_pagamento">
           <Key>
@@ -1427,6 +1521,8 @@
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Produ__00200768" FromRole="Produtos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Produtos_fornecedores" Relationship="Model.FK__Produtos___Produ__2180FB33" FromRole="Produtos" ToRole="Produtos_fornecedores" />
           <NavigationProperty Name="Unidades" Relationship="Model.FK__Produtos__Unidad__398D8EEE" FromRole="Produtos" ToRole="Unidades" />
+          <Property Name="Controla_grade" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Grades_produtos" Relationship="Model.FK__Grades_pr__Produ__25DB9BFC" FromRole="Produtos" ToRole="Grades_produtos" />
         </EntityType>
         <EntityType Name="Produtos_fornecedores">
           <Key>
@@ -1867,6 +1963,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Cores">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grades_produtos" Relationship="Model.FK__Grades_pr__Cor_i__27C3E46E" FromRole="Cores" ToRole="Grades_produtos" />
+        </EntityType>
+        <EntityType Name="Grades_produtos">
+          <Key>
+            <PropertyRef Name="Identificador" />
+          </Key>
+          <Property Name="Identificador" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Produto_id" Type="Int32" Nullable="false" />
+          <Property Name="Tamanho_id" Type="Int32" Nullable="false" />
+          <Property Name="Cor_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cores" Relationship="Model.FK__Grades_pr__Cor_i__27C3E46E" FromRole="Grades_produtos" ToRole="Cores" />
+          <NavigationProperty Name="Produtos" Relationship="Model.FK__Grades_pr__Produ__25DB9BFC" FromRole="Grades_produtos" ToRole="Produtos" />
+          <NavigationProperty Name="Tamanhos" Relationship="Model.FK__Grades_pr__Taman__26CFC035" FromRole="Grades_produtos" ToRole="Tamanhos" />
+        </EntityType>
+        <EntityType Name="Tamanhos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Descricao" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grades_produtos" Relationship="Model.FK__Grades_pr__Taman__26CFC035" FromRole="Tamanhos" ToRole="Grades_produtos" />
+        </EntityType>
+        <Association Name="FK__Grades_pr__Cor_i__27C3E46E">
+          <End Type="Model.Cores" Role="Cores" Multiplicity="1" />
+          <End Type="Model.Grades_produtos" Role="Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cores">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Cor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades_pr__Produ__25DB9BFC">
+          <End Type="Model.Produtos" Role="Produtos" Multiplicity="1" />
+          <End Type="Model.Grades_produtos" Role="Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades_pr__Taman__26CFC035">
+          <End Type="Model.Tamanhos" Role="Tamanhos" Multiplicity="1" />
+          <End Type="Model.Grades_produtos" Role="Grades_produtos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tamanhos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grades_produtos">
+              <PropertyRef Name="Tamanho_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1947,6 +2107,7 @@
           <EntitySetMapping Name="Estoque">
             <EntityTypeMapping TypeName="Model.Estoque">
               <MappingFragment StoreEntitySet="Estoque">
+                <ScalarProperty Name="Grade_id" ColumnName="Grade_id" />
                 <ScalarProperty Name="Data_validade" ColumnName="Data_validade" />
                 <ScalarProperty Name="Data_entrada" ColumnName="Data_entrada" />
                 <ScalarProperty Name="Sublote" ColumnName="Sublote" />
@@ -2009,6 +2170,7 @@
           <EntitySetMapping Name="Itens_movimento">
             <EntityTypeMapping TypeName="Model.Itens_movimento">
               <MappingFragment StoreEntitySet="Itens_movimento">
+                <ScalarProperty Name="Grade_id" ColumnName="Grade_id" />
                 <ScalarProperty Name="Unidade_id" ColumnName="Unidade_id" />
                 <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
                 <ScalarProperty Name="Vendedor_id" ColumnName="Vendedor_id" />
@@ -2207,6 +2369,7 @@
           <EntitySetMapping Name="Produtos">
             <EntityTypeMapping TypeName="Model.Produtos">
               <MappingFragment StoreEntitySet="Produtos">
+                <ScalarProperty Name="Controla_grade" ColumnName="Controla_grade" />
                 <ScalarProperty Name="Grupo_id" ColumnName="Grupo_id" />
                 <ScalarProperty Name="Controla_lote" ColumnName="Controla_lote" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
@@ -2301,6 +2464,32 @@
                 <ScalarProperty Name="Celular1" ColumnName="Celular1" />
                 <ScalarProperty Name="Apelido" ColumnName="Apelido" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cores">
+            <EntityTypeMapping TypeName="Model.Cores">
+              <MappingFragment StoreEntitySet="Cores">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades_produtos">
+            <EntityTypeMapping TypeName="Model.Grades_produtos">
+              <MappingFragment StoreEntitySet="Grades_produtos">
+                <ScalarProperty Name="Cor_id" ColumnName="Cor_id" />
+                <ScalarProperty Name="Tamanho_id" ColumnName="Tamanho_id" />
+                <ScalarProperty Name="Produto_id" ColumnName="Produto_id" />
+                <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tamanhos">
+            <EntityTypeMapping TypeName="Model.Tamanhos">
+              <MappingFragment StoreEntitySet="Tamanhos">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

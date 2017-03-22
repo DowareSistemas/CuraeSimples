@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Title="Cadastro de produtos" Height="431" Width="633">
+        Title="Cadastro de produtos" Height="471" Width="633">
     <Grid>
         <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
             <Button x:Name="btSalvar" TabIndex="6" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
@@ -26,6 +26,7 @@
             </Button>
             <Button x:Name="btNovo" TabIndex="7" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
             <Button x:Name="btRelatorio" Content="_Relatório" Margin="6,146,6,0" VerticalAlignment="Top" Height="29" FontSize="14.667"/>
+            <Button x:Name="btGrade" Content="_Grade" Margin="6,215,6,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btGrade_Click"/>
         </Grid>
         <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txCod" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="120,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="50" FontSize="14.667" Padding="0,5,0,0" Text="0"/>
@@ -58,9 +59,15 @@
         </Border>
         <Label x:Name="label_Copy8" Content="Localização" HorizontalAlignment="Left" Margin="10,290,0,0" VerticalAlignment="Top" FontSize="14.667"/>
         <TextBox x:Name="txLocalizacao" MaxLength="10" TabIndex="9" HorizontalAlignment="Left" Height="30" Margin="120,290,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="155" FontSize="14.667" Padding="0,5,0,0"/>
-        <Label x:Name="label_Copy9" Content="Foto" HorizontalAlignment="Left" Margin="368,117,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy9" Content="Foto" HorizontalAlignment="Left" Margin="368,112,0,0" VerticalAlignment="Top" FontSize="14.667" RenderTransformOrigin="0.436,0.267"/>
         <Label x:Name="lbSelecionarImagem" Content="Selecionar imagem" HorizontalAlignment="Left" Margin="420,291,0,0" VerticalAlignment="Top" Width="110" Foreground="#FF5AA3D6" Cursor="Hand" MouseDown="lbSelecionarImagem_MouseDown"/>
-        <CheckBox x:Name="ckControla_lote" TabIndex="11" Content="Controlado por lote" HorizontalAlignment="Left" Margin="120,325,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <GroupBox x:Name="groupBox" Header="Controle de estoque" HorizontalAlignment="Left" Margin="370,0,0,10" VerticalAlignment="Bottom" Height="95" Width="160" FontSize="14.667">
+            <Grid>
+                <RadioButton x:Name="rdoControleNormal" IsChecked="True" Content="Normal" Margin="0,4,0,0" Height="17" VerticalAlignment="Top"/>
+                <RadioButton x:Name="rdoControleLote" Content="Lote" Margin="0,26,0,0" Height="16" VerticalAlignment="Top" />
+                <RadioButton x:Name="rdoControleGrade" Content="Grade" Margin="0,47,0,0" Height="15" VerticalAlignment="Top"/>
+            </Grid>
+        </GroupBox>
 
     </Grid>
 </Window>

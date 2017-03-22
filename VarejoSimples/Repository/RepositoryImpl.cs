@@ -111,7 +111,7 @@ namespace VarejoSimples.Repository
             return null;
         }
 
-        public T Find(int id)
+        public T Find(object id)
         {
             try
             {

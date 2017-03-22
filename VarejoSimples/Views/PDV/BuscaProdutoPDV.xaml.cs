@@ -36,7 +36,10 @@ namespace VarejoSimples.Views.PDV
             EstoqueController ec = new EstoqueController();
             List<Estoque> list = ec.ListarEstoqueProdutos(txDescricao.Text, txMarca.Text, txFabricante.Text);
 
-            dataGrid.ItemsSource = list;
+            List<EstoquePdvAdapter> adapters = new List<EstoquePdvAdapter>();
+            list.ForEach(e => adapters.Add(new EstoquePdvAdapter(e)));
+
+            dataGrid.ItemsSource = adapters.OrderBy(e => e.Estoque.Produto_id);
         }
 
         private void btFechar_Click(object sender, RoutedEventArgs e)
@@ -100,30 +103,30 @@ namespace VarejoSimples.Views.PDV
 
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Estoque estoque = (Estoque)dataGrid.SelectedItem;
-            if (estoque == null)
+            EstoquePdvAdapter adapter = (EstoquePdvAdapter)dataGrid.SelectedItem;
+            if (adapter == null)
                 return;
 
-            if (estoque.Id == 0)
+            if (adapter.Estoque.Id == 0)
                 return;
 
             if (e.Key == Key.Insert)
-                MonitorInsereRemove.Instance.AcionarInsercao(estoque);
+                MonitorInsereRemove.Instance.AcionarInsercao(adapter.Estoque);
 
             if (e.Key == Key.Delete)
-                MonitorInsereRemove.Instance.AcionarRemocao(estoque);
+                MonitorInsereRemove.Instance.AcionarRemocao(adapter.Estoque);
         }
 
         private void btInserir_Click(object sender, RoutedEventArgs e)
         {
-            Estoque estoque = (Estoque)dataGrid.SelectedItem;
-            if (estoque == null)
+            EstoquePdvAdapter adapter = (EstoquePdvAdapter)dataGrid.SelectedItem;
+            if (adapter == null)
                 return;
 
-            if (estoque.Id == 0)
+            if (adapter.Estoque.Id == 0)
                 return;
 
-            MonitorInsereRemove.Instance.AcionarInsercao(estoque);
+            MonitorInsereRemove.Instance.AcionarInsercao(adapter.Estoque);
         }
 
         private void btRemover_Click(object sender, RoutedEventArgs e)
@@ -136,6 +139,19 @@ namespace VarejoSimples.Views.PDV
                 return;
 
             MonitorInsereRemove.Instance.AcionarRemocao(estoque);
+        }
+    }
+    
+    public class EstoquePdvAdapter
+    {
+        public Estoque Estoque { get; set; }
+        public Grades_produtos Grade { get; set; }
+
+        public EstoquePdvAdapter(Estoque estoque)
+        {
+            Estoque = estoque;
+            if (estoque.Grade_id != null)
+                Grade = new Grades_produtosController().Find(estoque.Grade_id);
         }
     }
 

@@ -27,6 +27,8 @@ namespace VarejoSimples.Views.Produto
     {
         private ProdutosController controller;
         private string Path_arquivo_foto { get; set; }
+        private Produtos Produto_atual { get; set; }
+
         public CadProduto()
         {
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace VarejoSimples.Views.Produto
             txAliquota.ToMoney();
             this.controller = new ProdutosController();
             txDescricao.Focus();
-            
+            btGrade.IsEnabled = false;
         }
 
         private void next_Click(object sender, RoutedEventArgs e)
@@ -59,6 +61,7 @@ namespace VarejoSimples.Views.Produto
             LimparCampos();
             fotoProduto.Source = null;
 
+            Produto_atual = p;
             txCod.Text = p.Id.ToString();
             txDescricao.Text = p.Descricao;
             txReferencia.Text = p.Referencia;
@@ -67,8 +70,10 @@ namespace VarejoSimples.Views.Produto
             txCod_unidade.Text = p.Unidade_id.ToString();
             txNome_unidade.Text = p.Unidades.Nome;
             txValor.Text = p.Valor_unit.ToString("N2");
-            ckControla_lote.IsChecked = p.Controla_lote;
+            rdoControleGrade.IsChecked = p.Controla_grade;
+            rdoControleLote.IsChecked = p.Controla_lote;
             txAliquota.Text = p.Aliquota.ToString("N2");
+            btGrade.IsEnabled = p.Controla_grade;
 
             Fabricantes fab = new FabricantesController().Find(p.Fabricante_id);
             if (fab != null)
@@ -134,7 +139,7 @@ namespace VarejoSimples.Views.Produto
                 ? new Produtos()
                 : pc.Find(int.Parse(txCod.Text)));
 
-          //  p.Id = int.Parse(txCod.Text);
+            //  p.Id = int.Parse(txCod.Text);
             p.Descricao = txDescricao.Text;
             p.Ean = txEan.Text;
             p.Referencia = txReferencia.Text;
@@ -144,16 +149,23 @@ namespace VarejoSimples.Views.Produto
             p.Fabricante_id = int.Parse(txCod_fabricante.Text);
             p.Marca_id = int.Parse(txCod_marca.Text);
             p.Localizacao = txLocalizacao.Text;
-            p.Controla_lote = ckControla_lote.IsChecked.Value;
+            p.Controla_lote = rdoControleLote.IsChecked.Value;
+            p.Controla_grade = rdoControleGrade.IsChecked.Value;
             p.Aliquota = decimal.Parse(txAliquota.Text);
 
             if ((p.Foto == null) && !string.IsNullOrWhiteSpace(Path_arquivo_foto))
                 p.Foto = (string.IsNullOrEmpty(Path_arquivo_foto)
                     ? null
                     : File.ReadAllBytes(Path_arquivo_foto));
+            Produto_atual = p;
 
             if (pc.Save(p))
-                LimparCampos();
+            {
+                if (p.Controla_grade)
+                    btGrade.IsEnabled = true;
+                else
+                    LimparCampos();
+            }
         }
 
         private void LimparCampos()
@@ -170,7 +182,9 @@ namespace VarejoSimples.Views.Produto
             txNome_fabricante.Text = string.Empty;
             txCod_marca.Text = "0";
             txAliquota.Text = "0,00";
-            ckControla_lote.IsChecked = false;
+            rdoControleGrade.IsChecked = false;
+            rdoControleLote.IsChecked = false;
+            rdoControleNormal.IsChecked = true;
             txNome_marca.Text = string.Empty;
             txLocalizacao.Text = string.Empty;
             fotoProduto.Source = null;
@@ -252,9 +266,18 @@ namespace VarejoSimples.Views.Produto
                 PesquisarProduto pp = new PesquisarProduto();
                 pp.ShowDialog();
 
-               if (pp.Selecionado.Id > 0)
+                if (pp.Selecionado.Id > 0)
                     FillProd(pp.Selecionado);
             }
+        }
+
+        private void btGrade_Click(object sender, RoutedEventArgs e)
+        {
+            GradesProdutos grade = new GradesProdutos(Produto_atual);
+            grade.ShowDialog();
+
+            btGrade.IsEnabled = false;
+            LimparCampos();
         }
     }
 }

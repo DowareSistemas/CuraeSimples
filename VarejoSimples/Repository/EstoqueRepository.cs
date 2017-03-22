@@ -28,7 +28,7 @@ namespace VarejoSimples.Repository
                       marcas.Nome.Contains(marca) &&
                       fabricantes.Nome.Contains(fabricante)
 
-                     select estoque).AsEnumerable().Take(100);
+                     select estoque).Take(100).AsEnumerable();
 
             return q.ToList();
         }

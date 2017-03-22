@@ -8,6 +8,7 @@ using VarejoSimples.Views.Caixa;
 using VarejoSimples.Views.Cliente;
 using VarejoSimples.Views.Configuracao;
 using VarejoSimples.Views.Conta;
+using VarejoSimples.Views.Cor;
 using VarejoSimples.Views.DocEntrada;
 using VarejoSimples.Views.Fabricante;
 using VarejoSimples.Views.Forma_pagto;
@@ -22,6 +23,7 @@ using VarejoSimples.Views.PDV;
 using VarejoSimples.Views.Plano_conta;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.Produto_fornecedor;
+using VarejoSimples.Views.Tamanho;
 using VarejoSimples.Views.Tipo_movimento;
 using VarejoSimples.Views.Unidade;
 using VarejoSimples.Views.Usuario;
@@ -220,6 +222,16 @@ namespace VarejoSimples.Controller
                     case 27:
                         DocumentoEntrada docEnt = new DocumentoEntrada();
                         docEnt.ShowDialog();
+                        break;
+
+                    case 35:
+                        CadCores cadCor = new CadCores();
+                        cadCor.ShowDialog();
+                        break;
+
+                    case 36:
+                        CadTamanhos cadTam = new CadTamanhos();
+                        cadTam.ShowDialog();
                         break;
                 }
             }

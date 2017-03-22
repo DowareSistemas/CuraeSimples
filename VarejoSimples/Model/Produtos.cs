@@ -20,6 +20,7 @@ namespace VarejoSimples.Model
             this.Estoque = new HashSet<Estoque>();
             this.Itens_movimento = new HashSet<Itens_movimento>();
             this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
+            this.Grades_produtos = new HashSet<Grades_produtos>();
         }
     
         public int Id { get; set; }
@@ -36,6 +37,7 @@ namespace VarejoSimples.Model
         public byte[] Foto { get; set; }
         public bool Controla_lote { get; set; }
         public int Grupo_id { get; set; }
+        public bool Controla_grade { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estoque> Estoque { get; set; }
@@ -45,5 +47,7 @@ namespace VarejoSimples.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
         public virtual Unidades Unidades { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grades_produtos> Grades_produtos { get; set; }
     }
 }

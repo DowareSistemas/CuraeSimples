@@ -30,6 +30,7 @@ namespace VarejoSimples.Controller
                 }
                 else
                     db.Update(f);
+
                 db.Commit();
                 BStatus.Success("Fornecedor salvo");
                 return true;

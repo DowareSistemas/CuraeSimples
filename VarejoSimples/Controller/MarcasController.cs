@@ -32,7 +32,7 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(m);
 
-             //   db.Commit();
+                db.Commit();
                 BStatus.Success("Marca salva");
                 return true;
             }

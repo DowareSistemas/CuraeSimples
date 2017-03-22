@@ -30,6 +30,7 @@ namespace VarejoSimples.Model
         public int Vendedor_id { get; set; }
         public decimal Valor_final { get; set; }
         public int Unidade_id { get; set; }
+        public string Grade_id { get; set; }
     
         public virtual Movimentos Movimentos { get; set; }
         public virtual Produtos Produtos { get; set; }

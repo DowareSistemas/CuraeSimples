@@ -19,8 +19,6 @@ namespace VarejoSimples.Controller
             db = new Repository.Formas_pagamentoRepository();
         }
 
-        bool auto_commit = true;
-
         public bool Save(Formas_pagamento pg)
         {
             try
@@ -36,8 +34,7 @@ namespace VarejoSimples.Controller
                 else
                     db.Update(pg);
 
-                if (auto_commit)
-                    db.Commit();
+                db.Commit();
                 BStatus.Success("Forma de pagamento salva");
                 return true;
             }
@@ -81,16 +78,16 @@ namespace VarejoSimples.Controller
                 }
             }
 
-            if(pg.Tipo_pagamento == (int) Tipo_pagamento.CHEQUE)
+            if (pg.Tipo_pagamento == (int)Tipo_pagamento.CHEQUE)
             {
-                if(pg.Conta_id == 0)
+                if (pg.Conta_id == 0)
                 {
                     BStatus.Alert("Uma conta do tipo BANCÁRIA é necessária para o tipo pagamento CHEQUE");
                     return false;
                 }
 
                 Contas conta = new ContasController().Find(pg.Conta_id);
-                if(conta.Tipo != (int)Tipo_conta.CONTA_BANCARIA)
+                if (conta.Tipo != (int)Tipo_conta.CONTA_BANCARIA)
                 {
                     BStatus.Alert("Uma conta do tipo BANCÁRIA é necessária para o tipo pagamento CHEQUE");
                     return false;
@@ -132,8 +129,8 @@ namespace VarejoSimples.Controller
                     BStatus.Alert("Não é possível excluir esta condição de pagamento. Ela está presente em um ou mais movimentos");
                     return false;
                 }
-                
-                if(fp.Pagamentos_lancamentos.Count > 0)
+
+                if (fp.Pagamentos_lancamentos.Count > 0)
                 {
                     BStatus.Alert("Não é possível excluir esta condição de pagamento. Ela está presente em um ou mais lançamentos financeiros");
                     return false;
@@ -167,7 +164,7 @@ namespace VarejoSimples.Controller
 
         internal void SetContext(varejo_config v)
         {
-            db.Context  = v;
+            db.Context = v;
         }
     }
 }

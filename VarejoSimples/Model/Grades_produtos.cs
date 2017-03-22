@@ -12,19 +12,15 @@ namespace VarejoSimples.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Estoque
+    public partial class Grades_produtos
     {
-        public int Id { get; set; }
+        public string Identificador { get; set; }
         public int Produto_id { get; set; }
-        public int Loja_id { get; set; }
-        public decimal Quant { get; set; }
-        public string Lote { get; set; }
-        public string Sublote { get; set; }
-        public Nullable<System.DateTime> Data_entrada { get; set; }
-        public Nullable<System.DateTime> Data_validade { get; set; }
-        public string Grade_id { get; set; }
+        public int Tamanho_id { get; set; }
+        public int Cor_id { get; set; }
     
-        public virtual Lojas Lojas { get; set; }
+        public virtual Cores Cores { get; set; }
         public virtual Produtos Produtos { get; set; }
+        public virtual Tamanhos Tamanhos { get; set; }
     }
 }

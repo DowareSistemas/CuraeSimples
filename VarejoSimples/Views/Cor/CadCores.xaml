@@ -1,0 +1,35 @@
+﻿<Window x:Class="VarejoSimples.Views.Cor.CadCores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.Cor"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="Cadastro de cores de produtos" Height="231" Width="528">
+    <Grid>
+        <Grid HorizontalAlignment="Right" Width="82" Background="WhiteSmoke">
+            <Button x:Name="btSalvar" TabIndex="6" Content="_Salvar" Margin="6,77,6,0" VerticalAlignment="Top" Click="btSalvar_Click" Background="#FFDDDDDD" Height="30" FontSize="14.667"/>
+            <Button x:Name="btCancelar" TabIndex="7" Content="_Cancelar" Margin="6,146,6,0" VerticalAlignment="Top" Click="btCancelar_Click" Height="30" FontSize="14.667"/>
+            <Button x:Name="btExcluir" TabIndex="6" Content="_Excluir" Margin="6,111,6,0" VerticalAlignment="Top" Height="30" FontSize="14.667" Click="btExcluir_Click" RenderTransformOrigin="0.5,0.5"/>
+            <Button x:Name="prev" HorizontalAlignment="Left" Margin="6,7,0,0" VerticalAlignment="Top" Width="34" Height="33" Click="prev_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/prev.png" Height="25" Width="32" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="next" HorizontalAlignment="Right" Margin="0,7,6,0" VerticalAlignment="Top" Width="34" Height="33" Click="next_Click">
+                <StackPanel>
+                    <Image Source="/Curae Varejo (Simples);component/Images/next.png" Height="30" Width="26" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="btNovo" TabIndex="7" Content="_Novo" Margin="6,44,6,0" VerticalAlignment="Top" Click="btNovo_Click" Height="30" FontSize="14.667"/>
+        </Grid>
+        <Label x:Name="label" Content="Código" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txCodigo" IsReadOnly="True" HorizontalAlignment="Left" Height="30" Margin="101,10,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="61" FontSize="14.667" Padding="0,4,0,0"/>
+        <Label x:Name="label_Copy" Content="Descrição" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" FontSize="14.667"/>
+        <TextBox x:Name="txDescricao" HorizontalAlignment="Left" Height="30" Margin="101,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="319" FontSize="14.667" Padding="0,4,0,0"/>
+
+    </Grid>
+</Window>

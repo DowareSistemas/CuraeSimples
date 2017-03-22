@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VarejoSimples.Controller;
 using VarejoSimples.Model;
 
 namespace VarejoSimples.Views.PDV
@@ -35,6 +36,11 @@ namespace VarejoSimples.Views.PDV
             lbValor_unit.Content = $"{item.Quant} {item.Produtos.Unidades.Sigla} x R${item.Valor_unit.ToString("N2")}";
             lbTotal_item.Content = $"R$ {item.Valor_final.ToString("N2")}";
 
+            if (item.Grade_id != null)
+            {
+                Grades_produtos grade = new Grades_produtosController().Find(item.Grade_id);
+                lbDescricao.Content += " " + grade.Cores.Descricao + " " + grade.Tamanhos.Descricao;
+            }
             if (item.Desconto > 0)
                 lbValor_unit.Content += " - " + "R$ " + item.Desconto.ToString("N2");
         }

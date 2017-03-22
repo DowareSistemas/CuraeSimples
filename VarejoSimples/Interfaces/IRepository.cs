@@ -13,7 +13,7 @@ namespace VarejoSimples.Interfaces
         void Update(T entity);
         void Remove(T entity);
         void Commit();
-        T Find(int id);
+        T Find(object id);
         int NextId(Func<T, int> query);
         IQueryable<T> Where(Expression<Func<T, bool>> query);
         DbContextTransaction Begin(System.Data.IsolationLevel isoLevel);

@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -125,11 +128,13 @@
     <Compile Include="Controller\CaixasController.cs" />
     <Compile Include="Controller\ClientesController.cs" />
     <Compile Include="Controller\ContasController.cs" />
+    <Compile Include="Controller\CoresController.cs" />
     <Compile Include="Controller\EstoqueController.cs" />
     <Compile Include="Controller\Extensions.cs" />
     <Compile Include="Controller\FabricantesController.cs" />
     <Compile Include="Controller\Formas_pagamentoController.cs" />
     <Compile Include="Controller\FornecedoresController.cs" />
+    <Compile Include="Controller\Grades_produtosController.cs" />
     <Compile Include="Controller\Grupos_produtosController.cs" />
     <Compile Include="Controller\Itens_movimentoController.cs" />
     <Compile Include="Controller\Itens_pagamentoController.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="Controller\ProdutosController.cs" />
     <Compile Include="Controller\Produtos_fornecedoresController.cs" />
     <Compile Include="Controller\RotinasController.cs" />
+    <Compile Include="Controller\TamanhosController.cs" />
     <Compile Include="Controller\Tipos_movimentoController.cs" />
     <Compile Include="Controller\UnidadesController.cs" />
     <Compile Include="Controller\UnitOfWork.cs" />
@@ -200,10 +206,12 @@
     <Compile Include="Interfaces\ICaixas.cs" />
     <Compile Include="Interfaces\IClientes.cs" />
     <Compile Include="Interfaces\IContas.cs" />
+    <Compile Include="Interfaces\ICores.cs" />
     <Compile Include="Interfaces\IEstoque.cs" />
     <Compile Include="Interfaces\IFabricantes.cs" />
     <Compile Include="Interfaces\IFormas_pagamento.cs" />
     <Compile Include="Interfaces\IFornecedor.cs" />
+    <Compile Include="Interfaces\IGrades_produtos.cs" />
     <Compile Include="Interfaces\IGrupos_produtos.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
     <Compile Include="Interfaces\IItens_pagamento.cs" />
@@ -224,6 +232,7 @@
     <Compile Include="Interfaces\IProdutos.cs" />
     <Compile Include="Interfaces\IProdutos_fornecedores.cs" />
     <Compile Include="Interfaces\IRotinas.cs" />
+    <Compile Include="Interfaces\ITamanhos.cs" />
     <Compile Include="Interfaces\ITelaPagamentoMovimento.cs" />
     <Compile Include="Interfaces\ITelaTransferenciaConta.cs" />
     <Compile Include="Interfaces\ITipos_movimento.cs" />
@@ -239,6 +248,9 @@
     <Compile Include="Model\Contas.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Cores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Documentos_fiscais.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -252,6 +264,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Fornecedores.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Grades_produtos.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Grupos_produtos.cs">
@@ -303,6 +318,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Rotinas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Tamanhos.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Tipos_movimento.cs">
@@ -362,10 +380,12 @@
     <Compile Include="Repository\CaixasRepository.cs" />
     <Compile Include="Repository\ClientesRepository.cs" />
     <Compile Include="Repository\ContasRepository.cs" />
+    <Compile Include="Repository\CoresRepository.cs" />
     <Compile Include="Repository\EstoqueRepository.cs" />
     <Compile Include="Repository\FabricantesRepository.cs" />
     <Compile Include="Repository\Formas_pagamentoRepository.cs" />
     <Compile Include="Repository\FornecedoresRepository.cs" />
+    <Compile Include="Repository\Grades_produtosRepository.cs" />
     <Compile Include="Repository\Grupos_produtosRepository.cs" />
     <Compile Include="Repository\Itens_movimentoRepository.cs" />
     <Compile Include="Repository\Itens_pagamentoRepository.cs" />
@@ -384,6 +404,7 @@
     <Compile Include="Repository\Produtos_fornecedoresRepository.cs" />
     <Compile Include="Repository\RepositoryImpl.cs" />
     <Compile Include="Repository\RotinasRepository.cs" />
+    <Compile Include="Repository\TamanhosRepository.cs" />
     <Compile Include="Repository\Tipos_movimentoRepository.cs" />
     <Compile Include="Repository\UnidadesRepository.cs" />
     <Compile Include="Repository\UsuariosRepository.cs" />
@@ -430,6 +451,12 @@
       <DependentUpon>PesquisarConta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Conversors.cs" />
+    <Compile Include="Views\Cor\CadCores.xaml.cs">
+      <DependentUpon>CadCores.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cor\PesquisarCor.xaml.cs">
+      <DependentUpon>PesquisarCor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DocEntrada\DocumentoEntrada.xaml.cs">
       <DependentUpon>DocumentoEntrada.xaml</DependentUpon>
     </Compile>
@@ -526,6 +553,9 @@
     <Compile Include="Views\Parcela\DetalhesParcela.xaml.cs">
       <DependentUpon>DetalhesParcela.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\BuscaClientePdv.xaml.cs">
+      <DependentUpon>BuscaClientePdv.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\BuscaProdutoPDV.xaml.cs">
       <DependentUpon>BuscaProdutoPDV.xaml</DependentUpon>
     </Compile>
@@ -544,14 +574,23 @@
     <Compile Include="Views\PDV\PDV.xaml.cs">
       <DependentUpon>PDV.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\SelecionarGrade.xaml.cs">
+      <DependentUpon>SelecionarGrade.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Plano_conta\CadPlano_conta.xaml.cs">
       <DependentUpon>CadPlano_conta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Plano_conta\SelecionarPlanoConta.xaml.cs">
       <DependentUpon>SelecionarPlanoConta.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Produto\AdicionarItemGrade.xaml.cs">
+      <DependentUpon>AdicionarItemGrade.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Produto\CadProduto.xaml.cs">
       <DependentUpon>CadProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Produto\GradesProdutos.xaml.cs">
+      <DependentUpon>GradesProdutos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Produto\PesquisarProduto.xaml.cs">
       <DependentUpon>PesquisarProduto.xaml</DependentUpon>
@@ -567,6 +606,12 @@
     </Compile>
     <Compile Include="Views\Reports\ReportViewWindow.Designer.cs">
       <DependentUpon>ReportViewWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tamanho\CadTamanhos.xaml.cs">
+      <DependentUpon>CadTamanhos.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tamanho\PesquisarTamanho.xaml.cs">
+      <DependentUpon>PesquisarTamanho.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tipo_movimento\CadastroTmv.xaml.cs">
       <DependentUpon>CadastroTmv.xaml</DependentUpon>
@@ -698,6 +743,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Cor\CadCores.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Cor\PesquisarCor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DocEntrada\DocumentoEntrada.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -826,6 +879,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\BuscaClientePdv.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PDV\BuscaProdutoPDV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -850,6 +907,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\SelecionarGrade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Plano_conta\CadPlano_conta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -858,7 +919,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Produto\AdicionarItemGrade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Produto\CadProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Produto\GradesProdutos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -871,6 +940,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Produto_fornecedor\Produto_fornecedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tamanho\CadTamanhos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tamanho\PesquisarTamanho.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1157,6 +1234,11 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
+  <PropertyGroup>
+    <SsdtUnitTestVersion>2.0</SsdtUnitTestVersion>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
