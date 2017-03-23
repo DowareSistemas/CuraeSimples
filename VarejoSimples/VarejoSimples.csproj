@@ -138,6 +138,7 @@
     <Compile Include="Controller\Grupos_produtosController.cs" />
     <Compile Include="Controller\Itens_movimentoController.cs" />
     <Compile Include="Controller\Itens_pagamentoController.cs" />
+    <Compile Include="Controller\Itens_pedidoController.cs" />
     <Compile Include="Controller\Lancamentos_financeirosController.cs" />
     <Compile Include="Controller\LocalConfigController.cs" />
     <Compile Include="Controller\LogController.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Controller\Pagamentos_lancamentosController.cs" />
     <Compile Include="Controller\ParametrosController.cs" />
     <Compile Include="Controller\ParcelasController.cs" />
+    <Compile Include="Controller\Pedidos_vendaController.cs" />
     <Compile Include="Controller\PermissoesController.cs" />
     <Compile Include="Controller\Planos_contasController.cs" />
     <Compile Include="Controller\ProdutosController.cs" />
@@ -215,10 +217,12 @@
     <Compile Include="Interfaces\IGrupos_produtos.cs" />
     <Compile Include="Interfaces\IItens_movimento.cs" />
     <Compile Include="Interfaces\IItens_pagamento.cs" />
+    <Compile Include="Interfaces\IItens_pedido.cs" />
     <Compile Include="Interfaces\ILancamentos_financeiros.cs" />
     <Compile Include="Interfaces\IPagamentos_lancamentos.cs" />
     <Compile Include="Interfaces\IPainelVenda.cs" />
     <Compile Include="Interfaces\IPDV.cs" />
+    <Compile Include="Interfaces\IPedidos_venda.cs" />
     <Compile Include="Interfaces\IRegistroCheques.cs" />
     <Compile Include="Interfaces\ILojas.cs" />
     <Compile Include="Interfaces\IMarcas.cs" />
@@ -278,6 +282,9 @@
     <Compile Include="Model\Itens_pagamento.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Itens_pedido.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Lancamentos_financeiros.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -303,6 +310,9 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Parcelas.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Pedidos_venda.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Permissoes.cs">
@@ -389,6 +399,7 @@
     <Compile Include="Repository\Grupos_produtosRepository.cs" />
     <Compile Include="Repository\Itens_movimentoRepository.cs" />
     <Compile Include="Repository\Itens_pagamentoRepository.cs" />
+    <Compile Include="Repository\Itens_pedidoRepository.cs" />
     <Compile Include="Repository\Lancamentos_financeirosRepository.cs" />
     <Compile Include="Repository\LojasRepository.cs" />
     <Compile Include="Repository\MarcasRepository.cs" />
@@ -398,6 +409,7 @@
     <Compile Include="Repository\Pagamentos_lancamentosRepository.cs" />
     <Compile Include="Repository\ParametrosRepository.cs" />
     <Compile Include="Repository\ParcelasRepository.cs" />
+    <Compile Include="Repository\Pedidos_vendaRepository.cs" />
     <Compile Include="Repository\PermissoesRepository.cs" />
     <Compile Include="Repository\Planos_contasRepository.cs" />
     <Compile Include="Repository\ProdutosRepository.cs" />
@@ -559,8 +571,14 @@
     <Compile Include="Views\PDV\BuscaProdutoPDV.xaml.cs">
       <DependentUpon>BuscaProdutoPDV.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\CadastroRapidoCliente.xaml.cs">
+      <DependentUpon>CadastroRapidoCliente.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\CardPagamento.xaml.cs">
       <DependentUpon>CardPagamento.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\ItemPedidoPdv.xaml.cs">
+      <DependentUpon>ItemPedidoPdv.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDV\ItemVendaPdv.xaml.cs">
       <DependentUpon>ItemVendaPdv.xaml</DependentUpon>
@@ -570,6 +588,9 @@
     </Compile>
     <Compile Include="Views\PDV\PainelItensVenda.xaml.cs">
       <DependentUpon>PainelItensVenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\PainelPedidos.xaml.cs">
+      <DependentUpon>PainelPedidos.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDV\PDV.xaml.cs">
       <DependentUpon>PDV.xaml</DependentUpon>
@@ -887,7 +908,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\CadastroRapidoCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PDV\CardPagamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\ItemPedidoPdv.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -900,6 +929,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PDV\PainelItensVenda.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\PainelPedidos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1073,6 +1106,8 @@
     <Resource Include="Images\pdv_pagamento.png" />
     <Resource Include="Images\pdv_menu_black.png" />
     <Resource Include="Images\pdv_close.png" />
+    <Resource Include="Images\ir_pedido.png" />
+    <Resource Include="Images\ir_pedido_press.png" />
     <Content Include="Images\questao.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1080,6 +1115,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="pdv_pagamento.png" />
+    <Resource Include="Images\search.png" />
     <Content Include="Utilitarios\SQL2Search.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

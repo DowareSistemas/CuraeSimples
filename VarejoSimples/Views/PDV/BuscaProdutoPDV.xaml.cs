@@ -96,11 +96,6 @@ namespace VarejoSimples.Views.PDV
             Pesquisar();
         }
 
-        private void dataGrid_KeyDown(object sender, KeyEventArgs e)
-        {
-   
-        }
-
         private void dataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             EstoquePdvAdapter adapter = (EstoquePdvAdapter)dataGrid.SelectedItem;

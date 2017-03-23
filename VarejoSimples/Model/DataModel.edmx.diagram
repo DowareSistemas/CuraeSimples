@@ -69,6 +69,13 @@
         <AssociationConnector Association="Model.FK__Grades_pr__Cor_i__27C3E46E" />
         <AssociationConnector Association="Model.FK__Grades_pr__Produ__25DB9BFC" />
         <AssociationConnector Association="Model.FK__Grades_pr__Taman__26CFC035" />
+        <EntityTypeShape EntityType="Model.Itens_pedido" Width="1.5" PointX="20.25" PointY="9.5" />
+        <EntityTypeShape EntityType="Model.Pedidos_venda" Width="1.5" PointX="18" PointY="16" />
+        <AssociationConnector Association="Model.FK__Pedidos_v__Clien__3429BB53" />
+        <AssociationConnector Association="Model.FK__Itens_ped__Pedid__38EE7070" />
+        <AssociationConnector Association="Model.FK__Itens_ped__Produ__370627FE" />
+        <AssociationConnector Association="Model.FK__Itens_ped__Unida__37FA4C37" />
+        <AssociationConnector Association="Model.FK__Pedidos_v__Usuar__3335971A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

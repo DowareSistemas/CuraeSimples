@@ -146,6 +146,13 @@ namespace VarejoSimples.Controller
             dt.VerticalGridLinesBrush = Brushes.LightGray;
 
             dt.KeyDown += Dt_KeyDown;
+            dt.PreviewKeyDown += Dt_PreviewKeyDown;
+        }
+
+        private static void Dt_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) 
+            e.Handled = true;
         }
 
         private static void Dt_KeyDown(object sender, KeyEventArgs e)
@@ -153,7 +160,6 @@ namespace VarejoSimples.Controller
             try
             {
                 DataGrid dataGrid = (sender as DataGrid);
-               // dataGrid.Focus();
 
                 if (dataGrid.Items.Count == 0)
                     return;
@@ -164,6 +170,13 @@ namespace VarejoSimples.Controller
                         return;
               
                     dataGrid.SelectedItem = dataGrid.SelectedItems[dataGrid.SelectedIndex + 1];
+                }
+
+                if(e.Key == Key.Enter)
+                {
+                    if ((dataGrid.SelectedIndex - 1) < 0)
+                        return;
+                    dataGrid.SelectedIndex -= 1;
                 }
 
                 if (e.Key == Key.Down)

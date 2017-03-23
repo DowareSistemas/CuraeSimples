@@ -210,7 +210,7 @@ namespace VarejoSimples.Controller
                                 break;
                             }
 
-                            if(prod.Controla_grade)
+                            if (prod.Controla_grade)
                             {
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, null, item.Grade_id))
                                 {
@@ -422,7 +422,7 @@ namespace VarejoSimples.Controller
                                 parcela_cheque.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
                                 parcela_cheque.Parcela_descricao = $"REFERENTE AO MOVIMENTO {Movimento.Id} ({tipo_mov.Descricao})";
                                 parcela_cheque.Data_vencimento = cheque.Data_deposito;
- 
+
                                 if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
                                 {
                                     parcela_cheque.Tipo_parcela = (int)Tipo_parcela.RECEBER;
@@ -563,12 +563,12 @@ namespace VarejoSimples.Controller
             //  Declaracoes.tCFCancelar_NFCe_Daruma("", "", "", "", "");
             Clientes cliente = new ClientesController().Find(Movimento.Cliente_id);
 
-            if (cliente != null)
-                retorno = Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
-                 cliente.Municipio, cliente.Uf, cliente.Cep);
-            else
+            if (cliente == null || cliente.Cpf.Equals("___.___.___-__"))
                 retorno = Declaracoes.aCFAbrir_NFCe_Daruma("", "", "", "", "", "",
                   "", "", "");
+            else
+                retorno = Declaracoes.aCFAbrir_NFCe_Daruma(cliente.Cpf, cliente.Nome, cliente.Logradouro, cliente.Numero.ToString(), cliente.Bairro, "",
+                    cliente.Municipio, cliente.Uf, cliente.Cep);
 
             LogNFCe($"aCFAbrir_NFCe_Daruma - {Declaracoes.TrataRetorno(retorno)}");
 
@@ -709,6 +709,11 @@ Mensagem...: {sbMensagem.ToString()}");
             return Itens_movimento.Sum(e => e.Valor_final);
         }
 
+        public int GetCliente()
+        {
+            return Movimento.Cliente_id;
+        }
+
         internal void InformarFornecedor(int fornecedor_id)
         {
             Movimento.Fornecedor_id = fornecedor_id;
@@ -835,8 +840,8 @@ Mensagem...: {sbMensagem.ToString()}");
 
             item.Id = id;
 
-            Itens_movimento itemExistente = Movimento.Itens_movimento.FirstOrDefault(e => 
-            e.Produto_id == item.Produto_id && 
+            Itens_movimento itemExistente = Movimento.Itens_movimento.FirstOrDefault(e =>
+            e.Produto_id == item.Produto_id &&
             (e.Lote == item.Lote && e.Sublote == item.Sublote) &&
             e.Grade_id == item.Grade_id);
 
@@ -903,6 +908,48 @@ Mensagem...: {sbMensagem.ToString()}");
         public int CountPaginacao(string search, DateTime? data_inicio, DateTime? data_fim)
         {
             return db.CountPaginacao(search, data_inicio, data_fim, db.Context);
+        }
+
+        public int MovimentoParaPedido()
+        {
+            Pedidos_vendaController pedidoController = new Pedidos_vendaController();
+            pedidoController.AbrePedido(Movimento.Cliente_id);
+
+            Itens_movimento.ForEach(e => pedidoController.AdicionaItem(pedidoController.ConvertToItemPedido(e)));
+            return pedidoController.FecharPedido();
+        }
+
+        public Itens_movimento ItemMovimentoFromItemPedido(Itens_pedido item_pedido)
+        {
+            Itens_movimento item = new Model.Itens_movimento();
+
+            item.Produto_id = item_pedido.Produto_id;
+            item.Produtos = item_pedido.Produtos;
+            item.Lote = item_pedido.Lote;
+            item.Sublote = item_pedido.Lote;
+            item.Quant = item_pedido.Quant;
+            item.Valor_unit = item_pedido.Valor_unit;
+            item.Aliquota = item_pedido.Aliquota;
+            item.Desconto = item_pedido.Desconto;
+            item.Acrescimo = item_pedido.Acrescimo;
+            item.Frete = item_pedido.Frete;
+            item.Outros_valores = item_pedido.Outros_valores;
+            item.Cfop = item_pedido.Cfop;
+            item.Vendedor_id = item_pedido.Vendedor_id;
+            item.Unidades = item_pedido.Unidades;
+            item.Unidade_id = item_pedido.Unidade_id;
+            item.Grade_id = item_pedido.Grade_id;
+
+            return item;
+        }
+
+        public Movimentos PedidoParaMovimento(Pedidos_venda pedido, int tipo_movimento_id)
+        {
+            AbreMovimento(0, tipo_movimento_id);
+            InformarCliente(pedido.Cliente_id);
+            pedido.Itens_pedido.ToList().ForEach(e => AdicionaItem(ItemMovimentoFromItemPedido(e)));
+
+            return Movimento;
         }
     }
 }

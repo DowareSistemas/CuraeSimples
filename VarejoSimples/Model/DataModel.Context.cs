@@ -57,5 +57,7 @@ namespace VarejoSimples.Model
         public virtual DbSet<Cores> Cores { get; set; }
         public virtual DbSet<Grades_produtos> Grades_produtos { get; set; }
         public virtual DbSet<Tamanhos> Tamanhos { get; set; }
+        public virtual DbSet<Itens_pedido> Itens_pedido { get; set; }
+        public virtual DbSet<Pedidos_venda> Pedidos_venda { get; set; }
     }
 }

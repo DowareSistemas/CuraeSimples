@@ -14,6 +14,12 @@ namespace VarejoSimples.Model
     
     public partial class Clientes
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Clientes()
+        {
+            this.Pedidos_venda = new HashSet<Pedidos_venda>();
+        }
+    
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Cpf { get; set; }
@@ -26,5 +32,8 @@ namespace VarejoSimples.Model
         public string Municipio { get; set; }
         public string Uf { get; set; }
         public string Cep { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedidos_venda> Pedidos_venda { get; set; }
     }
 }

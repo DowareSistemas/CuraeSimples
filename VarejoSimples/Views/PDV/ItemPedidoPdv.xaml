@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="VarejoSimples.Views.PDV.ItemPedidoPdv"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
+              mc:Ignorable="d" d:DesignWidth="575" Height="70">
+    <Grid Background="#FFFDFDFD">
+        <Border BorderBrush="#FFE6E6E6" BorderThickness="0,1">
+            <Grid>
+                <Label x:Name="lbId" Content="100" FontSize="18" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,2,0,0" Width="42" MaxWidth="31" MinWidth="31"/>
+                <Label x:Name="lbNome_cliente" Content="MARCOS VINÍCIUS P OLIVEIRA" FontSize="18" Padding="0,0,0,0" VerticalAlignment="Top" Margin="55,2,137,0" HorizontalContentAlignment="Left" />
+                <Label x:Name="lbTotal_pedido" Content="R$ 1400,00" FontSize="18" Padding="0,0,0,0" VerticalAlignment="Top" Margin="438,2,10,0" FontWeight="Bold" HorizontalContentAlignment="Right" />
+                <TextBlock x:Name="textBlock3" HorizontalAlignment="Left" Margin="8,0,0,5" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="14.667"><Hyperlink NavigateUri="http://search.msn.com"><Run Text="CANCELAR"/></Hyperlink></TextBlock>
+
+                <Border
+                       CornerRadius="20"
+                       Name="btAbrirPedido"
+                       Background="Transparent"
+                       PreviewMouseLeftButtonUp="btAbrirPedido_PreviewMouseLeftButtonUp"
+                       Margin="0,0,7,2" HorizontalAlignment="Right" Width="35" Height="35" VerticalAlignment="Bottom">
+
+                    <StackPanel MouseLeftButtonDown="StackPanel_MouseLeftButtonDown"  Width="32" Height="30">
+                        <Image x:Name="image" Source="/Curae Varejo (Simples);component/Images/ir_pedido.png" Height="30"/>
+                    </StackPanel>
+                </Border>
+                <Label x:Name="lbData" Content="06/02/2017 14:20:00" FontSize="18" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="105,0,0,5" Width="167" />
+                <Label x:Name="lbNumero_produtos" Content="10 Produtos" FontSize="18" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="291,0,0,5" Width="192" />
+                <Label x:Name="lbId_Copy2" Content="|" HorizontalContentAlignment="Center" FontSize="18" Padding="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="277,0,0,7" Width="8" />
+
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

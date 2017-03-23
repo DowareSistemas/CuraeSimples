@@ -40,7 +40,9 @@ namespace VarejoSimples.Views.PDV
             InitializeComponent();
 
             VendaAberta = false;
-            GridContainer.Children.Add(new LogoEmpresa());
+            GridContainer.Children.Add(new PainelPedidos());
+            HabilitarPaineis(false);
+
             Atalhos_pagamentos = new List<KeyValuePair<int, Formas_pagamento>>();
             Operacao_atual = Tipo_operacao_atual.VENDA;
             Setup();
@@ -53,9 +55,17 @@ namespace VarejoSimples.Views.PDV
             MonitorInsereRemove.Instance.ItemRemovido += Instance_ItemRemovido;
         }
 
+        private void HabilitarPaineis(bool habilitado)
+        {
+            painelPesquisaProduto.IsEnabled = habilitado;
+            painelInfoCliente.IsEnabled = habilitado;
+            painelAcoes.IsEnabled = habilitado;
+        }
+
         private void Setup()
         {
             btPagamento.IsEnabled = false;
+            btCliente.IsEnabled = false;
             string parametroAtual = "";
 
             try
@@ -197,6 +207,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
                 GridContainer.Children.Clear();
                 GridContainer.Children.Add(PainelVenda.CurrentUserControl);
                 btPagamento.IsEnabled = true;
+                btCliente.IsEnabled = true;
             }
 
             decimal quant = decimal.Parse(txQuant.Text);
@@ -268,12 +279,11 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
                 PainelVenda = null;
 
                 btPagamento.IsEnabled = false;
+                btCliente.IsEnabled = false;
+                lbCpf.Content = string.Empty;
+                lbNomeCliente.Content = "NÃO INFORMADO";
+                lbCreditoCliente.Content = "0,00";
             }
-        }
-
-        private void Encerrar()
-        {
-
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -327,8 +337,36 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
         private void ShowPesquisaCliente()
         {
+            if (!VendaAberta)
+                return;
+
             BuscaClientePdv bc = new BuscaClientePdv();
             bc.ShowDialog();
+
+            if (bc.Selecionado.Id == 0)
+                return;
+
+            lbNomeCliente.Content = bc.Selecionado.Nome;
+            lbCpf.Content = bc.Selecionado.Cpf;
+
+            PainelVenda.InformaCliente(bc.Selecionado.Id);
+        }
+
+        private void btSalvarPedido_Click(object sender, RoutedEventArgs e)
+        {
+            if (!VendaAberta)
+                return;
+            if (!btCliente.IsEnabled)
+                return;
+
+            if (!PainelVenda.ClienteInformado)
+            {
+                ShowPesquisaCliente();
+                if (!PainelVenda.ClienteInformado)
+                    return;
+            }
+
+            int pedido = PainelVenda.TransformarEmPedido();
         }
     }
 }

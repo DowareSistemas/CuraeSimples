@@ -178,6 +178,29 @@
           <Property Name="Forma_pagamento_id" Type="int" Nullable="false" />
           <Property Name="Valor" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="Itens_pedido">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Pedido_id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Pedido_id" Type="int" Nullable="false" />
+          <Property Name="Produto_id" Type="int" Nullable="false" />
+          <Property Name="Lote" Type="varchar" MaxLength="50" />
+          <Property Name="Sublote" Type="varchar" MaxLength="10" />
+          <Property Name="Quant" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Valor_unit" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Aliquota" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Desconto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Acrescimo" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Frete" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Outros_valores" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Cfop" Type="int" Nullable="false" />
+          <Property Name="Vendedor_id" Type="int" Nullable="false" />
+          <Property Name="Valor_final" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Unidade_id" Type="int" Nullable="false" />
+          <Property Name="Grade_id" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="Lancamentos_financeiros">
           <Key>
             <PropertyRef Name="Id" />
@@ -312,6 +335,15 @@
           <Property Name="Conta" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Dias_compensacao" Type="int" Nullable="false" />
           <Property Name="Pagamento_lancamento_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedidos_venda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Usuario_id" Type="int" Nullable="false" />
+          <Property Name="Cliente_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Permissoes">
           <Key>
@@ -556,6 +588,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Itens_ped__Pedid__4924D839">
+          <End Role="Pedidos_venda" Type="Self.Pedidos_venda" Multiplicity="1" />
+          <End Role="Itens_pedido" Type="Self.Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos_venda">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Pedido_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_ped__Produ__473C8FC7">
+          <End Role="Produtos" Type="Self.Produtos" Multiplicity="1" />
+          <End Role="Itens_pedido" Type="Self.Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_ped__Unida__4830B400">
+          <End Role="Unidades" Type="Self.Unidades" Multiplicity="1" />
+          <End Role="Itens_pedido" Type="Self.Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Lancament__Conta__5D60DB10">
           <End Role="Contas" Type="Self.Contas" Multiplicity="1" />
           <End Role="Lancamentos_financeiros" Type="Self.Lancamentos_financeiros" Multiplicity="*" />
@@ -673,6 +741,30 @@
             </Principal>
             <Dependent Role="Pagamentos_lancamentos">
               <PropertyRef Name="Lancamento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedidos_v__Clien__3429BB53">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="Pedidos_venda" Type="Self.Pedidos_venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedidos_venda">
+              <PropertyRef Name="Cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedidos_v__Usuar__3335971A">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Pedidos_venda" Type="Self.Pedidos_venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedidos_venda">
+              <PropertyRef Name="Usuario_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -834,6 +926,7 @@
           <EntitySet Name="Grupos_produtos" EntityType="Self.Grupos_produtos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Itens_movimento" EntityType="Self.Itens_movimento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Itens_pagamento" EntityType="Self.Itens_pagamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Itens_pedido" EntityType="Self.Itens_pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lancamentos_financeiros" EntityType="Self.Lancamentos_financeiros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lojas" EntityType="Self.Lojas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
@@ -843,6 +936,7 @@
           <EntitySet Name="Pagamentos_lancamentos" EntityType="Self.Pagamentos_lancamentos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parametros" EntityType="Self.Parametros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parcelas" EntityType="Self.Parcelas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedidos_venda" EntityType="Self.Pedidos_venda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permissoes" EntityType="Self.Permissoes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Planos_contas" EntityType="Self.Planos_contas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Produtos" EntityType="Self.Produtos" Schema="dbo" store:Type="Tables" />
@@ -893,6 +987,18 @@
             <End Role="Movimentos" EntitySet="Movimentos" />
             <End Role="Itens_pagamento" EntitySet="Itens_pagamento" />
           </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Pedid__4924D839" Association="Self.FK__Itens_ped__Pedid__4924D839">
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Produ__473C8FC7" Association="Self.FK__Itens_ped__Produ__473C8FC7">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Unida__4830B400" Association="Self.FK__Itens_ped__Unida__4830B400">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
           <AssociationSet Name="FK__Lancament__Conta__5D60DB10" Association="Self.FK__Lancament__Conta__5D60DB10">
             <End Role="Contas" EntitySet="Contas" />
             <End Role="Lancamentos_financeiros" EntitySet="Lancamentos_financeiros" />
@@ -932,6 +1038,14 @@
           <AssociationSet Name="FK__Pagamento__Lanca__6319B466" Association="Self.FK__Pagamento__Lanca__6319B466">
             <End Role="Lancamentos_financeiros" EntitySet="Lancamentos_financeiros" />
             <End Role="Pagamentos_lancamentos" EntitySet="Pagamentos_lancamentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedidos_v__Clien__3429BB53" Association="Self.FK__Pedidos_v__Clien__3429BB53">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedidos_v__Usuar__3335971A" Association="Self.FK__Pedidos_v__Usuar__3335971A">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
           </AssociationSet>
           <AssociationSet Name="FK__Permissoe__Rotin__6477ECF3" Association="Self.FK__Permissoe__Rotin__6477ECF3">
             <End Role="Rotinas" EntitySet="Rotinas" />
@@ -1147,6 +1261,28 @@
             <End Role="Tamanhos" EntitySet="Tamanhos" />
             <End Role="Grades_produtos" EntitySet="Grades_produtos" />
           </AssociationSet>
+          <EntitySet Name="Itens_pedido" EntityType="Model.Itens_pedido" />
+          <EntitySet Name="Pedidos_venda" EntityType="Model.Pedidos_venda" />
+          <AssociationSet Name="FK__Pedidos_v__Clien__3429BB53" Association="Model.FK__Pedidos_v__Clien__3429BB53">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Pedid__38EE7070" Association="Model.FK__Itens_ped__Pedid__38EE7070">
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Produ__370627FE" Association="Model.FK__Itens_ped__Produ__370627FE">
+            <End Role="Produtos" EntitySet="Produtos" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Itens_ped__Unida__37FA4C37" Association="Model.FK__Itens_ped__Unida__37FA4C37">
+            <End Role="Unidades" EntitySet="Unidades" />
+            <End Role="Itens_pedido" EntitySet="Itens_pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedidos_v__Usuar__3335971A" Association="Model.FK__Pedidos_v__Usuar__3335971A">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Pedidos_venda" EntitySet="Pedidos_venda" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -1172,6 +1308,7 @@
           <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Uf" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Cep" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pedidos_venda" Relationship="Model.FK__Pedidos_v__Clien__3429BB53" FromRole="Clientes" ToRole="Pedidos_venda" />
         </EntityType>
         <EntityType Name="Contas">
           <Key>
@@ -1523,6 +1660,7 @@
           <NavigationProperty Name="Unidades" Relationship="Model.FK__Produtos__Unidad__398D8EEE" FromRole="Produtos" ToRole="Unidades" />
           <Property Name="Controla_grade" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Grades_produtos" Relationship="Model.FK__Grades_pr__Produ__25DB9BFC" FromRole="Produtos" ToRole="Grades_produtos" />
+          <NavigationProperty Name="Itens_pedido" Relationship="Model.FK__Itens_ped__Produ__370627FE" FromRole="Produtos" ToRole="Itens_pedido" />
         </EntityType>
         <EntityType Name="Produtos_fornecedores">
           <Key>
@@ -1577,6 +1715,7 @@
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Unida__01142BA1" FromRole="Unidades" ToRole="Itens_movimento" />
           <NavigationProperty Name="Produtos" Relationship="Model.FK__Produtos__Unidad__398D8EEE" FromRole="Unidades" ToRole="Produtos" />
           <NavigationProperty Name="Produtos_fornecedores" Relationship="Model.FK__Produtos___Unida__22751F6C" FromRole="Unidades" ToRole="Produtos_fornecedores" />
+          <NavigationProperty Name="Itens_pedido" Relationship="Model.FK__Itens_ped__Unida__37FA4C37" FromRole="Unidades" ToRole="Itens_pedido" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -1593,6 +1732,7 @@
           <NavigationProperty Name="Movimentos_caixas" Relationship="Model.FK__Movimento__Usuar__55F4C372" FromRole="Usuarios" ToRole="Movimentos_caixas" />
           <NavigationProperty Name="Permissoes" Relationship="Model.FK__Permissoe__Usuar__6383C8BA" FromRole="Usuarios" ToRole="Permissoes" />
           <NavigationProperty Name="Vendedores" Relationship="Model.FK__Vendedore__Usuar__6EF57B66" FromRole="Usuarios" ToRole="Vendedores" />
+          <NavigationProperty Name="Pedidos_venda" Relationship="Model.FK__Pedidos_v__Usuar__3335971A" FromRole="Usuarios" ToRole="Pedidos_venda" />
         </EntityType>
         <EntityType Name="Vendedores">
           <Key>
@@ -2024,6 +2164,104 @@
             </Principal>
             <Dependent Role="Grades_produtos">
               <PropertyRef Name="Tamanho_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Itens_pedido">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Pedido_id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Pedido_id" Type="Int32" Nullable="false" />
+          <Property Name="Produto_id" Type="Int32" Nullable="false" />
+          <Property Name="Lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sublote" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Quant" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Valor_unit" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Aliquota" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Desconto" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Acrescimo" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Frete" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Outros_valores" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Cfop" Type="Int32" Nullable="false" />
+          <Property Name="Vendedor_id" Type="Int32" Nullable="false" />
+          <Property Name="Valor_final" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Unidade_id" Type="Int32" Nullable="false" />
+          <Property Name="Grade_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pedidos_venda" Relationship="Model.FK__Itens_ped__Pedid__38EE7070" FromRole="Itens_pedido" ToRole="Pedidos_venda" />
+          <NavigationProperty Name="Produtos" Relationship="Model.FK__Itens_ped__Produ__370627FE" FromRole="Itens_pedido" ToRole="Produtos" />
+          <NavigationProperty Name="Unidades" Relationship="Model.FK__Itens_ped__Unida__37FA4C37" FromRole="Itens_pedido" ToRole="Unidades" />
+        </EntityType>
+        <EntityType Name="Pedidos_venda">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Usuario_id" Type="Int32" Nullable="false" />
+          <Property Name="Cliente_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Model.FK__Pedidos_v__Clien__3429BB53" FromRole="Pedidos_venda" ToRole="Clientes" />
+          <NavigationProperty Name="Itens_pedido" Relationship="Model.FK__Itens_ped__Pedid__38EE7070" FromRole="Pedidos_venda" ToRole="Itens_pedido" />
+          <NavigationProperty Name="Usuarios" Relationship="Model.FK__Pedidos_v__Usuar__3335971A" FromRole="Pedidos_venda" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK__Pedidos_v__Clien__3429BB53">
+          <End Type="Model.Clientes" Role="Clientes" Multiplicity="1" />
+          <End Type="Model.Pedidos_venda" Role="Pedidos_venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedidos_venda">
+              <PropertyRef Name="Cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_ped__Pedid__38EE7070">
+          <End Type="Model.Pedidos_venda" Role="Pedidos_venda" Multiplicity="1" />
+          <End Type="Model.Itens_pedido" Role="Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedidos_venda">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Pedido_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_ped__Produ__370627FE">
+          <End Type="Model.Produtos" Role="Produtos" Multiplicity="1" />
+          <End Type="Model.Itens_pedido" Role="Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produtos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Produto_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Itens_ped__Unida__37FA4C37">
+          <End Type="Model.Unidades" Role="Unidades" Multiplicity="1" />
+          <End Type="Model.Itens_pedido" Role="Itens_pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Itens_pedido">
+              <PropertyRef Name="Unidade_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedidos_v__Usuar__3335971A">
+          <End Type="Model.Usuarios" Role="Usuarios" Multiplicity="1" />
+          <End Type="Model.Pedidos_venda" Role="Pedidos_venda" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Pedidos_venda">
+              <PropertyRef Name="Usuario_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2490,6 +2728,39 @@
             <EntityTypeMapping TypeName="Model.Tamanhos">
               <MappingFragment StoreEntitySet="Tamanhos">
                 <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Itens_pedido">
+            <EntityTypeMapping TypeName="Model.Itens_pedido">
+              <MappingFragment StoreEntitySet="Itens_pedido">
+                <ScalarProperty Name="Grade_id" ColumnName="Grade_id" />
+                <ScalarProperty Name="Unidade_id" ColumnName="Unidade_id" />
+                <ScalarProperty Name="Valor_final" ColumnName="Valor_final" />
+                <ScalarProperty Name="Vendedor_id" ColumnName="Vendedor_id" />
+                <ScalarProperty Name="Cfop" ColumnName="Cfop" />
+                <ScalarProperty Name="Outros_valores" ColumnName="Outros_valores" />
+                <ScalarProperty Name="Frete" ColumnName="Frete" />
+                <ScalarProperty Name="Acrescimo" ColumnName="Acrescimo" />
+                <ScalarProperty Name="Desconto" ColumnName="Desconto" />
+                <ScalarProperty Name="Aliquota" ColumnName="Aliquota" />
+                <ScalarProperty Name="Valor_unit" ColumnName="Valor_unit" />
+                <ScalarProperty Name="Quant" ColumnName="Quant" />
+                <ScalarProperty Name="Sublote" ColumnName="Sublote" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="Produto_id" ColumnName="Produto_id" />
+                <ScalarProperty Name="Pedido_id" ColumnName="Pedido_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedidos_venda">
+            <EntityTypeMapping TypeName="Model.Pedidos_venda">
+              <MappingFragment StoreEntitySet="Pedidos_venda">
+                <ScalarProperty Name="Cliente_id" ColumnName="Cliente_id" />
+                <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

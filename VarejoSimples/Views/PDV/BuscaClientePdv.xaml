@@ -8,6 +8,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None"
+        PreviewKeyDown="Window_PreviewKeyDown"
         Title="BuscaClientePdv" Height="520" Width="1020">
     <Grid Background="#FF999999">
         <Grid Margin="2" Background="White">
@@ -20,7 +21,7 @@
                 </Button>
             </Grid>
 
-            <DataGrid x:Name="dataGrid" Margin="5,40,5,73">
+            <DataGrid x:Name="dataGrid" PreviewKeyDown="dataGrid_PreviewKeyDown" Margin="5,40,5,73">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Código" MinWidth="80" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nome" MinWidth="220" Width="*" Binding="{Binding Nome}"/>
@@ -35,11 +36,11 @@
                     <DataGridTextColumn Header="CEP" MinWidth="100" Binding="{Binding Cep}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Label x:Name="label1" Content="Pesquisa" HorizontalAlignment="Left" Margin="2,0,0,40" VerticalAlignment="Bottom" FontSize="14.667"/>
-            <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="30" Margin="5,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="503" FontSize="16" Padding="0,3,0,0"/>
-            <Button x:Name="button" Content="Buscar [F5]" HorizontalAlignment="Right" Margin="0,0,251,10" VerticalAlignment="Bottom" Width="100" Height="26"/>
-            <Button x:Name="button_Copy" Content="Fechar [Esc]" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="98" Height="26"/>
-            <Button x:Name="button_Copy1" Content="Cadastro rápido [F2]" HorizontalAlignment="Right" Margin="0,0,113,10" VerticalAlignment="Bottom" Width="133" Height="26"/>
+            <Label x:Name="label1" Content="Pesquisa (F1)" HorizontalAlignment="Left" Margin="2,0,0,40" VerticalAlignment="Bottom" FontSize="14.667" Width="211"/>
+            <TextBox x:Name="txPesquisa" KeyDown="txPesquisa_KeyDown" HorizontalAlignment="Left" Height="30" Margin="5,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="343" FontSize="16" Padding="0,3,0,0"/>
+            <Button x:Name="btBuscar" Content="Buscar (F5)" HorizontalAlignment="Right" Margin="0,0,118,10" VerticalAlignment="Bottom" Width="100" Height="30" FontSize="14.667" Click="button_Click"/>
+            <Button x:Name="btCancelar" Content="Fechar (Esc)" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="103" Height="30" FontSize="14.667" Click="btCancelar_Click"/>
+            <Button x:Name="btCadastro" Content="Cadastro rápido (F2)" HorizontalAlignment="Right" Margin="0,0,223,10" VerticalAlignment="Bottom" Width="153" Height="30" FontSize="14.667" RenderTransformOrigin="0.564,0.567"/>
         </Grid>
 
     </Grid>

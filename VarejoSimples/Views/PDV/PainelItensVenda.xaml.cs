@@ -120,6 +120,19 @@ namespace VarejoSimples.Views.PDV
             MovimentosController.NFCe();
         }
 
+        public int TransformarEmPedido()
+        {
+            return MovimentosController.MovimentoParaPedido();
+        }
+
+        public bool ClienteInformado
+        {
+            get
+            {
+                return MovimentosController.GetCliente() > 0;
+            }
+        }
+
         public UserControl CurrentUserControl
         {
             get

@@ -12,28 +12,22 @@ namespace VarejoSimples.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Unidades
+    public partial class Pedidos_venda
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Unidades()
+        public Pedidos_venda()
         {
-            this.Itens_movimento = new HashSet<Itens_movimento>();
-            this.Produtos = new HashSet<Produtos>();
-            this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
             this.Itens_pedido = new HashSet<Itens_pedido>();
         }
     
         public int Id { get; set; }
-        public string Sigla { get; set; }
-        public string Nome { get; set; }
+        public System.DateTime Data { get; set; }
+        public int Usuario_id { get; set; }
+        public int Cliente_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Produtos> Produtos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
+        public virtual Clientes Clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_pedido> Itens_pedido { get; set; }
+        public virtual Usuarios Usuarios { get; set; }
     }
 }

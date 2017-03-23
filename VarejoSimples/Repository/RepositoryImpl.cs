@@ -87,7 +87,7 @@ namespace VarejoSimples.Repository
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException valEx)
             {
-                BStatus.ErrorOnSave(_context.Set<T>().GetType().Name, valEx.Message);
+                BStatus.ErrorOnSave(_context.Set<T>().GetType().Name, valEx.EntityValidationErrors.First().ValidationErrors.First().ErrorMessage);
                 throw;
             }
             catch (Exception ex)

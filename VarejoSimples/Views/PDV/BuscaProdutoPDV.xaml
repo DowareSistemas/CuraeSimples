@@ -21,7 +21,7 @@
             </Button>
         </Grid>
         <Grid Margin="2,39,2,2" Background="White">
-            <DataGrid x:Name="dataGrid" KeyDown="dataGrid_KeyDown" PreviewKeyDown="dataGrid_PreviewKeyDown" Margin="10,10,10,250">
+            <DataGrid x:Name="dataGrid" PreviewKeyDown="dataGrid_PreviewKeyDown" Margin="10,10,10,250">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Código" MinWidth="80" Binding="{Binding Estoque.Produtos.Id}"/>
                     <DataGridTextColumn Header="EAN" MinWidth="80" Binding="{Binding Estoque.Produtos.Ean}"/>

@@ -23,6 +23,9 @@ namespace VarejoSimples.Interfaces
         bool Encerrar(decimal troco);
         decimal GetValorParcial();
         void NFCe();
+        int TransformarEmPedido();
+
+        bool ClienteInformado { get; }
         UserControl CurrentUserControl { get; }
     }
 }

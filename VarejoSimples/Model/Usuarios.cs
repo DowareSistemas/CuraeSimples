@@ -22,6 +22,7 @@ namespace VarejoSimples.Model
             this.Movimentos_caixas = new HashSet<Movimentos_caixas>();
             this.Permissoes = new HashSet<Permissoes>();
             this.Vendedores = new HashSet<Vendedores>();
+            this.Pedidos_venda = new HashSet<Pedidos_venda>();
         }
     
         public int Id { get; set; }
@@ -41,5 +42,7 @@ namespace VarejoSimples.Model
         public virtual ICollection<Permissoes> Permissoes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vendedores> Vendedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedidos_venda> Pedidos_venda { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace VarejoSimples.Model
             this.Itens_movimento = new HashSet<Itens_movimento>();
             this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
             this.Grades_produtos = new HashSet<Grades_produtos>();
+            this.Itens_pedido = new HashSet<Itens_pedido>();
         }
     
         public int Id { get; set; }
@@ -49,5 +50,7 @@ namespace VarejoSimples.Model
         public virtual Unidades Unidades { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Grades_produtos> Grades_produtos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Itens_pedido> Itens_pedido { get; set; }
     }
 }
