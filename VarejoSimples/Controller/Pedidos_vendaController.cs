@@ -78,6 +78,7 @@ namespace VarejoSimples.Controller
             itemPedido.Valor_final = item_movimento.Valor_final;
             itemPedido.Unidade_id = item_movimento.Unidade_id;
             itemPedido.Grade_id = item_movimento.Grade_id;
+            itemPedido.Cfop = item_movimento.Cfop;
 
             return itemPedido;
         }
@@ -124,6 +125,28 @@ namespace VarejoSimples.Controller
             int id = 0;
             foreach (Itens_pedido item in Pedido.Itens_pedido)
                 item.Id = (id += 1);
+        }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
+        }
+
+        internal void RemovePedido(int pedido_venda_id)
+        {
+            Pedidos_venda pedido = Find(pedido_venda_id);
+
+            Itens_pedidoController itensPedidoController = new Itens_pedidoController();
+            itensPedidoController.SetContext(db.Context);
+            itensPedidoController.RemoveByPedido(pedido_venda_id);
+
+            db.Remove(pedido);
+            db.Commit();
+        }
+
+        private Pedidos_venda Find(int pedido_venda_id)
+        {
+            return db.Find(pedido_venda_id);
         }
     }
 }

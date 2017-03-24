@@ -15,6 +15,7 @@ using VarejoSimples.Controller;
 using VarejoSimples.Enums;
 using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
+using VarejoSimples.Views.PDV.EventMonitors;
 using VarejoSimples.Views.Produto;
 using VarejoSimples.Views.VendaRapida;
 
@@ -32,6 +33,7 @@ namespace VarejoSimples.Views.PDV
         private Tipos_movimento Tipo_movimento_id_venda { get; set; }
         private Tipos_movimento Tipo_movimento_id_devolucao { get; set; }
         Tipo_operacao_atual Operacao_atual { get; set; }
+        Tipo_PDV Tipo_pdv { get; set; }
 
         List<KeyValuePair<int, Formas_pagamento>> Atalhos_pagamentos { get; set; }
 
@@ -40,19 +42,61 @@ namespace VarejoSimples.Views.PDV
             InitializeComponent();
 
             VendaAberta = false;
-            GridContainer.Children.Add(new PainelPedidos());
-            HabilitarPaineis(false);
 
             Atalhos_pagamentos = new List<KeyValuePair<int, Formas_pagamento>>();
             Operacao_atual = Tipo_operacao_atual.VENDA;
             Setup();
-            txProduto.Focus();
-            Pago = false;
-            txQuant.ToMoney();
-            txQuant.IsEnabled = false;
-
+            ReconficurarUI();
             MonitorInsereRemove.Instance.ItemInserido += Instance_ItemInserido;
             MonitorInsereRemove.Instance.ItemRemovido += Instance_ItemRemovido;
+            MonitorSelecaoPedido.Instance.PedidoSelecionado += Instance_PedidoSelecionado;
+        }
+
+        private void ReconficurarUI()
+        {
+            VendaAberta = false;
+            btPagamento.IsEnabled = false;
+            btCliente.IsEnabled = false;
+            btSalvarPedido.IsEnabled = false;
+            lbCpf.Content = string.Empty;
+            lbNomeCliente.Content = "NÃO INFORMADO";
+            lbCreditoCliente.Content = "0,00";
+
+            if (Tipo_pdv == Tipo_PDV.PDV)
+            {
+                GridContainer.Children.Clear();
+                GridContainer.Children.Add(new LogoEmpresa());
+                HabilitarPaineis(true);
+            }
+
+            if (Tipo_pdv == Tipo_PDV.PDP)
+            {
+                GridContainer.Children.Clear();
+                GridContainer.Children.Add(new PainelPedidos());
+                HabilitarPaineis(false);
+            }
+        }
+
+        private void Instance_PedidoSelecionado(Pedidos_venda pedido)
+        {
+            HabilitarPaineis(true);
+            VendaAberta = true;
+            PainelVenda = new PainelItensVenda();
+            GridContainer.Children.Clear();
+            GridContainer.Children.Add(PainelVenda.CurrentUserControl);
+
+            PainelVenda.TransformarEmMovimento(pedido, Tipo_movimento_id_venda.Id);
+            btPagamento.IsEnabled = true;
+            btSalvarPedido.IsEnabled = false;
+
+            if (PainelVenda.ClienteInformado)
+            {
+                Clientes cliente = PainelVenda.GetCliente();
+                lbNomeCliente.Content = cliente.Nome;
+                lbCpf.Content = cliente.Cpf;
+            }
+
+            txProduto.Focus();
         }
 
         private void HabilitarPaineis(bool habilitado)
@@ -64,6 +108,11 @@ namespace VarejoSimples.Views.PDV
 
         private void Setup()
         {
+            txProduto.Focus();
+            Pago = false;
+            txQuant.ToMoney();
+            txQuant.IsEnabled = false;
+
             btPagamento.IsEnabled = false;
             btCliente.IsEnabled = false;
             string parametroAtual = "";
@@ -73,6 +122,34 @@ namespace VarejoSimples.Views.PDV
                 ParametrosController parametros = new ParametrosController();
                 Tipos_movimentoController tmvController = new Tipos_movimentoController();
                 Formas_pagamentoController fpgController = new Formas_pagamentoController();
+
+                #region Parametro TP_PDV
+                Parametros paramTipoPdv = parametros.FindParametroLojaAtual("TP_PDV", true);
+                if (paramTipoPdv == null)
+                    paramTipoPdv = parametros.FindParametroLojaAtual("TP_PDV", false);
+
+                if (paramTipoPdv == null)
+                {
+                    MessageBox.Show("Não é possível iniciar o PDV por que o parâmetro de sistema 'TP_PDV' não foi atribuido.", "TP_PDV", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    Close();
+                }
+
+                if (string.IsNullOrEmpty(paramTipoPdv.Valor))
+                {
+                    MessageBox.Show("Não é possível iniciar o PDV por que o parâmetro de sistema 'TP_PDV' não foi atribuido.", "TP_PDV", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    Close();
+                }
+
+                if (paramTipoPdv.Valor != "PDV" && paramTipoPdv.Valor != "PDP")
+                {
+                    MessageBox.Show("Não é possível iniciar o PDV por que o valor do parâmetro de sistema 'TP_PDV' não pôde ser reconhecido.", "TP_PDV", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    Close();
+                }
+
+                Tipo_pdv = (paramTipoPdv.Valor == "PDV"
+                    ? Tipo_PDV.PDV
+                    : Tipo_PDV.PDP);
+                #endregion
 
                 #region PAGAMENTOS
                 List<Parametros> parametrosPagamentos = parametros.ParametrosPagamentoPDV();
@@ -208,6 +285,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
                 GridContainer.Children.Add(PainelVenda.CurrentUserControl);
                 btPagamento.IsEnabled = true;
                 btCliente.IsEnabled = true;
+                btSalvarPedido.IsEnabled = true;
             }
 
             decimal quant = decimal.Parse(txQuant.Text);
@@ -258,6 +336,12 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             DEVOLUCAO = 1
         }
 
+        public enum Tipo_PDV
+        {
+            PDV = 0,
+            PDP = 1
+        }
+
         private void btPagamento_Click(object sender, RoutedEventArgs e)
         {
             ShowPagamento();
@@ -274,15 +358,8 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             if (pagamentos.Pago)
             {
                 VendaAberta = false;
-                GridContainer.Children.Clear();
-                GridContainer.Children.Add(new LogoEmpresa());
+                ReconficurarUI();
                 PainelVenda = null;
-
-                btPagamento.IsEnabled = false;
-                btCliente.IsEnabled = false;
-                lbCpf.Content = string.Empty;
-                lbNomeCliente.Content = "NÃO INFORMADO";
-                lbCreditoCliente.Content = "0,00";
             }
         }
 
@@ -293,8 +370,11 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
             if (e.Key == Key.F6)
                 ShowPagamento();
-        }
 
+            if (e.Key == Key.F8)
+                SalvarPedido();
+        }
+        
         private void txQuant_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -339,6 +419,8 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
         {
             if (!VendaAberta)
                 return;
+            if (!btCliente.IsEnabled)
+                return;
 
             BuscaClientePdv bc = new BuscaClientePdv();
             bc.ShowDialog();
@@ -351,12 +433,19 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
             PainelVenda.InformaCliente(bc.Selecionado.Id);
         }
-
+        
         private void btSalvarPedido_Click(object sender, RoutedEventArgs e)
+        {
+            SalvarPedido();
+        }
+
+        private void SalvarPedido()
         {
             if (!VendaAberta)
                 return;
             if (!btCliente.IsEnabled)
+                return;
+            if (!btSalvarPedido.IsEnabled)
                 return;
 
             if (!PainelVenda.ClienteInformado)
@@ -367,6 +456,13 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
 
             int pedido = PainelVenda.TransformarEmPedido();
+            ReconficurarUI();
+        }
+
+        private void btMenu_Click(object sender, RoutedEventArgs e)
+        {
+            MenuPDV.Menu menu = new MenuPDV.Menu();
+            menu.ShowDialog();
         }
     }
 }

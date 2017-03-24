@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VarejoSimples.Model;
+using VarejoSimples.Views.PDV.EventMonitors;
 
 namespace VarejoSimples.Views.PDV
 {
@@ -20,10 +21,12 @@ namespace VarejoSimples.Views.PDV
     /// </summary>
     public partial class ItemPedidoPdv : UserControl
     {
+        private Pedidos_venda Pedido { get; set; }
         public ItemPedidoPdv(Pedidos_venda pedido)
         {
             InitializeComponent();
 
+            Pedido = pedido;
             lbId.Content = pedido.Id.ToString();
             lbNome_cliente.Content = pedido.Clientes.Nome;
             lbTotal_pedido.Content = $"R$ {pedido.Itens_pedido.Sum(e => e.Valor_final)}";
@@ -33,6 +36,17 @@ namespace VarejoSimples.Views.PDV
                 lbNumero_produtos.Content = $"{pedido.Itens_pedido.Count} produto";
             else
                 lbNumero_produtos.Content = $"{pedido.Itens_pedido.Count} produtos";
+
+            if (pedido.Usuarios.Vendedores.Count == 0)
+                lbVendedor.Content = pedido.Usuarios.Nome.Split(' ')[0];
+            else
+            {
+                string[] partesNome = pedido.Usuarios.Vendedores.First().Nome.Split(' ');
+                if (partesNome.Length == 1)
+                    lbVendedor.Content = partesNome[0];
+                else
+                    lbVendedor.Content = $"{partesNome[0]} {partesNome[1]}";
+            }
         }
 
         private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -45,10 +59,6 @@ namespace VarejoSimples.Views.PDV
             btAbrirPedido.Background = (new BrushConverter().ConvertFromString("Blue") as Brush);
         }
 
-        private void StackPanel_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-        }
-
         private void btAbrirPedido_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             BitmapImage img = new BitmapImage();
@@ -57,6 +67,8 @@ namespace VarejoSimples.Views.PDV
             img.EndInit();
             image.Source = img;
             btAbrirPedido.Background = (new BrushConverter().ConvertFromString("Transparent") as Brush);
+
+            MonitorSelecaoPedido.Instance.AcionarSelecao(Pedido);
         }
     }
 }

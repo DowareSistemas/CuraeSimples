@@ -19,7 +19,7 @@
         <Border BorderBrush="#FF999999" BorderThickness="0,0,0,2" Height="40" VerticalAlignment="Top" Background="#FFE6E6E6" Grid.ColumnSpan="2">
             <Grid>
                 <Label x:Name="label" Content="Curae PDV" Margin="384,0" FontSize="20" HorizontalContentAlignment="Center"/>
-                <Button x:Name="btMenu" HorizontalAlignment="Left" Width="50" BorderBrush="#FF999999" BorderThickness="1,1,1,0" Background="#FFDEDEDE">
+                <Button x:Name="btMenu" Background="#FFE6E6E6" HorizontalAlignment="Left" Width="50" BorderBrush="#FF999999" BorderThickness="1,1,1,0" Click="btMenu_Click">
                     <Button.Content>
                         <StackPanel>
                             <Image Source="/Curae Varejo (Simples);component/Images/pdv_menu_black.png" Height="33" Width="42" />

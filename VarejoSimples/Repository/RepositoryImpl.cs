@@ -143,6 +143,20 @@ namespace VarejoSimples.Repository
             }
         }
 
+        public void ForceRemove(T entity)
+        {
+            try
+            {
+                _context.Set<T>().Attach(entity);
+                _context.Entry<T>(entity).State = EntityState.Deleted;
+            }
+            catch (Exception ex)
+            {
+                BStatus.ErrorOnRemove(entity.GetType().Name, ex.Message);
+                throw;
+            }
+        }
+
         public void Save(T entity)
         {
             try

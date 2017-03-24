@@ -32,6 +32,11 @@ namespace VarejoSimples.Views.PDV
             lbTotalParcial.Content = "R$ 0,00";
         }
 
+        public Clientes GetCliente()
+        {
+            return new ClientesController().Find(MovimentosController.GetClienteId());
+        }
+
         private void RefreshItens()
         {
             sp_produtos.Children.Clear();
@@ -125,11 +130,17 @@ namespace VarejoSimples.Views.PDV
             return MovimentosController.MovimentoParaPedido();
         }
 
+        public void TransformarEmMovimento(Pedidos_venda pedido, int tipo_mov)
+        {
+            MovimentosController.PedidoParaMovimento(pedido, tipo_mov);
+            RefreshItens();
+        }
+
         public bool ClienteInformado
         {
             get
             {
-                return MovimentosController.GetCliente() > 0;
+                return MovimentosController.GetClienteId() > 0;
             }
         }
 

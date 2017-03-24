@@ -28,14 +28,17 @@ namespace VarejoSimples.Model
         public virtual DbSet<Caixas> Caixas { get; set; }
         public virtual DbSet<Clientes> Clientes { get; set; }
         public virtual DbSet<Contas> Contas { get; set; }
+        public virtual DbSet<Cores> Cores { get; set; }
         public virtual DbSet<Documentos_fiscais> Documentos_fiscais { get; set; }
         public virtual DbSet<Estoque> Estoque { get; set; }
         public virtual DbSet<Fabricantes> Fabricantes { get; set; }
         public virtual DbSet<Formas_pagamento> Formas_pagamento { get; set; }
         public virtual DbSet<Fornecedores> Fornecedores { get; set; }
+        public virtual DbSet<Grades_produtos> Grades_produtos { get; set; }
         public virtual DbSet<Grupos_produtos> Grupos_produtos { get; set; }
         public virtual DbSet<Itens_movimento> Itens_movimento { get; set; }
         public virtual DbSet<Itens_pagamento> Itens_pagamento { get; set; }
+        public virtual DbSet<Itens_pedido> Itens_pedido { get; set; }
         public virtual DbSet<Lancamentos_financeiros> Lancamentos_financeiros { get; set; }
         public virtual DbSet<Lojas> Lojas { get; set; }
         public virtual DbSet<Marcas> Marcas { get; set; }
@@ -45,19 +48,16 @@ namespace VarejoSimples.Model
         public virtual DbSet<Pagamentos_lancamentos> Pagamentos_lancamentos { get; set; }
         public virtual DbSet<Parametros> Parametros { get; set; }
         public virtual DbSet<Parcelas> Parcelas { get; set; }
+        public virtual DbSet<Pedidos_venda> Pedidos_venda { get; set; }
         public virtual DbSet<Permissoes> Permissoes { get; set; }
         public virtual DbSet<Planos_contas> Planos_contas { get; set; }
         public virtual DbSet<Produtos> Produtos { get; set; }
         public virtual DbSet<Produtos_fornecedores> Produtos_fornecedores { get; set; }
         public virtual DbSet<Rotinas> Rotinas { get; set; }
+        public virtual DbSet<Tamanhos> Tamanhos { get; set; }
         public virtual DbSet<Tipos_movimento> Tipos_movimento { get; set; }
         public virtual DbSet<Unidades> Unidades { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Vendedores> Vendedores { get; set; }
-        public virtual DbSet<Cores> Cores { get; set; }
-        public virtual DbSet<Grades_produtos> Grades_produtos { get; set; }
-        public virtual DbSet<Tamanhos> Tamanhos { get; set; }
-        public virtual DbSet<Itens_pedido> Itens_pedido { get; set; }
-        public virtual DbSet<Pedidos_venda> Pedidos_venda { get; set; }
     }
 }

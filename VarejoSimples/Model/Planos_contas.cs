@@ -18,7 +18,6 @@ namespace VarejoSimples.Model
         public Planos_contas()
         {
             this.Lancamentos_financeiros = new HashSet<Lancamentos_financeiros>();
-            this.Movimentos = new HashSet<Movimentos>();
             this.Tipos_movimento = new HashSet<Tipos_movimento>();
         }
     
@@ -30,8 +29,6 @@ namespace VarejoSimples.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lancamentos_financeiros> Lancamentos_financeiros { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Movimentos> Movimentos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tipos_movimento> Tipos_movimento { get; set; }
     }

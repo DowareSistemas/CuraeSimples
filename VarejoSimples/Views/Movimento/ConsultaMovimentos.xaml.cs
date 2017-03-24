@@ -190,7 +190,6 @@ namespace VarejoSimples.Views.Movimento
     {
         public Movimentos Movimentos { get; set; }
         public Tipos_movimento Tipo_movimento { get; set; }
-        public Planos_contas Plano_contas { get; set; }
 
         public MovimentosAdapter(Movimentos movimento, varejo_config context)
         {
@@ -211,11 +210,7 @@ namespace VarejoSimples.Views.Movimento
                                   where fornecedor.Id == movimento.Fornecedor_id
                                   select fornecedor.Nome).SingleOrDefault();
                 }
-
-                Plano_contas = (from pc in context.Planos_contas
-                                where pc.Id == movimento.Plano_conta_id
-                                select pc).FirstOrDefault();
-
+                
                 Tipo_movimento = (from tm in context.Tipos_movimento
                                   where tm.Id == movimento.Tipo_movimento_id
                                   select tm).FirstOrDefault();

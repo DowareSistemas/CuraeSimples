@@ -65,7 +65,6 @@ namespace VarejoSimples.Views.Movimento
                    select fornecedor.Nome).SingleOrDefault());
             txData_mov.Text = movimento.Data.ToString("dd/MM/yyyy HH:mm:ss");
             txUsuario.Text = movimento.Usuarios.Nome;
-            txPlano_contas.Text = movimento.Planos_contas.Descricao;
 
             Caixas cx = (from caixa in context.Caixas
                             join mov_caixa in context.Movimentos_caixas on caixa.Id equals mov_caixa.Caixa_id

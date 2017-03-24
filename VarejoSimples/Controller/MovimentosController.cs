@@ -26,6 +26,7 @@ namespace VarejoSimples.Controller
         }
 
         private Movimentos Movimento { get; set; }
+        private Pedidos_venda Pedido_venda { get; set; }
 
         public void AbreMovimento(int cliente_fornecedor_id, int tipo_movimento)
         {
@@ -86,7 +87,6 @@ namespace VarejoSimples.Controller
                 Movimento.Data = DateTime.Now;
                 Movimento.Usuario_id = UsuariosController.UsuarioAtual.Id;
                 Movimento.Loja_id = UsuariosController.LojaAtual.Id;
-                Movimento.Plano_conta_id = tipo_mov.Plano_conta_id;
 
                 db.Save(Movimento);
                 db.Commit();
@@ -98,7 +98,7 @@ namespace VarejoSimples.Controller
 
                     Movimentos_caixas mcTroco = new Movimentos_caixas();
                     mcTroco.Descricao = $"Movimento {Movimento.Id} (TROCO)";
-                    mcTroco.Caixa_id = movimentos_caixaController.GetCaixaAtualUsuario();
+                    mcTroco.Caixa_id = movimentos_caixaController.Get_ID_CaixaAtualUsuario();
                     mcTroco.Data = Movimento.Data;
                     mcTroco.Movimento_id = Movimento.Id;
                     mcTroco.Usuario_id = Movimento.Usuario_id;
@@ -143,7 +143,7 @@ namespace VarejoSimples.Controller
 
                     ProdutosController pc = new ProdutosController();
                     pc.SetContext(unit.Context);
-                    Produtos prod = pc.Find(e.Produto_id);
+                    Produtos prod = pc.Find(item.Produto_id);
 
                     Produtos_fornecedoresController pForn_c = new Produtos_fornecedoresController();
                     pForn_c.SetContext(unit.Context);
@@ -157,6 +157,7 @@ namespace VarejoSimples.Controller
                                  Neste caso é gerado o seu Lote e inserido no estoque da 
                                  loja em questão
                             */
+                            #region tipo_mov.Utiliza_fornecedor && prod.Controla_lote
                             if (tipo_mov.Utiliza_fornecedor && prod.Controla_lote)
                             {
                                 e.Lote = lote;
@@ -172,7 +173,9 @@ namespace VarejoSimples.Controller
 
                                 break;
                             }
+                            #endregion
 
+                            #region tipo_mov.Utiliza_fornecedor && !prod.Controla_lote
                             if (tipo_mov.Utiliza_fornecedor && !prod.Controla_lote)
                             {
                                 Produtos_fornecedores pf = pForn_c.Find(item.Produto_id, Movimento.Fornecedor_id);
@@ -187,6 +190,7 @@ namespace VarejoSimples.Controller
 
                                 break;
                             }
+                            #endregion
 
                             /*
                                  O produto controla Lote, porém sua entrada NÃO é proveniennte de um fornecedor.
@@ -196,6 +200,7 @@ namespace VarejoSimples.Controller
                                  Caso não exista, será criado,
                                  Caso exista, o Saldo em Estoque do mesmo será atualizado
                             */
+                            #region (!tipo_mov.Utiliza_fornecedor) && prod.Controla_lote
                             if ((!tipo_mov.Utiliza_fornecedor) && prod.Controla_lote)
                             {
                                 if (!estoque_controller.ExisteLote(item.Lote, item.Sublote))
@@ -209,7 +214,9 @@ namespace VarejoSimples.Controller
 
                                 break;
                             }
+                            #endregion
 
+                            #region prod.Controla_grade
                             if (prod.Controla_grade)
                             {
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id, null, item.Grade_id))
@@ -220,6 +227,7 @@ namespace VarejoSimples.Controller
 
                                 break;
                             }
+                            #endregion
 
                             /*
                                 O produto NÃO controla lote, e sua entrada NÃO é proveniente de um fornecedor.
@@ -232,6 +240,7 @@ namespace VarejoSimples.Controller
                                 registros referente ao produto em questão, levando em consideração o Lote, Sub-Lote
                                 e respectiva Loja.
                             */
+                            #region !tipo_mov.Utiliza_fornecedor && !prod.Controla_lote
                             if (!tipo_mov.Utiliza_fornecedor && !prod.Controla_lote)
                             {
                                 if (!estoque_controller.InsereEstoque(item.Quant, item.Produto_id, Movimento.Loja_id))
@@ -242,6 +251,7 @@ namespace VarejoSimples.Controller
 
                                 break;
                             }
+                            #endregion
 
                             break;
 
@@ -308,7 +318,7 @@ namespace VarejoSimples.Controller
 
                     Movimentos_caixas movimento_caixa = new Movimentos_caixas();
                     movimento_caixa.Descricao = $"Movimento {Movimento.Id} ({(tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA ? "ENTRADA" : "SAIDA")})";
-                    movimento_caixa.Caixa_id = movimentos_caixaController.GetCaixaAtualUsuario();
+                    movimento_caixa.Caixa_id = movimentos_caixaController.Get_ID_CaixaAtualUsuario();
                     movimento_caixa.Data = Movimento.Data;
                     movimento_caixa.Movimento_id = Movimento.Id;
                     movimento_caixa.Usuario_id = Movimento.Usuario_id;
@@ -522,6 +532,14 @@ namespace VarejoSimples.Controller
                 }
                 #endregion
 
+                if (Pedido_venda != null)
+                {
+                    Pedidos_vendaController pedidosController = new Pedidos_vendaController();
+                    pedidosController.SetContext(unit.Context);
+
+                    pedidosController.RemovePedido(Pedido_venda.Id);
+                }
+
                 unit.Commit();
                 BStatus.Success("Movimento salvo");
                 return Movimento.Id;
@@ -709,7 +727,7 @@ Mensagem...: {sbMensagem.ToString()}");
             return Itens_movimento.Sum(e => e.Valor_final);
         }
 
-        public int GetCliente()
+        public int GetClienteId()
         {
             return Movimento.Cliente_id;
         }
@@ -939,6 +957,7 @@ Mensagem...: {sbMensagem.ToString()}");
             item.Unidades = item_pedido.Unidades;
             item.Unidade_id = item_pedido.Unidade_id;
             item.Grade_id = item_pedido.Grade_id;
+            item.Valor_final = item_pedido.Valor_final;
 
             return item;
         }
@@ -948,7 +967,7 @@ Mensagem...: {sbMensagem.ToString()}");
             AbreMovimento(0, tipo_movimento_id);
             InformarCliente(pedido.Cliente_id);
             pedido.Itens_pedido.ToList().ForEach(e => AdicionaItem(ItemMovimentoFromItemPedido(e)));
-
+            Pedido_venda = pedido;
             return Movimento;
         }
     }

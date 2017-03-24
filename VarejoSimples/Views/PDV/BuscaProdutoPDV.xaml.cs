@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Model;
+using VarejoSimples.Views.PDV.EventMonitors;
 
 namespace VarejoSimples.Views.PDV
 {
@@ -147,45 +148,6 @@ namespace VarejoSimples.Views.PDV
             Estoque = estoque;
             if (estoque.Grade_id != null)
                 Grade = new Grades_produtosController().Find(estoque.Grade_id);
-        }
-    }
-
-    public class MonitorInsereRemove
-    {
-        public delegate void InsereItem(Estoque estoque);
-        public event InsereItem ItemInserido;
-
-        public delegate void RemoveItem(Estoque estoque);
-        public event RemoveItem ItemRemovido;
-
-        public void AcionarInsercao(Estoque estoque)
-        {
-            if (ItemInserido != null)
-                ItemInserido(estoque);
-        }
-
-        public void AcionarRemocao(Estoque estoque)
-        {
-            if (ItemRemovido != null)
-                ItemRemovido(estoque);
-        }
-
-        private static MonitorInsereRemove instance = null;
-
-        private MonitorInsereRemove()
-        {
-
-        }
-
-        public static MonitorInsereRemove Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new MonitorInsereRemove();
-
-                return instance;
-            }
         }
     }
 }

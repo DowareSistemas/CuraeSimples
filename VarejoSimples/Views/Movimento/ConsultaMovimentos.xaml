@@ -24,7 +24,6 @@
                 <DataGridTextColumn Header="Fornecedor" MinWidth="200" Width="Auto" Binding="{Binding Fornecedor}"/>
                 <DataGridTextColumn Header="NFC-e" MinWidth="90" Width="Auto" Binding="{Binding Nfce}"/>
                 <DataGridTextColumn Header="CFOP" MinWidth="90" Width="Auto" Binding="{Binding Tipo_movimento.Cfop}"/>
-                <DataGridTextColumn Header="Plano de contas" MinWidth="300" Width="*" Binding="{Binding Plano_contas.Descricao}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid x:Name="GridNavegacao" HorizontalAlignment="Left" Height="25" Margin="10,5,0,0" VerticalAlignment="Top" Width="460">

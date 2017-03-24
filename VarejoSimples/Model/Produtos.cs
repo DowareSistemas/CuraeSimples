@@ -18,10 +18,10 @@ namespace VarejoSimples.Model
         public Produtos()
         {
             this.Estoque = new HashSet<Estoque>();
-            this.Itens_movimento = new HashSet<Itens_movimento>();
-            this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
             this.Grades_produtos = new HashSet<Grades_produtos>();
+            this.Itens_movimento = new HashSet<Itens_movimento>();
             this.Itens_pedido = new HashSet<Itens_pedido>();
+            this.Produtos_fornecedores = new HashSet<Produtos_fornecedores>();
         }
     
         public int Id { get; set; }
@@ -42,15 +42,15 @@ namespace VarejoSimples.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estoque> Estoque { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grades_produtos> Grades_produtos { get; set; }
         public virtual Grupos_produtos Grupos_produtos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Itens_pedido> Itens_pedido { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produtos_fornecedores> Produtos_fornecedores { get; set; }
         public virtual Unidades Unidades { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Grades_produtos> Grades_produtos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Itens_pedido> Itens_pedido { get; set; }
     }
 }

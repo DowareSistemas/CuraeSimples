@@ -30,14 +30,12 @@ namespace VarejoSimples.Model
         public int Documento_id { get; set; }
         public int Tipo_movimento_id { get; set; }
         public bool Trocou_vendedor { get; set; }
-        public int Plano_conta_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_movimento> Itens_movimento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Itens_pagamento> Itens_pagamento { get; set; }
         public virtual Usuarios Usuarios { get; set; }
-        public virtual Planos_contas Planos_contas { get; set; }
         public virtual Tipos_movimento Tipos_movimento { get; set; }
     }
 }

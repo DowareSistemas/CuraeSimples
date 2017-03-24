@@ -21,10 +21,8 @@
         <TextBox x:Name="txCliente" HorizontalAlignment="Left" Height="30" Margin="103,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="417" FontSize="14.667" Padding="0,5,0,0" IsEnabled="False"/>
         <Label x:Name="label_Copy4" Content="Fornecedor" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" FontSize="14.667" Width="88"/>
         <TextBox x:Name="txFornecedor" HorizontalAlignment="Left" Height="30" Margin="103,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="417" FontSize="14.667" Padding="0,5,0,0" IsEnabled="False"/>
-        <Label x:Name="label_Copy5" Content="Plano de contas" HorizontalAlignment="Left" Margin="539,44,0,0" VerticalAlignment="Top" FontSize="14.667" Width="117" RenderTransformOrigin="0.547,0.667"/>
-        <TextBox x:Name="txPlano_contas" Height="30" Margin="662,45,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" IsEnabled="False"/>
-        <Label x:Name="label_Copy6" Content="Caixa" HorizontalAlignment="Left" Margin="539,80,0,0" VerticalAlignment="Top" FontSize="14.667" Width="117" RenderTransformOrigin="0.547,0.667"/>
-        <TextBox x:Name="txCaixa" Height="30" Margin="662,80,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" IsEnabled="False"/>
+        <Label x:Name="label_Copy6" Content="Caixa" HorizontalAlignment="Left" Margin="539,45,0,0" VerticalAlignment="Top" FontSize="14.667" Width="117" RenderTransformOrigin="0.547,0.667"/>
+        <TextBox x:Name="txCaixa" Height="30" Margin="662,45,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14.667" Padding="0,5,0,0" IsEnabled="False"/>
         <Border BorderBrush="Black" BorderThickness="1" Margin="10,115,10,211">
             <Grid Margin="0,0,0,-1">
                 <Border BorderBrush="#FF6790AC" BorderThickness="1" Height="30" Margin="-1,-1,-1,0" VerticalAlignment="Top" Background="#FFE6E6E6">

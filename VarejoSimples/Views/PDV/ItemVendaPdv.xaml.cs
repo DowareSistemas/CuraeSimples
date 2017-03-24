@@ -33,7 +33,7 @@ namespace VarejoSimples.Views.PDV
             lbItem.Content = item.Id.ToString();
             lbDescricao.Content = item.Produtos.Descricao;
             lbCod_prod.Content = item.Produto_id.ToString();
-            lbValor_unit.Content = $"{item.Quant} {item.Produtos.Unidades.Sigla} x R${item.Valor_unit.ToString("N2")}";
+            lbValor_unit.Content = $"{item.Quant.ToString("N2")} {item.Produtos.Unidades.Sigla} x R${item.Valor_unit.ToString("N2")}";
             lbTotal_item.Content = $"R$ {item.Valor_final.ToString("N2")}";
 
             if (item.Grade_id != null)

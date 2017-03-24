@@ -422,6 +422,7 @@
     <Compile Include="Repository\VendedoresRepository.cs" />
     <Compile Include="Tasks\ConsultaParcelasTask.cs" />
     <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
+    <Compile Include="Tasks\Menu_caxaTask.cs" />
     <Compile Include="Views\Caixa\CadCaixas.xaml.cs">
       <DependentUpon>CadCaixas.xaml</DependentUpon>
     </Compile>
@@ -576,11 +577,19 @@
     <Compile Include="Views\PDV\CardPagamento.xaml.cs">
       <DependentUpon>CardPagamento.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\EventMonitors\MonitorInsereRemove.cs" />
+    <Compile Include="Views\PDV\EventMonitors\MonitorSelecaoPedido.cs" />
     <Compile Include="Views\PDV\ItemPedidoPdv.xaml.cs">
       <DependentUpon>ItemPedidoPdv.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDV\ItemVendaPdv.xaml.cs">
       <DependentUpon>ItemVendaPdv.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\MenuPDV\Menu.xaml.cs">
+      <DependentUpon>Menu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\MenuPDV\Menu_Caixa.xaml.cs">
+      <DependentUpon>Menu_Caixa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PDV\NFCe_Log.xaml.cs">
       <DependentUpon>NFCe_Log.xaml</DependentUpon>
@@ -923,6 +932,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\MenuPDV\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\MenuPDV\Menu_Caixa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PDV\NFCe_Log.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1115,6 +1132,7 @@
     </Content>
     <Resource Include="pdv_pagamento.png" />
     <Resource Include="Images\search.png" />
+    <Resource Include="Images\w8.gif" />
     <Content Include="Utilitarios\SQL2Search.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1240,9 +1258,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\PDV\UiControllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />

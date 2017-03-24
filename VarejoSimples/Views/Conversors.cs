@@ -8,6 +8,31 @@ using VarejoSimples.Enums;
 
 namespace VarejoSimples.Views
 {
+    public class Tipo_mov_caixaConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return value;
+
+            switch(int.Parse(value.ToString()))
+            {
+                case (int) Tipo_movimentacao_caixa.ABERTURA: return "ABERTURA";
+                case (int)Tipo_movimentacao_caixa.FECHAMENTO: return "FECHAMENTO";
+                case (int)Tipo_movimentacao_caixa.ENTRADA: return "ENTRADA";
+                case (int)Tipo_movimentacao_caixa.SAIDA: return "SAÍDA";
+                case (int)Tipo_movimentacao_caixa.TROCO: return "TROCO";
+            }
+
+            return "NÃO IDENTIFICADO";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class Tipo_contaConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

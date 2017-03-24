@@ -21,6 +21,24 @@ namespace VarejoSimples.Controller
             db.Context = context;
         }
 
+        public bool RemoveByPedido(int pedido_id)
+        {
+            try
+            {
+                List<Itens_pedido> itens = db.Where(e => e.Pedido_id == pedido_id).ToList();
+
+                foreach (Itens_pedido item in itens)
+                    db.ForceRemove(item);
+
+                db.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool Save(Itens_pedido item)
         {
             try
@@ -30,7 +48,7 @@ namespace VarejoSimples.Controller
                 BStatus.Success("Item adicionado ao pedido");
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }

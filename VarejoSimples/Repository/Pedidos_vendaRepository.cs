@@ -26,7 +26,7 @@ namespace VarejoSimples.Repository
                      itens_pedido.Produtos.Descricao.Contains(text) ||
                      pedidos.Itens_pedido.Sum(e => e.Valor_final) == valor
 
-                     select pedidos).OrderBy(e => e.Data).Take(10).Distinct().AsEnumerable();
+                     select pedidos).OrderBy(e => e.Data).Take(50).Distinct().AsEnumerable();
 
             return q.ToList();
         }

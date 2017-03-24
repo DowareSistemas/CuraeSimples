@@ -24,8 +24,9 @@ namespace VarejoSimples.Interfaces
         decimal GetValorParcial();
         void NFCe();
         int TransformarEmPedido();
-
+        Clientes GetCliente();
         bool ClienteInformado { get; }
+        void TransformarEmMovimento(Pedidos_venda pedido, int tipo_mov);
         UserControl CurrentUserControl { get; }
     }
 }
