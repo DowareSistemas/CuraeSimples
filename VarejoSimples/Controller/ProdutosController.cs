@@ -136,13 +136,7 @@ namespace VarejoSimples.Controller
 
         public List<Produtos> Search(string search)
         {
-            Expression<Func<Produtos, bool>> expr = (p =>
-                        p.Id.ToString().Equals(search) ||
-                        p.Descricao.Contains(search) ||
-                        p.Ean.Contains(search) ||
-                        p.Referencia.Contains(search));
-
-            return db.Where(expr).ToList();
+            return db.Search(search);
         }
 
         public List<Produtos> Where(Expression<Func<Produtos, bool>> query)

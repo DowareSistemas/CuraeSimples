@@ -317,15 +317,7 @@ namespace VarejoSimples.Controller
             int mes,
             int conta_id)
         {
-            Expression<Func<Lancamentos_financeiros, bool>> query = (e => e.Conta_id == conta_id);
-
-            DateTime mes_inicio = new DateTime(DateTime.Now.Year, mes, 1);
-            DateTime mes_fim = new DateTime(DateTime.Now.Year, mes, DateTime.DaysInMonth(DateTime.Now.Year, mes));
-
-            query = query.And(e => e.Data >= mes_inicio && e.Data <= mes_fim);
-
-            int result = db.Where(query).OrderBy(e => e.Id).Count();
-            return result;
+            return db.CountBusca(mes, conta_id);
         }
 
         public List<Lancamentos_financeiros> BuscaSimples(
@@ -334,15 +326,7 @@ namespace VarejoSimples.Controller
             int mes,
             int conta_id)
         {
-            Expression<Func<Lancamentos_financeiros, bool>> query = (e => e.Conta_id == conta_id);
-
-            DateTime mes_inicio = new DateTime(DateTime.Now.Year, mes, 1);
-            DateTime mes_fim = new DateTime(DateTime.Now.Year, mes, DateTime.DaysInMonth(DateTime.Now.Year, mes));
-
-            query = query.And(e => e.Data >= mes_inicio && e.Data <= mes_fim);
-
-            List<Lancamentos_financeiros> result = db.Where(query).OrderBy(e => e.Id).Skip(pagina_atual).Take(numero_registros).ToList();
-            return result;
+            return db.BuscaSimples(pagina_atual, numero_registros, mes, conta_id);
         }
     }
 }

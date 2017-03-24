@@ -68,40 +68,12 @@ namespace VarejoSimples.Controller
 
         public List<Estoque> ProdutosVencendo(int diasApartirDaDataAtual, Tipo_produto_filtro_validade tipo)
         {
-            DateTime data = DateTime.Now.AddDays(diasApartirDaDataAtual);
-            Expression<Func<Estoque, bool>> query = (e => e.Data_validade <= data);
-            query = query.And(e => e.Loja_id == UsuariosController.LojaAtual.Id);
-            query = query.And(e => e.Quant > 0);
-
-            switch (tipo)
-            {
-                case Tipo_produto_filtro_validade.APENAS_COM_LOTE:
-                    query = query.And(e => e.Lote != "");
-                    break;
-
-                case Tipo_produto_filtro_validade.APENAS_SEM_LOTE:
-                    query = query.And(e => e.Lote == "");
-                    break;
-            }
-
-            return db.Where(query).ToList();
+            return db.ProdutosVencendo(diasApartirDaDataAtual, tipo);
         }
 
         public List<Estoque> Search(string search, bool considera_lote = false)
         {
-            Expression<Func<Estoque, bool>> query = (
-                e => e.Produtos.Descricao.Contains(search));
-
-            if (considera_lote)
-            {
-                query = query.Or(e => e.Lote.Equals(search));
-                query = query.And(e => e.Lote != "");
-            }
-            else
-                query = query.And(e => e.Lote == string.Empty);
-
-            query = query.And(e => (e.Loja_id == UsuariosController.LojaAtual.Id));
-            return db.Where(query).ToList();
+            return db.Search(search, considera_lote);
         }
 
         public string GeraProximoLote(string LoteAtual)

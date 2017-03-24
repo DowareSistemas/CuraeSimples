@@ -140,7 +140,6 @@
     <Compile Include="Controller\Itens_pagamentoController.cs" />
     <Compile Include="Controller\Itens_pedidoController.cs" />
     <Compile Include="Controller\Lancamentos_financeirosController.cs" />
-    <Compile Include="Controller\LocalConfigController.cs" />
     <Compile Include="Controller\LogController.cs" />
     <Compile Include="Controller\LojasController.cs" />
     <Compile Include="Controller\MarcasController.cs" />

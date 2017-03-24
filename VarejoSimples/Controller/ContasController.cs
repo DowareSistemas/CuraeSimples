@@ -144,17 +144,7 @@ namespace VarejoSimples.Controller
 
         public List<Contas> Search(string search, bool inativos = false)
         {
-            Expression<Func<Contas, bool>> query = (e =>
-                e.Nome.Contains(search) ||
-                e.Nome_banco.Contains(search) ||
-                e.Conta.Equals(search) ||
-                e.Id.ToString().Equals(search) ||
-                e.Titular.Contains(search));
-
-            if (!inativos)
-                query = query.And(e => e.Inativa == false);
-
-            return db.Where(query).ToList();
+            return db.Search(search, inativos);
         }
 
         internal void SetContext(varejo_config context)
