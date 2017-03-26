@@ -68,6 +68,9 @@ namespace VarejoSimples.Controller
 
         public List<Clientes> Search(string search)
         {
+            int id = 0;
+            int.TryParse(search, out id);
+
             return db.Where(e =>
                         e.Nome.Contains(search) ||
                         e.Email.Contains(search) ||
@@ -75,7 +78,7 @@ namespace VarejoSimples.Controller
                         e.Municipio.Contains(search) ||
                         e.Logradouro.Contains(search) ||
                         e.Uf.Contains(search) ||
-                        e.Id.ToString().Equals(search)).ToList();
+                        e.Id == id).ToList();
         }
 
         public bool Remove(int id)

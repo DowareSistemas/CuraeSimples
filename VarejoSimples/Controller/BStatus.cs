@@ -32,96 +32,122 @@ namespace VarejoSimples.Controller
 
         public static void Success(string text)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            try
             {
-                foreach (BStatusItem item in Itens)
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    item.Label.Content = $"[{DateTime.Now.ToString()}]: " + text;
-                    LogController.WriteLog(text);
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/sucess.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        item.Label.Content = $"[{DateTime.Now.ToString()}]: " + text;
+                        LogController.WriteLog(text);
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/sucess.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
 
         public static void ErrorOnSave(string entity, string exception)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (BStatusItem item in Itens)
+            try {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string msg = $"Ocorreu um problema ao salvar {entity}. Acione o suporte Doware.";
-                    LogController.WriteLog(msg + "\n" + exception);
-                    item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        string msg = $"Ocorreu um problema ao salvar {entity}. Acione o suporte Doware.";
+                        LogController.WriteLog(msg + "\n" + exception);
+                        item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
 
         internal static void Error(string v)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (BStatusItem item in Itens)
+            try {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string msg = v;
-                    item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        string msg = v;
+                        item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
 
         public static void ErrorOnFind(string entity, string exception)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (BStatusItem item in Itens)
+            try {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string msg = $"Ocorreu um problema ao carregar {entity}. Acione o suporte Doware.";
-                    LogController.WriteLog(msg + "\n" + exception);
-                    item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        string msg = $"Ocorreu um problema ao carregar {entity}. Acione o suporte Doware.";
+                        LogController.WriteLog(msg + "\n" + exception);
+                        item.Label.Content = $"[{DateTime.Now.ToString()}]: " + msg;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
 
         internal static void Alert(string v)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (BStatusItem item in Itens)
+            try {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    item.Label.Content = $"[{DateTime.Now.ToString()}]: " + v;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/warning.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        item.Label.Content = $"[{DateTime.Now.ToString()}]: " + v;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/warning.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
 
         public static void ErrorOnRemove(string entity, string exception)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (BStatusItem item in Itens)
+            try {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string msg = $"[{DateTime.Now.ToString()}]: " + $"Ocorreu um problema ao remover {entity}. Acione o suporte Doware.";
-                    LogController.WriteLog(msg + "\n" + exception);
-                    item.Label.Content = msg;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        string msg = $"[{DateTime.Now.ToString()}]: " + $"Ocorreu um problema ao remover {entity}. Acione o suporte Doware.";
+                        LogController.WriteLog(msg + "\n" + exception);
+                        item.Label.Content = msg;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch
+            {
+
+            }
         }
 
         public static void ErrorOnList(string entity, string exception)
         {
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            try
             {
-                foreach (BStatusItem item in Itens)
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string msg = $"[{DateTime.Now.ToString()}]: " + $"Ocorreu um problema ao listar {entity}. Acione o suporte Doware.";
-                    LogController.WriteLog(msg + "\n" + exception);
-                    item.Label.Content = msg;
-                    item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
-                }
-            }));
+                    foreach (BStatusItem item in Itens)
+                    {
+                        string msg = $"[{DateTime.Now.ToString()}]: " + $"Ocorreu um problema ao listar {entity}. Acione o suporte Doware.";
+                        LogController.WriteLog(msg + "\n" + exception);
+                        item.Label.Content = msg;
+                        item.Image.Source = new BitmapImage(new Uri(@"/Images/error.png", UriKind.Relative));
+                    }
+                }));
+            }
+            catch { }
         }
     }
 }
