@@ -43,6 +43,11 @@ namespace VarejoSimples.Controller
             BStatus.Success("Movimento iniciado...");
         }
 
+        internal varejo_config GetContext()
+        {
+            return db.Context;
+        }
+
         internal Movimentos Find(int movimento_id)
         {
             return db.Find(movimento_id);
@@ -920,12 +925,12 @@ Mensagem...: {sbMensagem.ToString()}");
 
         public List<Movimentos> BuscaGenerica(string search, DateTime? data_inicio, DateTime? data_fim, int pagina_atual, int numero_registros)
         {
-            return db.BuscaGenericaMovimentos(search, data_inicio, data_fim, db.Context, pagina_atual, numero_registros);
+            return db.BuscaGenericaMovimentos(search, data_inicio, data_fim, pagina_atual, numero_registros);
         }
 
         public int CountPaginacao(string search, DateTime? data_inicio, DateTime? data_fim)
         {
-            return db.CountPaginacao(search, data_inicio, data_fim, db.Context);
+            return db.CountPaginacao(search, data_inicio, data_fim);
         }
 
         public int MovimentoParaPedido()

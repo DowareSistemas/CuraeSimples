@@ -17,8 +17,8 @@ namespace VarejoSimples.Repository
             decimal valor = 0;
             decimal.TryParse(text, out valor);
 
-            var q = (from pedidos in Context.Pedidos_venda
-                     join itens_pedido in Context.Itens_pedido on pedidos.Id equals itens_pedido.Pedido_id
+            var q = (from pedidos in Context.Pedidos_venda.AsNoTracking()
+                     join itens_pedido in Context.Itens_pedido.AsNoTracking() on pedidos.Id equals itens_pedido.Pedido_id
 
                      where
                      pedidos.Id == id ||

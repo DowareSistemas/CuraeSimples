@@ -17,10 +17,10 @@ namespace VarejoSimples.Repository
             int id = 0;
             int.TryParse(desc_cod_ref, out id);
 
-            var q = (from estoque in Context.Estoque
-                     join produtos in Context.Produtos on estoque.Produto_id equals produtos.Id
-                     join marcas in Context.Marcas on produtos.Marca_id equals marcas.Id
-                     join fabricantes in Context.Fabricantes on produtos.Fabricante_id equals fabricantes.Id
+            var q = (from estoque in Context.Estoque.AsNoTracking()
+                     join produtos in Context.Produtos.AsNoTracking() on estoque.Produto_id equals produtos.Id
+                     join marcas in Context.Marcas.AsNoTracking() on produtos.Marca_id equals marcas.Id
+                     join fabricantes in Context.Fabricantes.AsNoTracking() on produtos.Fabricante_id equals fabricantes.Id
 
                      where
                      (produtos.Descricao.Contains(desc_cod_ref) ||

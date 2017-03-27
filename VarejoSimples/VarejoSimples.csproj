@@ -425,6 +425,7 @@
     <Compile Include="Repository\UnidadesRepository.cs" />
     <Compile Include="Repository\UsuariosRepository.cs" />
     <Compile Include="Repository\VendedoresRepository.cs" />
+    <Compile Include="Tasks\ConsultaMovimentosTask.cs" />
     <Compile Include="Tasks\ConsultaParcelasTask.cs" />
     <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
     <Compile Include="Tasks\Menu_caxaTask.cs" />

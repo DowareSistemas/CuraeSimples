@@ -10,7 +10,6 @@
         WindowStartupLocation="CenterScreen"
         IsVisibleChanged="Window_IsVisibleChanged"
         PreviewKeyDown="Window_PreviewKeyDown"
-        Closing="Window_Closing"
         Title="Consulta Movimentos" Height="600" Width="1024">
     <Grid Background="White">
         <DataGrid x:Name="dataGrid" MouseDoubleClick="dataGrid_MouseDoubleClick" Margin="10,35,10,10">

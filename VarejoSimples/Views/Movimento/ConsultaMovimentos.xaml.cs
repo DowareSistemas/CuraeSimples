@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
 using VarejoSimples.Model;
+using VarejoSimples.Tasks;
 
 namespace VarejoSimples.Views.Movimento
 {
@@ -22,7 +23,6 @@ namespace VarejoSimples.Views.Movimento
     /// </summary>
     public partial class ConsultaMovimentos : Window
     {
-        Thread thread_busca;
         varejo_config Context = new varejo_config();
         public ConsultaMovimentos()
         {
@@ -38,30 +38,6 @@ namespace VarejoSimples.Views.Movimento
             txPagina_atual.ToNumeric();
         }
 
-        private void BuscaGenerica(string busca, DateTime? data_inicio, DateTime? data_fim, int pagina_atual, int numero_registros)
-        {
-            MovimentosController movController = new MovimentosController();
-
-            txPesquisa.Dispatcher.Invoke(new Action<DatePicker>(tx => txData_inicio.Focus()), txData_inicio);
-            txPesquisa.Dispatcher.Invoke(new Action<TextBox>(tx => txPesquisa.IsEnabled = false), txPesquisa);
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = false), GridNavegacao);
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = null), dataGrid);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Visible), imgLoading);
-
-            List<Movimentos> list = movController.BuscaGenerica(busca, data_inicio, data_fim, pagina_atual, numero_registros);
-            List<MovimentosAdapter> adapters = new List<MovimentosAdapter>();
-
-            list.ForEach(e => adapters.Add(new MovimentosAdapter(e, Context)));
-            dataGrid.Dispatcher.Invoke(new Action<DataGrid>(dt => dataGrid.ItemsSource = adapters), dataGrid);
-
-            txPesquisa.Dispatcher.Invoke(new Action<TextBox>(tx => txPesquisa.IsEnabled = true), txPesquisa);
-            txPesquisa.Dispatcher.Invoke(new Action<TextBox>(tx => txPesquisa.Focus()), txPesquisa);
-            GridNavegacao.Dispatcher.Invoke(new Action<Grid>(grd => GridNavegacao.IsEnabled = true), GridNavegacao);
-            imgLoading.Dispatcher.Invoke(new Action<Image>(img => imgLoading.Visibility = Visibility.Hidden), imgLoading);
-
-            thread_busca.Abort();
-        }
-
         private void AcionarBusca()
         {
             string busca = txPesquisa.Text;
@@ -70,9 +46,8 @@ namespace VarejoSimples.Views.Movimento
             int pagina_atual = (int.Parse(txPagina_atual.Text) * int.Parse(txNumero_registros.Text));
             int numero_registros = int.Parse(txNumero_registros.Text);
 
-            thread_busca = new Thread(() =>
-            BuscaGenerica(busca, data_inicio, data_fim, pagina_atual, numero_registros));
-            thread_busca.Start();
+            ConsultaMovimentosTask task = new ConsultaMovimentosTask(this);
+            task.Execute(new object[] { busca, data_inicio, data_fim, pagina_atual, numero_registros });
         }
 
         bool feito = false;
@@ -111,7 +86,6 @@ namespace VarejoSimples.Views.Movimento
         {
             if (e.Key == Key.F12)
             {
-                thread_busca.Abort();
                 dataGrid.IsEnabled = true;
                 txPesquisa.IsEnabled = true;
                 GridNavegacao.IsEnabled = true;
@@ -119,12 +93,6 @@ namespace VarejoSimples.Views.Movimento
                 txPesquisa.Focus();
                 Context = new varejo_config();
             }
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (thread_busca.ThreadState == ThreadState.Running)
-                thread_busca.Abort();
         }
 
         private void btProximo_Click(object sender, RoutedEventArgs e)
@@ -193,33 +161,33 @@ namespace VarejoSimples.Views.Movimento
 
         public MovimentosAdapter(Movimentos movimento, varejo_config context)
         {
-        //    try
-        //    {
-                Movimentos = movimento;
+            //    try
+            //    {
+            Movimentos = movimento;
 
-                if (movimento.Cliente_id > 0)
-                {
-                    Cliente = (from cliente in context.Clientes
-                               where cliente.Id == movimento.Cliente_id
-                               select cliente.Nome).SingleOrDefault();
-                }
+            if (movimento.Cliente_id > 0)
+            {
+                Cliente = (from cliente in context.Clientes
+                           where cliente.Id == movimento.Cliente_id
+                           select cliente.Nome).SingleOrDefault();
+            }
 
-                if (movimento.Fornecedor_id > 0)
-                {
-                    Fornecedor = (from fornecedor in context.Fornecedores
-                                  where fornecedor.Id == movimento.Fornecedor_id
-                                  select fornecedor.Nome).SingleOrDefault();
-                }
-                
-                Tipo_movimento = (from tm in context.Tipos_movimento
-                                  where tm.Id == movimento.Tipo_movimento_id
-                                  select tm).FirstOrDefault();
+            if (movimento.Fornecedor_id > 0)
+            {
+                Fornecedor = (from fornecedor in context.Fornecedores
+                              where fornecedor.Id == movimento.Fornecedor_id
+                              select fornecedor.Nome).SingleOrDefault();
+            }
 
-                Usuario = (from u in context.Usuarios
-                           where u.Id == movimento.Usuario_id
-                           select u.Nome).SingleOrDefault();
-       //     }
-        //    catch (Exception ex) { }
+            Tipo_movimento = (from tm in context.Tipos_movimento
+                              where tm.Id == movimento.Tipo_movimento_id
+                              select tm).FirstOrDefault();
+
+            Usuario = (from u in context.Usuarios
+                       where u.Id == movimento.Usuario_id
+                       select u.Nome).SingleOrDefault();
+            //     }
+            //    catch (Exception ex) { }
         }
 
         public string Cliente { get; set; }
