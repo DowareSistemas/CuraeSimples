@@ -1130,6 +1130,8 @@
     <Resource Include="Images\pdv_close.png" />
     <Resource Include="Images\ir_pedido.png" />
     <Resource Include="Images\ir_pedido_press.png" />
+    <Resource Include="Images\logo-icone.png" />
+    <Resource Include="Images\logo-fonte.png" />
     <Content Include="Images\questao.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

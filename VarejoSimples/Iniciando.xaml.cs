@@ -23,15 +23,8 @@ namespace VarejoSimples
         public Iniciando()
         {
             InitializeComponent();
-
-            this.IsVisibleChanged += Window_IsVisibleChanged;
+            
         }
-
-        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            Start();
-        }
-
         private bool feito = false;
 
         private void Start()
@@ -72,6 +65,11 @@ namespace VarejoSimples
         {
             if (!EnabledClose)
                 e.Cancel = true;
+        }
+
+        private void fadeCompleted(object sender, EventArgs e)
+        {
+            Start();
         }
     }
 }
