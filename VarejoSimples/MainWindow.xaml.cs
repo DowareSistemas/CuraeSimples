@@ -76,11 +76,6 @@ namespace VarejoSimples
             else
                if (p.Valor.Equals("N"))
                 listView.Items.Remove(mi_consultasCustomizadas);
-
-            new Thread(() =>
-            {
-                Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
-            }).Start();
             
             this.Show();
         }

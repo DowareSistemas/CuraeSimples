@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DarumaFramework_NFCe;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -69,6 +70,7 @@ namespace VarejoSimples
 
         private void fadeCompleted(object sender, EventArgs e)
         {
+            Declaracoes.regAlterarValor_NFCe_Daruma("CONFIGURACAO\\EmpPK", "0oz/7sntevE3BkNUMV+GJA==");
             Start();
         }
     }

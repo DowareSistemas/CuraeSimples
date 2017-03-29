@@ -26,8 +26,8 @@
             <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Right" Height="2" Margin="0,182,0,0" VerticalAlignment="Top" Width="299"/>
             <Label x:Name="label" Content="Doware Curae" HorizontalAlignment="Right" Margin="0,84,0,0" VerticalAlignment="Top" FontSize="26.667" Width="299"/>
             <Label x:Name="label1" Content="Versão - 1.0.00 (BETA)" HorizontalAlignment="Left" Margin="179,189,0,0" VerticalAlignment="Top" FontSize="20" Width="255" Foreground="#FF515151"/>
-            <Image x:Name="image" HorizontalAlignment="Right" Height="61" Margin="0,6,69,0" VerticalAlignment="Top" Width="145" Source="Images/logo-icone.png"/>
-            <Image x:Name="image_Copy" HorizontalAlignment="Right" Height="66" VerticalAlignment="Top" Width="154" Source="Images/logo-fonte.png" Margin="0,-18,0,0"/>
+            <Image x:Name="image" HorizontalAlignment="Right" Height="74" Margin="0,0,74,0" VerticalAlignment="Top" Width="148" Source="Images/logo-icone.png"/>
+            <Image x:Name="image_Copy" HorizontalAlignment="Right" Height="102" VerticalAlignment="Top" Width="134" Source="Images/logo-fonte.png" Margin="0,-24,0,0"/>
             <Label x:Name="label_Copy" Content="Varejo Simples" HorizontalAlignment="Right" Margin="0,129,0,0" VerticalAlignment="Top" FontSize="18.667" Width="299"/>
         </Grid>
     </Grid>
