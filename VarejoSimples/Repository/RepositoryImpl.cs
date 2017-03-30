@@ -17,6 +17,8 @@ namespace VarejoSimples.Repository
     {
         private VarejoSimples.Model.varejo_config _context;
         private bool hasTransaction = false;
+        private bool antiTrackingEnabled = true;
+
         public RepositoryImpl()
         {
             _context = new Model.varejo_config();
@@ -175,11 +177,25 @@ namespace VarejoSimples.Repository
             }
         }
 
+        public void DisableAntiTracking()
+        {
+            antiTrackingEnabled = false;
+        }
+
+        public void EnableAntiTracking()
+        {
+            antiTrackingEnabled = true;
+        }
+
         public IQueryable<T> Where(Expression<Func<T, bool>> query)
         {
             try
             {
-                return _context.Set<T>().Where(query).AsNoTracking();
+                IQueryable<T> result = (antiTrackingEnabled
+                    ? _context.Set<T>().Where(query).AsNoTracking()
+                    : _context.Set<T>().Where(query));
+
+                return result;
             }
             catch (Exception ex)
             {

@@ -68,6 +68,11 @@ namespace VarejoSimples.Controller
             return result;
         }
 
+        internal void DisableAntiTracking()
+        {
+            db.DisableAntiTracking();
+        }
+
         public int CountByCaixa(int caixa_id)
         {
             return db.Where(m => m.Caixa_id == caixa_id).Count();

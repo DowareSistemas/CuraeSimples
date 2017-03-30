@@ -6,15 +6,23 @@ using System.Linq;
 using System.Text;
 using CrystalDecisions.CrystalReports.Engine;
 using System.IO;
+using VarejoSimples.Views.Reports;
 
 namespace Base.Controller_Reports
 {
     public class ReportController : IControllerReport
     {
         private List<ReportDataSource> DataSources = null;
+        private List<KeyValuePair<string, object>> Parameters = null;
         private ReportController()
         {
             DataSources = new List<ReportDataSource>();
+            Parameters = new List<KeyValuePair<string, object>>();
+        }
+
+        public void BindParameter(string parameterName, object value)
+        {
+            this.Parameters.Add(new KeyValuePair<string, object>(parameterName, value));
         }
 
         public List<ReportFile> ReportFiles(string prefix)
@@ -69,6 +77,11 @@ namespace Base.Controller_Reports
             });
         }
 
+        public void ShowReport(string title, string reportFileName)
+        {
+            ReportViewWindow window = new ReportViewWindow(title, GetReportDocument(reportFileName));
+        }
+
         public ReportDocument GetReportDocument(string reportFileName)
         {
             if (!reportFileName.EndsWith(".rpt"))
@@ -90,6 +103,10 @@ namespace Base.Controller_Reports
                         break;
                 }
             }
+
+            if (this.Parameters.Count > 0)
+                this.Parameters.ForEach(param => rd.SetParameterValue(param.Key, param.Value));
+
             return rd;
         }
     }

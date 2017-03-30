@@ -12,6 +12,8 @@ namespace Base.Controller_Reports
         ReportDocument GetReportDocument(string reportFileName);
         void AddDataSource(string name, System.Collections.IEnumerable enumerable);
         void AddDataSource(string name, DataTable datatable);
+        void BindParameter(string paramenterName, object value);
         List<ReportFile> ReportFiles(string prefix);
+        void ShowReport(string title, string reportFileName);
     }
 }
