@@ -39,6 +39,7 @@ namespace VarejoSimples.Controller
 
         public static void ToMoney(this TextBox txInput)
         {
+            txInput.TextWrapping = System.Windows.TextWrapping.NoWrap;
             txInput.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
             txInput.PreviewTextInput += TxInput_PreviewTextInput;
             txInput.GotFocus += TxInput_GotFocus;
@@ -125,9 +126,13 @@ namespace VarejoSimples.Controller
 
         private static void TxInput_LostFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBox txInput = (sender as TextBox);
-            decimal content = decimal.Parse(txInput.Text);
-            txInput.Text = content.ToString("N2");
+            try
+            {
+                TextBox txInput = (sender as TextBox);
+                decimal content = decimal.Parse(txInput.Text);
+                txInput.Text = content.ToString("N2");
+            }
+            catch { }
         }
 
         public static void AplicarPadroes(this DataGrid dt, bool isRead = true)

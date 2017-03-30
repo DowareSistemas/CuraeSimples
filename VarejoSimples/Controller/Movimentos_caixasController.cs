@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using VarejoSimples.Enums;
 using VarejoSimples.Model;
 using VarejoSimples.Repository;
@@ -36,6 +37,37 @@ namespace VarejoSimples.Controller
             }
         }
 
+        public decimal GetTotalMovimentacoesCaixaAtual(Tipo_movimentacao_caixa tipo)
+        {
+            int Caixa_id = Get_ID_CaixaAtualUsuario();
+            int ultimaAbertura = GetUltimoMovimentoAbertura().Id;
+            if (Caixa_id == 0)
+                return 0;
+
+            int tipo_mov = (int)tipo;
+
+            decimal result = db.Where(e =>
+                e.Caixa_id == Caixa_id &&
+                e.Id > ultimaAbertura &&
+                e.Tipo_mov == tipo_mov).Sum(e => e.Valor);
+
+            return result;
+        }
+
+        public decimal GetTotalCaixa()
+        {
+            int caixa_id = Get_ID_CaixaAtualUsuario();
+            int ultimaAbertura = GetUltimoMovimentoAbertura().Id;
+            if (caixa_id == 0)
+                return 0;
+
+            decimal result = db.Where(e =>
+                e.Caixa_id == caixa_id &&
+                e.Id >= ultimaAbertura).Sum(e => e.Valor);
+
+            return result;
+        }
+
         public int CountByCaixa(int caixa_id)
         {
             return db.Where(m => m.Caixa_id == caixa_id).Count();
@@ -65,14 +97,54 @@ namespace VarejoSimples.Controller
                 BStatus.Error("Ocorreu um problema ao abrir o caixa. Acione o suporte Doware.");
         }
 
-        public bool MovimentarCaixa(Tipo_movimentacao_caixa tipo_mov, decimal valor, int forma_pagamento_id, int movimento_id, string descricao)
+        public bool MovimentarCaixa(Tipo_movimentacao_caixa tipo_mov,
+            decimal valor,
+            int forma_pagamento_id,
+            int usuario_id,
+            int movimento_id,
+            string descricao)
         {
+
+            if (valor == 0)
+            {
+                MessageBox.Show("Informe o valor", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(descricao))
+            {
+                MessageBox.Show("Informe o motivo", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            if (usuario_id == 0)
+            {
+                MessageBox.Show("Informe o usuário", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            if (forma_pagamento_id == 0)
+            {
+                MessageBox.Show("Informe a condição de pagamento", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
+            Formas_pagamento fpg = new Formas_pagamentoController().Find(forma_pagamento_id);
+            if (fpg.Tipo_pagamento != (int)Tipo_pagamento.DINHEIRO)
+            {
+                MessageBox.Show("A condição de pagamento para movimentações no caixa deve ser do tipo 'DINHEIR'", "Confição de pagamento incompatível", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return false;
+            }
+
             Movimentos_caixas mc = new Movimentos_caixas();
             mc.Caixa_id = Get_ID_CaixaAtualUsuario();
             mc.Forma_pagamento_id = forma_pagamento_id;
             mc.Loja_id = UsuariosController.LojaAtual.Id;
-            mc.Usuario_id = UsuariosController.UsuarioAtual.Id;
-            mc.Valor = valor;
+            mc.Usuario_id = usuario_id;
+            mc.Valor = (tipo_mov == Tipo_movimentacao_caixa.ABERTURA || tipo_mov == Tipo_movimentacao_caixa.ENTRADA
+                ? valor
+                : valor * (-1));
+            mc.Data = DateTime.Now;
             mc.Movimento_id = movimento_id;
             mc.Tipo_mov = (int)tipo_mov;
             mc.Descricao = descricao;

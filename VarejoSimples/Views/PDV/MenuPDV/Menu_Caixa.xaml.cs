@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VarejoSimples.Controller;
+using VarejoSimples.Enums;
 using VarejoSimples.Tasks;
 
 namespace VarejoSimples.Views.PDV.MenuPDV
@@ -28,9 +29,31 @@ namespace VarejoSimples.Views.PDV.MenuPDV
             controller = new Movimentos_caixasController();
 
             dataGrid.AplicarPadroes();
+            ListarMovimentacoes();
+        }
 
+        private void ListarMovimentacoes()
+        {
             Menu_CaixaTask task = new Menu_CaixaTask(this);
             task.Execute(0);
+        }
+
+        private void btEntrada_Click(object sender, RoutedEventArgs e)
+        {
+            ShowMovimentacao(Tipo_movimentacao_caixa.ENTRADA);
+        }
+
+        private void ShowMovimentacao(Tipo_movimentacao_caixa tipo)
+        {
+            EntradaValorCaixa evc = new EntradaValorCaixa(tipo);
+            evc.ShowDialog();
+
+            ListarMovimentacoes();
+        }
+
+        private void btRetirada_Click(object sender, RoutedEventArgs e)
+        {
+            ShowMovimentacao(Tipo_movimentacao_caixa.SAIDA);
         }
     }
 }

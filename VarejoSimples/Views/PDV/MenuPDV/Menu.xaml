@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Title="Menu" Height="500" Width="1015">
+        Title="Menu" Height="525" Width="1015">
     <Grid Background="#FF999999">
         <Grid Margin="2" Background="#FFF9F9F9">
             <Grid Height="35" VerticalAlignment="Top" Background="#FFF0F0F0">

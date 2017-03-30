@@ -43,6 +43,9 @@ namespace VarejoSimples
 
         public MainWindow(Iniciando ini)
         {
+            varejo_config db = new varejo_config();
+            db.Database.CreateIfNotExists();
+
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");
 

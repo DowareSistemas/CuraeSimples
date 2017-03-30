@@ -584,6 +584,12 @@
     <Compile Include="Views\PDV\CardPagamento.xaml.cs">
       <DependentUpon>CardPagamento.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\DigitarSenhaUsuario.xaml.cs">
+      <DependentUpon>DigitarSenhaUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\EntradaValorCaixa.xaml.cs">
+      <DependentUpon>EntradaValorCaixa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\EventMonitors\MonitorInsereRemove.cs" />
     <Compile Include="Views\PDV\EventMonitors\MonitorSelecaoPedido.cs" />
     <Compile Include="Views\PDV\ItemPedidoPdv.xaml.cs">
@@ -928,6 +934,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PDV\CardPagamento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\DigitarSenhaUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\EntradaValorCaixa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

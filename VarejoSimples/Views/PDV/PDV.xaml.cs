@@ -373,8 +373,17 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
             if (e.Key == Key.F8)
                 SalvarPedido();
+
+            if (e.Key == Key.F12)
+                ShowMenu();
         }
-        
+
+        private void ShowMenu()
+        {
+            MenuPDV.Menu menu = new MenuPDV.Menu();
+            menu.ShowDialog();
+        }
+
         private void txQuant_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -461,8 +470,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
         private void btMenu_Click(object sender, RoutedEventArgs e)
         {
-            MenuPDV.Menu menu = new MenuPDV.Menu();
-            menu.ShowDialog();
+            ShowMenu();
         }
     }
 }
