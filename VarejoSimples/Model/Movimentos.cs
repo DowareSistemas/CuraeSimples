@@ -19,6 +19,7 @@ namespace VarejoSimples.Model
         {
             this.Itens_movimento = new HashSet<Itens_movimento>();
             this.Itens_pagamento = new HashSet<Itens_pagamento>();
+            this.Documentos_fiscais = new HashSet<Documentos_fiscais>();
         }
     
         public int Id { get; set; }
@@ -27,7 +28,6 @@ namespace VarejoSimples.Model
         public int Usuario_id { get; set; }
         public int Cliente_id { get; set; }
         public int Fornecedor_id { get; set; }
-        public int Documento_id { get; set; }
         public int Tipo_movimento_id { get; set; }
         public bool Trocou_vendedor { get; set; }
     
@@ -37,5 +37,7 @@ namespace VarejoSimples.Model
         public virtual ICollection<Itens_pagamento> Itens_pagamento { get; set; }
         public virtual Usuarios Usuarios { get; set; }
         public virtual Tipos_movimento Tipos_movimento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Documentos_fiscais> Documentos_fiscais { get; set; }
     }
 }

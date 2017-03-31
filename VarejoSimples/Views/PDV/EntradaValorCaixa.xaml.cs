@@ -76,13 +76,19 @@ namespace VarejoSimples.Views.PDV
 
         private void Confirmar()
         {
+            if(decimal.Parse(txValor_movimentacao.Text) == 0)
+            {
+                MessageBox.Show("Informe o valor", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
             Movimentos_caixasController controller = new Movimentos_caixasController();
 
             if (controller.MovimentarCaixa(
                 Tipo_movimentacao,
                 decimal.Parse(txValor_movimentacao.Text),
-                int.Parse(txCod_usuario.Text),
                 int.Parse(txCod_forma_pagamento.Text),
+                int.Parse(txCod_usuario.Text),
                 0,
                 txDescricao_movimento.Text))
             {

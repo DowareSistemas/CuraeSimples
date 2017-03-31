@@ -69,6 +69,18 @@ namespace VarejoSimples.Views.PDV
                     MostraFormaPagamento(2);
                     break;
 
+                case Key.F3:
+                    MostraFormaPagamento(3);
+                    break;
+
+                case Key.F4:
+                    MostraFormaPagamento(4);
+                    break;
+
+                case Key.F5:
+                    MostraFormaPagamento(5);
+                    break;
+
                 case Key.F6:
                     NFCe();
                     break;

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsFechamentoCaixa" targetNamespace="http://tempuri.org/DsFechamentoCaixa.xsd" xmlns:mstns="http://tempuri.org/DsFechamentoCaixa.xsd" xmlns="http://tempuri.org/DsFechamentoCaixa.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsFechamentoCaixa" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsFechamentoCaixa" msprop:Generator_UserDSName="DsFechamentoCaixa">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Itens_pagamento" msprop:Generator_TableClassName="Itens_pagamentoDataTable" msprop:Generator_TableVarName="tableItens_pagamento" msprop:Generator_TablePropName="Itens_pagamento" msprop:Generator_RowDeletingName="Itens_pagamentoRowDeleting" msprop:Generator_RowChangingName="Itens_pagamentoRowChanging" msprop:Generator_RowEvHandlerName="Itens_pagamentoRowChangeEventHandler" msprop:Generator_RowDeletedName="Itens_pagamentoRowDeleted" msprop:Generator_UserTableName="Itens_pagamento" msprop:Generator_RowChangedName="Itens_pagamentoRowChanged" msprop:Generator_RowEvArgName="Itens_pagamentoRowChangeEvent" msprop:Generator_RowClassName="Itens_pagamentoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Condicao_pagamento" msprop:Generator_ColumnVarNameInTable="columnCondicao_pagamento" msprop:Generator_ColumnPropNameInRow="Condicao_pagamento" msprop:Generator_ColumnPropNameInTable="Condicao_pagamentoColumn" msprop:Generator_UserColumnName="Condicao_pagamento" type="xs:string" minOccurs="0" />
+              <xs:element name="Valor" msprop:Generator_ColumnVarNameInTable="columnValor" msprop:Generator_ColumnPropNameInRow="Valor" msprop:nullValue="0" msprop:Generator_ColumnPropNameInTable="ValorColumn" msprop:Generator_UserColumnName="Valor" type="xs:decimal" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,35 @@
+﻿<Window x:Class="VarejoSimples.Views.PDV.FechamentoCaixa"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        PreviewKeyDown="Window_PreviewKeyDown"
+        Title="FechamentoCaixa" Height="455" Width="490">
+    <Grid Background="#FF999999">
+
+        <Grid Margin="2" Background="White">
+            <ScrollViewer Background="White" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="scroll1" BorderBrush="Black" Margin="0,102,0,0"  Height="307" VerticalAlignment="Top">
+                <Grid>
+                    <StackPanel  x:Name="sp_formas_pag" />
+                </Grid>
+            </ScrollViewer>
+            <Grid Height="35" VerticalAlignment="Top" Background="#FFF0F0F0">
+                <Label x:Name="lbTitulo" Content="Fechamento de caixa" Margin="6,4,59,0" FontSize="20" Padding="5,0" Height="27" VerticalAlignment="Top"/>
+                <Button x:Name="btFechar" TabIndex="99" Click="btFechar_Click" BorderThickness="0" Margin="0,1,1,1" HorizontalAlignment="Right" Width="41">
+                    <StackPanel>
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_close.png" Height="22"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Label x:Name="label" Content="Informe os valores de acordo com as condições de &#xD;&#xA;pagamento e pressione F1 para confirmar" Margin="10,40,10,0" VerticalAlignment="Top" Height="62" FontSize="18"/>
+            <Button x:Name="btConfirmar" TabIndex="1" Content="_Confirmar (F1)" HorizontalAlignment="Right" Margin="0,0,120,9" VerticalAlignment="Bottom" Width="105" Height="28" Click="btConfirmar_Click"/>
+            <Button x:Name="btCancelar" TabIndex="2" Content="Ca_ncelar (Esc)" HorizontalAlignment="Right" Margin="0,0,10,9" VerticalAlignment="Bottom" Width="105" Height="28"/>
+        </Grid>
+
+    </Grid>
+</Window>

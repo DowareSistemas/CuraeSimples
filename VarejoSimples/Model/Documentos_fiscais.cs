@@ -34,5 +34,8 @@ namespace VarejoSimples.Model
         public bool Inutilizado { get; set; }
         public Nullable<System.DateTime> Data_inutilizacao { get; set; }
         public int Numero_documento { get; set; }
+        public int Movimento_id { get; set; }
+    
+        public virtual Movimentos Movimentos { get; set; }
     }
 }

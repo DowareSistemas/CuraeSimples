@@ -78,6 +78,7 @@
           <Property Name="Inutilizado" Type="bit" Nullable="false" />
           <Property Name="Data_inutilizacao" Type="datetime" />
           <Property Name="Numero_documento" Type="int" Nullable="false" />
+          <Property Name="Movimento_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Estoque">
           <Key>
@@ -258,7 +259,6 @@
           <Property Name="Usuario_id" Type="int" Nullable="false" />
           <Property Name="Cliente_id" Type="int" Nullable="false" />
           <Property Name="Fornecedor_id" Type="int" Nullable="false" />
-          <Property Name="Documento_id" Type="int" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="int" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="bit" Nullable="false" />
         </EntityType>
@@ -467,6 +467,18 @@
           <Property Name="Usuario_id" Type="int" Nullable="false" />
           <Property Name="Loja_id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="DOCF_MOV_1352008XS">
+          <End Role="Movimentos" Type="Self.Movimentos" Multiplicity="1" />
+          <End Role="Documentos_fiscais" Type="Self.Documentos_fiscais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movimentos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Documentos_fiscais">
+              <PropertyRef Name="Movimento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Estoque__Loja_id__4BAC3F29">
           <End Role="Lojas" Type="Self.Lojas" Multiplicity="1" />
           <End Role="Estoque" Type="Self.Estoque" Multiplicity="*" />
@@ -934,6 +946,10 @@
           <EntitySet Name="Unidades" EntityType="Self.Unidades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendedores" EntityType="Self.Vendedores" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="DOCF_MOV_1352008XS" Association="Self.DOCF_MOV_1352008XS">
+            <End Role="Movimentos" EntitySet="Movimentos" />
+            <End Role="Documentos_fiscais" EntitySet="Documentos_fiscais" />
+          </AssociationSet>
           <AssociationSet Name="FK__Estoque__Loja_id__4BAC3F29" Association="Self.FK__Estoque__Loja_id__4BAC3F29">
             <End Role="Lojas" EntitySet="Lojas" />
             <End Role="Estoque" EntitySet="Estoque" />
@@ -1262,6 +1278,10 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Vendedores" EntitySet="Vendedores" />
           </AssociationSet>
+          <AssociationSet Name="DOCF_MOV_1352008XS" Association="Model.DOCF_MOV_1352008XS">
+            <End Role="Movimentos" EntitySet="Movimentos" />
+            <End Role="Documentos_fiscais" EntitySet="Documentos_fiscais" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Caixas">
           <Key>
@@ -1340,6 +1360,8 @@
           <Property Name="Inutilizado" Type="Boolean" Nullable="false" />
           <Property Name="Data_inutilizacao" Type="DateTime" Precision="3" />
           <Property Name="Numero_documento" Type="Int32" Nullable="false" />
+          <Property Name="Movimento_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Movimentos" Relationship="Model.DOCF_MOV_1352008XS" FromRole="Documentos_fiscais" ToRole="Movimentos" />
         </EntityType>
         <EntityType Name="Estoque">
           <Key>
@@ -1545,13 +1567,13 @@
           <Property Name="Usuario_id" Type="Int32" Nullable="false" />
           <Property Name="Cliente_id" Type="Int32" Nullable="false" />
           <Property Name="Fornecedor_id" Type="Int32" Nullable="false" />
-          <Property Name="Documento_id" Type="Int32" Nullable="false" />
           <Property Name="Tipo_movimento_id" Type="Int32" Nullable="false" />
           <Property Name="Trocou_vendedor" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Movim__02084FDA" FromRole="Movimentos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Itens_pagamento" Relationship="Model.FK__Itens_pag__Movim__7A672E12" FromRole="Movimentos" ToRole="Itens_pagamento" />
           <NavigationProperty Name="Usuarios" Relationship="Model.FK__Movimento__Usuar__76969D2E" FromRole="Movimentos" ToRole="Usuarios" />
           <NavigationProperty Name="Tipos_movimento" Relationship="Model.Mov_Tp_1999800XBA" FromRole="Movimentos" ToRole="Tipos_movimento" />
+          <NavigationProperty Name="Documentos_fiscais" Relationship="Model.DOCF_MOV_1352008XS" FromRole="Movimentos" ToRole="Documentos_fiscais" />
         </EntityType>
         <EntityType Name="Movimentos_caixas">
           <Key>
@@ -2229,6 +2251,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DOCF_MOV_1352008XS">
+          <End Type="Model.Movimentos" Role="Movimentos" Multiplicity="1" />
+          <End Type="Model.Documentos_fiscais" Role="Documentos_fiscais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movimentos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Documentos_fiscais">
+              <PropertyRef Name="Movimento_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2291,6 +2325,7 @@
           <EntitySetMapping Name="Documentos_fiscais">
             <EntityTypeMapping TypeName="Model.Documentos_fiscais">
               <MappingFragment StoreEntitySet="Documentos_fiscais">
+                <ScalarProperty Name="Movimento_id" ColumnName="Movimento_id" />
                 <ScalarProperty Name="Numero_documento" ColumnName="Numero_documento" />
                 <ScalarProperty Name="Data_inutilizacao" ColumnName="Data_inutilizacao" />
                 <ScalarProperty Name="Inutilizado" ColumnName="Inutilizado" />
@@ -2498,7 +2533,6 @@
               <MappingFragment StoreEntitySet="Movimentos">
                 <ScalarProperty Name="Trocou_vendedor" ColumnName="Trocou_vendedor" />
                 <ScalarProperty Name="Tipo_movimento_id" ColumnName="Tipo_movimento_id" />
-                <ScalarProperty Name="Documento_id" ColumnName="Documento_id" />
                 <ScalarProperty Name="Fornecedor_id" ColumnName="Fornecedor_id" />
                 <ScalarProperty Name="Cliente_id" ColumnName="Cliente_id" />
                 <ScalarProperty Name="Usuario_id" ColumnName="Usuario_id" />

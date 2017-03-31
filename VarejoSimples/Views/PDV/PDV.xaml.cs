@@ -50,6 +50,7 @@ namespace VarejoSimples.Views.PDV
             MonitorInsereRemove.Instance.ItemInserido += Instance_ItemInserido;
             MonitorInsereRemove.Instance.ItemRemovido += Instance_ItemRemovido;
             MonitorSelecaoPedido.Instance.PedidoSelecionado += Instance_PedidoSelecionado;
+            txQuant.Text = "1,00";
         }
 
         private void ReconficurarUI()
@@ -108,6 +109,16 @@ namespace VarejoSimples.Views.PDV
 
         private void Setup()
         {
+            Movimentos_caixasController mc_controller = new Movimentos_caixasController();
+            if(!mc_controller.CaixaAberto(UsuariosController.UsuarioAtual.Id))
+            {
+                AberturaCaixa ac = new AberturaCaixa();
+                ac.ShowDialog();
+
+                if (!ac.CaixaAberto)
+                    Close();
+            }
+
             txProduto.Focus();
             Pago = false;
             txQuant.ToMoney();

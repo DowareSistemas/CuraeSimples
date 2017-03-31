@@ -12,9 +12,7 @@ namespace VarejoSimples.Tests
     [TestClass]
     public class TestClientesController
     {
-        int CLIENTE_ID_BASE = 11;
-        [TestMethod]
-        public void DEVE_EXECUTAR_CADASTRO_CLIENTE()
+        private Clientes GetCliente()
         {
             Clientes cliente = new Clientes();
             cliente.Nome = "Teste 001";
@@ -29,15 +27,30 @@ namespace VarejoSimples.Tests
             cliente.Cep = "27281-440";
             cliente.Numero = 12;
 
+            return cliente;
+        }
+
+
+        [TestMethod]
+        public void DEVE_EXECUTAR_CADASTRO_CLIENTE()
+        {
             ClientesController clientesController = new ClientesController();
-            Assert.IsTrue(clientesController.Save(cliente));
+            Clientes cliente = GetCliente();
+            bool result = clientesController.Save(cliente);
+            clientesController.Remove(cliente.Id);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
         public void DEVE_EXECUTAR_BUSCA_CLIENTES_CASO_EXISTA()
         {
             ClientesController controller = new ClientesController();
+            Clientes cliente = GetCliente();
+            controller.Save(cliente);
+
             List<Clientes> resultList = controller.Search("Mar");
+
+            controller.Remove(cliente.Id);
 
             Assert.IsTrue(resultList.Count > 0);
         }
@@ -46,25 +59,24 @@ namespace VarejoSimples.Tests
         public void DEVE_BUSCAR_CLIENTE_APARTIR_DO_CPF()
         {
             ClientesController controller = new ClientesController();
+            Clientes cliente = GetCliente();
+            controller.Save(cliente);
+
             List<Clientes> resultList = controller.Search("444.999.777-00");
 
             Assert.IsTrue(resultList.FirstOrDefault(e => e.Cpf.Equals("444.999.777-00")) != null);
-        }
 
-        [TestMethod]
-        public void DEVE_BUSCAR_CLIENTE_APARTIR_DO_ID()
-        {
-            ClientesController controller = new ClientesController();
-            List<Clientes> resultList = controller.Search(CLIENTE_ID_BASE.ToString());
-
-            Assert.IsTrue(resultList.FirstOrDefault(e => e.Id == CLIENTE_ID_BASE) != null);
+            controller.Remove(cliente.Id);
         }
 
         [TestMethod]
         public void DEVE_EXCLUIR_CLIENTE_CASO_EXISTA()
         {
             ClientesController controller = new ClientesController();
-            Assert.IsTrue(controller.Remove(CLIENTE_ID_BASE));
+            Clientes cliente = GetCliente();
+            controller.Save(cliente);
+            
+            Assert.IsTrue(controller.Remove(cliente.Id));
         }
     }
 }

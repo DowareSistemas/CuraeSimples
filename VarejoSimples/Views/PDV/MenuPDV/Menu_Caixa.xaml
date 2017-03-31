@@ -22,7 +22,7 @@
         </DataGrid>
 
         <Label x:Name="label" Content="Caixa" HorizontalAlignment="Left" Margin="10,3,0,0" VerticalAlignment="Top" FontSize="24" Foreground="#FF1B8DFF"/>
-        <Button x:Name="btFecharCaixa" Content="Fechar Caixa" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="110" Height="30" FontSize="14.667"/>
+        <Button x:Name="btFecharCaixa" Content="Fechar Caixa" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="110" Height="30" FontSize="14.667" Click="btFecharCaixa_Click"/>
         <Button x:Name="btRetirada" Content="Retirada" HorizontalAlignment="Right" Margin="0,10,125,0" VerticalAlignment="Top" Width="95" Height="30" FontSize="14.667" Click="btRetirada_Click"/>
         <Button x:Name="btEntrada" Content="Entrada" HorizontalAlignment="Right" Margin="0,10,225,0" VerticalAlignment="Top" Width="95" Height="30" FontSize="14.667" Click="btEntrada_Click"/>
         <Border BorderBrush="#FFDADADA" BorderThickness="1" Margin="0,50,0,0" Height="2" VerticalAlignment="Top"/>

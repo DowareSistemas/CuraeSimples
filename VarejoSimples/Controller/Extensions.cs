@@ -40,9 +40,22 @@ namespace VarejoSimples.Controller
         public static void ToMoney(this TextBox txInput)
         {
             txInput.TextWrapping = System.Windows.TextWrapping.NoWrap;
+            txInput.AcceptsReturn = false;
             txInput.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Right;
             txInput.PreviewTextInput += TxInput_PreviewTextInput;
             txInput.GotFocus += TxInput_GotFocus;
+            txInput.LostFocus += TxInput_LostFocus1;
+            txInput.Text = "0,00";
+        }
+
+        private static void TxInput_LostFocus1(object sender, System.Windows.RoutedEventArgs e)
+        {
+            TextBox textBox = (sender as TextBox);
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+                textBox.Text = "0,00";
+
+            if (string.IsNullOrEmpty(textBox.Text))
+                textBox.Text = "0,00";
         }
 
         public static void ToNumeric(this TextBox txInput, bool acceptTrace = false)
@@ -93,10 +106,10 @@ namespace VarejoSimples.Controller
 
                     if (e.Text.Equals(".") && txInput.Text.Contains(","))
                         return;
-                    
+
                     if (e.Text.Equals(",") && txInput.Text.Contains(","))
                         return;
-                    
+
                     if (e.Text.Equals(".") && (txInput.Text.Last().Equals('.') || txInput.Text.Last().Equals(',')))
                         return;
 
@@ -156,8 +169,8 @@ namespace VarejoSimples.Controller
 
         private static void Dt_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) 
-            e.Handled = true;
+            if (e.Key == Key.Enter)
+                e.Handled = true;
         }
 
         private static void Dt_KeyDown(object sender, KeyEventArgs e)
@@ -169,15 +182,15 @@ namespace VarejoSimples.Controller
                 if (dataGrid.Items.Count == 0)
                     return;
 
-                if(e.Key == Key.Insert)
+                if (e.Key == Key.Insert)
                 {
                     if ((dataGrid.SelectedIndex - 1) < 0)
                         return;
-              
+
                     dataGrid.SelectedItem = dataGrid.SelectedItems[dataGrid.SelectedIndex + 1];
                 }
 
-                if(e.Key == Key.Enter)
+                if (e.Key == Key.Enter)
                 {
                     if ((dataGrid.SelectedIndex - 1) < 0)
                         return;

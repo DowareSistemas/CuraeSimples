@@ -61,22 +61,19 @@ namespace VarejoSimples.Repository
                      from clients in cli.DefaultIfEmpty()
                      join fornecedores in Context.Fornecedores.AsNoTracking() on movimentos.Fornecedor_id equals fornecedores.Id into frn
                      from forn in frn.DefaultIfEmpty()
-                     join documentos in Context.Documentos_fiscais on movimentos.Documento_id equals documentos.Id into dc
-                     from docs in dc.DefaultIfEmpty()
 
                      where
                     (usuarios.Nome.Contains(busca) ||
                      tipos_movimento.Descricao.Contains(busca) ||
                      clients.Nome.Contains(busca) ||
                      forn.Nome.Contains(busca) ||
-                     docs.Numero_documento == valor_numerico ||
-                     docs.Chave_acesso == busca) &&
 
-                     ((data_inicio != null && data_fim == null) // Tem data inicio | Não tem data fim
+                     (data_inicio != null && data_fim == null) // Tem data inicio | Não tem data fim
                          ? movimentos.Data >= data_inicio // apartir da data inicio
                          : (data_inicio == null && data_fim != null) // Não tem data inicio | Tem data fim
                          ? movimentos.Data <= data_fim // menor que a data fim
-                         : (movimentos.Data >= data_inicio && movimentos.Data <= data_fim))
+                         : (movimentos.Data >= data_inicio && movimentos.Data <= data_fim)
+                      )
 
                      select movimentos);
 

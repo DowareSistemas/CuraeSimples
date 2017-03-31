@@ -46,10 +46,33 @@ namespace VarejoSimples.Controller
 
             int tipo_mov = (int)tipo;
 
-            decimal result = db.Where(e =>
+            decimal? result = db.Where(e =>
                 e.Caixa_id == Caixa_id &&
                 e.Id > ultimaAbertura &&
-                e.Tipo_mov == tipo_mov).Sum(e => e.Valor);
+                e.Tipo_mov == tipo_mov).Sum(e => (decimal?)e.Valor);
+
+            return (result == null
+                ? 0
+                : (decimal)result);
+        }
+
+        public List<KeyValuePair<Formas_pagamento, decimal>> GetTotaisPorFormaPagamentoCaixaAtual()
+        {
+            int ultmaAbertura = GetUltimoMovimentoAbertura().Id;
+            int caixa_id = Get_ID_CaixaAtualUsuario();
+            int tipoMov_abertura = (int)Tipo_movimentacao_caixa.ABERTURA;
+
+            List<Movimentos_caixas> movimentos = GetMovimentosCaixaAtual();
+            List<Movimentos_caixas> distinctFormaPg = movimentos.GroupBy(e => e.Forma_pagamento_id).Select(mov => mov.First()).ToList();
+            List<KeyValuePair<Formas_pagamento, decimal>> result = new List<KeyValuePair<Formas_pagamento, decimal>>();
+
+            Formas_pagamentoController fpgController = new Formas_pagamentoController();
+
+            foreach (Movimentos_caixas mov in distinctFormaPg)
+            {
+                Formas_pagamento fpg = fpgController.Find(mov.Forma_pagamento_id);
+                result.Add(new KeyValuePair<Formas_pagamento, decimal>(fpg, movimentos.Where(e => e.Forma_pagamento_id == mov.Forma_pagamento_id).Sum(e => e.Valor)));
+            }
 
             return result;
         }
@@ -94,9 +117,11 @@ namespace VarejoSimples.Controller
             mc.Caixa_id = caixa_id;
             mc.Valor = fundo_troco;
             mc.Usuario_id = usuario_id;
+            mc.Data = DateTime.Now;
             mc.Forma_pagamento_id = forma_pagamento_id;
             mc.Tipo_mov = (int)Tipo_movimentacao_caixa.ABERTURA;
             mc.Loja_id = UsuariosController.LojaAtual.Id;
+            mc.Descricao = "ABERTURA DO CAIXA";
 
             if (!Save(mc))
                 BStatus.Error("Ocorreu um problema ao abrir o caixa. Acione o suporte Doware.");
@@ -109,12 +134,6 @@ namespace VarejoSimples.Controller
             int movimento_id,
             string descricao)
         {
-
-            if (valor == 0)
-            {
-                MessageBox.Show("Informe o valor", "Atenção", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
-            }
 
             if (string.IsNullOrWhiteSpace(descricao))
             {
@@ -134,11 +153,14 @@ namespace VarejoSimples.Controller
                 return false;
             }
 
-            Formas_pagamento fpg = new Formas_pagamentoController().Find(forma_pagamento_id);
-            if (fpg.Tipo_pagamento != (int)Tipo_pagamento.DINHEIRO)
+            if (tipo_mov == Tipo_movimentacao_caixa.SAIDA)
             {
-                MessageBox.Show("A condição de pagamento para movimentações no caixa deve ser do tipo 'DINHEIR'", "Confição de pagamento incompatível", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return false;
+                Formas_pagamento fpg = new Formas_pagamentoController().Find(forma_pagamento_id);
+                if (fpg.Tipo_pagamento != (int)Tipo_pagamento.DINHEIRO)
+                {
+                    MessageBox.Show("A condição de pagamento para movimentações de saída no caixa deve ser do tipo 'DINHEIRO'", "Confição de pagamento incompatível", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return false;
+                }
             }
 
             Movimentos_caixas mc = new Movimentos_caixas();
@@ -206,11 +228,6 @@ namespace VarejoSimples.Controller
             ).ToList();
         }
 
-        private void FechaCaixa(int caixa_id, int usuario_id)
-        {
-
-        }
-
         public bool CaixaAberto(int usuario_id)
         {
             int? ultimoFechamento = db.Where(m =>
@@ -223,13 +240,22 @@ namespace VarejoSimples.Controller
                     m.Tipo_mov == (int)Tipo_movimentacao_caixa.ABERTURA
                 ).Max(m => (int?)m.Id);
 
-            if ((ultimoFechamento == null) && (ultimaAbertura > 0))
-                return true;
-
             if ((ultimoFechamento == null) && (ultimaAbertura == null))
                 return false;
 
-            return (ultimaAbertura < ultimoFechamento);
+            if ((ultimoFechamento == null) && (ultimaAbertura > 0))
+                return true;
+
+            if (ultimoFechamento > ultimaAbertura)
+                return false;
+
+            if (ultimaAbertura > ultimoFechamento)
+                return true;
+
+            if (ultimaAbertura > 0 && ultimoFechamento == null)
+                return true;
+
+            return false;
         }
     }
 }

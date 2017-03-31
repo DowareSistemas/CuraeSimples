@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using VarejoSimples.Enums;
 using VarejoSimples.Model;
 using VarejoSimples.Repository;
 
@@ -109,6 +110,23 @@ namespace VarejoSimples.Controller
         public List<Caixas> Search(string search)
         {
             return db.Where(c => c.Nome.Contains(search)).ToList();
+        }
+
+        public List<Caixas> CaixasAbertos()
+        {
+            List<Caixas> caixas = Search("");
+            List<Caixas> result = new List<Caixas>();
+
+            foreach(Caixas caixa in caixas)
+            {
+                Movimentos_caixas ultimoMov = caixa.Movimentos_caixas.OrderByDescending(e => e.Id).FirstOrDefault();
+                if (ultimoMov == null)
+                    result.Add(caixa);
+                else if (ultimoMov.Tipo_mov == (int)Tipo_movimentacao_caixa.FECHAMENTO)
+                    result.Add(caixa);
+            }
+
+            return result;
         }
 
         public Caixas Next(int current_id)

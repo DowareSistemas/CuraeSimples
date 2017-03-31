@@ -118,8 +118,7 @@ namespace VarejoSimples.Controller
                         return 0;
                     }
                 }
-
-
+                
                 Itens_movimentoController imc = new Itens_movimentoController();
                 imc.SetContext(unit.Context);
 
@@ -351,12 +350,6 @@ namespace VarejoSimples.Controller
                                     break;
                             }
 
-                            if (!movimentos_caixaController.Save(movimento_caixa))
-                            {
-                                unit.RollBack();
-                                return 0;
-                            }
-
                             break;
                         #endregion
 
@@ -385,12 +378,18 @@ namespace VarejoSimples.Controller
                             {
                                 parcela_cartao.Tipo_parcela = (int)Tipo_parcela.RECEBER;
                                 parcela_cartao.Cliente_id = Movimento.Cliente_id;
+
+                                movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
+                                movimento_caixa.Valor = item_pg.Valor;
                             }
 
                             if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
                             {
                                 parcela_cartao.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                 parcela_cartao.Fornecedor_id = Movimento.Cliente_id;
+
+                                movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
+                                movimento_caixa.Valor = item_pg.Valor * (-1);
                             }
 
                             parcela_cartao.Num_documento = Movimento.Id.ToString().PadLeft(8 - Movimento.Id.ToString().Length, '0') + "-" + numero_parcela;
@@ -417,11 +416,18 @@ namespace VarejoSimples.Controller
                             IRegistroCheques registroCheques;
 
                             if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.ENTRADA)
+                            {
                                 registroCheques = new RecebimentoCheques();
+                                movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
+                                movimento_caixa.Valor = item_pg.Valor;
+                            }
                             else
                             {
                                 registroCheques = new LancamentoCheque();
                                 registroCheques.SetConta(contas_controller.Find(forma_pagamento.Conta_id));
+
+                                movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
+                                movimento_caixa.Valor = item_pg.Valor * (-1);
                             }
 
                             registroCheques.Exibir(item_pg.Valor);
@@ -515,12 +521,18 @@ namespace VarejoSimples.Controller
                                 {
                                     parcela_prazo.Tipo_parcela = (int)Tipo_parcela.RECEBER;
                                     parcela_prazo.Cliente_id = Movimento.Cliente_id;
+
+                                    movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.ENTRADA;
+                                    movimento_caixa.Valor = item_pg.Valor;
                                 }
 
                                 if (tipo_mov.Movimentacao_valores == (int)Tipo_movimentacao.SAIDA)
                                 {
                                     parcela_prazo.Tipo_parcela = (int)Tipo_parcela.PAGAR;
                                     parcela_prazo.Fornecedor_id = Movimento.Fornecedor_id;
+
+                                    movimento_caixa.Tipo_mov = (int)Tipo_movimentacao_caixa.SAIDA;
+                                    movimento_caixa.Valor = item_pg.Valor * (-1);
                                 }
 
                                 if (!parcController.Save(parcela_prazo))
@@ -533,6 +545,12 @@ namespace VarejoSimples.Controller
                             }
                             break;
                             #endregion
+                    }
+
+                    if (!movimentos_caixaController.Save(movimento_caixa))
+                    {
+                        unit.RollBack();
+                        return 0;
                     }
                 }
                 #endregion

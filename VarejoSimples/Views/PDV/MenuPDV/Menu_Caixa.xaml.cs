@@ -98,5 +98,11 @@ namespace VarejoSimples.Views.PDV.MenuPDV
 
             rController.ShowReport("Relatório de caixa", "CXACONS001");
         }
+
+        private void btFecharCaixa_Click(object sender, RoutedEventArgs e)
+        {
+            FechamentoCaixa fc = new FechamentoCaixa();
+            fc.ShowDialog();
+        }
     }
 }

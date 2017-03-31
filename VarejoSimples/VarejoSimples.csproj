@@ -170,6 +170,11 @@
     <Compile Include="Controller_Reports\ReportController.cs" />
     <Compile Include="Controller_Reports\ReportDataSource.cs" />
     <Compile Include="Controller_Reports\ReportFile.cs" />
+    <Compile Include="DataSets\DsFechamentoCaixa.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsFechamentoCaixa.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSets\DsProdutosVencendoValidade.cs">
       <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
     </Compile>
@@ -356,6 +361,19 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Relatorios\CXACONS002.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CXACONS002.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Relatorios\MOV001.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MOV001.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -437,6 +455,7 @@
     <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
     <Compile Include="Tasks\Menu_caxaTask.cs" />
     <Compile Include="Tests\TestClientesController.cs" />
+    <Compile Include="Tests\TestMovimentos_caixasController.cs" />
     <Compile Include="Views\Caixa\CadCaixas.xaml.cs">
       <DependentUpon>CadCaixas.xaml</DependentUpon>
     </Compile>
@@ -579,6 +598,9 @@
     <Compile Include="Views\Parcela\DetalhesParcela.xaml.cs">
       <DependentUpon>DetalhesParcela.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\AberturaCaixa.xaml.cs">
+      <DependentUpon>AberturaCaixa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\BuscaClientePdv.xaml.cs">
       <DependentUpon>BuscaClientePdv.xaml</DependentUpon>
     </Compile>
@@ -599,6 +621,12 @@
     </Compile>
     <Compile Include="Views\PDV\EventMonitors\MonitorInsereRemove.cs" />
     <Compile Include="Views\PDV\EventMonitors\MonitorSelecaoPedido.cs" />
+    <Compile Include="Views\PDV\FechamentoCaixa.xaml.cs">
+      <DependentUpon>FechamentoCaixa.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PDV\ItemFpgFechamentoCaixa.xaml.cs">
+      <DependentUpon>ItemFpgFechamentoCaixa.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\ItemPedidoPdv.xaml.cs">
       <DependentUpon>ItemPedidoPdv.xaml</DependentUpon>
     </Compile>
@@ -655,6 +683,9 @@
     </Compile>
     <Compile Include="Views\Reports\ReportViewWindow.Designer.cs">
       <DependentUpon>ReportViewWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Setup\PreparacaoSistema.xaml.cs">
+      <DependentUpon>PreparacaoSistema.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Tamanho\CadTamanhos.xaml.cs">
       <DependentUpon>CadTamanhos.xaml</DependentUpon>
@@ -928,6 +959,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PDV\AberturaCaixa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PDV\BuscaClientePdv.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -949,6 +984,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PDV\EntradaValorCaixa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\FechamentoCaixa.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\ItemFpgFechamentoCaixa.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1017,6 +1060,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Produto_fornecedor\Produto_fornecedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Setup\PreparacaoSistema.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1170,6 +1217,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSets\DsFechamentoCaixa.xsc">
+      <DependentUpon>DsFechamentoCaixa.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsFechamentoCaixa.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsFechamentoCaixa.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DsFechamentoCaixa.xss">
+      <DependentUpon>DsFechamentoCaixa.xsd</DependentUpon>
+    </None>
     <None Include="DataSets\DsProdutosVencendoValidade.xsc">
       <DependentUpon>DsProdutosVencendoValidade.xsd</DependentUpon>
     </None>
@@ -1273,6 +1331,15 @@
       <LastGenOutput>CXACONS001.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Relatorios\CXACONS002.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CXACONS002.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Relatorios\MOV001.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>MOV001.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">
       <DependentUpon>ReportViewWindow.cs</DependentUpon>
     </EmbeddedResource>

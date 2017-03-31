@@ -1,0 +1,34 @@
+﻿<Window x:Class="VarejoSimples.Views.PDV.AberturaCaixa"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VarejoSimples.Views.PDV"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Title="AberturaCaixa" Height="422.932" Width="444.36">
+    <Grid Background="#FF999999">
+        <Grid Background="White" Margin="2">
+            <Grid Height="35" VerticalAlignment="Top" Background="#FFF0F0F0">
+                <Label x:Name="lbTitulo" Content="Abertura de caixa" Margin="6,4,59,0" FontSize="20" Padding="5,0" Height="27" VerticalAlignment="Top"/>
+                <Button x:Name="btFechar" Click="btFechar_Click" BorderThickness="0" Margin="0,1,1,1" HorizontalAlignment="Right" Width="41">
+                    <StackPanel>
+                        <Image Source="/Curae Varejo (Simples);component/Images/pdv_close.png" Height="22"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <Label x:Name="label" Content="Fundo de troco (R$)" Margin="10,0,0,10" VerticalAlignment="Bottom" FontSize="25" HorizontalAlignment="Left" Width="243"/>
+            <TextBox x:Name="txFundo_troco" KeyDown="txFundo_troco_KeyDown" HorizontalAlignment="Right" Height="38" Margin="0,0,10,10" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Bottom" Width="120" FontSize="25"/>
+
+            <DataGrid x:Name="dataGrid" PreviewKeyDown="dataGrid_PreviewKeyDown" Margin="10,40,10,0" VerticalAlignment="Top" Height="321">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Código" MinWidth="80" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Nome" MinWidth="200" Width="*" Binding="{Binding Nome}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Grid>
+</Window>
