@@ -170,6 +170,14 @@
     <Compile Include="Controller_Reports\ReportController.cs" />
     <Compile Include="Controller_Reports\ReportDataSource.cs" />
     <Compile Include="Controller_Reports\ReportFile.cs" />
+    <Compile Include="DataSets\DsCupomNaoFiscal.cs">
+      <DependentUpon>DsCupomNaoFiscal.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSets\DsCupomNaoFiscal.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsCupomNaoFiscal.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DataSets\DsFechamentoCaixa.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -373,6 +381,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MOV001.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Relatorios\PFRN001.cs">
       <AutoGen>True</AutoGen>
@@ -455,7 +464,9 @@
     <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
     <Compile Include="Tasks\Menu_caxaTask.cs" />
     <Compile Include="Tests\TestClientesController.cs" />
+    <Compile Include="Tests\TestGradeController.cs" />
     <Compile Include="Tests\TestMovimentos_caixasController.cs" />
+    <Compile Include="Tests\TestProdutosController.cs" />
     <Compile Include="Views\Caixa\CadCaixas.xaml.cs">
       <DependentUpon>CadCaixas.xaml</DependentUpon>
     </Compile>
@@ -1217,6 +1228,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSets\DsCupomNaoFiscal.xsc">
+      <DependentUpon>DsCupomNaoFiscal.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsCupomNaoFiscal.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsCupomNaoFiscal.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DsCupomNaoFiscal.xss">
+      <DependentUpon>DsCupomNaoFiscal.xsd</DependentUpon>
+    </None>
     <None Include="DataSets\DsFechamentoCaixa.xsc">
       <DependentUpon>DsFechamentoCaixa.xsd</DependentUpon>
     </None>
@@ -1336,10 +1358,11 @@
       <LastGenOutput>CXACONS002.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Relatorios\MOV001.rpt">
+    <Content Include="Relatorios\MOV001.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>MOV001.cs</LastGenOutput>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Views\Reports\ReportViewWindow.resx">
       <DependentUpon>ReportViewWindow.cs</DependentUpon>
     </EmbeddedResource>

@@ -899,18 +899,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PROD_GPR_147806589">
-          <End Role="Grupos_produtos" Type="Self.Grupos_produtos" Multiplicity="1" />
-          <End Role="Produtos" Type="Self.Produtos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Grupos_produtos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Produtos">
-              <PropertyRef Name="Grupo_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Caixas" EntityType="Self.Caixas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
@@ -1089,10 +1077,6 @@
           <AssociationSet Name="Mov_Tp_1999800XBA" Association="Self.Mov_Tp_1999800XBA">
             <End Role="Tipos_movimento" EntitySet="Tipos_movimento" />
             <End Role="Movimentos" EntitySet="Movimentos" />
-          </AssociationSet>
-          <AssociationSet Name="PROD_GPR_147806589" Association="Self.PROD_GPR_147806589">
-            <End Role="Grupos_produtos" EntitySet="Grupos_produtos" />
-            <End Role="Produtos" EntitySet="Produtos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1712,7 +1696,6 @@
           <Property Name="Controla_grade" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Estoque" Relationship="Model.FK__Estoque__Produto__4AB81AF0" FromRole="Produtos" ToRole="Estoque" />
           <NavigationProperty Name="Grades_produtos" Relationship="Model.FK__Grades_pr__Produ__25DB9BFC" FromRole="Produtos" ToRole="Grades_produtos" />
-          <NavigationProperty Name="Grupos_produtos" Relationship="Model.PROD_GPR_147806589" FromRole="Produtos" ToRole="Grupos_produtos" />
           <NavigationProperty Name="Itens_movimento" Relationship="Model.FK__Itens_mov__Produ__00200768" FromRole="Produtos" ToRole="Itens_movimento" />
           <NavigationProperty Name="Itens_pedido" Relationship="Model.FK__Itens_ped__Produ__473C8FC7" FromRole="Produtos" ToRole="Itens_pedido" />
           <NavigationProperty Name="Produtos_fornecedores" Relationship="Model.FK__Produtos___Produ__2180FB33" FromRole="Produtos" ToRole="Produtos_fornecedores" />

@@ -64,8 +64,8 @@ namespace VarejoSimples.Views.Produto
             Grades_produtos grade = (Grades_produtos)dataGrid.SelectedItem;
             if (grade == null)
                 return;
-
-            if (controller.Remove(grade.Identificador))
+            
+            if (controller.RemoveGradeCompleto(grade.Identificador))
             {
                 controller = new Grades_produtosController();
                 ListarGrades();

@@ -46,6 +46,11 @@ namespace VarejoSimples.Views.PDV
             lbTotalParcial.Content = "R$ " + MovimentosController.GetTotalParcial().ToString("N2");
         }
 
+        public void CupomNaoFiscal()
+        {
+            MovimentosController.CupomNaoFiscal();
+        }
+
         public void AbreVenda(int tipo_movimento)
         {
             MovimentosController.AbreMovimento(0, tipo_movimento);

@@ -23,6 +23,7 @@ namespace VarejoSimples.Interfaces
         bool Encerrar(decimal troco);
         decimal GetValorParcial();
         void NFCe();
+        void CupomNaoFiscal();
         int TransformarEmPedido();
         Clientes GetCliente();
         bool ClienteInformado { get; }

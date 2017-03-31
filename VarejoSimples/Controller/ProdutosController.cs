@@ -78,24 +78,28 @@ namespace VarejoSimples.Controller
 
         public bool Remove(int id)
         {
+            UnitOfWork unitOfWork = null;
             try
             {
+                unitOfWork = new UnitOfWork();
+                unitOfWork.BeginTransaction();
+
+                db.Context = unitOfWork.Context;
+
                 if (!ValidRemove(id))
                     return false;
-
-                db.Begin(System.Data.IsolationLevel.ReadCommitted);
-
+               
                 EstoqueController ec = new EstoqueController();
-                ec.RemoveByProduto(id, db.Context);
-
+                ec.RemoveByProduto(id, unitOfWork);
+                
                 db.Remove(Find(id));
-                db.Commit();
+                unitOfWork.Commit();
                 BStatus.Success("Produto removido");
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
-                db.RollBack();
+                unitOfWork.RollBack();
                 return false;
             }
         }
@@ -110,10 +114,13 @@ namespace VarejoSimples.Controller
                 return false;
             }
 
-            if (p.Produtos_fornecedores.Count > 0)
+            if (p.Produtos_fornecedores != null)
             {
-                BStatus.Alert("Não é possível excluir este produto. Ele está presente em uma ou mais amarrações Produto x Fornecedor");
-                return false;
+                if (p.Produtos_fornecedores.Count > 0)
+                {
+                    BStatus.Alert("Não é possível excluir este produto. Ele está presente em uma ou mais amarrações Produto x Fornecedor");
+                    return false;
+                }
             }
 
             return true;

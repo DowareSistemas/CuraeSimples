@@ -152,10 +152,12 @@ namespace VarejoSimples.Controller
             return LoteAtual;
         }
 
-        internal bool RemoveByGrade(string grade_id)
+        internal bool RemoveByGrade(string grade_id, UnitOfWork unitOfWork)
         {
             try
             {
+                db.Context = unitOfWork.Context;
+
                 Estoque est = db.Where(e => e.Grade_id.Equals(grade_id)).FirstOrDefault();
                 if (est == null)
                     return true;
@@ -187,17 +189,25 @@ namespace VarejoSimples.Controller
             return (db.Where(e => e.Lote.Equals(lote) && e.Sublote.Equals(sublote)).Count() > 0);
         }
 
-        public void RemoveByProduto(int produto_id, varejo_config v = null)
+        public void RemoveByProduto(int produto_id, UnitOfWork unitOfWork)
         {
-            if (v != null)
-                db.Context = v;
+            db.Context = unitOfWork.Context;
 
             List<Estoque> estoques = db.Where(e => e.Produto_id == produto_id).ToList();
             if (estoques != null)
-                estoques.ForEach(e => db.Remove(e));
+            {
+                Grades_produtosController gc = new Grades_produtosController();
+             //   gc.SetContext(unitOfWork.Context);
 
-            if (v == null)
-                db.Commit();
+                foreach (Estoque estoque in estoques)
+                {
+                    if (estoque.Grade_id != null)
+                        if (!gc.RemoveApenasGrade(estoque.Grade_id, unitOfWork))
+                            throw new Exception("Erro ao remover a grade do produto. Id grade " + estoque.Grade_id);
+
+                    db.ForceRemove(estoque);
+                }
+            }
         }
 
         public bool InsereEstoque(List<Estoque> estoques)

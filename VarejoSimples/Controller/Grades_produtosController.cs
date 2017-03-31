@@ -25,7 +25,7 @@ namespace VarejoSimples.Controller
 
             if (identificador.Length < 10)
                 identificador = identificador.PadRight(10, '0');
-            if(identificador.Length > 10)
+            if (identificador.Length > 10)
                 identificador = identificador.Substring(0, 10);
 
             if (db.Find(identificador) == null)
@@ -58,7 +58,7 @@ namespace VarejoSimples.Controller
 
                     EstoqueController ec = new EstoqueController();
                     ec.SetContext(unit.Context);
-                    if(!ec.Save(estoque, true))
+                    if (!ec.Save(estoque, true))
                     {
                         unit.RollBack();
                         return false;
@@ -71,7 +71,7 @@ namespace VarejoSimples.Controller
                 BStatus.Success("Grade de produto salva");
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (unit != null)
                     unit.RollBack();
@@ -90,36 +90,58 @@ namespace VarejoSimples.Controller
             return db.Find(identificador);
         }
 
-        internal bool Remove(string identificador)
+        public bool RemoveGradeCompleto(string identificador)
         {
-            UnitOfWork unit = null;
+            UnitOfWork unitOfWork = null;
             try
             {
-                unit = new UnitOfWork();
-                unit.BeginTransaction();
-                db.Context = unit.Context;
+                unitOfWork = new UnitOfWork();
+                unitOfWork.BeginTransaction();
+                db.Context = unitOfWork.Context;
 
-                Grades_produtos grade = Find(identificador);
+                EstoqueController eController = new EstoqueController();
 
-                EstoqueController estoque = new EstoqueController();
-                estoque.SetContext(unit.Context);
-                if (!estoque.RemoveByGrade(grade.Identificador))
+                if (!eController.RemoveByGrade(identificador, unitOfWork))
                 {
-                    unit.RollBack();
+                    unitOfWork.RollBack();
                     return false;
                 }
 
+                Grades_produtos grade = Find(identificador);
                 db.Remove(grade);
-                unit.Commit();
+                unitOfWork.Commit();
+
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if (unit != null)
-                    unit.RollBack();
-
+                unitOfWork.RollBack();
                 return false;
             }
+        }
+
+        internal bool RemoveApenasGrade(string identificador, UnitOfWork unitOfWork)
+        {
+            try
+            {
+                db.Context = unitOfWork.Context;
+
+                Grades_produtos grade = Find(identificador);
+                db.Remove(grade);
+                db.Commit();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                db.RollBack();
+                return false;
+            }
+        }
+
+        internal void SetContext(varejo_config context)
+        {
+            db.Context = context;
         }
     }
 }

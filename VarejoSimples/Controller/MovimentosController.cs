@@ -1,12 +1,15 @@
-﻿using DarumaFramework_NFCe;
+﻿using Base.Controller_Reports;
+using DarumaFramework_NFCe;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using VarejoSimples.DataSets;
 using VarejoSimples.Enums;
 using VarejoSimples.Interfaces;
 using VarejoSimples.Model;
@@ -118,7 +121,7 @@ namespace VarejoSimples.Controller
                         return 0;
                     }
                 }
-                
+
                 Itens_movimentoController imc = new Itens_movimentoController();
                 imc.SetContext(unit.Context);
 
@@ -743,6 +746,84 @@ Mensagem...: {sbMensagem.ToString()}");
 
                 System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + @"\Utilitarios\NFCe_Spool.exe");
             }
+        }
+
+        public void CupomNaoFiscal()
+        {
+            DsCupomNaoFiscal dataSet = new DsCupomNaoFiscal();
+            DataTable dtMovimento = dataSet.Tables["Movimento"];
+
+            EstoqueController eController = new EstoqueController();
+            Grades_produtosController gController = new Grades_produtosController();
+            UnidadesController unController = new UnidadesController();
+            UsuariosController usuariosController = new UsuariosController();
+            ClientesController clientesController = new ClientesController();
+            Tipos_movimentoController tipoMovController = new Tipos_movimentoController();
+            Formas_pagamentoController fpgController = new Formas_pagamentoController();
+
+            if (Movimento.Usuarios == null)
+                Movimento.Usuarios = new UsuariosController().Find(Movimento.Usuario_id);
+
+            #region MOVIMENTO
+            dtMovimento.Rows.Add(
+                Movimento.Id,
+                UsuariosController.LojaAtual.Nome_fantasia,
+                Movimento.Usuarios.Vendedores.Count == 0 ? Movimento.Usuarios.Nome : Movimento.Usuarios.Vendedores.First().Nome,
+                Movimento.Cliente_id == 0 ? "Não identificado" : clientesController.Find(Movimento.Cliente_id).Nome,
+                GetTotalParcial(),
+                GetTotalDesconto(),
+                Movimento.Data,
+                "Mensagem promocional",
+                $"{UsuariosController.LojaAtual.Logradouro}, {UsuariosController.LojaAtual.Bairro} - {UsuariosController.LojaAtual.Municipio}",
+                tipoMovController.Find(Movimento.Tipo_movimento_id).Descricao,
+                UsuariosController.LojaAtual.Cnpj);
+            #endregion
+
+            #region ITENS_PAGAMENTO
+            DataTable dtItens_pag = dataSet.Tables["Itens_pagamento"];
+            itens_pag.ForEach(e => dtItens_pag.Rows.Add(
+                    fpgController.Find(e.Forma_pagamento_id).Descricao,
+                    e.Valor
+                 ));
+            #endregion
+
+            #region ITENS_MOVIMENTO
+            DataTable dtItens_mov = dataSet.Tables["Itens_movimento"];
+            foreach (Itens_movimento item in Itens_movimento)
+            {
+                string cod_prod = string.Empty;
+                string descricaoProdo = item.Produtos.Descricao;
+                string descricao_valor_unitario = string.Empty;
+
+                if (!string.IsNullOrEmpty(item.Lote))
+                    cod_prod = item.Lote + "SL" + item.Sublote;
+                else if (item.Grade_id != null)
+                {
+                    Grades_produtos grade = gController.Find(item.Grade_id);
+
+                    cod_prod = item.Grade_id;
+                    descricaoProdo += $" {grade.Cores.Descricao} {grade.Tamanhos.Descricao}";
+                }
+                else cod_prod = item.Produtos.Ean;
+
+                if (item.Unidades == null)
+                    item.Unidades = unController.Find(item.Unidade_id);
+                descricao_valor_unitario = $"{item.Quant} {item.Unidades.Sigla} x R${item.Valor_unit}";
+                dtItens_mov.Rows.Add(item.Id, cod_prod, descricaoProdo, descricao_valor_unitario, item.Quant, item.Valor_final);
+            }
+            #endregion
+
+            IControllerReport rController = ReportController.GetInstance();
+            rController.AddDataSource("Itens_movimento", dtItens_mov);
+            rController.AddDataSource("Itens_pagamento", dtItens_pag);
+            rController.AddDataSource("Movimento", dtMovimento);
+
+            rController.ShowReport("MOVIMENTO", "MOV001");
+        }
+
+        public decimal GetTotalDesconto()
+        {
+            return Itens_movimento.Sum(e => e.Desconto);
         }
 
         public decimal GetTotalParcial()

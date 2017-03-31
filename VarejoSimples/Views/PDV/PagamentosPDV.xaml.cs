@@ -218,8 +218,7 @@ namespace VarejoSimples.Views.PDV
             if (!btImpressao.IsEnabled)
                 return;
 
-            //TODO: impressao nao fiscal
-
+            IPdv.PainelVenda.CupomNaoFiscal();
             Close();
         }
 
