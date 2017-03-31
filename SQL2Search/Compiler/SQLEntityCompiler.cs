@@ -14,12 +14,16 @@ namespace SQL2Search.Compiler
         {
             StreamReader reader = null;
             FileStream fs = null;
+
+            string filePath = compiledFilePath + $@"Output {DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.csql";
+
             try
             {
                 SQLEntity entity = new SQLEntity();
                 entity.Create();
 
                 reader = new StreamReader(scriptFile);
+                
                 string line = "";
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -45,10 +49,14 @@ namespace SQL2Search.Compiler
                     entity.FullSQLCommand += line + "\n";
                 }
 
-                fs =new FileStream(compiledFilePath + $@"Output {DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss")}.csql", FileMode.Create);
+                fs =new FileStream(filePath, FileMode.Create);
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(fs, entity);
                 fs.Close();
+
+                Console.WriteLine("Compilação bem sucedida. \nCaminho do arquivo: " + filePath);
+                Console.WriteLine("");
+                Class1.Run();
             }
             catch
             {

@@ -463,6 +463,7 @@
     <Compile Include="Tasks\ConsultaParcelasTask.cs" />
     <Compile Include="Tasks\LancamentosFinanceirosTask.cs" />
     <Compile Include="Tasks\Menu_caxaTask.cs" />
+    <Compile Include="Tasks\SetupTask.cs" />
     <Compile Include="Tests\TestClientesController.cs" />
     <Compile Include="Tests\TestGradeController.cs" />
     <Compile Include="Tests\TestMovimentos_caixasController.cs" />
@@ -1192,6 +1193,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Utilitarios\SQL2Search.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\sql.png" />
     <Resource Include="Images\logo1.png" />
     <Resource Include="Images\transferencia.png" />
@@ -1221,9 +1225,6 @@
     <Resource Include="pdv_pagamento.png" />
     <Resource Include="Images\search.png" />
     <Resource Include="Images\w8.gif" />
-    <Content Include="Utilitarios\SQL2Search.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

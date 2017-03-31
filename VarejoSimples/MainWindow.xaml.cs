@@ -15,6 +15,7 @@ using VarejoSimples.Views;
 using VarejoSimples.Views.Consultas;
 using VarejoSimples.Views.ConsutasCustomizadas;
 using VarejoSimples.Views.PDV;
+using VarejoSimples.Views.Setup;
 
 namespace VarejoSimples
 {
@@ -41,10 +42,51 @@ namespace VarejoSimples
         public delegate void Complete();
         public event Complete OnComplete;
 
+        private void SetupDB()
+        {
+         /*   string configFile = Directory.GetCurrentDirectory() + "/Curae Varejo (Simples).exe.config";
+            StreamReader reader = new StreamReader(configFile);
+            string line = "";
+            string xmlContent = "";
+
+            while ((line = reader.ReadLine()) != null)
+                xmlContent += line + "\n";
+
+            reader.Close();
+
+            xmlContent = xmlContent.Replace("data source=localhost;", $"data source={GetConfigValue("SERVIDOR")};");
+            xmlContent = xmlContent.Replace("da");
+
+            File.WriteAllText(configFile, "");
+            File.WriteAllText(configFile, xmlContent); */
+        }
+
+        private string GetConfigValue(string key)
+        {
+            string result = "";
+            string confFile = Directory.GetCurrentDirectory() + @"\CURAE_CONFIG.dwconf";
+            StreamReader reader = new StreamReader(confFile);
+            string line = "";
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Equals(key))
+                {
+                    result = line.Replace($"{key}=", "");
+                    break;
+                }
+            }
+
+            return result;
+        }
+
         public MainWindow(Iniciando ini)
         {
             varejo_config db = new varejo_config();
-            db.Database.CreateIfNotExists();
+            if(!db.Database.Exists())
+            {
+                PreparacaoSistema s = new PreparacaoSistema();
+                s.ShowDialog();
+            }
 
             if (!Directory.Exists(@"C:\Temp\Curae"))
                 Directory.CreateDirectory(@"C:\Temp\Curae");

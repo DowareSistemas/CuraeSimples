@@ -35,40 +35,40 @@ namespace VarejoSimples.Views
         {
             LojasController lc = new LojasController();
             Lojas loja = null;
-            new Thread(() =>
+
+
+            try
             {
-                try
-                {
-                    this.Dispatcher.Invoke(new Action<Window>(w => this.Visibility = Visibility.Hidden), this);
+                this.Visibility = Visibility.Hidden;
 
+                loja = lc.Search("").FirstOrDefault();
+
+                if (loja == null)
+                {
+                    CadLoja cadatroLoja = new CadLoja();
+                    cadatroLoja.ShowDialog();
                     loja = lc.Search("").FirstOrDefault();
-
-                    if (loja == null)
-                    {
-                        CadLoja cadatroLoja = new CadLoja();
-                        cadatroLoja.ShowDialog();
-                        loja = lc.Search("").FirstOrDefault();
-                    }
-
-                    txCod_loja.Dispatcher.Invoke(new Action<TextBox>(tx => txCod_loja.Text = loja.Id.ToString()), txCod_loja);
-                    txNome_loja.Dispatcher.Invoke(new Action<TextBox>(tx => txNome_loja.Text = loja.Razao_social), txNome_loja);
-                    txUsuario.Dispatcher.Invoke(new Action<TextBox>(tx => txUsuario.Focus()), txUsuario);
-
-                    this.Dispatcher.Invoke(new Action<Window>(w => this.Visibility = Visibility.Visible), this);
-                    ini.EnabledClose = true;
-                    ini.Dispatcher.Invoke(new Action<Window>(w => ini.Close()), ini);
                 }
-                catch
-                {
-                    MessageBox.Show(@"Não foi possível conectar-se com o servidor.
+
+                txCod_loja.Text = loja.Id.ToString();
+                txNome_loja.Text = loja.Razao_social;
+                txUsuario.Focus();
+
+                this.Visibility = Visibility.Visible;
+                ini.EnabledClose = true;
+                ini.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@"Não foi possível conectar-se com o servidor.
 Verifique a configuração de rede do computador.
 Verifique se o cabo de rede ou Wi-Fi está conectado e
 tente novamente.
 
 Caso o problema persista, acione o suporte Doware.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Environment.Exit(0);
-                }
-            }).Start();
+                Environment.Exit(0);
+            }
+
             feito = true;
         }
 

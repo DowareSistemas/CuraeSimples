@@ -12,23 +12,31 @@ namespace VarejoSimples.Repository
 {
     public class EstoqueRepository : RepositoryImpl<Estoque>, IEstoque
     {
-        internal List<Estoque> ListarEstoqueProdutos(string desc_cod_ref, string marca, string fabricante)
+        internal List<Estoque> ListarEstoqueProdutos(string desc_cod_ref, string nome_marca, string nome_fabricante)
         {
             int id = 0;
             int.TryParse(desc_cod_ref, out id);
 
             var q = (from estoque in Context.Estoque.AsNoTracking()
                      join produtos in Context.Produtos.AsNoTracking() on estoque.Produto_id equals produtos.Id
-                     join marcas in Context.Marcas.AsNoTracking() on produtos.Marca_id equals marcas.Id
-                     join fabricantes in Context.Fabricantes.AsNoTracking() on produtos.Fabricante_id equals fabricantes.Id
+                     join marcas in Context.Marcas.AsNoTracking() on produtos.Marca_id equals marcas.Id into m
+                     from marca in m.DefaultIfEmpty()
+                     join fabricantes in Context.Fabricantes.AsNoTracking() on produtos.Fabricante_id equals fabricantes.Id into f
+                     from fabricante in f.DefaultIfEmpty()
 
                      where
-                     (produtos.Descricao.Contains(desc_cod_ref) ||
+                      (produtos.Descricao.Contains(desc_cod_ref) ||
                       produtos.Referencia.Contains(desc_cod_ref) ||
                       produtos.Ean.Contains(desc_cod_ref) ||
                       produtos.Id == id) &&
-                      marcas.Nome.Contains(marca) &&
-                      fabricantes.Nome.Contains(fabricante)
+
+                      (produtos.Marca_id > 0
+                        ?  marca.Nome.Contains(nome_marca)
+                        : produtos.Marca_id == 0)  &&
+
+                      (produtos.Fabricante_id > 0
+                         ? fabricante.Nome.Contains(nome_fabricante)
+                         : produtos.Fabricante_id == 0)
 
                      select estoque).Take(100).AsEnumerable();
 

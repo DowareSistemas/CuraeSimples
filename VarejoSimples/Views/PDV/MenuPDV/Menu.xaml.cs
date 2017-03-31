@@ -18,9 +18,13 @@ namespace VarejoSimples.Views.PDV.MenuPDV
     /// </summary>
     public partial class Menu : Window
     {
+        public bool CaixaFechado { get; private set; }
+
         public Menu()
         {
             InitializeComponent();
+
+            CaixaFechado = false;
         }
 
         private void btFechar_Click(object sender, RoutedEventArgs e)
@@ -30,8 +34,16 @@ namespace VarejoSimples.Views.PDV.MenuPDV
 
         private void btCaixa_Click(object sender, RoutedEventArgs e)
         {
+            Menu_Caixa mCaixa = new Menu_Caixa();
+            mCaixa.CaixaFechado += MCaixa_CaixaFechado;
             GridContainer.Children.Clear();
-            GridContainer.Children.Add(new Menu_Caixa());
+            GridContainer.Children.Add(mCaixa);
+        }
+
+        private void MCaixa_CaixaFechado()
+        {
+            CaixaFechado = true;
+            Close();
         }
     }
 }

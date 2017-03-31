@@ -393,6 +393,9 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
         {
             MenuPDV.Menu menu = new MenuPDV.Menu();
             menu.ShowDialog();
+
+            if (menu.CaixaFechado)
+                Close();
         }
 
         private void txQuant_KeyDown(object sender, KeyEventArgs e)

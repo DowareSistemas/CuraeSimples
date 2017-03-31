@@ -28,6 +28,8 @@ namespace VarejoSimples.Views.PDV
         private Movimentos_caixasController controller = null;
         private List<ItemFpgFechamentoCaixa> Itens_pagamento { get; set; }
 
+        public bool CaixaFechado { get; set; }
+
         public FechamentoCaixa()
         {
             InitializeComponent();
@@ -35,6 +37,8 @@ namespace VarejoSimples.Views.PDV
             Itens_pagamento = new List<ItemFpgFechamentoCaixa>();
             controller = new Movimentos_caixasController();
             CarregarFormasPag();
+
+            CaixaFechado = false;
         }
 
         private void CarregarFormasPag()
@@ -92,12 +96,11 @@ namespace VarejoSimples.Views.PDV
                     EfetuarTransferenciaConta();
             }
 
-            Parametros param = ParametrosController.FindParametro("NF_IMPPADRAO", true);
-            if(param == null)
-                param = ParametrosController.FindParametro("NF_IMPPADRAO", false);
-            
+            CaixaFechado = true;
             ReportDocument rpt = rController.GetReportDocument("CXACONS002");
             rpt.PrintToPrinter(1, false, 1, 1);
+
+            Close();
         }
 
         private void EfetuarTransferenciaConta()

@@ -4,15 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VarejoSimples.Views.Setup"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         Title="PreparacaoSistema" Height="389.098" Width="504.135">
+
     <Grid Background="#FF999999">
         <Grid Background="White" Margin="2">
-            <Label x:Name="label" HorizontalContentAlignment="Center" Content="Label" Margin="10,133,10,0" VerticalAlignment="Top"/>
-
+            <Grid x:Name="GridExecutando" Opacity="05" Background="White" Margin="10">
+                <Label x:Name="label" HorizontalContentAlignment="Center" Content="Preparando o sistema para o primeiro uso" Margin="10,85,10,0" VerticalAlignment="Top" FontSize="24"/>
+                <Image x:Name="imgLoading" Visibility="Visible" gif:ImageBehavior.AnimatedSource="/Curae Varejo (Simples);component/Images/w8.gif" Margin="10,0,10,125" RenderTransformOrigin="0.4,0.6" Height="39" VerticalAlignment="Bottom" />
+                <Label x:Name="lbProgresso" HorizontalContentAlignment="Center"  Content="Executando scripts do pacote" Margin="10,145,10,0" VerticalAlignment="Top" FontSize="20"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

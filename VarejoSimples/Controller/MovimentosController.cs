@@ -773,7 +773,7 @@ Mensagem...: {sbMensagem.ToString()}");
                 GetTotalParcial(),
                 GetTotalDesconto(),
                 Movimento.Data,
-                "Mensagem promocional",
+                "",
                 $"{UsuariosController.LojaAtual.Logradouro}, {UsuariosController.LojaAtual.Bairro} - {UsuariosController.LojaAtual.Municipio}",
                 tipoMovController.Find(Movimento.Tipo_movimento_id).Descricao,
                 UsuariosController.LojaAtual.Cnpj);

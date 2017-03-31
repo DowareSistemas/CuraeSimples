@@ -14,17 +14,47 @@ namespace SQL2Search
         {
             try
             {
-                Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("*******************************************************");
+                Console.WriteLine("********            Doware Sistemas            ********");
+                Console.WriteLine("********          www.doware.com.br            ********");
+                Console.WriteLine("********   Curae Utility Tools - SQL2Search    ********");
+                Console.WriteLine("*******************************************************");
+                Console.WriteLine("");
+                Console.WriteLine("Ferramenta de compilação SQL2Search");
+                Console.WriteLine("Este programa é destinado a compilação de arquivos .csql");
+                Console.WriteLine("");
 
-                string source = new InputBox("Caminho do arquivo SQL de origem").Value;
-                string target = new InputBox("Pasta de destino da saída").Value;
+                Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NoneEnabled;
+                Run();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro durante a compilação: \n" + ex.Message, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void Run()
+        {
+            try
+            {
+                Console.WriteLine("Caminho do arquivo SQL de origem: ");
+                string source = Console.ReadLine();
+
+                Console.WriteLine("Pasta de destino da saída do arquivo .csql: ");
+                string target = Console.ReadLine();
 
                 SQLEntityCompiler compiler = new SQLEntityCompiler();
                 compiler.Compile(source, target);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocorreu um erro durante a compilação: \n" + ex.Message, "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("");
+                Console.WriteLine("Ocorreu um problema durante a compilação do arquivo .csql. \n" + ex.Message);
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Run();
             }
         }
     }

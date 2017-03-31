@@ -25,6 +25,10 @@ namespace VarejoSimples.Views.PDV.MenuPDV
     public partial class Menu_Caixa : UserControl
     {
         Movimentos_caixasController controller = null;
+
+        public delegate void FechamentoCaixaEvt();
+        public event FechamentoCaixaEvt CaixaFechado; 
+
         public Menu_Caixa()
         {
             InitializeComponent();
@@ -103,6 +107,9 @@ namespace VarejoSimples.Views.PDV.MenuPDV
         {
             FechamentoCaixa fc = new FechamentoCaixa();
             fc.ShowDialog();
+
+            if (fc.CaixaFechado)
+                CaixaFechado?.Invoke();
         }
     }
 }
