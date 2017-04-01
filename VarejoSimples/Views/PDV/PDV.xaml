@@ -49,7 +49,7 @@
         </Border>
         <Border x:Name="painelAcoes"  BorderBrush="#FF999999" BorderThickness="0,0,0,2" Grid.Column="1" Height="133" Margin="2,312,0,0" VerticalAlignment="Top">
             <Grid>
-                <Button x:Name="btCancelarItem" Content="Cancelar item [F1]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667"/>
+                <Button x:Name="btCancelarItem" Content="Cancelar item [F1]" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btCancelarItem_Click"/>
                 <Button x:Name="button_Copy1" Content="Desconto [F2]" HorizontalAlignment="Left" Margin="148,10,0,0" VerticalAlignment="Top" Width="135" Height="53" FontSize="14.667" RenderTransformOrigin="0.535,0.528"/>
                 <Button x:Name="btPagamento" Content="Pagamento [F6]" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" Height="53" FontSize="14.667" Click="btPagamento_Click"/>
                 <Button x:Name="btCliente" Content="Cliente [F4]" HorizontalAlignment="Left" Margin="288,10,0,0" VerticalAlignment="Top" Width="129" Height="53" FontSize="14.667" Click="btCliente_Click"/>

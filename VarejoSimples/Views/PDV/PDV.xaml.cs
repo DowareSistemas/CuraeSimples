@@ -29,7 +29,6 @@ namespace VarejoSimples.Views.PDV
         private bool VendaAberta { get; set; }
         public IPainelVenda PainelVenda { get; set; }
         private bool Pago { get; set; }
-
         private Tipos_movimento Tipo_movimento_id_venda { get; set; }
         private Tipos_movimento Tipo_movimento_id_devolucao { get; set; }
         Tipo_operacao_atual Operacao_atual { get; set; }
@@ -46,14 +45,14 @@ namespace VarejoSimples.Views.PDV
             Atalhos_pagamentos = new List<KeyValuePair<int, Formas_pagamento>>();
             Operacao_atual = Tipo_operacao_atual.VENDA;
             Setup();
-            ReconficurarUI();
+            ResetUI();
             MonitorInsereRemove.Instance.ItemInserido += Instance_ItemInserido;
             MonitorInsereRemove.Instance.ItemRemovido += Instance_ItemRemovido;
             MonitorSelecaoPedido.Instance.PedidoSelecionado += Instance_PedidoSelecionado;
             txQuant.Text = "1,00";
         }
 
-        private void ReconficurarUI()
+        private void ResetUI()
         {
             VendaAberta = false;
             btPagamento.IsEnabled = false;
@@ -110,7 +109,7 @@ namespace VarejoSimples.Views.PDV
         private void Setup()
         {
             Movimentos_caixasController mc_controller = new Movimentos_caixasController();
-            if(!mc_controller.CaixaAberto(UsuariosController.UsuarioAtual.Id))
+            if (!mc_controller.CaixaAberto(UsuariosController.UsuarioAtual.Id))
             {
                 AberturaCaixa ac = new AberturaCaixa();
                 ac.ShowDialog();
@@ -264,6 +263,11 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
         }
 
+        public void CancelarVenda()
+        {
+            ResetUI();
+        }
+
         public void VendeItem(Estoque estoqueParam = null)
         {
             Estoque estoque = estoqueParam;
@@ -369,13 +373,16 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             if (pagamentos.Pago)
             {
                 VendaAberta = false;
-                ReconficurarUI();
+                ResetUI();
                 PainelVenda = null;
             }
         }
 
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.F1)
+                ShowCancelarItem();
+
             if (e.Key == Key.F4)
                 ShowPesquisaCliente();
 
@@ -456,7 +463,7 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
 
             PainelVenda.InformaCliente(bc.Selecionado.Id);
         }
-        
+
         private void btSalvarPedido_Click(object sender, RoutedEventArgs e)
         {
             SalvarPedido();
@@ -479,12 +486,23 @@ Acione o suporte Doware.", "Erro de configuração", MessageBoxButton.OK, Messag
             }
 
             int pedido = PainelVenda.TransformarEmPedido();
-            ReconficurarUI();
+            ResetUI();
         }
 
         private void btMenu_Click(object sender, RoutedEventArgs e)
         {
             ShowMenu();
+        }
+
+        private void btCancelarItem_Click(object sender, RoutedEventArgs e)
+        {
+            ShowCancelarItem();
+        }
+
+        private void ShowCancelarItem()
+        {
+            CancelarItem ci = new CancelarItem(PainelVenda);
+            ci.ShowDialog();
         }
     }
 }

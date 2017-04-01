@@ -622,6 +622,9 @@
     <Compile Include="Views\PDV\CadastroRapidoCliente.xaml.cs">
       <DependentUpon>CadastroRapidoCliente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PDV\CancelarItem.xaml.cs">
+      <DependentUpon>CancelarItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PDV\CardPagamento.xaml.cs">
       <DependentUpon>CardPagamento.xaml</DependentUpon>
     </Compile>
@@ -986,6 +989,10 @@
     <Page Include="Views\PDV\CadastroRapidoCliente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PDV\CancelarItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PDV\CardPagamento.xaml">
       <SubType>Designer</SubType>

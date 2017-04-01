@@ -9,7 +9,7 @@ namespace VarejoSimples.Interfaces
     public interface IPDV
     {
         void VendeItem(Estoque estoque = null);
-
+        void CancelarVenda();
         IPainelVenda PainelVenda { get; set; }
     }
 }

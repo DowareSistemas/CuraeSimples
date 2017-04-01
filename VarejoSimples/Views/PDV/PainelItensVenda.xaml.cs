@@ -37,6 +37,17 @@ namespace VarejoSimples.Views.PDV
             return new ClientesController().Find(MovimentosController.GetClienteId());
         }
 
+        public List<Itens_movimento> GetItensMovimento()
+        {
+            return MovimentosController.Itens_movimento;
+        }
+
+        public void CancelarItem(int item_id)
+        {
+            MovimentosController.RemoveItem(item_id);
+            RefreshItens();
+        }
+
         private void RefreshItens()
         {
             sp_produtos.Children.Clear();

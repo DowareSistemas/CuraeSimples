@@ -26,6 +26,8 @@ namespace VarejoSimples.Interfaces
         void CupomNaoFiscal();
         int TransformarEmPedido();
         Clientes GetCliente();
+        void CancelarItem(int item_id);
+        List<Itens_movimento> GetItensMovimento();
         bool ClienteInformado { get; }
         void TransformarEmMovimento(Pedidos_venda pedido, int tipo_mov);
         UserControl CurrentUserControl { get; }
